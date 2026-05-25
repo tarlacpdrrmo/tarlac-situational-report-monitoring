@@ -11,8 +11,8 @@
             /* Stormy macOS Glassmorphism Palette */
             --text-main: #f8fafc;
             --text-muted: #94a3b8;
-            --accent: #f59e0b; /* Amber warning accent fits the weather theme */
-            --glass-bg: rgba(15, 23, 42, 0.2); /* 80% Transparent */
+            --accent: #f59e0b; 
+            --glass-bg: rgba(15, 23, 42, 0.2); 
             --glass-border: rgba(255, 255, 255, 0.08);
             --glass-hover: rgba(255, 255, 255, 0.12);
             --input-bg: rgba(0, 0, 0, 0.25);
@@ -33,7 +33,6 @@
             overflow: hidden;
         }
 
-        /* Smooth rolling background animation */
         @keyframes stormFront {
             0% { background-position: 0% 50%; }
             50% { background-position: 100% 50%; }
@@ -89,9 +88,23 @@
         .top-agency-select {
             background: var(--input-bg); color: var(--text-main); border: 1px solid var(--glass-border);
             padding: 10px 15px; border-radius: 12px; font-size: 14px; outline: none; appearance: none;
-            cursor: pointer; min-width: 200px;
+            cursor: pointer; min-width: 200px; transition: 0.3s;
         }
         .top-agency-select:focus { border-color: var(--accent); }
+        select option, select optgroup { background: #1e293b; color: white; font-family: 'Inter', sans-serif;} 
+
+        /* Conditional LGU Dropdown Animation */
+        #lguSelectContainer {
+            display: none; /* Hidden by default */
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        #lguSelectContainer.visible {
+            display: block;
+            opacity: 1;
+            animation: fadeIn 0.3s ease forwards;
+        }
+        @keyframes fadeIn { from { opacity: 0; transform: translateX(-10px); } to { opacity: 1; transform: translateX(0); } }
 
         .dashboard-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
 
@@ -159,12 +172,6 @@
         }
         .scanner-area:hover { background: rgba(0,0,0,0.3); border-color: var(--accent); }
         .scanner-icon { color: var(--accent); margin-bottom: 15px; }
-        select.custom-select {
-            width: 100%; background: var(--input-bg); color: var(--text-main);
-            border: none; padding: 12px 15px; border-radius: 12px; margin-bottom: 20px;
-            outline: none; appearance: none; cursor: pointer;
-        }
-        select option { background: #1e293b; color: white; } /* Dark bg for dropdown options */
 
         /* --- Buttons --- */
         .btn-primary {
@@ -205,21 +212,56 @@
         <div class="header">
             <div>
                 <h1>Situational Report</h1>
-                <div style="display: flex; align-items: center; gap: 10px;">
-                    <label style="font-size: 13px; color: var(--text-muted); font-weight: 500;">Reporting Agency:</label>
-                    <select class="top-agency-select" id="mainReportingAgency">
-                        <option value="MDRRMO">MDRRMO</option>
-                        <option value="PDRRMO">PDRRMO</option>
-                        <option value="BFP">BFP</option>
-                        <option value="PNP">PNP</option>
-                        <option value="DSWD">DSWD</option>
-                        <option value="PHO">Provincial Health Office (PHO)</option>
-                        <option value="AGRICULTURE">Department of Agriculture</option>
-                        <option value="PSWDO">PSWDO</option>
-                        <option value="OTHER">Other...</option>
-                    </select>
+                
+                <div style="display: flex; align-items: center; gap: 15px; flex-wrap: wrap;">
+                    
+                    <div style="display: flex; align-items: center; gap: 10px;">
+                        <label style="font-size: 13px; color: var(--text-muted); font-weight: 500;">Reporting Agency:</label>
+                        <select class="top-agency-select" id="mainReportingAgency">
+                            <option value="PDRRMO">PDRRMO (Provincial)</option>
+                            <option value="MDRRMO">MDRRMO / CDRRMO (LGU)</option>
+                            <option value="BFP">BFP</option>
+                            <option value="PNP">PNP</option>
+                            <option value="DSWD">DSWD</option>
+                            <option value="PHO">Provincial Health Office (PHO)</option>
+                            <option value="AGRICULTURE">Department of Agriculture</option>
+                            <option value="PSWDO">PSWDO</option>
+                            <option value="OTHER">Other...</option>
+                        </select>
+                    </div>
+
+                    <div id="lguSelectContainer" style="display: flex; align-items: center; gap: 10px;">
+                        <i data-lucide="chevron-right" style="color: var(--text-muted); width: 16px;"></i>
+                        <select class="top-agency-select" id="lguSelect">
+                            <option value="" disabled selected>Select Municipality/City...</option>
+                            <optgroup label="City (CDRRMO)">
+                                <option value="Tarlac City">Tarlac City</option>
+                            </optgroup>
+                            <optgroup label="Municipalities (MDRRMO)">
+                                <option value="Anao">Anao</option>
+                                <option value="Bamban">Bamban</option>
+                                <option value="Camiling">Camiling</option>
+                                <option value="Capas">Capas</option>
+                                <option value="Concepcion">Concepcion</option>
+                                <option value="Gerona">Gerona</option>
+                                <option value="La Paz">La Paz</option>
+                                <option value="Mayantoc">Mayantoc</option>
+                                <option value="Moncada">Moncada</option>
+                                <option value="Paniqui">Paniqui</option>
+                                <option value="Pura">Pura</option>
+                                <option value="Ramos">Ramos</option>
+                                <option value="San Clemente">San Clemente</option>
+                                <option value="San Jose">San Jose</option>
+                                <option value="San Manuel">San Manuel</option>
+                                <option value="Santa Ignacia">Santa Ignacia</option>
+                                <option value="Victoria">Victoria</option>
+                            </optgroup>
+                        </select>
+                    </div>
+
                 </div>
             </div>
+            
             <div style="text-align: right;">
                 <label style="font-size: 12px; color: var(--text-muted); font-weight: 500; display: block; margin-bottom: 5px;">Report As Of:</label>
                 <input type="datetime-local" style="background: var(--input-bg); border: none; color: white; padding: 10px 15px; border-radius: 10px; outline: none; font-family: 'Inter', sans-serif;">
@@ -289,7 +331,7 @@
 
                 <div class="card">
                     <div class="card-title"><i data-lucide="scan-line"></i> External Data Scanner</div>
-                    <select class="custom-select" id="agencySelect">
+                    <select class="top-agency-select" style="width: 100%; margin-bottom: 20px;">
                         <option value="agri">Agriculture (Crop Damage Table)</option>
                         <option value="pho">Provincial Health Office (PHO Table)</option>
                         <option value="pswdo">PSWDO Report</option>
@@ -342,19 +384,29 @@
     <script>
         lucide.createIcons();
 
+        // --- Dynamic LGU Dropdown Logic ---
+        const mainAgencySelect = document.getElementById('mainReportingAgency');
+        const lguSelectContainer = document.getElementById('lguSelectContainer');
+        const lguSelect = document.getElementById('lguSelect');
+
+        mainAgencySelect.addEventListener('change', function() {
+            if (this.value === 'MDRRMO') {
+                lguSelectContainer.classList.add('visible');
+                lguSelect.required = true;
+            } else {
+                lguSelectContainer.classList.remove('visible');
+                lguSelect.required = false;
+                lguSelect.value = ''; // Reset the value if they switch away
+            }
+        });
+
         // --- Auto-Uppercase Feature ---
-        // Grabs all text inputs and textareas
         const textInputs = document.querySelectorAll('input[type="text"], textarea');
         textInputs.forEach(input => {
             input.addEventListener('input', function() {
-                // Save the cursor position before changing the text
                 const start = this.selectionStart;
                 const end = this.selectionEnd;
-                
-                // Convert to uppercase
                 this.value = this.value.toUpperCase();
-                
-                // Restore the cursor position
                 this.setSelectionRange(start, end);
             });
         });
