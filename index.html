@@ -83,9 +83,15 @@
             scroll-behavior: smooth;
         }
 
-        .header { display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 40px; }
-        .header h1 { font-size: 32px; font-weight: 600; letter-spacing: -0.5px; }
-        .header p { color: var(--text-muted); font-size: 14px; margin-top: 8px; }
+        .header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 40px; }
+        .header h1 { font-size: 32px; font-weight: 600; letter-spacing: -0.5px; margin-bottom: 12px; }
+        
+        .top-agency-select {
+            background: var(--input-bg); color: var(--text-main); border: 1px solid var(--glass-border);
+            padding: 10px 15px; border-radius: 12px; font-size: 14px; outline: none; appearance: none;
+            cursor: pointer; min-width: 200px;
+        }
+        .top-agency-select:focus { border-color: var(--accent); }
 
         .dashboard-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
 
@@ -158,6 +164,7 @@
             border: none; padding: 12px 15px; border-radius: 12px; margin-bottom: 20px;
             outline: none; appearance: none; cursor: pointer;
         }
+        select option { background: #1e293b; color: white; } /* Dark bg for dropdown options */
 
         /* --- Buttons --- */
         .btn-primary {
@@ -198,11 +205,24 @@
         <div class="header">
             <div>
                 <h1>Situational Report</h1>
-                <p>Repository: tarlac-situational-report-monitoring</p>
+                <div style="display: flex; align-items: center; gap: 10px;">
+                    <label style="font-size: 13px; color: var(--text-muted); font-weight: 500;">Reporting Agency:</label>
+                    <select class="top-agency-select" id="mainReportingAgency">
+                        <option value="MDRRMO">MDRRMO</option>
+                        <option value="PDRRMO">PDRRMO</option>
+                        <option value="BFP">BFP</option>
+                        <option value="PNP">PNP</option>
+                        <option value="DSWD">DSWD</option>
+                        <option value="PHO">Provincial Health Office (PHO)</option>
+                        <option value="AGRICULTURE">Department of Agriculture</option>
+                        <option value="PSWDO">PSWDO</option>
+                        <option value="OTHER">Other...</option>
+                    </select>
+                </div>
             </div>
             <div style="text-align: right;">
                 <label style="font-size: 12px; color: var(--text-muted); font-weight: 500; display: block; margin-bottom: 5px;">Report As Of:</label>
-                <input type="datetime-local" style="background: var(--input-bg); border: none; color: white; padding: 10px 15px; border-radius: 10px; outline: none;">
+                <input type="datetime-local" style="background: var(--input-bg); border: none; color: white; padding: 10px 15px; border-radius: 10px; outline: none; font-family: 'Inter', sans-serif;">
             </div>
         </div>
 
@@ -225,7 +245,7 @@
                     </div>
                     <div class="input-row">
                         <label>d. Casualty</label>
-                        <input type="text" placeholder="e.g., Zero casualties">
+                        <input type="text" placeholder="E.G., ZERO CASUALTIES">
                     </div>
                 </div>
 
@@ -268,12 +288,12 @@
                 </div>
 
                 <div class="card">
-                    <div class="card-title"><i data-lucide="scan-line"></i> Agency Report Scanner</div>
+                    <div class="card-title"><i data-lucide="scan-line"></i> External Data Scanner</div>
                     <select class="custom-select" id="agencySelect">
-                        <option value="agri">Agriculture (Crop Damage)</option>
-                        <option value="pho">Provincial Health Office (PHO)</option>
-                        <option value="pswdo">PSWDO</option>
-                        <option value="custom">+ Add / Edit Custom Agency...</option>
+                        <option value="agri">Agriculture (Crop Damage Table)</option>
+                        <option value="pho">Provincial Health Office (PHO Table)</option>
+                        <option value="pswdo">PSWDO Report</option>
+                        <option value="custom">+ Add / Edit Custom Format...</option>
                     </select>
                     
                     <div class="scanner-area">
@@ -307,7 +327,7 @@
                         </label>
                     </div>
                     <div class="input-row" style="margin-top: 20px; border-bottom: none;">
-                        <input type="text" placeholder="+ Type custom activity and press Enter..." style="text-align: left; background: var(--input-bg); padding: 12px 15px; border-radius: 12px;">
+                        <input type="text" placeholder="+ TYPE CUSTOM ACTIVITY AND PRESS ENTER..." style="text-align: left; background: var(--input-bg); padding: 12px 15px; border-radius: 12px;">
                     </div>
                 </div>
 
@@ -322,12 +342,29 @@
     <script>
         lucide.createIcons();
 
-        // Scanner Trigger
+        // --- Auto-Uppercase Feature ---
+        // Grabs all text inputs and textareas
+        const textInputs = document.querySelectorAll('input[type="text"], textarea');
+        textInputs.forEach(input => {
+            input.addEventListener('input', function() {
+                // Save the cursor position before changing the text
+                const start = this.selectionStart;
+                const end = this.selectionEnd;
+                
+                // Convert to uppercase
+                this.value = this.value.toUpperCase();
+                
+                // Restore the cursor position
+                this.setSelectionRange(start, end);
+            });
+        });
+
+        // --- Scanner Trigger ---
         const scannerArea = document.querySelector('.scanner-area');
         const fileUpload = document.getElementById('fileUpload');
         scannerArea.addEventListener('click', () => { fileUpload.click(); });
 
-        // Pill Button Toggle Logic
+        // --- Pill Button Toggle Logic ---
         const pills = document.querySelectorAll('.activity-pill');
         pills.forEach(pill => {
             pill.addEventListener('change', function(e) {
