@@ -8,131 +8,147 @@
     <script src="https://unpkg.com/lucide@latest"></script>
     <style>
         :root {
-            --bg-color: #1a1412; /* Deep warm dark background */
-            --sidebar-bg: #231a18;
-            --card-bg: rgba(45, 34, 31, 0.7);
-            --card-border: rgba(255, 255, 255, 0.05);
-            --text-main: #f4eceb;
-            --text-muted: #a99c9a;
-            --accent: #d96c4a; /* Warm reddish-orange accent */
+            /* Light macOS Glassmorphism Palette */
+            --text-main: #3a2b25;
+            --text-muted: #756058;
+            --accent: #d96c4a;
             --accent-hover: #e88060;
-            --input-bg: rgba(0, 0, 0, 0.2);
+            --glass-bg: rgba(255, 255, 255, 0.25);
+            --glass-border: rgba(255, 255, 255, 0.4);
+            --glass-highlight: rgba(255, 255, 255, 0.6);
+            --input-bg: rgba(255, 255, 255, 0.4);
+            --input-focus: rgba(255, 255, 255, 0.8);
         }
 
         * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Inter', sans-serif; }
 
         body {
-            background-color: var(--bg-color);
+            /* Warm macOS style abstract gradient background */
+            background: linear-gradient(135deg, #f6d365 0%, #ff8e53 50%, #eb5d47 100%);
             color: var(--text-main);
             display: flex;
+            justify-content: center;
+            align-items: center;
             height: 100vh;
             overflow: hidden;
-            background-image: radial-gradient(circle at top right, #38201a, transparent 40%);
+        }
+
+        /* The Main App Window */
+        .app-window {
+            display: flex;
+            width: 95vw;
+            height: 92vh;
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(30px);
+            -webkit-backdrop-filter: blur(30px);
+            border: 1px solid var(--glass-border);
+            border-radius: 24px;
+            box-shadow: 0 24px 48px rgba(0, 0, 0, 0.15), inset 0 1px 1px rgba(255,255,255,0.6);
+            overflow: hidden;
         }
 
         /* --- Sidebar Styles --- */
         .sidebar {
             width: 260px;
-            background-color: var(--sidebar-bg);
-            padding: 30px 20px;
+            background: rgba(255, 255, 255, 0.1);
+            padding: 20px;
             display: flex;
             flex-direction: column;
-            border-right: 1px solid var(--card-border);
+            border-right: 1px solid var(--glass-border);
         }
+
+        /* macOS Window Controls */
+        .mac-controls {
+            display: flex; gap: 8px; margin-bottom: 30px; padding-left: 5px;
+        }
+        .dot { width: 12px; height: 12px; border-radius: 50%; box-shadow: inset 0 1px 2px rgba(0,0,0,0.1); }
+        .dot.close { background-color: #ff5f56; }
+        .dot.minimize { background-color: #ffbd2e; }
+        .dot.maximize { background-color: #27c93f; }
 
         .profile {
-            display: flex;
-            align-items: center;
-            gap: 15px;
-            margin-bottom: 40px;
+            display: flex; align-items: center; gap: 15px; margin-bottom: 35px; padding-left: 5px;
         }
-
         .profile-img {
-            width: 45px; height: 45px;
-            background-color: var(--accent);
-            border-radius: 50%;
-            display: flex; justify-content: center; align-items: center;
-            font-weight: bold; font-size: 18px;
+            width: 45px; height: 45px; background-color: var(--accent); color: white;
+            border-radius: 50%; display: flex; justify-content: center; align-items: center;
+            font-weight: 600; font-size: 18px; box-shadow: 0 4px 10px rgba(217, 108, 74, 0.3);
         }
-
         .profile-info h4 { font-size: 14px; font-weight: 600; }
         .profile-info p { font-size: 11px; color: var(--text-muted); letter-spacing: 0.5px; text-transform: uppercase; }
 
-        .nav-menu { list-style: none; display: flex; flex-direction: column; gap: 10px; }
+        .nav-menu { list-style: none; display: flex; flex-direction: column; gap: 8px; }
         .nav-item {
             display: flex; align-items: center; gap: 12px;
-            padding: 12px 15px; border-radius: 12px;
-            color: var(--text-muted); cursor: pointer; transition: all 0.3s ease;
+            padding: 10px 15px; border-radius: 12px;
+            color: var(--text-muted); cursor: pointer; transition: all 0.2s ease;
             font-size: 14px; font-weight: 500;
         }
-        .nav-item:hover, .nav-item.active {
-            background-color: var(--card-bg); color: var(--text-main);
+        .nav-item:hover { background: var(--glass-highlight); color: var(--text-main); }
+        .nav-item.active {
+            background: var(--glass-highlight); color: var(--text-main);
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05); border: 1px solid var(--glass-border);
         }
 
         /* --- Main Content Styles --- */
-        .main-content {
-            flex: 1; padding: 40px; overflow-y: auto;
-        }
+        .main-content { flex: 1; padding: 40px; overflow-y: auto; }
 
         .header { display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 30px; }
-        .header h1 { font-size: 28px; font-weight: 600; }
+        .header h1 { font-size: 28px; font-weight: 600; letter-spacing: -0.5px; }
         .header p { color: var(--text-muted); font-size: 14px; margin-top: 5px; }
 
-        .dashboard-grid {
-            display: grid; grid-template-columns: 1fr 1fr; gap: 20px;
-        }
+        .dashboard-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
 
         .card {
-            background: var(--card-bg);
-            border: 1px solid var(--card-border);
-            border-radius: 16px; padding: 25px;
-            backdrop-filter: blur(10px);
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            border-radius: 20px; padding: 25px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.05);
         }
         .card.full-width { grid-column: span 2; }
 
         .card-title {
             font-size: 12px; text-transform: uppercase; letter-spacing: 1px;
-            color: var(--accent); margin-bottom: 20px; font-weight: 600;
-            display: flex; align-items: center; gap: 8px;
+            color: var(--text-main); margin-bottom: 20px; font-weight: 600;
+            display: flex; align-items: center; gap: 8px; opacity: 0.8;
         }
 
         /* --- Editable Information Fields --- */
         .info-group { margin-bottom: 15px; }
-        .info-group label {
-            display: block; font-size: 12px; color: var(--text-muted); margin-bottom: 5px;
-        }
+        .info-group label { display: block; font-size: 12px; color: var(--text-muted); margin-bottom: 5px; font-weight: 500;}
         
-        /* This makes inputs look like plain text until interacted with */
         .info-input {
-            width: 100%; background: transparent; border: 1px solid transparent;
-            color: var(--text-main); font-size: 14px; padding: 8px; border-radius: 8px;
-            transition: all 0.2s ease;
+            width: 100%; background: var(--input-bg); border: 1px solid transparent;
+            color: var(--text-main); font-size: 14px; padding: 10px 12px; border-radius: 10px;
+            transition: all 0.2s ease; box-shadow: inset 0 1px 3px rgba(0,0,0,0.02);
         }
-        .info-input:hover { background: var(--input-bg); border: 1px solid var(--card-border); }
+        .info-input:hover { border: 1px solid var(--glass-border); background: var(--glass-highlight); }
         .info-input:focus {
-            background: var(--input-bg); border: 1px solid var(--accent); outline: none;
+            background: var(--input-focus); border: 1px solid var(--accent); outline: none;
+            box-shadow: 0 0 0 3px rgba(217, 108, 74, 0.1);
         }
         textarea.info-input { resize: vertical; min-height: 40px; }
+        
+        /* Placeholder styling for light mode */
+        ::placeholder { color: rgba(117, 96, 88, 0.5); }
 
         /* --- Activities Checkboxes --- */
-        .activities-grid {
-            display: grid; grid-template-columns: 1fr 1fr; gap: 10px;
-        }
+        .activities-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
         .checkbox-label {
             display: flex; align-items: center; gap: 10px; font-size: 13px;
-            padding: 10px; border-radius: 8px; background: var(--input-bg);
+            padding: 10px; border-radius: 10px; background: var(--input-bg);
             cursor: pointer; border: 1px solid transparent; transition: 0.2s;
         }
-        .checkbox-label:hover { border-color: var(--card-border); }
+        .checkbox-label:hover { background: var(--glass-highlight); border-color: var(--glass-border); }
         .checkbox-label input { accent-color: var(--accent); width: 16px; height: 16px; }
 
         /* --- OCR Scanner UI --- */
         .scanner-area {
-            border: 2px dashed var(--card-border); border-radius: 12px;
+            border: 2px dashed rgba(217, 108, 74, 0.4); border-radius: 16px;
             padding: 30px; text-align: center; cursor: pointer; transition: 0.3s;
-            background: var(--input-bg);
+            background: rgba(255, 255, 255, 0.3);
         }
-        .scanner-area:hover { border-color: var(--accent); background: rgba(217, 108, 74, 0.05); }
+        .scanner-area:hover { background: rgba(255, 255, 255, 0.6); border-color: var(--accent); }
         .scanner-icon { color: var(--accent); margin-bottom: 10px; }
         
         select.info-input { appearance: none; cursor: pointer; }
@@ -140,168 +156,172 @@
         /* --- Buttons --- */
         .btn-primary {
             background-color: var(--accent); color: white; border: none;
-            padding: 12px 24px; border-radius: 8px; font-size: 14px; font-weight: 500;
+            padding: 12px 24px; border-radius: 12px; font-size: 14px; font-weight: 500;
             cursor: pointer; transition: 0.3s; float: right; margin-top: 20px;
+            box-shadow: 0 4px 15px rgba(217, 108, 74, 0.3);
         }
-        .btn-primary:hover { background-color: var(--accent-hover); box-shadow: 0 4px 15px rgba(217, 108, 74, 0.3); }
+        .btn-primary:hover { transform: translateY(-1px); box-shadow: 0 6px 20px rgba(217, 108, 74, 0.4); }
 
-        /* Custom Scrollbar */
-        ::-webkit-scrollbar { width: 8px; }
+        /* Custom Scrollbar for Mac Feel */
+        ::-webkit-scrollbar { width: 6px; }
         ::-webkit-scrollbar-track { background: transparent; }
-        ::-webkit-scrollbar-thumb { background: var(--card-border); border-radius: 4px; }
-        ::-webkit-scrollbar-thumb:hover { background: var(--text-muted); }
+        ::-webkit-scrollbar-thumb { background: rgba(0,0,0,0.1); border-radius: 10px; }
+        ::-webkit-scrollbar-thumb:hover { background: rgba(0,0,0,0.2); }
     </style>
 </head>
 <body>
 
-    <aside class="sidebar">
-        <div class="profile">
-            <div class="profile-img">T</div>
-            <div class="profile-info">
-                <p>Monitoring Center</p>
-                <h4>Tarlac PDRRMO</h4>
+    <div class="app-window">
+        <aside class="sidebar">
+            <div class="mac-controls">
+                <span class="dot close"></span>
+                <span class="dot minimize"></span>
+                <span class="dot maximize"></span>
             </div>
-        </div>
-        <ul class="nav-menu">
-            <li class="nav-item active"><i data-lucide="layout-dashboard"></i> Dashboard</li>
-            <li class="nav-item"><i data-lucide="file-text"></i> Compile Reports</li>
-            <li class="nav-item"><i data-lucide="users"></i> Agency Records</li>
-            <li class="nav-item"><i data-lucide="settings"></i> Settings</li>
-        </ul>
-    </aside>
 
-    <main class="main-content">
-        <div class="header">
-            <div>
-                <h1>Situational Report</h1>
-                <p>Repository: tarlac-situational-report-monitoring</p>
-            </div>
-            <div>
-                <label style="font-size: 12px; color: var(--text-muted);">Report As Of:</label>
-                <input type="datetime-local" class="info-input" style="width: auto; font-weight: bold;">
-            </div>
-        </div>
-
-        <form id="sitrepForm">
-            <div class="dashboard-grid">
-                
-                <div class="card">
-                    <div class="card-title"><i data-lucide="cloud-rain"></i> General Status</div>
-                    
-                    <div class="info-group">
-                        <label>a. Weather Condition</label>
-                        <input type="text" class="info-input" placeholder="Click to enter weather condition...">
-                    </div>
-                    <div class="info-group">
-                        <label>b. Affected Population</label>
-                        <input type="text" class="info-input" placeholder="Enter affected population details...">
-                    </div>
-                    <div class="info-group">
-                        <label>c. Pre-Emptive/Forced Evacuation</label>
-                        <input type="text" class="info-input" placeholder="Enter evacuation details...">
-                    </div>
-                    <div class="info-group">
-                        <label>d. Casualty</label>
-                        <input type="text" class="info-input" placeholder="e.g., Zero casualties monitored">
-                    </div>
+            <div class="profile">
+                <div class="profile-img">T</div>
+                <div class="profile-info">
+                    <p>Monitoring Center</p>
+                    <h4>Tarlac PDRRMO</h4>
                 </div>
-
-                <div class="card">
-                    <div class="card-title"><i data-lucide="alert-triangle"></i> Damages & Interruptions</div>
-                    
-                    <div class="info-group">
-                        <label>e. Suspension of Class/Work</label>
-                        <input type="text" class="info-input" placeholder="Enter suspension details...">
-                    </div>
-                    <div class="info-group">
-                        <label>f. Flooded Areas</label>
-                        <input type="text" class="info-input" placeholder="List flooded barangays/municipalities...">
-                    </div>
-                    <div class="info-group">
-                        <label>j. Power and Water Interruptions</label>
-                        <input type="text" class="info-input" placeholder="Enter utility status...">
-                    </div>
-                    <div class="info-group">
-                        <label>k. Other Incidents Monitored</label>
-                        <input type="text" class="info-input" placeholder="Any other incidents...">
-                    </div>
-                </div>
-
-                <div class="card full-width">
-                    <div class="card-title"><i data-lucide="map-pin"></i> Critical Damages</div>
-                    <div class="dashboard-grid">
-                        <div class="info-group">
-                            <label>g. Damages on Infrastructure</label>
-                            <textarea class="info-input" placeholder="Detail infrastructure damages here..."></textarea>
-                        </div>
-                        <div class="info-group">
-                            <label>h. Damages on Agriculture (Auto-fills via OCR)</label>
-                            <textarea class="info-input" placeholder="Detail agricultural damages here..."></textarea>
-                        </div>
-                        <div class="info-group">
-                            <label>i. Status of Roads and Bridges</label>
-                            <textarea class="info-input" placeholder="Detail road/bridge passability here..."></textarea>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="card">
-                    <div class="card-title"><i data-lucide="scan-line"></i> Agency Report Scanner (OCR)</div>
-                    <div class="info-group">
-                        <label>Select Agency / Report Type</label>
-                        <select class="info-input" id="agencySelect">
-                            <option value="agri">Agriculture (Crop Damage)</option>
-                            <option value="pho">Provincial Health Office (PHO)</option>
-                            <option value="pswdo">PSWDO</option>
-                            <option value="custom">+ Add / Edit Custom Agency</option>
-                        </select>
-                    </div>
-                    <div class="scanner-area">
-                        <i data-lucide="image-plus" class="scanner-icon" width="32" height="32"></i>
-                        <p style="font-size: 13px; color: var(--text-main);">Click or drag an image here to scan</p>
-                        <p style="font-size: 11px; color: var(--text-muted); margin-top: 5px;">Supports JPEG, PNG (e.g., Agricultural Data Tables)</p>
-                        <input type="file" id="fileUpload" style="display: none;" accept="image/*">
-                    </div>
-                </div>
-
-                <div class="card">
-                    <div class="card-title"><i data-lucide="activity"></i> Other Activities Monitored</div>
-                    <div class="activities-grid">
-                        <label class="checkbox-label"><input type="checkbox"> EOC Activated 24/7</label>
-                        <label class="checkbox-label"><input type="checkbox"> MDRRMC Convened</label>
-                        <label class="checkbox-label"><input type="checkbox"> PAGASA Bulletin Monitored</label>
-                        <label class="checkbox-label"><input type="checkbox"> Barangay Coordination</label>
-                        <label class="checkbox-label"><input type="checkbox"> Validating Damaged Houses</label>
-                        <label class="checkbox-label"><input type="checkbox"> Relief Goods Prepositioned</label>
-                    </div>
-                    <div class="info-group" style="margin-top: 15px;">
-                        <input type="text" class="info-input" placeholder="+ Add a custom activity manually...">
-                    </div>
-                </div>
-
             </div>
             
-            <button type="button" class="btn-primary" onclick="alert('Submission to Google Sheets will be triggered here.')">
-                <i data-lucide="send" style="width: 16px; height: 16px; display: inline; vertical-align: middle; margin-right: 5px;"></i> Submit SITREP
-            </button>
-        </form>
-    </main>
+            <ul class="nav-menu">
+                <li class="nav-item active"><i data-lucide="layout-dashboard"></i> Dashboard</li>
+                <li class="nav-item"><i data-lucide="file-text"></i> Compile Reports</li>
+                <li class="nav-item"><i data-lucide="users"></i> Agency Records</li>
+                <li class="nav-item"><i data-lucide="settings"></i> Settings</li>
+            </ul>
+        </aside>
+
+        <main class="main-content">
+            <div class="header">
+                <div>
+                    <h1>Situational Report</h1>
+                    <p>Repository: tarlac-situational-report-monitoring</p>
+                </div>
+                <div>
+                    <label style="font-size: 12px; color: var(--text-muted); font-weight: 500;">Report As Of:</label>
+                    <input type="datetime-local" class="info-input" style="width: auto; font-weight: 600; background: var(--glass-highlight);">
+                </div>
+            </div>
+
+            <form id="sitrepForm">
+                <div class="dashboard-grid">
+                    
+                    <div class="card">
+                        <div class="card-title"><i data-lucide="cloud-rain"></i> General Status</div>
+                        <div class="info-group">
+                            <label>a. Weather Condition</label>
+                            <input type="text" class="info-input" placeholder="Enter weather condition...">
+                        </div>
+                        <div class="info-group">
+                            <label>b. Affected Population</label>
+                            <input type="text" class="info-input" placeholder="Enter affected population details...">
+                        </div>
+                        <div class="info-group">
+                            <label>c. Pre-Emptive/Forced Evacuation</label>
+                            <input type="text" class="info-input" placeholder="Enter evacuation details...">
+                        </div>
+                        <div class="info-group">
+                            <label>d. Casualty</label>
+                            <input type="text" class="info-input" placeholder="e.g., Zero casualties monitored">
+                        </div>
+                    </div>
+
+                    <div class="card">
+                        <div class="card-title"><i data-lucide="alert-triangle"></i> Damages & Interruptions</div>
+                        <div class="info-group">
+                            <label>e. Suspension of Class/Work</label>
+                            <input type="text" class="info-input" placeholder="Enter suspension details...">
+                        </div>
+                        <div class="info-group">
+                            <label>f. Flooded Areas</label>
+                            <input type="text" class="info-input" placeholder="List flooded barangays/municipalities...">
+                        </div>
+                        <div class="info-group">
+                            <label>j. Power and Water Interruptions</label>
+                            <input type="text" class="info-input" placeholder="Enter utility status...">
+                        </div>
+                        <div class="info-group">
+                            <label>k. Other Incidents Monitored</label>
+                            <input type="text" class="info-input" placeholder="Any other incidents...">
+                        </div>
+                    </div>
+
+                    <div class="card full-width">
+                        <div class="card-title"><i data-lucide="map-pin"></i> Critical Damages</div>
+                        <div class="dashboard-grid">
+                            <div class="info-group">
+                                <label>g. Damages on Infrastructure</label>
+                                <textarea class="info-input" placeholder="Detail infrastructure damages here..."></textarea>
+                            </div>
+                            <div class="info-group">
+                                <label>h. Damages on Agriculture (Auto-fills via OCR)</label>
+                                <textarea class="info-input" placeholder="Detail agricultural damages here..."></textarea>
+                            </div>
+                            <div class="info-group full-width" style="grid-column: span 2;">
+                                <label>i. Status of Roads and Bridges</label>
+                                <textarea class="info-input" placeholder="Detail road/bridge passability here..."></textarea>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card">
+                        <div class="card-title"><i data-lucide="scan-line"></i> Agency Report Scanner (OCR)</div>
+                        <div class="info-group">
+                            <label>Select Agency / Report Type</label>
+                            <select class="info-input" id="agencySelect">
+                                <option value="agri">Agriculture (Crop Damage)</option>
+                                <option value="pho">Provincial Health Office (PHO)</option>
+                                <option value="pswdo">PSWDO</option>
+                                <option value="custom">+ Add / Edit Custom Agency</option>
+                            </select>
+                        </div>
+                        <div class="scanner-area">
+                            <i data-lucide="image-plus" class="scanner-icon" width="32" height="32"></i>
+                            <p style="font-size: 13px; font-weight: 500;">Drop an image here to scan</p>
+                            <p style="font-size: 11px; color: var(--text-muted); margin-top: 5px;">Supports JPEG, PNG (e.g., Agricultural Data Tables)</p>
+                            <input type="file" id="fileUpload" style="display: none;" accept="image/*">
+                        </div>
+                    </div>
+
+                    <div class="card">
+                        <div class="card-title"><i data-lucide="activity"></i> Other Activities Monitored</div>
+                        <div class="activities-grid">
+                            <label class="checkbox-label"><input type="checkbox"> EOC Activated 24/7</label>
+                            <label class="checkbox-label"><input type="checkbox"> MDRRMC Convened</label>
+                            <label class="checkbox-label"><input type="checkbox"> PAGASA Bulletin Monitored</label>
+                            <label class="checkbox-label"><input type="checkbox"> Barangay Coordination</label>
+                            <label class="checkbox-label"><input type="checkbox"> Validating Damaged Houses</label>
+                            <label class="checkbox-label"><input type="checkbox"> Relief Goods Prepositioned</label>
+                        </div>
+                        <div class="info-group" style="margin-top: 15px;">
+                            <input type="text" class="info-input" placeholder="+ Add a custom activity manually...">
+                        </div>
+                    </div>
+
+                </div>
+                
+                <button type="button" class="btn-primary" onclick="alert('Submission to Google Sheets will be triggered here.')">
+                    <i data-lucide="send" style="width: 16px; height: 16px; display: inline; vertical-align: middle; margin-right: 5px;"></i> Submit SITREP
+                </button>
+            </form>
+        </main>
+    </div>
 
     <script>
         lucide.createIcons();
 
-        // Simple script to trigger file upload from the scanner area
         const scannerArea = document.querySelector('.scanner-area');
         const fileUpload = document.getElementById('fileUpload');
 
-        scannerArea.addEventListener('click', () => {
-            fileUpload.click();
-        });
+        scannerArea.addEventListener('click', () => { fileUpload.click(); });
 
         fileUpload.addEventListener('change', (e) => {
             if(e.target.files.length > 0) {
                 alert(`File "${e.target.files[0].name}" loaded. OCR processing simulation starting...`);
-                // OCR Logic will be injected here later
             }
         });
     </script>
