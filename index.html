@@ -8,22 +8,24 @@
     <script src="https://unpkg.com/lucide@latest"></script>
     <style>
         :root {
-            /* Dark macOS Glassmorphism Palette */
-            --text-main: #f5ece9;
-            --text-muted: #b8a6a1;
-            --accent: #e27a5d;
-            --glass-bg: rgba(35, 20, 18, 0.4);
+            /* Stormy macOS Glassmorphism Palette */
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
+            --accent: #f59e0b; /* Amber warning accent fits the weather theme */
+            --glass-bg: rgba(15, 23, 42, 0.2); /* 80% Transparent */
             --glass-border: rgba(255, 255, 255, 0.08);
             --glass-hover: rgba(255, 255, 255, 0.12);
-            --input-bg: rgba(0, 0, 0, 0.2);
-            --sidebar-bg: rgba(20, 10, 8, 0.4);
+            --input-bg: rgba(0, 0, 0, 0.25);
+            --sidebar-bg: rgba(10, 15, 30, 0.3);
         }
 
         * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Inter', sans-serif; }
 
         body {
-            /* Rich, deep ambient background matching the dark image */
-            background: linear-gradient(135deg, #2b0e07 0%, #4a190a 40%, #1f0b12 100%);
+            /* Animated Weather Disturbance Background */
+            background: linear-gradient(-45deg, #0f172a, #1e293b, #0f2027, #203a43);
+            background-size: 400% 400%;
+            animation: stormFront 20s ease infinite;
             color: var(--text-main);
             display: flex;
             height: 100vh;
@@ -31,304 +33,29 @@
             overflow: hidden;
         }
 
+        /* Smooth rolling background animation */
+        @keyframes stormFront {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
         /* --- Sidebar Styles --- */
         .sidebar {
             width: 280px;
             background: var(--sidebar-bg);
-            backdrop-filter: blur(30px);
-            -webkit-backdrop-filter: blur(30px);
+            backdrop-filter: blur(40px);
+            -webkit-backdrop-filter: blur(40px);
             border-right: 1px solid var(--glass-border);
             padding: 40px 20px;
             display: flex;
             flex-direction: column;
+            z-index: 10;
         }
 
         .profile {
             display: flex; align-items: center; gap: 15px; margin-bottom: 40px; padding-left: 10px;
         }
         .profile-img {
-            width: 48px; height: 48px; background: linear-gradient(135deg, #e27a5d, #b84b31);
-            border-radius: 50%; display: flex; justify-content: center; align-items: center;
-            font-weight: 600; font-size: 18px; color: white; box-shadow: 0 4px 15px rgba(226, 122, 93, 0.4);
-        }
-        .profile-info h4 { font-size: 15px; font-weight: 600; letter-spacing: 0.3px; }
-        .profile-info p { font-size: 11px; color: var(--text-muted); letter-spacing: 0.5px; text-transform: uppercase; margin-top: 2px;}
-
-        .nav-menu { list-style: none; display: flex; flex-direction: column; gap: 6px; }
-        .nav-item {
-            display: flex; align-items: center; gap: 14px;
-            padding: 12px 18px; border-radius: 14px;
-            color: var(--text-muted); cursor: pointer; transition: all 0.2s ease;
-            font-size: 14px; font-weight: 500;
-        }
-        .nav-item:hover { background: var(--glass-hover); color: var(--text-main); }
-        .nav-item.active {
-            background: var(--glass-bg); color: var(--text-main);
-            border: 1px solid var(--glass-border); box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-        }
-
-        /* --- Main Content Styles --- */
-        .main-content { 
-            flex: 1; padding: 50px 60px; overflow-y: auto; 
-            scroll-behavior: smooth;
-        }
-
-        .header { display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 40px; }
-        .header h1 { font-size: 32px; font-weight: 600; letter-spacing: -0.5px; }
-        .header p { color: var(--text-muted); font-size: 14px; margin-top: 8px; }
-
-        .dashboard-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
-
-        /* The Mac OS style boxes */
-        .card {
-            background: var(--glass-bg);
-            backdrop-filter: blur(25px);
-            -webkit-backdrop-filter: blur(25px);
-            border: 1px solid var(--glass-border);
-            border-radius: 24px; padding: 30px;
-            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
-        }
-        .card.full-width { grid-column: span 2; }
-
-        .card-title {
-            font-size: 13px; text-transform: uppercase; letter-spacing: 1px;
-            color: var(--accent); margin-bottom: 25px; font-weight: 600;
-            display: flex; align-items: center; gap: 8px;
-        }
-
-        /* --- Seamless Row Inputs (Replaces stacked boxes) --- */
-        .input-row {
-            display: flex; align-items: center; justify-content: space-between;
-            padding: 14px 0; border-bottom: 1px solid var(--glass-border);
-        }
-        .input-row:last-child { border-bottom: none; padding-bottom: 0; }
-        .input-row label { font-size: 13px; color: var(--text-muted); font-weight: 500; flex: 1; }
-        .input-row input {
-            flex: 1; background: transparent; border: none; color: var(--text-main);
-            font-size: 14px; text-align: right; outline: none; transition: color 0.2s;
-        }
-        .input-row input::placeholder { color: rgba(255, 255, 255, 0.2); }
-        .input-row input:focus { color: var(--accent); }
-
-        /* --- Block Inputs for long text --- */
-        .input-block { margin-bottom: 20px; }
-        .input-block:last-child { margin-bottom: 0; }
-        .input-block label { display: block; font-size: 13px; color: var(--text-muted); margin-bottom: 10px; font-weight: 500;}
-        .input-block textarea {
-            width: 100%; background: var(--input-bg); border: 1px solid transparent;
-            color: var(--text-main); font-size: 14px; padding: 15px; border-radius: 16px;
-            resize: vertical; min-height: 80px; outline: none; transition: 0.3s;
-        }
-        .input-block textarea:focus { border-color: rgba(226, 122, 93, 0.5); background: rgba(0,0,0,0.3); }
-
-        /* --- Activities Pills (Replaces checkboxes) --- */
-        .activities-container { display: flex; flex-wrap: wrap; gap: 10px; }
-        .activity-pill {
-            background: var(--input-bg); border: 1px solid transparent;
-            padding: 10px 18px; border-radius: 30px; font-size: 13px;
-            color: var(--text-muted); cursor: pointer; transition: 0.3s;
-            display: flex; align-items: center; gap: 8px; user-select: none;
-        }
-        .activity-pill:hover { background: var(--glass-hover); }
-        .activity-pill.active {
-            background: rgba(226, 122, 93, 0.15); border-color: var(--accent); color: var(--accent);
-        }
-        /* Hidden actual checkboxes to keep form logic intact */
-        .activity-pill input { display: none; }
-
-        /* --- OCR Scanner UI --- */
-        .scanner-area {
-            border: 2px dashed rgba(226, 122, 93, 0.3); border-radius: 16px;
-            padding: 40px; text-align: center; cursor: pointer; transition: 0.3s;
-            background: rgba(0,0,0,0.1);
-        }
-        .scanner-area:hover { background: rgba(0,0,0,0.2); border-color: var(--accent); }
-        .scanner-icon { color: var(--accent); margin-bottom: 15px; }
-        select.custom-select {
-            width: 100%; background: var(--input-bg); color: var(--text-main);
-            border: none; padding: 12px 15px; border-radius: 12px; margin-bottom: 20px;
-            outline: none; appearance: none; cursor: pointer;
-        }
-
-        /* --- Buttons --- */
-        .btn-primary {
-            background: linear-gradient(135deg, var(--accent), #b84b31);
-            color: white; border: none; padding: 15px 30px; border-radius: 14px;
-            font-size: 15px; font-weight: 500; cursor: pointer; transition: 0.3s;
-            float: right; margin-top: 30px; box-shadow: 0 8px 25px rgba(226, 122, 93, 0.3);
-        }
-        .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 12px 30px rgba(226, 122, 93, 0.5); }
-
-        /* Custom Scrollbar */
-        ::-webkit-scrollbar { width: 8px; }
-        ::-webkit-scrollbar-track { background: transparent; }
-        ::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.1); border-radius: 10px; }
-        ::-webkit-scrollbar-thumb:hover { background: rgba(255,255,255,0.2); }
-    </style>
-</head>
-<body>
-
-    <aside class="sidebar">
-        <div class="profile">
-            <div class="profile-img">T</div>
-            <div class="profile-info">
-                <p>Monitoring Center</p>
-                <h4>Tarlac PDRRMO</h4>
-            </div>
-        </div>
-        
-        <ul class="nav-menu">
-            <li class="nav-item active"><i data-lucide="layout-dashboard"></i> Dashboard</li>
-            <li class="nav-item"><i data-lucide="file-text"></i> Compile Reports</li>
-            <li class="nav-item"><i data-lucide="users"></i> Agency Records</li>
-            <li class="nav-item"><i data-lucide="settings"></i> Settings</li>
-        </ul>
-    </aside>
-
-    <main class="main-content">
-        <div class="header">
-            <div>
-                <h1>Situational Report</h1>
-                <p>Repository: tarlac-situational-report-monitoring</p>
-            </div>
-            <div style="text-align: right;">
-                <label style="font-size: 12px; color: var(--text-muted); font-weight: 500; display: block; margin-bottom: 5px;">Report As Of:</label>
-                <input type="datetime-local" style="background: var(--input-bg); border: none; color: white; padding: 10px 15px; border-radius: 10px; outline: none;">
-            </div>
-        </div>
-
-        <form id="sitrepForm">
-            <div class="dashboard-grid">
-                
-                <div class="card">
-                    <div class="card-title"><i data-lucide="cloud-rain"></i> General Status</div>
-                    <div class="input-row">
-                        <label>a. Weather Condition</label>
-                        <input type="text" placeholder="Tap to type...">
-                    </div>
-                    <div class="input-row">
-                        <label>b. Affected Population</label>
-                        <input type="text" placeholder="Tap to type...">
-                    </div>
-                    <div class="input-row">
-                        <label>c. Forced Evacuation</label>
-                        <input type="text" placeholder="Tap to type...">
-                    </div>
-                    <div class="input-row">
-                        <label>d. Casualty</label>
-                        <input type="text" placeholder="e.g., Zero casualties">
-                    </div>
-                </div>
-
-                <div class="card">
-                    <div class="card-title"><i data-lucide="alert-triangle"></i> Damages & Interruptions</div>
-                    <div class="input-row">
-                        <label>e. Class/Work Suspension</label>
-                        <input type="text" placeholder="Tap to type...">
-                    </div>
-                    <div class="input-row">
-                        <label>f. Flooded Areas</label>
-                        <input type="text" placeholder="Tap to type...">
-                    </div>
-                    <div class="input-row">
-                        <label>j. Power & Water</label>
-                        <input type="text" placeholder="Tap to type...">
-                    </div>
-                    <div class="input-row">
-                        <label>k. Other Incidents</label>
-                        <input type="text" placeholder="Tap to type...">
-                    </div>
-                </div>
-
-                <div class="card full-width">
-                    <div class="card-title"><i data-lucide="map-pin"></i> Critical Damages</div>
-                    <div class="dashboard-grid">
-                        <div class="input-block">
-                            <label>g. Damages on Infrastructure</label>
-                            <textarea placeholder="Provide detailed infrastructure report here..."></textarea>
-                        </div>
-                        <div class="input-block">
-                            <label>h. Damages on Agriculture (Auto-fills via OCR)</label>
-                            <textarea placeholder="Provide detailed agricultural damage report here..."></textarea>
-                        </div>
-                        <div class="input-block full-width" style="grid-column: span 2;">
-                            <label>i. Status of Roads and Bridges</label>
-                            <textarea placeholder="Report on road passability and bridge structural integrity..."></textarea>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="card">
-                    <div class="card-title"><i data-lucide="scan-line"></i> Agency Report Scanner</div>
-                    <select class="custom-select" id="agencySelect">
-                        <option value="agri">Agriculture (Crop Damage)</option>
-                        <option value="pho">Provincial Health Office (PHO)</option>
-                        <option value="pswdo">PSWDO</option>
-                        <option value="custom">+ Add / Edit Custom Agency...</option>
-                    </select>
-                    
-                    <div class="scanner-area">
-                        <i data-lucide="image-plus" class="scanner-icon" width="36" height="36"></i>
-                        <p style="font-size: 14px; font-weight: 500; color: var(--text-main);">Drop document image here</p>
-                        <p style="font-size: 12px; color: var(--text-muted); margin-top: 8px;">JPEG or PNG (Tables auto-extract)</p>
-                        <input type="file" id="fileUpload" style="display: none;" accept="image/*">
-                    </div>
-                </div>
-
-                <div class="card">
-                    <div class="card-title"><i data-lucide="activity"></i> Other Activities Monitored</div>
-                    <div class="activities-container">
-                        <label class="activity-pill">
-                            <input type="checkbox"> <i data-lucide="check-circle" width="14" height="14"></i> EOC Activated 24/7
-                        </label>
-                        <label class="activity-pill">
-                            <input type="checkbox"> <i data-lucide="check-circle" width="14" height="14"></i> MDRRMC Convened
-                        </label>
-                        <label class="activity-pill">
-                            <input type="checkbox"> <i data-lucide="check-circle" width="14" height="14"></i> PAGASA Monitored
-                        </label>
-                        <label class="activity-pill">
-                            <input type="checkbox"> <i data-lucide="check-circle" width="14" height="14"></i> Barangay Coordination
-                        </label>
-                        <label class="activity-pill">
-                            <input type="checkbox"> <i data-lucide="check-circle" width="14" height="14"></i> Validating Houses
-                        </label>
-                        <label class="activity-pill">
-                            <input type="checkbox"> <i data-lucide="check-circle" width="14" height="14"></i> Goods Prepositioned
-                        </label>
-                    </div>
-                    <div class="input-row" style="margin-top: 20px; border-bottom: none;">
-                        <input type="text" placeholder="+ Type custom activity and press Enter..." style="text-align: left; background: var(--input-bg); padding: 12px 15px; border-radius: 12px;">
-                    </div>
-                </div>
-
-            </div>
-            
-            <button type="button" class="btn-primary" onclick="alert('Google Sheets Sync Triggered')">
-                <i data-lucide="send" style="width: 16px; height: 16px; display: inline; vertical-align: middle; margin-right: 5px;"></i> Log to Database
-            </button>
-        </form>
-    </main>
-
-    <script>
-        lucide.createIcons();
-
-        // Scanner Trigger
-        const scannerArea = document.querySelector('.scanner-area');
-        const fileUpload = document.getElementById('fileUpload');
-        scannerArea.addEventListener('click', () => { fileUpload.click(); });
-
-        // Pill Button Toggle Logic
-        const pills = document.querySelectorAll('.activity-pill');
-        pills.forEach(pill => {
-            pill.addEventListener('change', function(e) {
-                if(e.target.checked) {
-                    this.classList.add('active');
-                } else {
-                    this.classList.remove('active');
-                }
-            });
-        });
-    </script>
-</body>
-</html>
+            width: 48px; height: 48px; background: linear-gradient(135deg, #f59e0b, #d97706);
+            border-radius: 50%; display: flex; justify-content: center; align
