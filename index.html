@@ -93,15 +93,15 @@
         .top-agency-select:focus { border-color: var(--accent); }
         select option, select optgroup { background: #1e293b; color: white; font-family: 'Inter', sans-serif;} 
 
-        /* Conditional LGU Dropdown Fix (No more ghost clicks!) */
+        /* Conditional LGU Dropdown Fix */
         #lguSelectContainer {
-            display: none; /* Completely hidden from the layout by default */
+            display: none; 
             align-items: center; 
             gap: 10px;
             opacity: 0;
         }
         #lguSelectContainer.visible {
-            display: flex; /* Brings it into layout only when active */
+            display: flex; 
             opacity: 1;
             animation: fadeIn 0.3s ease forwards;
         }
@@ -203,7 +203,7 @@
         
         <ul class="nav-menu">
             <li class="nav-item active"><i data-lucide="layout-dashboard"></i> Dashboard</li>
-            <li class="nav-item"><i data-lucide="file-text"></i> Compile Reports</li>
+            <li class="nav-item"><i data-lucide="file-text"></i> Summary Situational Report</li>
             <li class="nav-item"><i data-lucide="users"></i> Agency Records</li>
             <li class="nav-item"><i data-lucide="settings"></i> Settings</li>
         </ul>
