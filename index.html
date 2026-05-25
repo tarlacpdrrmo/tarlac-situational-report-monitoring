@@ -93,14 +93,15 @@
         .top-agency-select:focus { border-color: var(--accent); }
         select option, select optgroup { background: #1e293b; color: white; font-family: 'Inter', sans-serif;} 
 
-        /* Conditional LGU Dropdown Animation */
+        /* Conditional LGU Dropdown Fix (No more ghost clicks!) */
         #lguSelectContainer {
-            display: none; /* Hidden by default */
+            display: none; /* Completely hidden from the layout by default */
+            align-items: center; 
+            gap: 10px;
             opacity: 0;
-            transition: opacity 0.3s ease;
         }
         #lguSelectContainer.visible {
-            display: block;
+            display: flex; /* Brings it into layout only when active */
             opacity: 1;
             animation: fadeIn 0.3s ease forwards;
         }
@@ -230,7 +231,7 @@
                         </select>
                     </div>
 
-                    <div id="lguSelectContainer" style="display: flex; align-items: center; gap: 10px;">
+                    <div id="lguSelectContainer">
                         <i data-lucide="chevron-right" style="color: var(--text-muted); width: 16px;"></i>
                         <select class="top-agency-select" id="lguSelect">
                             <option value="" disabled selected>Select Municipality/City...</option>
