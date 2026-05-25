@@ -1,113 +1,73 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SITREP Generator | Disaster Risk Reduction Management</title>
-    <style>
-        body { font-family: Arial, sans-serif; padding: 20px; background-color: #f4f4f9; }
-        .container { max-width: 800px; margin: auto; background: white; padding: 30px; border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.1); }
-        h2, h3 { color: #333; border-bottom: 2px solid #0056b3; padding-bottom: 5px; }
-        label { font-weight: bold; display: block; margin-top: 15px; }
-        input[type="text"], input[type="datetime-local"], textarea, select { width: 100%; padding: 10px; margin-top: 5px; border: 1px solid #ccc; border-radius: 4px; box-sizing: border-box; }
-        .checkbox-group { margin-top: 10px; }
-        .checkbox-group label { font-weight: normal; display: inline-block; margin-top: 5px; width: 100%; }
-        button { background-color: #0056b3; color: white; padding: 10px 20px; border: none; border-radius: 4px; cursor: pointer; margin-top: 20px; font-size: 16px; width: 100%; }
-        button:hover { background-color: #004494; }
-        .ocr-section { background-color: #e9ecef; padding: 15px; border-radius: 4px; margin-top: 20px; }
-    </style>
-</head>
-<body>
-
-<div class="container">
-    <h2>SITUATIONAL REPORT (SITREP)</h2>
-    <form id="sitrepForm">
-        
-        <label for="reportTime">As of (Date & Time):</label>
-        <input type="datetime-local" id="reportTime" name="reportTime" required>
-
-        <label for="weatherCondition">a. Weather Condition:</label>
-        <input type="text" id="weatherCondition" name="weatherCondition" placeholder="e.g., Moderate to heavy rains">
-
-        <label for="affectedPopulation">b. Affected Population:</label>
-        <input type="text" id="affectedPopulation" name="affectedPopulation">
-
-        <label for="evacuation">c. Pre-Emptive/Forced Evacuation:</label>
-        <input type="text" id="evacuation" name="evacuation">
-
-        <label for="casualty">d. Casualty:</label>
-        <input type="text" id="casualty" name="casualty" placeholder="Zero casualty monitored">
-
-        <label for="suspension">e. Suspension of Class/Work:</label>
-        <input type="text" id="suspension" name="suspension">
-
-        <label for="floodedAreas">f. Flooded Areas:</label>
-        <input type="text" id="floodedAreas" name="floodedAreas">
-
-        <label for="infrastructure">g. Damages on Infrastructure:</label>
-        <textarea id="infrastructure" name="infrastructure" rows="2"></textarea>
-
-        <label for="agriculture">h. Damages on Agriculture:</label>
-        <textarea id="agriculture" name="agriculture" rows="2"></textarea>
-
-        <label for="roadsBridges">i. Status of Roads and Bridges:</label>
-        <input type="text" id="roadsBridges" name="roadsBridges">
-
-        <label for="powerWater">j. Power and Water Interruptions:</label>
-        <input type="text" id="powerWater" name="powerWater">
-
-        <label for="otherIncidents">k. Other Incidents Monitored:</label>
-        <input type="text" id="otherIncidents" name="otherIncidents">
-
-        <h3>Other Activities</h3>
-        <div class="checkbox-group">
-            <label><input type="checkbox" name="activities" value="Constant monitoring of Tropical Cyclone Bulletin issued by DOST-PAGASA"> Constant monitoring of Tropical Cyclone Bulletin issued by DOST-PAGASA</label>
-            <label><input type="checkbox" name="activities" value="Continuous coordination with the Barangays"> Continuous coordination with the Barangays</label>
-            <label><input type="checkbox" name="activities" value="Ongoing validation of the reported damaged houses"> Ongoing validation of the reported damaged houses</label>
-            <label><input type="checkbox" name="activities" value="Activated the 24/7 Emergency Operation Center"> Activated the 24/7 Emergency Operation Center</label>
-            <label><input type="checkbox" name="activities" value="MDRRMC Convened"> MDRRMC Convened</label>
-            <label><input type="checkbox" name="activities" value="Continuous monitoring of Weather Condition"> Continuous monitoring of Weather Condition</label>
-            <label><input type="checkbox" name="activities" value="Continuously Monitors situation within AOR"> Continuously Monitors situation within AOR</label>
-            <label><input type="checkbox" name="activities" value="Continuous Coordination with the BDRRMC"> Continuous Coordination with the BDRRMC</label>
-            <label><input type="checkbox" name="activities" value="Prepositioned Food and Non-Food Items"> Prepositioned Food and Non-Food Items</label>
-        </div>
-        
-        <label for="manualActivity">Add Custom Activity:</label>
-        <input type="text" id="manualActivity" name="manualActivity" placeholder="Type activity and press Enter to add...">
-
-        <div class="ocr-section">
-            <h3>📷 Agency Report Scanner (OCR)</h3>
-            <p><small>Upload an image (e.g., Agricultural Damage Report) to auto-extract data.</small></p>
-            <label for="agencySelect">Select Agency Format:</label>
-            <select id="agencySelect">
-                <option value="agriculture">Agriculture (Crop Damage)</option>
-                <option value="health">Provincial Health Office (PHO)</option>
-                <option value="pswdo">PSWDO</option>
-                <option value="custom">Add/Edit Custom Agency...</option>
-            </select>
-            <input type="file" id="reportImage" accept="image/png, image/jpeg" style="margin-top: 10px;">
-            <button type="button" id="scanBtn" style="background-color: #28a745; width: auto; padding: 5px 15px; margin-top: 10px;">Scan Image</button>
-            <p id="scanStatus" style="color: blue; font-size: 14px;"></p>
-        </div>
-
-        <button type="submit">Submit Report to Google Sheets</button>
-    </form>
-</div>
-
 <script>
-    // Placeholder script for future backend and OCR connection
     document.getElementById('sitrepForm').addEventListener('submit', function(e) {
-        e.preventDefault();
-        alert('Form submission triggered! (Backend script integration required)');
-        // Here we will add the fetch() API to send data to Google Apps Script
+        e.preventDefault(); // Prevents the page from refreshing
+
+        // PASTE YOUR GOOGLE APPS SCRIPT WEB APP URL HERE:
+        const scriptURL = 'YOUR_WEB_APP_URL_HERE'; 
+
+        // 1. Gather all checked "Other Activities"
+        const checkedActivities = Array.from(document.querySelectorAll('input[name="activities"]:checked'))
+                                       .map(cb => cb.value);
+        
+        // 2. Add the manual custom activity if the user typed one
+        const manualAct = document.getElementById('manualActivity').value;
+        if(manualAct) {
+            checkedActivities.push(manualAct);
+        }
+
+        // 3. Package the data into a JSON object
+        const payload = {
+            reportTime: document.getElementById('reportTime').value,
+            weatherCondition: document.getElementById('weatherCondition').value,
+            affectedPopulation: document.getElementById('affectedPopulation').value,
+            evacuation: document.getElementById('evacuation').value,
+            casualty: document.getElementById('casualty').value,
+            suspension: document.getElementById('suspension').value,
+            floodedAreas: document.getElementById('floodedAreas').value,
+            infrastructure: document.getElementById('infrastructure').value,
+            agriculture: document.getElementById('agriculture').value,
+            roadsBridges: document.getElementById('roadsBridges').value,
+            powerWater: document.getElementById('powerWater').value,
+            otherIncidents: document.getElementById('otherIncidents').value,
+            activities: checkedActivities.join(" | ") // Joins them into one string for the spreadsheet
+        };
+
+        // 4. Update the submit button so the user knows it's working
+        const submitBtn = e.target.querySelector('button[type="submit"]');
+        submitBtn.innerText = 'Submitting...';
+        submitBtn.disabled = true;
+
+        // 5. Send the data to Google Sheets
+        fetch(scriptURL, {
+            method: 'POST',
+            body: JSON.stringify(payload),
+            // Sending as plain text bypasses strict CORS policies from browsers
+            headers: { 'Content-Type': 'text/plain;charset=utf-8' } 
+        })
+        .then(response => response.json())
+        .then(data => {
+            if(data.status === 'success') {
+                alert('Success! SITREP logged to Google Sheets.');
+                document.getElementById('sitrepForm').reset(); // Clear the form
+            } else {
+                alert('Error logging to sheets: ' + data.message);
+            }
+        })
+        .catch(error => {
+            console.error('Fetch Error:', error);
+            alert('Failed to submit report. Please check your internet connection.');
+        })
+        .finally(() => {
+            // Restore the button state
+            submitBtn.innerText = 'Submit Report to Google Sheets';
+            submitBtn.disabled = false;
+        });
     });
 
+    // Placeholder for OCR functionality
     document.getElementById('scanBtn').addEventListener('click', function() {
         const fileInput = document.getElementById('reportImage').files[0];
         if(!fileInput) { alert("Please upload an image first."); return; }
-        document.getElementById('scanStatus').innerText = "Scanning document... (Tesseract.js integration required)";
+        document.getElementById('scanStatus').innerText = "Scanning document... (Tesseract.js integration pending)";
     });
 </script>
-
-</body>
-</html>
