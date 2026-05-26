@@ -138,21 +138,21 @@
             background: rgba(22, 30, 44, 0.95); backdrop-filter: blur(25px); -webkit-backdrop-filter: blur(25px);
             border: 1px solid var(--glass-border); border-radius: 16px;
             box-shadow: 0 20px 40px rgba(0,0,0,0.5); z-index: 100;
-            width: 420px; flex-direction: row; text-align: left;
+            width: 450px; flex-direction: row; text-align: left;
             overflow: hidden;
         }
         .dt-popup.show { display: flex; animation: slideDown 0.2s ease forwards; }
         @keyframes slideDown { from { opacity: 0; transform: translateY(-10px); } to { opacity: 1; transform: translateY(0); } }
 
         .dt-calendar-sec { flex: 1.2; padding: 20px; border-right: 1px solid var(--glass-border); display: flex; flex-direction: column;}
-        .dt-time-sec { flex: 0.8; padding: 20px; display: flex; flex-direction: column; align-items: center; background: rgba(0,0,0,0.1); }
+        .dt-time-sec { flex: 0.9; padding: 20px; display: flex; flex-direction: column; background: rgba(0,0,0,0.1); }
 
         .dt-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; font-size: 14px; font-weight: 600; }
         .dt-nav i { width: 16px; height: 16px; cursor: pointer; color: var(--text-muted); transition: 0.2s; }
         .dt-nav i:hover { color: var(--text-main); }
         .dt-weekdays { display: grid; grid-template-columns: repeat(7, 1fr); gap: 5px; text-align: center; font-size: 11px; color: var(--text-muted); margin-bottom: 10px; font-weight: 500;}
         .dt-days { display: grid; grid-template-columns: repeat(7, 1fr); gap: 5px; text-align: center; font-size: 12px; }
-        .dt-day { padding: 6px 0; cursor: pointer; border-radius: 6px; transition: 0.2s; color: var(--text-muted); font-weight: 500;}
+        .dt-day { padding: 6px 0; cursor: pointer; border-radius: 6px; transition: 0.2s; color: var(--text-muted); font-weight: 500; text-align: center;}
         .dt-day:hover { background: var(--glass-hover); color: var(--text-main); }
         .dt-day.active { background: rgba(245, 158, 11, 0.2); color: var(--accent); font-weight: 600; border: 1px solid var(--accent); }
         .dt-day.other-month { opacity: 0.3; }
@@ -161,37 +161,45 @@
         .dt-actions span { cursor: pointer; transition: 0.2s; font-weight: 500; }
         .dt-actions span:hover { opacity: 0.8; }
 
-        /* --- Analog Clock Revamp --- */
-        .analog-clock { 
-            width: 120px; height: 120px; 
-            border-radius: 50%; 
-            border: 3px solid rgba(255,255,255,0.08); 
-            position: relative; margin: 25px 0; 
-            background: linear-gradient(135deg, rgba(0,0,0,0.4), rgba(0,0,0,0.15)); 
-            box-shadow: inset 0 4px 15px rgba(0,0,0,0.5), 0 4px 15px rgba(0,0,0,0.2); 
-        }
-        .clock-face { width: 100%; height: 100%; position: relative; }
-        .clock-center { 
-            width: 8px; height: 8px; background: var(--text-main); 
-            border: 2px solid var(--accent); border-radius: 50%; 
-            position: absolute; top: calc(50% - 4px); left: calc(50% - 4px); 
-            z-index: 10; box-shadow: 0 2px 4px rgba(0,0,0,0.4); 
+        /* --- Sleek Digital Time Picker --- */
+        .dt-time-header { font-size: 12px; font-weight: 600; color: var(--text-muted); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 15px; text-align: center;}
+        
+        .digital-time-picker {
+            display: flex; flex-direction: column; align-items: center; justify-content: center;
+            gap: 15px; margin: auto 0;
         }
         
-        .clock-marker { position: absolute; background: rgba(255,255,255,0.25); border-radius: 2px; }
-        .marker12 { top: 6px; left: calc(50% - 1.5px); width: 3px; height: 10px; background: var(--accent); }
-        .marker3 { top: calc(50% - 1.5px); right: 6px; width: 10px; height: 3px; }
-        .marker6 { bottom: 6px; left: calc(50% - 1.5px); width: 3px; height: 10px; }
-        .marker9 { top: calc(50% - 1.5px); left: 6px; width: 10px; height: 3px; }
+        .time-inputs {
+            display: flex; align-items: center; gap: 8px;
+            background: rgba(0,0,0,0.25); padding: 15px 20px; border-radius: 16px;
+            box-shadow: inset 0 2px 10px rgba(0,0,0,0.3); border: 1px solid var(--glass-border);
+        }
+        
+        .time-input {
+            width: 48px; background: transparent; border: none; color: var(--text-main);
+            font-size: 32px; font-weight: 600; text-align: center; outline: none;
+            font-family: 'Inter', sans-serif; transition: color 0.3s;
+        }
+        .time-input:focus { color: var(--accent); }
+        
+        /* Hide number arrows for clean look */
+        .time-input::-webkit-outer-spin-button, .time-input::-webkit-inner-spin-button { -webkit-appearance: none; margin: 0; }
+        .time-input[type=number] { -moz-appearance: textfield; }
+        
+        .time-separator { font-size: 32px; font-weight: 600; color: var(--text-muted); padding-bottom: 4px;}
+        
+        .ampm-toggle {
+            display: flex; background: rgba(0,0,0,0.3); border-radius: 10px; overflow: hidden;
+            border: 1px solid var(--glass-border); width: 100%;
+        }
+        
+        .ampm-btn {
+            flex: 1; background: transparent; border: none; color: var(--text-muted); padding: 10px 0;
+            font-size: 13px; font-weight: 600; cursor: pointer; transition: 0.3s;
+        }
+        .ampm-btn.active { background: rgba(245, 158, 11, 0.2); color: var(--accent); }
 
-        .hand-container { position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 5; }
-        .hour-hand { width: 4px; height: 32px; background: var(--text-main); position: absolute; bottom: 50%; left: calc(50% - 2px); border-radius: 4px 4px 0 0; }
-        .min-hand { width: 3px; height: 44px; background: var(--text-muted); position: absolute; bottom: 50%; left: calc(50% - 1.5px); border-radius: 4px 4px 0 0; }
-        .sec-hand { width: 2px; height: 50px; background: var(--accent); position: absolute; bottom: 50%; left: calc(50% - 1px); border-radius: 4px 4px 0 0; }
-        .sec-hand::after { content: ''; position: absolute; top: 100%; left: 0; width: 2px; height: 12px; background: var(--accent); border-radius: 0 0 4px 4px; }
-        
-        .dt-time-header { font-size: 12px; font-weight: 600; display: flex; justify-content: space-between; width: 100%; align-items: center; background: rgba(0,0,0,0.2); padding: 8px 12px; border-radius: 8px; border: 1px solid var(--glass-border); cursor: pointer;}
-        .dt-time-footer { font-size: 11px; color: var(--text-muted); display: flex; gap: 8px; align-items: center; margin-top: auto; font-weight: 500;}
+        .dt-time-footer { font-size: 11px; color: var(--text-muted); display: flex; justify-content: center; gap: 8px; align-items: center; margin-top: auto; font-weight: 500;}
 
         /* --- Dynamic Dashboard Grid Logic --- */
         .dashboard-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
@@ -407,24 +415,22 @@
                         </div>
                     </div>
                     <div class="dt-time-sec">
-                        <div class="dt-time-header">
-                            <span id="dtDigitalTime">11:17 AM</span>
-                            <i data-lucide="chevron-down" style="width:14px; color: var(--text-muted);"></i>
-                        </div>
-                        <div class="analog-clock">
-                            <div class="clock-face">
-                                <div class="clock-marker marker12"></div>
-                                <div class="clock-marker marker3"></div>
-                                <div class="clock-marker marker6"></div>
-                                <div class="clock-marker marker9"></div>
-                                <div class="hand-container" id="hourHand"><div class="hour-hand"></div></div>
-                                <div class="hand-container" id="minHand"><div class="min-hand"></div></div>
-                                <div class="hand-container" id="secHand"><div class="sec-hand"></div></div>
-                                <div class="clock-center"></div>
+                        <div class="dt-time-header">Set Report Time</div>
+                        
+                        <div class="digital-time-picker">
+                            <div class="time-inputs">
+                                <input type="number" id="dtHour" class="time-input" min="1" max="12" value="12">
+                                <span class="time-separator">:</span>
+                                <input type="number" id="dtMin" class="time-input" min="0" max="59" value="00">
+                            </div>
+                            <div class="ampm-toggle">
+                                <button type="button" id="btnAm" class="ampm-btn active">AM</button>
+                                <button type="button" id="btnPm" class="ampm-btn">PM</button>
                             </div>
                         </div>
+
                         <div class="dt-time-footer">
-                            <span style="background: rgba(0,0,0,0.3); padding: 3px 8px; border-radius: 4px; font-weight: 600;">PST</span> : <span id="dtDigitalTimeSmall">11:17 AM</span>
+                            <span style="background: rgba(0,0,0,0.3); padding: 3px 8px; border-radius: 4px; font-weight: 600;">PST</span> Philippine Standard Time
                         </div>
                     </div>
                 </div>
@@ -517,11 +523,16 @@
         const dtDays = document.getElementById('dtDays');
         const dtMonthYear = document.getElementById('dtMonthYear');
         
+        // Digital Picker Elements
+        const hrInput = document.getElementById('dtHour');
+        const minInput = document.getElementById('dtMin');
+        const btnAm = document.getElementById('btnAm');
+        const btnPm = document.getElementById('btnPm');
+        
         let currentDate = new Date();
         let selectedDate = new Date();
         let isDateSelected = false;
         
-        const formatTime = (date) => date.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' });
         const formatDate = (date) => {
             const d = date.getDate();
             const m = date.toLocaleString('default', { month: 'short' });
@@ -529,34 +540,73 @@
             return `${d} ${m} ${y}`;
         };
 
-        // Real-time Analog Clock
-        function updateClock() {
-            const now = new Date();
-            const sec = now.getSeconds();
-            const min = now.getMinutes();
-            const hr = now.getHours();
+        // --- Digital Time Picker Formatter ---
+        function formatTimeDisplay() {
+            let h = parseInt(hrInput.value);
+            let m = parseInt(minInput.value);
+            let ampm = btnAm.classList.contains('active') ? 'AM' : 'PM';
             
-            const secDeg = ((sec / 60) * 360);
-            const minDeg = ((min / 60) * 360) + ((sec/60)*6);
-            const hrDeg = ((hr / 12) * 360) + ((min/60)*30);
+            // Enforce constraints
+            if (isNaN(h) || h < 1) h = 1;
+            if (h > 12) h = 12;
+            if (isNaN(m) || m < 0) m = 0;
+            if (m > 59) m = 59;
             
-            document.getElementById('secHand').style.transform = `rotate(${secDeg}deg)`;
-            document.getElementById('minHand').style.transform = `rotate(${minDeg}deg)`;
-            document.getElementById('hourHand').style.transform = `rotate(${hrDeg}deg)`;
+            // Pad with zero and set values back to inputs
+            hrInput.value = h.toString().padStart(2, '0');
+            minInput.value = m.toString().padStart(2, '0');
             
-            const timeStr = formatTime(now);
-            document.getElementById('dtDigitalTime').innerText = timeStr;
-            document.getElementById('dtDigitalTimeSmall').innerText = timeStr;
+            const timeStr = `${hrInput.value}:${minInput.value} ${ampm}`;
             
-            if(isDateSelected) {
-                const datePart = dtDisplayText.innerText.split(' ').slice(0,3).join(' ');
-                dtDisplayText.innerText = `${datePart}  ${timeStr}`;
+            // Update the top trigger text only if a date is already picked
+            if (isDateSelected) {
+                dtDisplayText.innerText = `${formatDate(selectedDate)}  ${timeStr}`;
             }
         }
-        setInterval(updateClock, 1000);
-        updateClock();
 
-        // Calendar Render
+        // Initialize time inputs with current time
+        function setInitialTime() {
+            let now = new Date();
+            let h = now.getHours();
+            let m = now.getMinutes();
+            let ampm = h >= 12 ? 'PM' : 'AM';
+            
+            h = h % 12;
+            h = h ? h : 12; // the hour '0' should be '12'
+            
+            hrInput.value = h.toString().padStart(2, '0');
+            minInput.value = m.toString().padStart(2, '0');
+            
+            if(ampm === 'PM') {
+                btnPm.classList.add('active');
+                btnAm.classList.remove('active');
+            } else {
+                btnAm.classList.add('active');
+                btnPm.classList.remove('active');
+            }
+        }
+        
+        // Listeners for Digital Editor
+        hrInput.addEventListener('blur', formatTimeDisplay);
+        minInput.addEventListener('blur', formatTimeDisplay);
+        // Pressing Enter functions like blur
+        hrInput.addEventListener('keypress', (e) => { if(e.key === 'Enter') hrInput.blur(); });
+        minInput.addEventListener('keypress', (e) => { if(e.key === 'Enter') minInput.blur(); });
+
+        btnAm.addEventListener('click', (e) => { 
+            e.stopPropagation();
+            btnAm.classList.add('active'); 
+            btnPm.classList.remove('active'); 
+            formatTimeDisplay(); 
+        });
+        btnPm.addEventListener('click', (e) => { 
+            e.stopPropagation();
+            btnPm.classList.add('active'); 
+            btnAm.classList.remove('active'); 
+            formatTimeDisplay(); 
+        });
+
+        // --- Calendar Render ---
         function renderCalendar(date) {
             dtDays.innerHTML = '';
             dtMonthYear.innerText = date.toLocaleString('default', { month: 'long', year: 'numeric' });
@@ -583,10 +633,15 @@
                     dayEl.classList.add('active');
                 }
                 dayEl.innerText = i;
-                dayEl.addEventListener('click', () => {
+                dayEl.addEventListener('click', (e) => {
+                    e.stopPropagation();
                     selectedDate = new Date(year, month, i);
                     isDateSelected = true;
-                    dtDisplayText.innerText = `${formatDate(selectedDate)}  ${formatTime(new Date())}`;
+                    // Format time immediately upon clicking a date
+                    let ampm = btnAm.classList.contains('active') ? 'AM' : 'PM';
+                    let timeStr = `${hrInput.value}:${minInput.value} ${ampm}`;
+                    dtDisplayText.innerText = `${formatDate(selectedDate)}  ${timeStr}`;
+                    
                     renderCalendar(currentDate); 
                     dtPopup.classList.remove('show');
                 });
@@ -603,6 +658,10 @@
             }
         }
 
+        // Init Setup
+        setInitialTime();
+
+        // Popup Handlers
         dtTrigger.addEventListener('click', (e) => {
             e.stopPropagation();
             dtPopup.classList.toggle('show');
@@ -623,7 +682,10 @@
             currentDate = new Date();
             selectedDate = new Date();
             isDateSelected = true;
-            dtDisplayText.innerText = `${formatDate(selectedDate)}  ${formatTime(new Date())}`;
+            setInitialTime(); // Reset time to exactly right now
+            let ampm = btnAm.classList.contains('active') ? 'AM' : 'PM';
+            let timeStr = `${hrInput.value}:${minInput.value} ${ampm}`;
+            dtDisplayText.innerText = `${formatDate(selectedDate)}  ${timeStr}`;
             renderCalendar(currentDate);
             dtPopup.classList.remove('show');
         });
@@ -631,8 +693,16 @@
             e.stopPropagation();
             isDateSelected = false;
             dtDisplayText.innerText = 'Select Date & Time';
+            setInitialTime(); // Revert back to system time on clear
             renderCalendar(currentDate);
         });
+        
+        // Prevent popup closing when clicking inside it
+        dtPopup.addEventListener('click', (e) => {
+            e.stopPropagation();
+        });
+
+        // Close when clicking outside
         document.addEventListener('click', (e) => {
             if(!dtPopup.contains(e.target) && !dtTrigger.contains(e.target)) {
                 dtPopup.classList.remove('show');
