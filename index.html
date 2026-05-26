@@ -12,30 +12,38 @@
             --text-main: #f8fafc;
             --text-muted: #94a3b8;
             --accent: #f59e0b; 
-            --glass-bg: rgba(15, 23, 42, 0.2); 
+            --glass-bg: rgba(15, 23, 42, 0.25); 
             --glass-border: rgba(255, 255, 255, 0.08);
             --glass-hover: rgba(255, 255, 255, 0.12);
-            --input-bg: rgba(0, 0, 0, 0.25);
-            --sidebar-bg: rgba(10, 15, 30, 0.3);
+            --input-bg: rgba(0, 0, 0, 0.3);
+            --sidebar-bg: rgba(10, 15, 30, 0.4);
         }
 
         * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Inter', sans-serif; }
 
         body {
-            background: linear-gradient(-45deg, #0f172a, #1e293b, #0f2027, #203a43);
-            background-size: 400% 400%;
-            animation: stormFront 20s ease infinite;
             color: var(--text-main);
             display: flex;
             height: 100vh;
             width: 100vw;
             overflow: hidden;
+            position: relative;
+            background-color: #0b1120; /* Dark fallback */
         }
 
-        @keyframes stormFront {
-            0% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-            100% { background-position: 0% 50%; }
+        /* --- Blurred Typhoon Satellite Background --- */
+        body::before {
+            content: '';
+            position: absolute;
+            /* Overhang the edges by 20px so the blur doesn't create white borders */
+            top: -20px; left: -20px; right: -20px; bottom: -20px; 
+            /* High-quality satellite storm image placeholder */
+            background-image: url('https://images.unsplash.com/photo-1527482797697-8795b05a13fe?q=80&w=2000&auto=format&fit=crop'); 
+            background-size: cover;
+            background-position: center;
+            /* The 'little blur' and darkening effect so the UI pops */
+            filter: blur(8px) brightness(0.35) contrast(1.1); 
+            z-index: -1;
         }
 
         /* --- Sidebar Styles --- */
@@ -102,7 +110,7 @@
         .nav-sub-item:hover { background: var(--glass-hover); color: var(--text-main); }
 
         /* --- Main Content Styles --- */
-        .main-content { flex: 1; padding: 50px 60px; overflow-y: auto; scroll-behavior: smooth; }
+        .main-content { flex: 1; padding: 50px 60px; overflow-y: auto; scroll-behavior: smooth; z-index: 1;}
         .header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 40px; position: relative; }
         .header h1 { font-size: 32px; font-weight: 600; letter-spacing: -0.5px; margin-bottom: 12px; }
         
