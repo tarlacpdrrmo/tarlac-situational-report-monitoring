@@ -41,7 +41,7 @@
 
         /* --- Sidebar Styles --- */
         .sidebar {
-            width: 320px; /* Slightly wider to accommodate long agency names */
+            width: 320px; 
             background: var(--sidebar-bg);
             backdrop-filter: blur(40px);
             -webkit-backdrop-filter: blur(40px);
@@ -50,7 +50,7 @@
             display: flex;
             flex-direction: column;
             z-index: 10;
-            overflow-y: auto; /* Makes sidebar scrollable */
+            overflow-y: auto; 
         }
 
         .profile {
@@ -86,7 +86,7 @@
         .dropdown-icon.rotate { transform: rotate(180deg); }
         
         .nav-sub-menu {
-            display: none; /* Hidden by default */
+            display: none; 
             flex-direction: column; gap: 2px;
             padding-left: 20px; margin-top: 5px; margin-bottom: 10px;
             list-style: none;
@@ -116,12 +116,13 @@
         .top-agency-select {
             background: var(--input-bg); color: var(--text-main); border: 1px solid var(--glass-border);
             padding: 10px 15px; border-radius: 12px; font-size: 14px; outline: none; appearance: none;
-            cursor: pointer; min-width: 200px; transition: 0.3s;
+            cursor: pointer; min-width: 200px; max-width: 450px; transition: 0.3s;
         }
         .top-agency-select:focus { border-color: var(--accent); }
         select option, select optgroup { background: #1e293b; color: white; font-family: 'Inter', sans-serif;} 
+        optgroup { font-weight: 600; color: var(--accent); }
 
-        /* Conditional LGU Dropdown Fix */
+        /* Conditional LGU Dropdown */
         #lguSelectContainer {
             display: none; 
             align-items: center; 
@@ -248,7 +249,7 @@
                     <li class="nav-sub-item" title="TARLAC POLICE PROVINCIAL OFFICE">TARLAC POLICE PROVINCIAL OFFICE</li>
                     <li class="nav-sub-item">3RD MECH INF BN, PA</li>
                     <li class="nav-sub-item">522 ECB, PA</li>
-                    <li class="nav-sub-item">DPWPH 1ST DEO</li>
+                    <li class="nav-sub-item">DPWH 1ST DEO</li>
                     <li class="nav-sub-item">PDOHO</li>
                     <li class="nav-sub-item">BFP- TARLAC PROVINCE</li>
                     <li class="nav-sub-item" title="PEO/PGSO/DEPED/DILG/TAU/CARITAS TARLAC">PEO/PGSO/DEPED/DILG/TAU/CARITAS...</li>
@@ -282,8 +283,7 @@
 
             <li class="nav-item"><i data-lucide="file-text"></i> Summary Situational Report</li>
             <li class="nav-item"><i data-lucide="users"></i> Agency Records</li>
-            
-            </ul>
+        </ul>
     </aside>
 
     <main class="main-content">
@@ -296,15 +296,33 @@
                     <div style="display: flex; align-items: center; gap: 10px;">
                         <label style="font-size: 13px; color: var(--text-muted); font-weight: 500;">Reporting Agency:</label>
                         <select class="top-agency-select" id="mainReportingAgency">
-                            <option value="PDRRMO">PDRRMO (Provincial)</option>
-                            <option value="MDRRMO">MDRRMO / CDRRMO (LGU)</option>
-                            <option value="BFP">BFP</option>
-                            <option value="PNP">PNP</option>
-                            <option value="DSWD">DSWD</option>
-                            <option value="PHO">Provincial Health Office (PHO)</option>
-                            <option value="AGRICULTURE">Department of Agriculture</option>
-                            <option value="PSWDO">PSWDO</option>
-                            <option value="OTHER">Other...</option>
+                            <option value="" disabled selected>Select Agency...</option>
+                            
+                            <optgroup label="PDRRM COUNCIL">
+                                <option value="PDRRMO">PDRRMO</option>
+                                <option value="PSWDO">PSWDO</option>
+                                <option value="PHO">PHO</option>
+                                <option value="DA-OPA">DA-OPA</option>
+                                <option value="PROVINCIAL ENGINEERING (PEO)">PROVINCIAL ENGINEERING (PEO)</option>
+                                <option value="TACTICAL OPERATION GROUP 3- PAF">TACTICAL OPERATION GROUP 3- PHILIPPINE AIR FORCE</option>
+                                <option value="TARLAC POLICE PROVINCIAL OFFICE">TARLAC POLICE PROVINCIAL OFFICE</option>
+                                <option value="3RD MECH INF BN, PA">3RD MECH INF BN, PA</option>
+                                <option value="522 ECB, PA">522 ECB, PA</option>
+                                <option value="DPWH 1ST DEO">DPWH 1ST DEO</option>
+                                <option value="PDOHO">PDOHO</option>
+                                <option value="BFP- TARLAC PROVINCE">BFP- TARLAC PROVINCE</option>
+                                <option value="PEO/PGSO/DEPED/DILG/TAU/CARITAS TARLAC">PEO/PGSO/DEPED/DILG/TAU/CARITAS TARLAC</option>
+                            </optgroup>
+
+                            <optgroup label="LDRRMCs">
+                                <option value="LDRRMC">LDRRMC (MDRRMO / CDRRMO)</option>
+                            </optgroup>
+
+                            <optgroup label="OTHER PARTNER AGENCIES/GROUP">
+                                <option value="7TH CIVIL MILITARY OP. BN, PA">7TH CIVIL MILITARY OPERATION BATTALION, PA</option>
+                                <option value="ARMOR DIVISION, CAMP O'DONNEL, PA">ARMOR DIVISION, CAMP O'DONNEL, PA</option>
+                                <option value="VAT">VOLUNTEERS ASSOCIATION OF TARLAC (VAT)</option>
+                            </optgroup>
                         </select>
                     </div>
 
@@ -478,7 +496,8 @@
         const lguSelect = document.getElementById('lguSelect');
 
         mainAgencySelect.addEventListener('change', function() {
-            if (this.value === 'MDRRMO') {
+            // Trigger the secondary dropdown if "LDRRMC" is chosen
+            if (this.value === 'LDRRMC') {
                 lguSelectContainer.classList.add('visible');
                 lguSelect.required = true;
             } else {
