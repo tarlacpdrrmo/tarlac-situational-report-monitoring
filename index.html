@@ -269,7 +269,7 @@
         .card.full-width { grid-column: span 2; }
         .card-title { font-size: 13px; text-transform: uppercase; letter-spacing: 1px; color: var(--accent); margin-bottom: 25px; font-weight: 600; display: flex; align-items: center; gap: 8px; }
 
-        /* --- Inputs & Pills --- */
+        /* --- Inputs --- */
         .input-row { display: flex; align-items: center; justify-content: space-between; padding: 14px 0; border-bottom: 1px solid var(--glass-border); }
         .input-row:last-child { border-bottom: none; padding-bottom: 0; }
         .input-row label { font-size: 13px; color: var(--text-muted); font-weight: 500; flex: 1; }
@@ -283,16 +283,21 @@
         .input-block textarea { width: 100%; background: var(--input-bg); border: 1px solid transparent; color: var(--text-main); font-size: 14px; padding: 15px; border-radius: 16px; resize: vertical; min-height: 80px; outline: none; transition: 0.3s; }
         .input-block textarea:focus { border-color: rgba(245, 158, 11, 0.5); background: rgba(0,0,0,0.4); }
 
-        .activities-container { display: flex; flex-wrap: wrap; gap: 10px; }
-        .activity-pill { background: var(--input-bg); border: 1px solid transparent; padding: 10px 18px; border-radius: 30px; font-size: 13px; color: var(--text-muted); cursor: pointer; transition: 0.3s; display: flex; align-items: center; gap: 8px; user-select: none; }
-        .activity-pill:hover { background: var(--glass-hover); }
-        .activity-pill.active { background: rgba(245, 158, 11, 0.15); border-color: var(--accent); color: var(--accent); }
-        .activity-pill input { display: none; }
-
-        /* --- OCR Scanner UI --- */
+        /* --- OCR Scanner UI & PDF Viewer --- */
         .scanner-area { border: 2px dashed rgba(245, 158, 11, 0.3); border-radius: 16px; padding: 60px 40px; text-align: center; cursor: pointer; transition: 0.3s; background: rgba(0,0,0,0.15); }
         .scanner-area:hover { background: rgba(0,0,0,0.3); border-color: var(--accent); }
         .scanner-icon { color: var(--text-main); margin-bottom: 15px; }
+
+        #pdfViewerContainer {
+            display: none; 
+            margin-top: 24px; 
+            border-radius: 16px; 
+            overflow: hidden; 
+            height: 600px; 
+            border: 1px solid var(--glass-border); 
+            background: rgba(0,0,0,0.2);
+            box-shadow: inset 0 5px 20px rgba(0,0,0,0.3);
+        }
 
         /* --- Buttons --- */
         #submitBtn { display: none; }
@@ -610,29 +615,20 @@
                     </div>
                 </div>
 
-                <div class="card other-card">
-                    <div class="card-title"><i data-lucide="scan-line"></i> External Data Scanner</div>
+                <div class="card other-card full-width">
+                    <div class="card-title"><i data-lucide="file-scan"></i> PDF Document Scanner</div>
+                    
                     <div class="scanner-area">
                         <i data-lucide="scan" class="scanner-icon" width="42" height="42"></i>
-                        <p style="font-size: 15px; font-weight: 500; color: var(--text-main); margin-bottom: 5px;">Scan Status: IDLE</p>
-                        <p style="font-size: 13px; color: var(--text-muted);">Drop document image here to begin data extraction.</p>
-                        <input type="file" id="fileUpload" style="display: none;" accept="image/*">
+                        <p style="font-size: 15px; font-weight: 500; color: var(--text-main); margin-bottom: 5px;" id="scanStatusText">Scan Status: IDLE</p>
+                        <p style="font-size: 13px; color: var(--text-muted);">Drop PDF document here to begin data extraction.</p>
+                        <input type="file" id="fileUpload" style="display: none;" accept=".pdf,application/pdf">
                     </div>
-                </div>
 
-                <div class="card other-card">
-                    <div class="card-title"><i data-lucide="activity"></i> Other Activities Monitored</div>
-                    <div class="activities-container">
-                        <label class="activity-pill"><input type="checkbox"> <i data-lucide="check-circle" width="14" height="14"></i> EOC Activated 24/7</label>
-                        <label class="activity-pill"><input type="checkbox"> <i data-lucide="check-circle" width="14" height="14"></i> MDRRMC Convened</label>
-                        <label class="activity-pill"><input type="checkbox"> <i data-lucide="check-circle" width="14" height="14"></i> PAGASA Monitored</label>
-                        <label class="activity-pill"><input type="checkbox"> <i data-lucide="check-circle" width="14" height="14"></i> Barangay Coordination</label>
-                        <label class="activity-pill"><input type="checkbox"> <i data-lucide="check-circle" width="14" height="14"></i> Validating Houses</label>
-                        <label class="activity-pill"><input type="checkbox"> <i data-lucide="check-circle" width="14" height="14"></i> Goods Prepositioned</label>
+                    <div id="pdfViewerContainer">
+                        <iframe id="pdfViewer" src="" style="width: 100%; height: 100%; border: none;"></iframe>
                     </div>
-                    <div class="input-row" style="margin-top: 20px; border-bottom: none;">
-                        <input type="text" placeholder="+ TYPE CUSTOM ACTIVITY AND PRESS ENTER..." style="text-align: left; background: var(--input-bg); padding: 12px 15px; border-radius: 12px;">
-                    </div>
+
                 </div>
 
             </div>
@@ -857,6 +853,10 @@
         const submitBtn = document.getElementById('submitBtn');
         const landingView = document.getElementById('landingView');
         const sitrepForm = document.getElementById('sitrepForm');
+        
+        // Reset PDF viewer state
+        const pdfViewerContainer = document.getElementById('pdfViewerContainer');
+        const scanStatusText = document.getElementById('scanStatusText');
 
         mainAgencySelect.addEventListener('change', function() {
             if (this.value === 'LDRRMC') {
@@ -896,24 +896,35 @@
             });
         });
 
-        // --- Scanner Trigger ---
+        // --- OCR Scanner Trigger & PDF Loader ---
         const scannerArea = document.querySelector('.scanner-area');
         const fileUpload = document.getElementById('fileUpload');
+        const pdfViewer = document.getElementById('pdfViewer');
+
         if(scannerArea) {
             scannerArea.addEventListener('click', () => { fileUpload.click(); });
         }
 
-        // --- Pill Button Toggle Logic ---
-        const pills = document.querySelectorAll('.activity-pill');
-        pills.forEach(pill => {
-            pill.addEventListener('change', function(e) {
-                if(e.target.checked) {
-                    this.classList.add('active');
-                } else {
-                    this.classList.remove('active');
+        if(fileUpload) {
+            fileUpload.addEventListener('change', function(e) {
+                const file = e.target.files[0];
+                
+                if (file && file.type === 'application/pdf') {
+                    // Create object URL to display the PDF locally in the browser
+                    const fileURL = URL.createObjectURL(file);
+                    pdfViewer.src = fileURL;
+                    
+                    // Show the viewer and update status text
+                    pdfViewerContainer.style.display = 'block';
+                    scanStatusText.innerText = 'Scan Status: PDF LOADED & READY';
+                    scanStatusText.style.color = 'var(--accent)';
+                } else if (file) {
+                    alert('Please upload a valid PDF file.');
+                    // Reset input
+                    e.target.value = '';
                 }
             });
-        });
+        }
     </script>
 </body>
 </html>
