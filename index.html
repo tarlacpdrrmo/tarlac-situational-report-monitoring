@@ -41,7 +41,7 @@
 
         /* --- Sidebar Styles --- */
         .sidebar {
-            width: 280px;
+            width: 320px; /* Slightly wider to accommodate long agency names */
             background: var(--sidebar-bg);
             backdrop-filter: blur(40px);
             -webkit-backdrop-filter: blur(40px);
@@ -50,10 +50,12 @@
             display: flex;
             flex-direction: column;
             z-index: 10;
+            overflow-y: auto; /* Makes sidebar scrollable */
         }
 
         .profile {
             display: flex; align-items: center; gap: 15px; margin-bottom: 40px; padding-left: 10px;
+            flex-shrink: 0;
         }
         .profile-img {
             width: 48px; height: 48px; background: linear-gradient(135deg, #f59e0b, #d97706);
@@ -64,6 +66,9 @@
         .profile-info p { font-size: 11px; color: var(--text-muted); letter-spacing: 0.5px; text-transform: uppercase; margin-top: 2px;}
 
         .nav-menu { list-style: none; display: flex; flex-direction: column; gap: 6px; }
+        
+        .nav-item-container { display: flex; flex-direction: column; }
+        
         .nav-item {
             display: flex; align-items: center; gap: 14px;
             padding: 12px 18px; border-radius: 14px;
@@ -75,6 +80,29 @@
             background: var(--glass-bg); color: var(--text-main);
             border: 1px solid var(--glass-border); box-shadow: 0 4px 15px rgba(0,0,0,0.2);
         }
+
+        /* Sidebar Dropdown Styles */
+        .dropdown-icon { margin-left: auto; transition: transform 0.3s ease; width: 16px; height: 16px; }
+        .dropdown-icon.rotate { transform: rotate(180deg); }
+        
+        .nav-sub-menu {
+            display: none; /* Hidden by default */
+            flex-direction: column; gap: 2px;
+            padding-left: 20px; margin-top: 5px; margin-bottom: 10px;
+            list-style: none;
+        }
+        .nav-sub-menu.open { display: flex; }
+        
+        .sub-group-title {
+            font-size: 11px; color: var(--accent); font-weight: 600;
+            letter-spacing: 0.5px; margin-top: 15px; margin-bottom: 5px; padding-left: 12px;
+        }
+        .nav-sub-item {
+            color: var(--text-muted); cursor: pointer; transition: 0.2s;
+            font-size: 12px; padding: 8px 12px; border-radius: 10px;
+            white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+        }
+        .nav-sub-item:hover { background: var(--glass-hover); color: var(--text-main); }
 
         /* --- Main Content Styles --- */
         .main-content { 
@@ -184,7 +212,7 @@
         .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 12px 30px rgba(245, 158, 11, 0.4); }
 
         /* Custom Scrollbar */
-        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar { width: 6px; }
         ::-webkit-scrollbar-track { background: transparent; }
         ::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.1); border-radius: 10px; }
         ::-webkit-scrollbar-thumb:hover { background: rgba(255,255,255,0.2); }
@@ -202,11 +230,60 @@
         </div>
         
         <ul class="nav-menu">
-            <li class="nav-item active"><i data-lucide="layout-dashboard"></i> Dashboard</li>
+            
+            <li class="nav-item-container">
+                <div class="nav-item active" id="overviewToggle">
+                    <i data-lucide="layout-dashboard"></i> SITUATION OVERVIEW
+                    <i data-lucide="chevron-down" class="dropdown-icon"></i>
+                </div>
+                
+                <ul class="nav-sub-menu" id="overviewSubMenu">
+                    <li class="sub-group-title">PDRRM COUNCIL</li>
+                    <li class="nav-sub-item">PDRRMO</li>
+                    <li class="nav-sub-item">PSWDO</li>
+                    <li class="nav-sub-item">PHO</li>
+                    <li class="nav-sub-item">DA-OPA</li>
+                    <li class="nav-sub-item" title="PROVINCIAL ENGINEERING (PEO)">PROVINCIAL ENGINEERING (PEO)</li>
+                    <li class="nav-sub-item" title="TACTICAL OPERATION GROUP 3- PHILIPPINE AIR FORCE">TACTICAL OPERATION GROUP 3- PAF</li>
+                    <li class="nav-sub-item" title="TARLAC POLICE PROVINCIAL OFFICE">TARLAC POLICE PROVINCIAL OFFICE</li>
+                    <li class="nav-sub-item">3RD MECH INF BN, PA</li>
+                    <li class="nav-sub-item">522 ECB, PA</li>
+                    <li class="nav-sub-item">DPWPH 1ST DEO</li>
+                    <li class="nav-sub-item">PDOHO</li>
+                    <li class="nav-sub-item">BFP- TARLAC PROVINCE</li>
+                    <li class="nav-sub-item" title="PEO/PGSO/DEPED/DILG/TAU/CARITAS TARLAC">PEO/PGSO/DEPED/DILG/TAU/CARITAS...</li>
+
+                    <li class="sub-group-title">LDRRMCs</li>
+                    <li class="nav-sub-item">Tarlac City (CDRRMO)</li>
+                    <li class="nav-sub-item">Anao</li>
+                    <li class="nav-sub-item">Bamban</li>
+                    <li class="nav-sub-item">Camiling</li>
+                    <li class="nav-sub-item">Capas</li>
+                    <li class="nav-sub-item">Concepcion</li>
+                    <li class="nav-sub-item">Gerona</li>
+                    <li class="nav-sub-item">La Paz</li>
+                    <li class="nav-sub-item">Mayantoc</li>
+                    <li class="nav-sub-item">Moncada</li>
+                    <li class="nav-sub-item">Paniqui</li>
+                    <li class="nav-sub-item">Pura</li>
+                    <li class="nav-sub-item">Ramos</li>
+                    <li class="nav-sub-item">San Clemente</li>
+                    <li class="nav-sub-item">San Jose</li>
+                    <li class="nav-sub-item">San Manuel</li>
+                    <li class="nav-sub-item">Santa Ignacia</li>
+                    <li class="nav-sub-item">Victoria</li>
+
+                    <li class="sub-group-title">OTHER PARTNER AGENCIES/GROUP</li>
+                    <li class="nav-sub-item" title="7TH CIVIL MILITARY OPERATION BATTALION, PA">7TH CIVIL MILITARY OP. BN, PA</li>
+                    <li class="nav-sub-item" title="ARMOR DIVISION, CAMP O'DONNEL, PA">ARMOR DIVISION, CAMP O'DONNEL, PA</li>
+                    <li class="nav-sub-item" title="VOLUNTEERS ASSOCIATION OF TARLAC (VAT)">VOLUNTEERS ASSOC. OF TARLAC (VAT)</li>
+                </ul>
+            </li>
+
             <li class="nav-item"><i data-lucide="file-text"></i> Summary Situational Report</li>
             <li class="nav-item"><i data-lucide="users"></i> Agency Records</li>
-            <li class="nav-item"><i data-lucide="settings"></i> Settings</li>
-        </ul>
+            
+            </ul>
     </aside>
 
     <main class="main-content">
@@ -385,6 +462,16 @@
     <script>
         lucide.createIcons();
 
+        // --- Sidebar Dropdown Logic ---
+        const overviewToggle = document.getElementById('overviewToggle');
+        const overviewSubMenu = document.getElementById('overviewSubMenu');
+        const overviewIcon = overviewToggle.querySelector('.dropdown-icon');
+
+        overviewToggle.addEventListener('click', () => {
+            overviewSubMenu.classList.toggle('open');
+            overviewIcon.classList.toggle('rotate');
+        });
+
         // --- Dynamic LGU Dropdown Logic ---
         const mainAgencySelect = document.getElementById('mainReportingAgency');
         const lguSelectContainer = document.getElementById('lguSelectContainer');
@@ -397,7 +484,7 @@
             } else {
                 lguSelectContainer.classList.remove('visible');
                 lguSelect.required = false;
-                lguSelect.value = ''; // Reset the value if they switch away
+                lguSelect.value = ''; 
             }
         });
 
