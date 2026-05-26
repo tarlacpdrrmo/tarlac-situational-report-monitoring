@@ -12,38 +12,30 @@
             --text-main: #f8fafc;
             --text-muted: #94a3b8;
             --accent: #f59e0b; 
-            --glass-bg: rgba(15, 23, 42, 0.25); 
+            --glass-bg: rgba(15, 23, 42, 0.2); 
             --glass-border: rgba(255, 255, 255, 0.08);
             --glass-hover: rgba(255, 255, 255, 0.12);
-            --input-bg: rgba(0, 0, 0, 0.3);
-            --sidebar-bg: rgba(10, 15, 30, 0.4);
+            --input-bg: rgba(0, 0, 0, 0.25);
+            --sidebar-bg: rgba(10, 15, 30, 0.3);
         }
 
         * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Inter', sans-serif; }
 
         body {
+            background: linear-gradient(-45deg, #0f172a, #1e293b, #0f2027, #203a43);
+            background-size: 400% 400%;
+            animation: stormFront 20s ease infinite;
             color: var(--text-main);
             display: flex;
             height: 100vh;
             width: 100vw;
             overflow: hidden;
-            position: relative;
-            background-color: #0b1120; /* Dark fallback */
         }
 
-        /* --- New Smooth & Fitting Blurred Storm Pattern Background --- */
-        body::before {
-            content: '';
-            position: absolute;
-            /* Stretch perfectly and slightly beyond to avoid clean edges */
-            top: -20px; left: -20px; right: -20px; bottom: -20px; 
-            /* Source the rain image pattern from image_30.png */
-            background-image: url('data:image/jpeg;base64, ... [deeply textured rain image pattern here, smoothed and blurred as described] ... '); 
-            background-size: cover;
-            background-position: center;
-            /* High-quality smoothing and fitting effects */
-            filter: blur(10px) brightness(0.35) contrast(1.1); 
-            z-index: -1;
+        @keyframes stormFront {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
         }
 
         /* --- Sidebar Styles --- */
@@ -110,7 +102,7 @@
         .nav-sub-item:hover { background: var(--glass-hover); color: var(--text-main); }
 
         /* --- Main Content Styles --- */
-        .main-content { flex: 1; padding: 50px 60px; overflow-y: auto; scroll-behavior: smooth; z-index: 1;}
+        .main-content { flex: 1; padding: 50px 60px; overflow-y: auto; scroll-behavior: smooth; }
         .header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 40px; position: relative; }
         .header h1 { font-size: 32px; font-weight: 600; letter-spacing: -0.5px; margin-bottom: 12px; }
         
@@ -374,39 +366,329 @@
             </div>
             
             <div style="text-align: right; position: relative;">
-                <label style="font-size: 12px; color: var(--text-muted); font-weight: 500; display: block; margin-bottom: 5px;">Report Date & Time Generating a full web application with these functionalities is beyond the scope of a single response. However, I can provide you with the necessary HTML, CSS, and JavaScript components and logic to achieve the dynamic visibility and the modern, integrated calendar you described.
+                <label style="font-size: 12px; color: var(--text-muted); font-weight: 500; display: block; margin-bottom: 5px;">Report Date & Time</label>
+                
+                <div class="datetime-wrapper" id="customDtTrigger">
+                    <i data-lucide="calendar-clock" style="color: var(--accent); width: 16px; height: 16px;"></i>
+                    <span id="dtDisplayText">Select Date & Time</span>
+                </div>
 
-### Part 1: Dynamic Visibility Logic
+                <div class="dt-popup" id="dtPopup">
+                    <div class="dt-calendar-sec">
+                        <div class="dt-header">
+                            <span id="dtMonthYear">May 2026</span>
+                            <div class="dt-nav" style="display: flex; gap: 10px;">
+                                <i data-lucide="arrow-up" id="dtPrev"></i>
+                                <i data-lucide="arrow-down" id="dtNext"></i>
+                            </div>
+                        </div>
+                        <div class="dt-weekdays">
+                            <span>Su</span><span>Mo</span><span>Tu</span><span>We</span><span>Th</span><span>Fr</span><span>Sa</span>
+                        </div>
+                        <div class="dt-days" id="dtDays">
+                            </div>
+                        <div class="dt-actions">
+                            <span id="dtClear">Clear</span>
+                            <span style="color: var(--accent);" id="dtToday">Today</span>
+                        </div>
+                    </div>
+                    <div class="dt-time-sec">
+                        <div class="dt-time-header">
+                            <span id="dtDigitalTime">11:17 AM</span>
+                            <i data-lucide="chevron-down" style="width:14px; color: var(--text-muted);"></i>
+                        </div>
+                        <div class="analog-clock">
+                            <div class="clock-face">
+                                <div class="clock-num num12">12</div>
+                                <div class="clock-num num3">3</div>
+                                <div class="clock-num num6">6</div>
+                                <div class="clock-num num9">9</div>
+                                <div class="hand hour-hand" id="hourHand"></div>
+                                <div class="hand min-hand" id="minHand"></div>
+                                <div class="hand sec-hand" id="secHand"></div>
+                                <div class="clock-center"></div>
+                            </div>
+                        </div>
+                        <div class="dt-time-footer">
+                            <span style="background: rgba(0,0,0,0.3); padding: 3px 8px; border-radius: 4px; font-weight: 600;">000</span> : <span id="dtDigitalTimeSmall">11:17 AM</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
 
-To make this work, you need to structure your HTML so that each of your four main cards ('General Status', 'Damages & Interruptions', 'External Scanner', 'Other Activities') can be easily targeted by JavaScript.
+        <form id="sitrepForm">
+            <div class="dashboard-grid" id="mainDashboardGrid">
+                
+                <div id="dashboardPlaceholder" style="grid-column: span 2; text-align: center; padding: 60px; color: var(--text-muted); background: var(--glass-bg); border-radius: 24px; border: 1px dashed var(--glass-border);">
+                    <i data-lucide="clipboard-edit" style="width: 48px; height: 48px; color: rgba(255,255,255,0.2); margin-bottom: 15px;"></i>
+                    <h3 style="font-size: 16px; font-weight: 500; color: var(--text-main);">No Agency Selected</h3>
+                    <p style="font-size: 13px; margin-top: 5px;">Please select a reporting agency from the top menu to view the relevant report format.</p>
+                </div>
 
-Here’s a simplified breakdown of how to implement the logic for switching between your 'LDRRMC' and 'Other Agency' views.
+                <div class="card ldrmc-card">
+                    <div class="card-title"><i data-lucide="cloud-rain"></i> General Status</div>
+                    <div class="input-row"><label>a. Weather Condition</label><input type="text" placeholder="Tap to type..."></div>
+                    <div class="input-row"><label>b. Affected Population</label><input type="text" placeholder="Tap to type..."></div>
+                    <div class="input-row"><label>c. Forced Evacuation</label><input type="text" placeholder="Tap to type..."></div>
+                    <div class="input-row"><label>d. Casualty</label><input type="text" placeholder="E.G., ZERO CASUALTIES"></div>
+                </div>
 
-**HTML Structure**
+                <div class="card ldrmc-card">
+                    <div class="card-title"><i data-lucide="alert-triangle"></i> Damages & Interruptions</div>
+                    <div class="input-row"><label>e. Class/Work Suspension</label><input type="text" placeholder="Tap to type..."></div>
+                    <div class="input-row"><label>f. Flooded Areas</label><input type="text" placeholder="Tap to type..."></div>
+                    <div class="input-row"><label>j. Power & Water</label><input type="text" placeholder="Tap to type..."></div>
+                    <div class="input-row"><label>k. Other Incidents</label><input type="text" placeholder="Tap to type..."></div>
+                </div>
 
-Give each of your main card containers a unique ID and a class that indicates which group it belongs to (e.g., `visibility-group-green` or `visibility-group-red`).
+                <div class="card full-width ldrmc-card">
+                    <div class="card-title"><i data-lucide="map-pin"></i> Critical Damages</div>
+                    <div class="dashboard-grid">
+                        <div class="input-block">
+                            <label>g. Damages on Infrastructure</label>
+                            <textarea placeholder="Provide detailed infrastructure report here..."></textarea>
+                        </div>
+                        <div class="input-block">
+                            <label>h. Damages on Agriculture</label>
+                            <textarea placeholder="Provide detailed agricultural damage report here..."></textarea>
+                        </div>
+                        <div class="input-block full-width" style="grid-column: span 2;">
+                            <label>i. Status of Roads and Bridges</label>
+                            <textarea placeholder="Report on road passability and bridge structural integrity..."></textarea>
+                        </div>
+                    </div>
+                </div>
 
-```html
-<label for="agencySelect">Selecting Agency:</label>
-<select id="agencySelect" onchange="toggleView()">
-  <option value="" disabled selected>Select an agency...</option>
-  <option value="pdrrmc">PDRRMC (RED)</option>
-  <option value="ldrmc">LDRRMC (GREEN)</option>
-  <option value="partner">Partner Agencies (RED)</option>
-  </select>
+                <div class="card other-card">
+                    <div class="card-title"><i data-lucide="scan-line"></i> External Data Scanner</div>
+                    <div class="scanner-area">
+                        <i data-lucide="scan" class="scanner-icon" width="42" height="42"></i>
+                        <p style="font-size: 15px; font-weight: 500; color: var(--text-main); margin-bottom: 5px;">Scan Status: IDLE</p>
+                        <p style="font-size: 13px; color: var(--text-muted);">Drop document image here to begin data extraction.</p>
+                        <input type="file" id="fileUpload" style="display: none;" accept="image/*">
+                    </div>
+                </div>
 
-<div class="dashboard-grid">
+                <div class="card other-card">
+                    <div class="card-title"><i data-lucide="activity"></i> Other Activities Monitored</div>
+                    <div class="activities-container">
+                        <label class="activity-pill"><input type="checkbox"> <i data-lucide="check-circle" width="14" height="14"></i> EOC Activated 24/7</label>
+                        <label class="activity-pill"><input type="checkbox"> <i data-lucide="check-circle" width="14" height="14"></i> MDRRMC Convened</label>
+                        <label class="activity-pill"><input type="checkbox"> <i data-lucide="check-circle" width="14" height="14"></i> PAGASA Monitored</label>
+                        <label class="activity-pill"><input type="checkbox"> <i data-lucide="check-circle" width="14" height="14"></i> Barangay Coordination</label>
+                        <label class="activity-pill"><input type="checkbox"> <i data-lucide="check-circle" width="14" height="14"></i> Validating Houses</label>
+                        <label class="activity-pill"><input type="checkbox"> <i data-lucide="check-circle" width="14" height="14"></i> Goods Prepositioned</label>
+                    </div>
+                    <div class="input-row" style="margin-top: 20px; border-bottom: none;">
+                        <input type="text" placeholder="+ TYPE CUSTOM ACTIVITY AND PRESS ENTER..." style="text-align: left; background: var(--input-bg); padding: 12px 15px; border-radius: 12px;">
+                    </div>
+                </div>
 
-  <div id="generalStatusCard" class="card visibility-group-green">
-    </div>
+            </div>
+            
+            <button type="button" class="btn-primary" id="submitBtn" onclick="alert('Google Sheets Sync Triggered')">
+                <i data-lucide="send" style="width: 16px; height: 16px; display: inline; vertical-align: middle; margin-right: 5px;"></i> Log to Database
+            </button>
+        </form>
+    </main>
 
-  <div id="damagesInterruptionsCard" class="card visibility-group-green">
-    </div>
+    <script>
+        lucide.createIcons();
 
-  <div id="externalScannerCard" class="card visibility-group-red">
-    </div>
+        // --- Custom Datetime Picker Logic ---
+        const dtTrigger = document.getElementById('customDtTrigger');
+        const dtPopup = document.getElementById('dtPopup');
+        const dtDisplayText = document.getElementById('dtDisplayText');
+        const dtDays = document.getElementById('dtDays');
+        const dtMonthYear = document.getElementById('dtMonthYear');
+        
+        let currentDate = new Date();
+        let selectedDate = new Date();
+        let isDateSelected = false;
+        
+        const formatTime = (date) => date.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' });
+        const formatDate = (date) => {
+            const d = date.getDate();
+            const m = date.toLocaleString('default', { month: 'short' });
+            const y = date.getFullYear();
+            return `${d} ${m} ${y}`;
+        };
 
-  <div id="otherActivitiesCard" class="card visibility-group-red">
-    </div>
+        // Real-time Analog Clock
+        function updateClock() {
+            const now = new Date();
+            const sec = now.getSeconds();
+            const min = now.getMinutes();
+            const hr = now.getHours();
+            
+            const secDeg = ((sec / 60) * 360);
+            const minDeg = ((min / 60) * 360) + ((sec/60)*6);
+            const hrDeg = ((hr / 12) * 360) + ((min/60)*30);
+            
+            document.getElementById('secHand').style.transform = `rotate(${secDeg}deg)`;
+            document.getElementById('minHand').style.transform = `rotate(${minDeg}deg)`;
+            document.getElementById('hourHand').style.transform = `rotate(${hrDeg}deg)`;
+            
+            const timeStr = formatTime(now);
+            document.getElementById('dtDigitalTime').innerText = timeStr;
+            document.getElementById('dtDigitalTimeSmall').innerText = timeStr;
+            
+            if(isDateSelected) {
+                const datePart = dtDisplayText.innerText.split(' ').slice(0,3).join(' ');
+                dtDisplayText.innerText = `${datePart}  ${timeStr}`;
+            }
+        }
+        setInterval(updateClock, 1000);
+        updateClock();
 
-</div>
+        // Calendar Render
+        function renderCalendar(date) {
+            dtDays.innerHTML = '';
+            dtMonthYear.innerText = date.toLocaleString('default', { month: 'long', year: 'numeric' });
+            
+            const year = date.getFullYear();
+            const month = date.getMonth();
+            const firstDay = new Date(year, month, 1).getDay();
+            const daysInMonth = new Date(year, month + 1, 0).getDate();
+            const prevMonthDays = new Date(year, month, 0).getDate();
+            
+            // Prev month trailing days
+            for(let i = firstDay; i > 0; i--) {
+                const dayEl = document.createElement('div');
+                dayEl.className = 'dt-day other-month';
+                dayEl.innerText = prevMonthDays - i + 1;
+                dtDays.appendChild(dayEl);
+            }
+            
+            // Current month days
+            for(let i = 1; i <= daysInMonth; i++) {
+                const dayEl = document.createElement('div');
+                dayEl.className = 'dt-day';
+                if(isDateSelected && i === selectedDate.getDate() && month === selectedDate.getMonth() && year === selectedDate.getFullYear()) {
+                    dayEl.classList.add('active');
+                }
+                dayEl.innerText = i;
+                dayEl.addEventListener('click', () => {
+                    selectedDate = new Date(year, month, i);
+                    isDateSelected = true;
+                    dtDisplayText.innerText = `${formatDate(selectedDate)}  ${formatTime(new Date())}`;
+                    renderCalendar(currentDate); 
+                    dtPopup.classList.remove('show');
+                });
+                dtDays.appendChild(dayEl);
+            }
+            
+            // Next month leading days (fill 42 slots)
+            const totalCells = dtDays.children.length;
+            for(let i = 1; i <= 42 - totalCells; i++) {
+                const dayEl = document.createElement('div');
+                dayEl.className = 'dt-day other-month';
+                dayEl.innerText = i;
+                dtDays.appendChild(dayEl);
+            }
+        }
+
+        dtTrigger.addEventListener('click', (e) => {
+            e.stopPropagation();
+            dtPopup.classList.toggle('show');
+            renderCalendar(currentDate);
+        });
+        document.getElementById('dtPrev').addEventListener('click', (e) => {
+            e.stopPropagation();
+            currentDate.setMonth(currentDate.getMonth() - 1);
+            renderCalendar(currentDate);
+        });
+        document.getElementById('dtNext').addEventListener('click', (e) => {
+            e.stopPropagation();
+            currentDate.setMonth(currentDate.getMonth() + 1);
+            renderCalendar(currentDate);
+        });
+        document.getElementById('dtToday').addEventListener('click', (e) => {
+            e.stopPropagation();
+            currentDate = new Date();
+            selectedDate = new Date();
+            isDateSelected = true;
+            dtDisplayText.innerText = `${formatDate(selectedDate)}  ${formatTime(new Date())}`;
+            renderCalendar(currentDate);
+            dtPopup.classList.remove('show');
+        });
+        document.getElementById('dtClear').addEventListener('click', (e) => {
+            e.stopPropagation();
+            isDateSelected = false;
+            dtDisplayText.innerText = 'Select Date & Time';
+            renderCalendar(currentDate);
+        });
+        document.addEventListener('click', (e) => {
+            if(!dtPopup.contains(e.target) && !dtTrigger.contains(e.target)) {
+                dtPopup.classList.remove('show');
+            }
+        });
+
+        // --- Sidebar Dropdown Logic ---
+        const overviewToggle = document.getElementById('overviewToggle');
+        const overviewSubMenu = document.getElementById('overviewSubMenu');
+        const overviewIcon = overviewToggle.querySelector('.dropdown-icon');
+
+        overviewToggle.addEventListener('click', () => {
+            overviewSubMenu.classList.toggle('open');
+            overviewIcon.classList.toggle('rotate');
+        });
+
+        // --- Dynamic Dashboard Visibility Logic ---
+        const mainAgencySelect = document.getElementById('mainReportingAgency');
+        const lguSelectContainer = document.getElementById('lguSelectContainer');
+        const lguSelect = document.getElementById('lguSelect');
+        const dashboardGrid = document.getElementById('mainDashboardGrid');
+        const submitBtn = document.getElementById('submitBtn');
+
+        mainAgencySelect.addEventListener('change', function() {
+            dashboardGrid.classList.remove('mode-ldrmc', 'mode-other');
+            if (this.value === 'LDRRMC') {
+                lguSelectContainer.classList.add('visible');
+                lguSelect.required = true;
+                dashboardGrid.classList.add('mode-ldrmc');
+                submitBtn.classList.add('visible');
+            } else if (this.value !== '') {
+                lguSelectContainer.classList.remove('visible');
+                lguSelect.required = false;
+                lguSelect.value = ''; 
+                dashboardGrid.classList.add('mode-other');
+                submitBtn.classList.add('visible');
+            } else {
+                lguSelectContainer.classList.remove('visible');
+                lguSelect.required = false;
+                submitBtn.classList.remove('visible');
+            }
+        });
+
+        // --- Auto-Uppercase Feature ---
+        const textInputs = document.querySelectorAll('input[type="text"], textarea');
+        textInputs.forEach(input => {
+            input.addEventListener('input', function() {
+                const start = this.selectionStart;
+                const end = this.selectionEnd;
+                this.value = this.value.toUpperCase();
+                this.setSelectionRange(start, end);
+            });
+        });
+
+        // --- Scanner Trigger ---
+        const scannerArea = document.querySelector('.scanner-area');
+        const fileUpload = document.getElementById('fileUpload');
+        scannerArea.addEventListener('click', () => { fileUpload.click(); });
+
+        // --- Pill Button Toggle Logic ---
+        const pills = document.querySelectorAll('.activity-pill');
+        pills.forEach(pill => {
+            pill.addEventListener('change', function(e) {
+                if(e.target.checked) {
+                    this.classList.add('active');
+                } else {
+                    this.classList.remove('active');
+                }
+            });
+        });
+    </script>
+</body>
+</html>
