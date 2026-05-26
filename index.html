@@ -200,32 +200,26 @@
 
         .dt-time-footer { font-size: 11px; color: var(--text-muted); display: flex; justify-content: center; gap: 8px; align-items: center; margin-top: auto; font-weight: 500;}
 
-        /* --- Landing View & Slideshow Elements --- */
+        /* --- Landing View & Static Advisory Grid --- */
         #landingView { display: block; animation: fadeIn 0.3s ease; }
         
         .insights-header {
             font-size: 13px; text-transform: uppercase; letter-spacing: 1px; color: var(--text-muted); margin-bottom: 20px; font-weight: 600; display: flex; align-items: center; gap: 8px;
         }
         
-        .slideshow-wrapper {
-            width: 100%; overflow: hidden; position: relative;
-            -webkit-mask-image: linear-gradient(to right, transparent, black 2%, black 98%, transparent);
-            mask-image: linear-gradient(to right, transparent, black 2%, black 98%, transparent);
-            padding: 10px 0;
+        .advisory-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 24px;
+            width: 100%;
         }
-        
-        .slideshow-track {
-            display: flex; gap: 20px; width: max-content;
-            animation: scrollTrack 30s linear infinite;
-        }
-        .slideshow-track:hover { animation-play-state: paused; }
 
         /* --- Tweet Wall Card Styling --- */
         .tweet-card {
             background: var(--glass-bg);
             backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
             border: 1px solid var(--glass-border); border-radius: 18px;
-            padding: 22px; width: 340px; flex-shrink: 0;
+            padding: 22px; width: 100%; 
             display: flex; flex-direction: column; gap: 14px;
             box-shadow: 0 4px 15px rgba(0,0,0,0.1);
             transition: border-color 0.3s, transform 0.3s, background 0.3s;
@@ -257,11 +251,6 @@
         .tweet-footer { 
             font-size: 11px; color: var(--text-muted); display: flex; align-items: center; justify-content: space-between; 
             border-top: 1px solid var(--glass-border); padding-top: 12px; margin-top: 5px; 
-        }
-
-        @keyframes scrollTrack {
-            0% { transform: translateX(0); }
-            100% { transform: translateX(calc(-50% - 10px)); } 
         }
 
         /* --- Dynamic Dashboard Grid Logic --- */
@@ -510,145 +499,77 @@
             <div class="insights-header">
                 <i data-lucide="bell-ring" style="color: var(--accent);"></i> LATEST AGENCY ADVISORY
             </div>
-            <div class="slideshow-wrapper">
-                <div class="slideshow-track">
-                    <div class="tweet-card">
-                        <div class="tweet-header">
-                            <div class="tweet-avatar av-pdrrmo">T</div>
-                            <div class="tweet-meta">
-                                <span class="tweet-name">Tarlac PDRRMO <i data-lucide="badge-check" style="width:14px; height:14px; color:var(--accent);"></i></span>
-                                <span class="tweet-handle">@PDRRMOCouncil</span>
-                            </div>
-                        </div>
-                        <div class="tweet-body">
-                            🚨 <strong>RED ALERT</strong> status raised for Tarlac Province due to Severe Tropical Storm. All LDRRMCs are advised to activate EOCs and preposition goods.
-                        </div>
-                        <div class="tweet-footer">
-                            <span>Scanned via Document OCR</span>
-                            <span>4:37 PM • May 26</span>
+            
+            <div class="advisory-grid">
+                
+                <div class="tweet-card">
+                    <div class="tweet-header">
+                        <div class="tweet-avatar av-pdrrmo">T</div>
+                        <div class="tweet-meta">
+                            <span class="tweet-name">Tarlac PDRRMO <i data-lucide="badge-check" style="width:14px; height:14px; color:var(--accent);"></i></span>
+                            <span class="tweet-handle">@PDRRMOCouncil</span>
                         </div>
                     </div>
-                    
-                    <div class="tweet-card">
-                        <div class="tweet-header">
-                            <div class="tweet-avatar av-pagasa"><i data-lucide="cloud-lightning" style="width:20px;height:20px;"></i></div>
-                            <div class="tweet-meta">
-                                <span class="tweet-name">DOST-PAGASA</span>
-                                <span class="tweet-handle">@dost_pagasa</span>
-                            </div>
-                        </div>
-                        <div class="tweet-body">
-                            <strong>Typhoon Update:</strong> TCWS No. 3 hoisted over Tarlac. Expect heavy to intense rains over the next 24 hours. Possible flash floods in low-lying areas.
-                        </div>
-                        <div class="tweet-footer">
-                            <span>Extracted from Advisory #4</span>
-                            <span>3:15 PM • May 26</span>
-                        </div>
+                    <div class="tweet-body">
+                        🚨 <strong>RED ALERT</strong> status raised for Tarlac Province due to Severe Tropical Storm. All LDRRMCs are advised to activate EOCs and preposition goods.
                     </div>
-
-                    <div class="tweet-card">
-                        <div class="tweet-header">
-                            <div class="tweet-avatar av-pswdo"><i data-lucide="package" style="width:20px;height:20px;"></i></div>
-                            <div class="tweet-meta">
-                                <span class="tweet-name">PSWDO Tarlac</span>
-                                <span class="tweet-handle">@TarlacPSWDO</span>
-                            </div>
-                        </div>
-                        <div class="tweet-body">
-                            Relief operations ready. Over <strong>2,500 family food packs</strong> have been successfully prepositioned in 3 major provincial hubs.
-                        </div>
-                        <div class="tweet-footer">
-                            <span>Inventory Log Scan</span>
-                            <span>2:00 PM • May 26</span>
-                        </div>
+                    <div class="tweet-footer">
+                        <span>Scanned via Document OCR</span>
+                        <span>4:37 PM • May 26</span>
                     </div>
-
-                    <div class="tweet-card">
-                        <div class="tweet-header">
-                            <div class="tweet-avatar av-bfp"><i data-lucide="flame" style="width:20px;height:20px;"></i></div>
-                            <div class="tweet-meta">
-                                <span class="tweet-name">BFP Tarlac Province</span>
-                                <span class="tweet-handle">@BureauOfFire</span>
-                            </div>
-                        </div>
-                        <div class="tweet-body">
-                            Search and Rescue (SAR) teams are now on <strong>standby alert</strong>. All water assets and rescue equipment checks completed across all municipalities.
-                        </div>
-                        <div class="tweet-footer">
-                            <span>Memo OCR Extract</span>
-                            <span>1:45 PM • May 26</span>
-                        </div>
-                    </div>
-
-                    <div class="tweet-card">
-                        <div class="tweet-header">
-                            <div class="tweet-avatar av-pdrrmo">T</div>
-                            <div class="tweet-meta">
-                                <span class="tweet-name">Tarlac PDRRMO <i data-lucide="badge-check" style="width:14px; height:14px; color:var(--accent);"></i></span>
-                                <span class="tweet-handle">@PDRRMOCouncil</span>
-                            </div>
-                        </div>
-                        <div class="tweet-body">
-                            🚨 <strong>RED ALERT</strong> status raised for Tarlac Province due to Severe Tropical Storm. All LDRRMCs are advised to activate EOCs and preposition goods.
-                        </div>
-                        <div class="tweet-footer">
-                            <span>Scanned via Document OCR</span>
-                            <span>4:37 PM • May 26</span>
-                        </div>
-                    </div>
-                    
-                    <div class="tweet-card">
-                        <div class="tweet-header">
-                            <div class="tweet-avatar av-pagasa"><i data-lucide="cloud-lightning" style="width:20px;height:20px;"></i></div>
-                            <div class="tweet-meta">
-                                <span class="tweet-name">DOST-PAGASA</span>
-                                <span class="tweet-handle">@dost_pagasa</span>
-                            </div>
-                        </div>
-                        <div class="tweet-body">
-                            <strong>Typhoon Update:</strong> TCWS No. 3 hoisted over Tarlac. Expect heavy to intense rains over the next 24 hours. Possible flash floods in low-lying areas.
-                        </div>
-                        <div class="tweet-footer">
-                            <span>Extracted from Advisory #4</span>
-                            <span>3:15 PM • May 26</span>
-                        </div>
-                    </div>
-
-                    <div class="tweet-card">
-                        <div class="tweet-header">
-                            <div class="tweet-avatar av-pswdo"><i data-lucide="package" style="width:20px;height:20px;"></i></div>
-                            <div class="tweet-meta">
-                                <span class="tweet-name">PSWDO Tarlac</span>
-                                <span class="tweet-handle">@TarlacPSWDO</span>
-                            </div>
-                        </div>
-                        <div class="tweet-body">
-                            Relief operations ready. Over <strong>2,500 family food packs</strong> have been successfully prepositioned in 3 major provincial hubs.
-                        </div>
-                        <div class="tweet-footer">
-                            <span>Inventory Log Scan</span>
-                            <span>2:00 PM • May 26</span>
-                        </div>
-                    </div>
-
-                    <div class="tweet-card">
-                        <div class="tweet-header">
-                            <div class="tweet-avatar av-bfp"><i data-lucide="flame" style="width:20px;height:20px;"></i></div>
-                            <div class="tweet-meta">
-                                <span class="tweet-name">BFP Tarlac Province</span>
-                                <span class="tweet-handle">@BureauOfFire</span>
-                            </div>
-                        </div>
-                        <div class="tweet-body">
-                            Search and Rescue (SAR) teams are now on <strong>standby alert</strong>. All water assets and rescue equipment checks completed across all municipalities.
-                        </div>
-                        <div class="tweet-footer">
-                            <span>Memo OCR Extract</span>
-                            <span>1:45 PM • May 26</span>
-                        </div>
-                    </div>
-
                 </div>
+                
+                <div class="tweet-card">
+                    <div class="tweet-header">
+                        <div class="tweet-avatar av-pagasa"><i data-lucide="cloud-lightning" style="width:20px;height:20px;"></i></div>
+                        <div class="tweet-meta">
+                            <span class="tweet-name">DOST-PAGASA</span>
+                            <span class="tweet-handle">@dost_pagasa</span>
+                        </div>
+                    </div>
+                    <div class="tweet-body">
+                        <strong>Typhoon Update:</strong> TCWS No. 3 hoisted over Tarlac. Expect heavy to intense rains over the next 24 hours. Possible flash floods in low-lying areas.
+                    </div>
+                    <div class="tweet-footer">
+                        <span>Extracted from Advisory #4</span>
+                        <span>3:15 PM • May 26</span>
+                    </div>
+                </div>
+
+                <div class="tweet-card">
+                    <div class="tweet-header">
+                        <div class="tweet-avatar av-pswdo"><i data-lucide="package" style="width:20px;height:20px;"></i></div>
+                        <div class="tweet-meta">
+                            <span class="tweet-name">PSWDO Tarlac</span>
+                            <span class="tweet-handle">@TarlacPSWDO</span>
+                        </div>
+                    </div>
+                    <div class="tweet-body">
+                        Relief operations ready. Over <strong>2,500 family food packs</strong> have been successfully prepositioned in 3 major provincial hubs.
+                    </div>
+                    <div class="tweet-footer">
+                        <span>Inventory Log Scan</span>
+                        <span>2:00 PM • May 26</span>
+                    </div>
+                </div>
+
+                <div class="tweet-card">
+                    <div class="tweet-header">
+                        <div class="tweet-avatar av-bfp"><i data-lucide="flame" style="width:20px;height:20px;"></i></div>
+                        <div class="tweet-meta">
+                            <span class="tweet-name">BFP Tarlac Province</span>
+                            <span class="tweet-handle">@BureauOfFire</span>
+                        </div>
+                    </div>
+                    <div class="tweet-body">
+                        Search and Rescue (SAR) teams are now on <strong>standby alert</strong>. All water assets and rescue equipment checks completed across all municipalities.
+                    </div>
+                    <div class="tweet-footer">
+                        <span>Memo OCR Extract</span>
+                        <span>1:45 PM • May 26</span>
+                    </div>
+                </div>
+                
             </div>
         </div>
 
