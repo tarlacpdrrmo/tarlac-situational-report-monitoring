@@ -103,7 +103,7 @@
 
         /* --- Main Content Styles --- */
         .main-content { flex: 1; padding: 50px 60px; overflow-y: auto; scroll-behavior: smooth; }
-        .header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 40px; position: relative; }
+        .header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 30px; position: relative; }
         .header h1 { font-size: 32px; font-weight: 600; letter-spacing: -0.5px; margin-bottom: 12px; }
         
         .top-agency-select {
@@ -182,7 +182,6 @@
         }
         .time-input:focus { color: var(--accent); }
         
-        /* Hide number arrows for clean look */
         .time-input::-webkit-outer-spin-button, .time-input::-webkit-inner-spin-button { -webkit-appearance: none; margin: 0; }
         .time-input[type=number] { -moz-appearance: textfield; }
         
@@ -201,14 +200,76 @@
 
         .dt-time-footer { font-size: 11px; color: var(--text-muted); display: flex; justify-content: center; gap: 8px; align-items: center; margin-top: auto; font-weight: 500;}
 
+        /* --- Landing View & Slideshow Elements --- */
+        #landingView { display: block; animation: fadeIn 0.3s ease; }
+        
+        .insights-header {
+            font-size: 13px; text-transform: uppercase; letter-spacing: 1px; color: var(--text-muted); margin-bottom: 20px; font-weight: 600; display: flex; align-items: center; gap: 8px;
+        }
+        
+        .slideshow-wrapper {
+            width: 100%; overflow: hidden; position: relative;
+            -webkit-mask-image: linear-gradient(to right, transparent, black 2%, black 98%, transparent);
+            mask-image: linear-gradient(to right, transparent, black 2%, black 98%, transparent);
+            padding: 10px 0;
+        }
+        
+        .slideshow-track {
+            display: flex; gap: 20px; width: max-content;
+            animation: scrollTrack 30s linear infinite;
+        }
+        .slideshow-track:hover { animation-play-state: paused; }
+
+        /* --- Tweet Wall Card Styling --- */
+        .tweet-card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+            border: 1px solid var(--glass-border); border-radius: 18px;
+            padding: 22px; width: 340px; flex-shrink: 0;
+            display: flex; flex-direction: column; gap: 14px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            transition: border-color 0.3s, transform 0.3s, background 0.3s;
+            cursor: default;
+        }
+        .tweet-card:hover {
+            transform: translateY(-3px);
+            border-color: rgba(245, 158, 11, 0.4);
+            background: rgba(245, 158, 11, 0.05);
+        }
+        .tweet-header { display: flex; align-items: center; gap: 12px; }
+        .tweet-avatar {
+            width: 42px; height: 42px; border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            color: white; font-weight: 700; font-size: 16px;
+        }
+        
+        /* Avatar Color Themes */
+        .av-pdrrmo { background: linear-gradient(135deg, var(--accent), #d97706); box-shadow: 0 4px 10px rgba(245, 158, 11, 0.3); }
+        .av-pagasa { background: linear-gradient(135deg, #3b82f6, #1d4ed8); box-shadow: 0 4px 10px rgba(59, 130, 246, 0.3); }
+        .av-pswdo  { background: linear-gradient(135deg, #10b981, #047857); box-shadow: 0 4px 10px rgba(16, 185, 129, 0.3); }
+        .av-bfp    { background: linear-gradient(135deg, #ef4444, #b91c1c); box-shadow: 0 4px 10px rgba(239, 68, 68, 0.3); }
+
+        .tweet-meta { display: flex; flex-direction: column; line-height: 1.2; }
+        .tweet-name { font-size: 14px; font-weight: 600; color: var(--text-main); display: flex; align-items: center; gap: 4px; }
+        .tweet-handle { font-size: 12px; color: var(--text-muted); }
+        .tweet-body { font-size: 13px; color: var(--text-muted); line-height: 1.6; }
+        .tweet-body strong { color: var(--text-main); font-weight: 500; }
+        .tweet-footer { 
+            font-size: 11px; color: var(--text-muted); display: flex; align-items: center; justify-content: space-between; 
+            border-top: 1px solid var(--glass-border); padding-top: 12px; margin-top: 5px; 
+        }
+
+        @keyframes scrollTrack {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(calc(-50% - 10px)); } 
+        }
+
         /* --- Dynamic Dashboard Grid Logic --- */
+        #sitrepForm { display: none; animation: fadeIn 0.3s ease; }
         .dashboard-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
         .ldrmc-card, .other-card { display: none; }
         .dashboard-grid.mode-ldrmc .ldrmc-card { display: block; }
         .dashboard-grid.mode-other .other-card { display: block; }
-        .mode-ldrmc #dashboardPlaceholder, .mode-other #dashboardPlaceholder { display: none; }
-        #submitBtn { display: none; }
-        #submitBtn.visible { display: block; }
 
         /* Mac OS style boxes */
         .card {
@@ -244,65 +305,10 @@
         .scanner-area:hover { background: rgba(0,0,0,0.3); border-color: var(--accent); }
         .scanner-icon { color: var(--text-main); margin-bottom: 15px; }
 
-        /* --- Quick Stats Slideshow (Extracted Data) --- */
-        .extracted-insights {
-            margin-top: 40px;
-            margin-bottom: 20px;
-            display: none; /* Hidden until agency is selected */
-        }
-        .insights-header {
-            font-size: 13px; text-transform: uppercase; letter-spacing: 1px; color: var(--text-muted); margin-bottom: 15px; font-weight: 600; display: flex; align-items: center; gap: 8px;
-        }
-        .slideshow-wrapper {
-            width: 100%;
-            overflow: hidden;
-            position: relative;
-            /* Glass fade effect on edges */
-            -webkit-mask-image: linear-gradient(to right, transparent, black 5%, black 95%, transparent);
-            mask-image: linear-gradient(to right, transparent, black 5%, black 95%, transparent);
-            padding: 10px 0;
-        }
-        .slideshow-track {
-            display: flex;
-            gap: 20px;
-            width: max-content;
-            animation: scrollTrack 30s linear infinite;
-        }
-        .slideshow-track:hover {
-            animation-play-state: paused;
-        }
-        .stat-card {
-            background: var(--glass-bg);
-            backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
-            border: 1px solid var(--glass-border);
-            border-radius: 16px;
-            padding: 22px;
-            display: flex;
-            flex-direction: column;
-            gap: 12px;
-            transition: transform 0.3s ease, border-color 0.3s, background 0.3s;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-            width: 260px; /* Fixed width to make infinite scroll seamless */
-            flex-shrink: 0;
-            cursor: default;
-        }
-        .stat-card:hover {
-            transform: translateY(-3px);
-            border-color: var(--accent);
-            background: rgba(245, 158, 11, 0.05);
-        }
-        .stat-icon { color: var(--accent); width: 22px; height: 22px; opacity: 0.8; }
-        .stat-title { font-size: 12px; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.5px; font-weight: 600; }
-        .stat-value { font-size: 20px; font-weight: 600; color: var(--text-main); letter-spacing: -0.5px;}
-
-        /* Exact -50% translates exactly one half of the duplicated array */
-        @keyframes scrollTrack {
-            0% { transform: translateX(0); }
-            100% { transform: translateX(calc(-50% - 10px)); } 
-        }
-
         /* --- Buttons --- */
-        .btn-primary { background: linear-gradient(135deg, var(--accent), #d97706); color: white; border: none; padding: 15px 30px; border-radius: 14px; font-size: 15px; font-weight: 500; cursor: pointer; transition: 0.3s; float: right; margin-top: 10px; box-shadow: 0 8px 25px rgba(245, 158, 11, 0.2); }
+        #submitBtn { display: none; }
+        #submitBtn.visible { display: block; }
+        .btn-primary { background: linear-gradient(135deg, var(--accent), #d97706); color: white; border: none; padding: 15px 30px; border-radius: 14px; font-size: 15px; font-weight: 500; cursor: pointer; transition: 0.3s; float: right; margin-top: 30px; box-shadow: 0 8px 25px rgba(245, 158, 11, 0.2); }
         .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 12px 30px rgba(245, 158, 11, 0.4); }
 
         ::-webkit-scrollbar { width: 6px; }
@@ -494,15 +500,161 @@
             </div>
         </div>
 
+        <div id="landingView">
+            <div style="text-align: center; padding: 60px; color: var(--text-muted); background: var(--glass-bg); border-radius: 24px; border: 1px dashed var(--glass-border); margin-bottom: 40px;">
+                <i data-lucide="clipboard-edit" style="width: 48px; height: 48px; color: rgba(255,255,255,0.2); margin-bottom: 15px;"></i>
+                <h3 style="font-size: 16px; font-weight: 500; color: var(--text-main);">No Agency Selected</h3>
+                <p style="font-size: 13px; margin-top: 5px;">Please select a reporting agency from the top menu to view the relevant report format.</p>
+            </div>
+
+            <div class="insights-header">
+                <i data-lucide="bell-ring" style="color: var(--accent);"></i> LATEST AGENCY ADVISORY
+            </div>
+            <div class="slideshow-wrapper">
+                <div class="slideshow-track">
+                    <div class="tweet-card">
+                        <div class="tweet-header">
+                            <div class="tweet-avatar av-pdrrmo">T</div>
+                            <div class="tweet-meta">
+                                <span class="tweet-name">Tarlac PDRRMO <i data-lucide="badge-check" style="width:14px; height:14px; color:var(--accent);"></i></span>
+                                <span class="tweet-handle">@PDRRMOCouncil</span>
+                            </div>
+                        </div>
+                        <div class="tweet-body">
+                            🚨 <strong>RED ALERT</strong> status raised for Tarlac Province due to Severe Tropical Storm. All LDRRMCs are advised to activate EOCs and preposition goods.
+                        </div>
+                        <div class="tweet-footer">
+                            <span>Scanned via Document OCR</span>
+                            <span>4:37 PM • May 26</span>
+                        </div>
+                    </div>
+                    
+                    <div class="tweet-card">
+                        <div class="tweet-header">
+                            <div class="tweet-avatar av-pagasa"><i data-lucide="cloud-lightning" style="width:20px;height:20px;"></i></div>
+                            <div class="tweet-meta">
+                                <span class="tweet-name">DOST-PAGASA</span>
+                                <span class="tweet-handle">@dost_pagasa</span>
+                            </div>
+                        </div>
+                        <div class="tweet-body">
+                            <strong>Typhoon Update:</strong> TCWS No. 3 hoisted over Tarlac. Expect heavy to intense rains over the next 24 hours. Possible flash floods in low-lying areas.
+                        </div>
+                        <div class="tweet-footer">
+                            <span>Extracted from Advisory #4</span>
+                            <span>3:15 PM • May 26</span>
+                        </div>
+                    </div>
+
+                    <div class="tweet-card">
+                        <div class="tweet-header">
+                            <div class="tweet-avatar av-pswdo"><i data-lucide="package" style="width:20px;height:20px;"></i></div>
+                            <div class="tweet-meta">
+                                <span class="tweet-name">PSWDO Tarlac</span>
+                                <span class="tweet-handle">@TarlacPSWDO</span>
+                            </div>
+                        </div>
+                        <div class="tweet-body">
+                            Relief operations ready. Over <strong>2,500 family food packs</strong> have been successfully prepositioned in 3 major provincial hubs.
+                        </div>
+                        <div class="tweet-footer">
+                            <span>Inventory Log Scan</span>
+                            <span>2:00 PM • May 26</span>
+                        </div>
+                    </div>
+
+                    <div class="tweet-card">
+                        <div class="tweet-header">
+                            <div class="tweet-avatar av-bfp"><i data-lucide="flame" style="width:20px;height:20px;"></i></div>
+                            <div class="tweet-meta">
+                                <span class="tweet-name">BFP Tarlac Province</span>
+                                <span class="tweet-handle">@BureauOfFire</span>
+                            </div>
+                        </div>
+                        <div class="tweet-body">
+                            Search and Rescue (SAR) teams are now on <strong>standby alert</strong>. All water assets and rescue equipment checks completed across all municipalities.
+                        </div>
+                        <div class="tweet-footer">
+                            <span>Memo OCR Extract</span>
+                            <span>1:45 PM • May 26</span>
+                        </div>
+                    </div>
+
+                    <div class="tweet-card">
+                        <div class="tweet-header">
+                            <div class="tweet-avatar av-pdrrmo">T</div>
+                            <div class="tweet-meta">
+                                <span class="tweet-name">Tarlac PDRRMO <i data-lucide="badge-check" style="width:14px; height:14px; color:var(--accent);"></i></span>
+                                <span class="tweet-handle">@PDRRMOCouncil</span>
+                            </div>
+                        </div>
+                        <div class="tweet-body">
+                            🚨 <strong>RED ALERT</strong> status raised for Tarlac Province due to Severe Tropical Storm. All LDRRMCs are advised to activate EOCs and preposition goods.
+                        </div>
+                        <div class="tweet-footer">
+                            <span>Scanned via Document OCR</span>
+                            <span>4:37 PM • May 26</span>
+                        </div>
+                    </div>
+                    
+                    <div class="tweet-card">
+                        <div class="tweet-header">
+                            <div class="tweet-avatar av-pagasa"><i data-lucide="cloud-lightning" style="width:20px;height:20px;"></i></div>
+                            <div class="tweet-meta">
+                                <span class="tweet-name">DOST-PAGASA</span>
+                                <span class="tweet-handle">@dost_pagasa</span>
+                            </div>
+                        </div>
+                        <div class="tweet-body">
+                            <strong>Typhoon Update:</strong> TCWS No. 3 hoisted over Tarlac. Expect heavy to intense rains over the next 24 hours. Possible flash floods in low-lying areas.
+                        </div>
+                        <div class="tweet-footer">
+                            <span>Extracted from Advisory #4</span>
+                            <span>3:15 PM • May 26</span>
+                        </div>
+                    </div>
+
+                    <div class="tweet-card">
+                        <div class="tweet-header">
+                            <div class="tweet-avatar av-pswdo"><i data-lucide="package" style="width:20px;height:20px;"></i></div>
+                            <div class="tweet-meta">
+                                <span class="tweet-name">PSWDO Tarlac</span>
+                                <span class="tweet-handle">@TarlacPSWDO</span>
+                            </div>
+                        </div>
+                        <div class="tweet-body">
+                            Relief operations ready. Over <strong>2,500 family food packs</strong> have been successfully prepositioned in 3 major provincial hubs.
+                        </div>
+                        <div class="tweet-footer">
+                            <span>Inventory Log Scan</span>
+                            <span>2:00 PM • May 26</span>
+                        </div>
+                    </div>
+
+                    <div class="tweet-card">
+                        <div class="tweet-header">
+                            <div class="tweet-avatar av-bfp"><i data-lucide="flame" style="width:20px;height:20px;"></i></div>
+                            <div class="tweet-meta">
+                                <span class="tweet-name">BFP Tarlac Province</span>
+                                <span class="tweet-handle">@BureauOfFire</span>
+                            </div>
+                        </div>
+                        <div class="tweet-body">
+                            Search and Rescue (SAR) teams are now on <strong>standby alert</strong>. All water assets and rescue equipment checks completed across all municipalities.
+                        </div>
+                        <div class="tweet-footer">
+                            <span>Memo OCR Extract</span>
+                            <span>1:45 PM • May 26</span>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
         <form id="sitrepForm">
             <div class="dashboard-grid" id="mainDashboardGrid">
                 
-                <div id="dashboardPlaceholder" style="grid-column: span 2; text-align: center; padding: 60px; color: var(--text-muted); background: var(--glass-bg); border-radius: 24px; border: 1px dashed var(--glass-border);">
-                    <i data-lucide="clipboard-edit" style="width: 48px; height: 48px; color: rgba(255,255,255,0.2); margin-bottom: 15px;"></i>
-                    <h3 style="font-size: 16px; font-weight: 500; color: var(--text-main);">No Agency Selected</h3>
-                    <p style="font-size: 13px; margin-top: 5px;">Please select a reporting agency from the top menu to view the relevant report format.</p>
-                </div>
-
                 <div class="card ldrmc-card">
                     <div class="card-title"><i data-lucide="cloud-rain"></i> General Status</div>
                     <div class="input-row"><label>a. Weather Condition</label><input type="text" placeholder="Tap to type..."></div>
@@ -561,77 +713,7 @@
                         <input type="text" placeholder="+ TYPE CUSTOM ACTIVITY AND PRESS ENTER..." style="text-align: left; background: var(--input-bg); padding: 12px 15px; border-radius: 12px;">
                     </div>
                 </div>
-            </div>
 
-            <div class="extracted-insights" id="extractedInsights">
-                <div class="insights-header">
-                    <i data-lucide="cpu" style="width: 16px; height: 16px;"></i> Latest Extracted Insights (Auto-Scanned)
-                </div>
-                <div class="slideshow-wrapper">
-                    <div class="slideshow-track">
-                        <div class="stat-card">
-                            <div style="display: flex; justify-content: space-between; align-items: center;">
-                                <span class="stat-title">Latest Advisory</span><i data-lucide="radio-tower" class="stat-icon"></i>
-                            </div>
-                            <span class="stat-value" style="color: #ef4444;">RED ALERT</span>
-                        </div>
-                        <div class="stat-card">
-                            <div style="display: flex; justify-content: space-between; align-items: center;">
-                                <span class="stat-title">Active Weather</span><i data-lucide="cloud-lightning" class="stat-icon"></i>
-                            </div>
-                            <span class="stat-value">TYPHOON</span>
-                        </div>
-                        <div class="stat-card">
-                            <div style="display: flex; justify-content: space-between; align-items: center;">
-                                <span class="stat-title">Data Scanned</span><i data-lucide="file-scan" class="stat-icon"></i>
-                            </div>
-                            <span class="stat-value">12 Logs</span>
-                        </div>
-                        <div class="stat-card">
-                            <div style="display: flex; justify-content: space-between; align-items: center;">
-                                <span class="stat-title">Active EOCs</span><i data-lucide="tent" class="stat-icon"></i>
-                            </div>
-                            <span class="stat-value">4 Activated</span>
-                        </div>
-                        <div class="stat-card">
-                            <div style="display: flex; justify-content: space-between; align-items: center;">
-                                <span class="stat-title">Evacuees</span><i data-lucide="users" class="stat-icon"></i>
-                            </div>
-                            <span class="stat-value">1,240 Indv.</span>
-                        </div>
-                        
-                        <div class="stat-card">
-                            <div style="display: flex; justify-content: space-between; align-items: center;">
-                                <span class="stat-title">Latest Advisory</span><i data-lucide="radio-tower" class="stat-icon"></i>
-                            </div>
-                            <span class="stat-value" style="color: #ef4444;">RED ALERT</span>
-                        </div>
-                        <div class="stat-card">
-                            <div style="display: flex; justify-content: space-between; align-items: center;">
-                                <span class="stat-title">Active Weather</span><i data-lucide="cloud-lightning" class="stat-icon"></i>
-                            </div>
-                            <span class="stat-value">TYPHOON</span>
-                        </div>
-                        <div class="stat-card">
-                            <div style="display: flex; justify-content: space-between; align-items: center;">
-                                <span class="stat-title">Data Scanned</span><i data-lucide="file-scan" class="stat-icon"></i>
-                            </div>
-                            <span class="stat-value">12 Logs</span>
-                        </div>
-                        <div class="stat-card">
-                            <div style="display: flex; justify-content: space-between; align-items: center;">
-                                <span class="stat-title">Active EOCs</span><i data-lucide="tent" class="stat-icon"></i>
-                            </div>
-                            <span class="stat-value">4 Activated</span>
-                        </div>
-                        <div class="stat-card">
-                            <div style="display: flex; justify-content: space-between; align-items: center;">
-                                <span class="stat-title">Evacuees</span><i data-lucide="users" class="stat-icon"></i>
-                            </div>
-                            <span class="stat-value">1,240 Indv.</span>
-                        </div>
-                    </div>
-                </div>
             </div>
             
             <button type="button" class="btn-primary" id="submitBtn" onclick="alert('Google Sheets Sync Triggered')">
@@ -852,29 +934,34 @@
         const lguSelect = document.getElementById('lguSelect');
         const dashboardGrid = document.getElementById('mainDashboardGrid');
         const submitBtn = document.getElementById('submitBtn');
-        const extractedInsights = document.getElementById('extractedInsights');
+        const landingView = document.getElementById('landingView');
+        const sitrepForm = document.getElementById('sitrepForm');
 
         mainAgencySelect.addEventListener('change', function() {
-            dashboardGrid.classList.remove('mode-ldrmc', 'mode-other');
             if (this.value === 'LDRRMC') {
+                landingView.style.display = 'none';
+                sitrepForm.style.display = 'block';
                 lguSelectContainer.classList.add('visible');
                 lguSelect.required = true;
-                dashboardGrid.classList.add('mode-ldrmc');
+                dashboardGrid.className = 'dashboard-grid mode-ldrmc';
                 submitBtn.classList.add('visible');
-                extractedInsights.style.display = 'block';
             } else if (this.value !== '') {
+                landingView.style.display = 'none';
+                sitrepForm.style.display = 'block';
                 lguSelectContainer.classList.remove('visible');
                 lguSelect.required = false;
                 lguSelect.value = ''; 
-                dashboardGrid.classList.add('mode-other');
+                dashboardGrid.className = 'dashboard-grid mode-other';
                 submitBtn.classList.add('visible');
-                extractedInsights.style.display = 'block';
             } else {
+                landingView.style.display = 'block';
+                sitrepForm.style.display = 'none';
                 lguSelectContainer.classList.remove('visible');
                 lguSelect.required = false;
                 submitBtn.classList.remove('visible');
-                extractedInsights.style.display = 'none';
             }
+            // Re-initialize icons just in case newly displayed ones need rendering
+            lucide.createIcons();
         });
 
         // --- Auto-Uppercase Feature ---
@@ -891,7 +978,9 @@
         // --- Scanner Trigger ---
         const scannerArea = document.querySelector('.scanner-area');
         const fileUpload = document.getElementById('fileUpload');
-        scannerArea.addEventListener('click', () => { fileUpload.click(); });
+        if(scannerArea) {
+            scannerArea.addEventListener('click', () => { fileUpload.click(); });
+        }
 
         // --- Pill Button Toggle Logic ---
         const pills = document.querySelectorAll('.activity-pill');
