@@ -123,39 +123,63 @@
         optgroup { font-weight: 600; color: var(--accent); }
 
         /* Conditional LGU Dropdown */
-        #lguSelectContainer {
-            display: none; 
-            align-items: center; 
-            gap: 10px;
-            opacity: 0;
-        }
-        #lguSelectContainer.visible {
-            display: flex; 
-            opacity: 1;
-            animation: fadeIn 0.3s ease forwards;
-        }
+        #lguSelectContainer { display: none; align-items: center; gap: 10px; opacity: 0; }
+        #lguSelectContainer.visible { display: flex; opacity: 1; animation: fadeIn 0.3s ease forwards; }
         @keyframes fadeIn { from { opacity: 0; transform: translateX(-10px); } to { opacity: 1; transform: translateX(0); } }
 
+        /* Custom Datetime Picker Styling */
+        .datetime-wrapper {
+            display: inline-flex; align-items: center; gap: 10px;
+            background: rgba(0,0,0,0.3); border: 1px solid var(--glass-border);
+            border-radius: 12px; padding: 8px 14px; transition: 0.3s;
+            box-shadow: inset 0 2px 5px rgba(0,0,0,0.2);
+        }
+        .datetime-wrapper:hover, .datetime-wrapper:focus-within {
+            border-color: var(--accent); background: rgba(0,0,0,0.4);
+            box-shadow: 0 0 10px rgba(245, 158, 11, 0.2), inset 0 2px 5px rgba(0,0,0,0.2);
+        }
+        .custom-datetime {
+            background: transparent; border: none; color: var(--text-main);
+            font-family: 'Inter', sans-serif; font-size: 13px; font-weight: 500;
+            outline: none; cursor: pointer;
+        }
+        /* Forces the native calendar icon to turn white so it fits the theme */
+        .custom-datetime::-webkit-calendar-picker-indicator {
+            cursor: pointer; filter: invert(1); opacity: 0.6; transition: 0.2s;
+        }
+        .custom-datetime::-webkit-calendar-picker-indicator:hover { opacity: 1; }
+
+        /* --- Dynamic Dashboard Grid Logic --- */
         .dashboard-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+        
+        /* Hide all cards by default */
+        .ldrmc-card, .other-card { display: none; }
+        
+        /* Show specific cards based on the form's mode */
+        .dashboard-grid.mode-ldrmc .ldrmc-card { display: block; }
+        .dashboard-grid.mode-other .other-card { display: block; }
+        
+        /* Ensure the empty state placeholder vanishes when active */
+        .mode-ldrmc #dashboardPlaceholder, .mode-other #dashboardPlaceholder { display: none; }
+
+        /* Form Button hiding logic */
+        #submitBtn { display: none; }
+        #submitBtn.visible { display: block; }
 
         /* Mac OS style boxes */
         .card {
-            background: var(--glass-bg);
-            backdrop-filter: blur(40px);
-            -webkit-backdrop-filter: blur(40px);
-            border: 1px solid var(--glass-border);
-            border-radius: 24px; padding: 30px;
+            background: var(--glass-bg); backdrop-filter: blur(40px); -webkit-backdrop-filter: blur(40px);
+            border: 1px solid var(--glass-border); border-radius: 24px; padding: 30px;
             box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3);
         }
         .card.full-width { grid-column: span 2; }
-
         .card-title {
             font-size: 13px; text-transform: uppercase; letter-spacing: 1px;
             color: var(--accent); margin-bottom: 25px; font-weight: 600;
             display: flex; align-items: center; gap: 8px;
         }
 
-        /* --- Seamless Row Inputs --- */
+        /* --- Inputs & Pills --- */
         .input-row {
             display: flex; align-items: center; justify-content: space-between;
             padding: 14px 0; border-bottom: 1px solid var(--glass-border);
@@ -169,7 +193,6 @@
         .input-row input::placeholder { color: rgba(255, 255, 255, 0.2); }
         .input-row input:focus { color: var(--accent); }
 
-        /* --- Block Inputs --- */
         .input-block { margin-bottom: 20px; }
         .input-block:last-child { margin-bottom: 0; }
         .input-block label { display: block; font-size: 13px; color: var(--text-muted); margin-bottom: 10px; font-weight: 500;}
@@ -180,7 +203,6 @@
         }
         .input-block textarea:focus { border-color: rgba(245, 158, 11, 0.5); background: rgba(0,0,0,0.4); }
 
-        /* --- Activities Pills --- */
         .activities-container { display: flex; flex-wrap: wrap; gap: 10px; }
         .activity-pill {
             background: var(--input-bg); border: 1px solid transparent;
@@ -189,9 +211,7 @@
             display: flex; align-items: center; gap: 8px; user-select: none;
         }
         .activity-pill:hover { background: var(--glass-hover); }
-        .activity-pill.active {
-            background: rgba(245, 158, 11, 0.15); border-color: var(--accent); color: var(--accent);
-        }
+        .activity-pill.active { background: rgba(245, 158, 11, 0.15); border-color: var(--accent); color: var(--accent); }
         .activity-pill input { display: none; }
 
         /* --- OCR Scanner UI --- */
@@ -212,7 +232,6 @@
         }
         .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 12px 30px rgba(245, 158, 11, 0.4); }
 
-        /* Custom Scrollbar */
         ::-webkit-scrollbar { width: 6px; }
         ::-webkit-scrollbar-track { background: transparent; }
         ::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.1); border-radius: 10px; }
@@ -231,7 +250,6 @@
         </div>
         
         <ul class="nav-menu">
-            
             <li class="nav-item-container">
                 <div class="nav-item active" id="overviewToggle">
                     <i data-lucide="layout-dashboard"></i> SITUATION OVERVIEW
@@ -292,7 +310,6 @@
                 <h1>Situational Report</h1>
                 
                 <div style="display: flex; align-items: center; gap: 15px; flex-wrap: wrap;">
-                    
                     <div style="display: flex; align-items: center; gap: 10px;">
                         <label style="font-size: 13px; color: var(--text-muted); font-weight: 500;">Reporting Agency:</label>
                         <select class="top-agency-select" id="mainReportingAgency">
@@ -354,60 +371,44 @@
                             </optgroup>
                         </select>
                     </div>
-
                 </div>
             </div>
             
             <div style="text-align: right;">
                 <label style="font-size: 12px; color: var(--text-muted); font-weight: 500; display: block; margin-bottom: 5px;">Report As Of:</label>
-                <input type="datetime-local" style="background: var(--input-bg); border: none; color: white; padding: 10px 15px; border-radius: 10px; outline: none; font-family: 'Inter', sans-serif;">
+                <div class="datetime-wrapper">
+                    <i data-lucide="calendar-clock" style="color: var(--accent); width: 16px; height: 16px;"></i>
+                    <input type="datetime-local" class="custom-datetime">
+                </div>
             </div>
         </div>
 
         <form id="sitrepForm">
-            <div class="dashboard-grid">
+            <div class="dashboard-grid" id="mainDashboardGrid">
                 
-                <div class="card">
+                <div id="dashboardPlaceholder" style="grid-column: span 2; text-align: center; padding: 60px; color: var(--text-muted); background: var(--glass-bg); border-radius: 24px; border: 1px dashed var(--glass-border);">
+                    <i data-lucide="clipboard-edit" style="width: 48px; height: 48px; color: rgba(255,255,255,0.2); margin-bottom: 15px;"></i>
+                    <h3 style="font-size: 16px; font-weight: 500; color: var(--text-main);">No Agency Selected</h3>
+                    <p style="font-size: 13px; margin-top: 5px;">Please select a reporting agency from the top menu to view the relevant report format.</p>
+                </div>
+
+                <div class="card ldrmc-card">
                     <div class="card-title"><i data-lucide="cloud-rain"></i> General Status</div>
-                    <div class="input-row">
-                        <label>a. Weather Condition</label>
-                        <input type="text" placeholder="Tap to type...">
-                    </div>
-                    <div class="input-row">
-                        <label>b. Affected Population</label>
-                        <input type="text" placeholder="Tap to type...">
-                    </div>
-                    <div class="input-row">
-                        <label>c. Forced Evacuation</label>
-                        <input type="text" placeholder="Tap to type...">
-                    </div>
-                    <div class="input-row">
-                        <label>d. Casualty</label>
-                        <input type="text" placeholder="E.G., ZERO CASUALTIES">
-                    </div>
+                    <div class="input-row"><label>a. Weather Condition</label><input type="text" placeholder="Tap to type..."></div>
+                    <div class="input-row"><label>b. Affected Population</label><input type="text" placeholder="Tap to type..."></div>
+                    <div class="input-row"><label>c. Forced Evacuation</label><input type="text" placeholder="Tap to type..."></div>
+                    <div class="input-row"><label>d. Casualty</label><input type="text" placeholder="E.G., ZERO CASUALTIES"></div>
                 </div>
 
-                <div class="card">
+                <div class="card ldrmc-card">
                     <div class="card-title"><i data-lucide="alert-triangle"></i> Damages & Interruptions</div>
-                    <div class="input-row">
-                        <label>e. Class/Work Suspension</label>
-                        <input type="text" placeholder="Tap to type...">
-                    </div>
-                    <div class="input-row">
-                        <label>f. Flooded Areas</label>
-                        <input type="text" placeholder="Tap to type...">
-                    </div>
-                    <div class="input-row">
-                        <label>j. Power & Water</label>
-                        <input type="text" placeholder="Tap to type...">
-                    </div>
-                    <div class="input-row">
-                        <label>k. Other Incidents</label>
-                        <input type="text" placeholder="Tap to type...">
-                    </div>
+                    <div class="input-row"><label>e. Class/Work Suspension</label><input type="text" placeholder="Tap to type..."></div>
+                    <div class="input-row"><label>f. Flooded Areas</label><input type="text" placeholder="Tap to type..."></div>
+                    <div class="input-row"><label>j. Power & Water</label><input type="text" placeholder="Tap to type..."></div>
+                    <div class="input-row"><label>k. Other Incidents</label><input type="text" placeholder="Tap to type..."></div>
                 </div>
 
-                <div class="card full-width">
+                <div class="card full-width ldrmc-card">
                     <div class="card-title"><i data-lucide="map-pin"></i> Critical Damages</div>
                     <div class="dashboard-grid">
                         <div class="input-block">
@@ -415,7 +416,7 @@
                             <textarea placeholder="Provide detailed infrastructure report here..."></textarea>
                         </div>
                         <div class="input-block">
-                            <label>h. Damages on Agriculture (Auto-fills via OCR)</label>
+                            <label>h. Damages on Agriculture</label>
                             <textarea placeholder="Provide detailed agricultural damage report here..."></textarea>
                         </div>
                         <div class="input-block full-width" style="grid-column: span 2;">
@@ -425,7 +426,7 @@
                     </div>
                 </div>
 
-                <div class="card">
+                <div class="card other-card">
                     <div class="card-title"><i data-lucide="scan-line"></i> External Data Scanner</div>
                     <select class="top-agency-select" style="width: 100%; margin-bottom: 20px;">
                         <option value="agri">Agriculture (Crop Damage Table)</option>
@@ -442,27 +443,15 @@
                     </div>
                 </div>
 
-                <div class="card">
+                <div class="card other-card">
                     <div class="card-title"><i data-lucide="activity"></i> Other Activities Monitored</div>
                     <div class="activities-container">
-                        <label class="activity-pill">
-                            <input type="checkbox"> <i data-lucide="check-circle" width="14" height="14"></i> EOC Activated 24/7
-                        </label>
-                        <label class="activity-pill">
-                            <input type="checkbox"> <i data-lucide="check-circle" width="14" height="14"></i> MDRRMC Convened
-                        </label>
-                        <label class="activity-pill">
-                            <input type="checkbox"> <i data-lucide="check-circle" width="14" height="14"></i> PAGASA Monitored
-                        </label>
-                        <label class="activity-pill">
-                            <input type="checkbox"> <i data-lucide="check-circle" width="14" height="14"></i> Barangay Coordination
-                        </label>
-                        <label class="activity-pill">
-                            <input type="checkbox"> <i data-lucide="check-circle" width="14" height="14"></i> Validating Houses
-                        </label>
-                        <label class="activity-pill">
-                            <input type="checkbox"> <i data-lucide="check-circle" width="14" height="14"></i> Goods Prepositioned
-                        </label>
+                        <label class="activity-pill"><input type="checkbox"> <i data-lucide="check-circle" width="14" height="14"></i> EOC Activated 24/7</label>
+                        <label class="activity-pill"><input type="checkbox"> <i data-lucide="check-circle" width="14" height="14"></i> MDRRMC Convened</label>
+                        <label class="activity-pill"><input type="checkbox"> <i data-lucide="check-circle" width="14" height="14"></i> PAGASA Monitored</label>
+                        <label class="activity-pill"><input type="checkbox"> <i data-lucide="check-circle" width="14" height="14"></i> Barangay Coordination</label>
+                        <label class="activity-pill"><input type="checkbox"> <i data-lucide="check-circle" width="14" height="14"></i> Validating Houses</label>
+                        <label class="activity-pill"><input type="checkbox"> <i data-lucide="check-circle" width="14" height="14"></i> Goods Prepositioned</label>
                     </div>
                     <div class="input-row" style="margin-top: 20px; border-bottom: none;">
                         <input type="text" placeholder="+ TYPE CUSTOM ACTIVITY AND PRESS ENTER..." style="text-align: left; background: var(--input-bg); padding: 12px 15px; border-radius: 12px;">
@@ -471,7 +460,7 @@
 
             </div>
             
-            <button type="button" class="btn-primary" onclick="alert('Google Sheets Sync Triggered')">
+            <button type="button" class="btn-primary" id="submitBtn" onclick="alert('Google Sheets Sync Triggered')">
                 <i data-lucide="send" style="width: 16px; height: 16px; display: inline; vertical-align: middle; margin-right: 5px;"></i> Log to Database
             </button>
         </form>
@@ -490,20 +479,40 @@
             overviewIcon.classList.toggle('rotate');
         });
 
-        // --- Dynamic LGU Dropdown Logic ---
+        // --- Dynamic Dashboard Visibility Logic ---
         const mainAgencySelect = document.getElementById('mainReportingAgency');
         const lguSelectContainer = document.getElementById('lguSelectContainer');
         const lguSelect = document.getElementById('lguSelect');
+        const dashboardGrid = document.getElementById('mainDashboardGrid');
+        const submitBtn = document.getElementById('submitBtn');
 
         mainAgencySelect.addEventListener('change', function() {
-            // Trigger the secondary dropdown if "LDRRMC" is chosen
+            // First, clear any active modes
+            dashboardGrid.classList.remove('mode-ldrmc', 'mode-other');
+            
             if (this.value === 'LDRRMC') {
+                // Show LGU Dropdown
                 lguSelectContainer.classList.add('visible');
                 lguSelect.required = true;
-            } else {
+                
+                // Show Green Box Cards
+                dashboardGrid.classList.add('mode-ldrmc');
+                submitBtn.classList.add('visible');
+
+            } else if (this.value !== '') {
+                // Hide LGU Dropdown if active
                 lguSelectContainer.classList.remove('visible');
                 lguSelect.required = false;
                 lguSelect.value = ''; 
+                
+                // Show Red Box Cards (Other Agencies)
+                dashboardGrid.classList.add('mode-other');
+                submitBtn.classList.add('visible');
+            } else {
+                // Failsafe empty state
+                lguSelectContainer.classList.remove('visible');
+                lguSelect.required = false;
+                submitBtn.classList.remove('visible');
             }
         });
 
