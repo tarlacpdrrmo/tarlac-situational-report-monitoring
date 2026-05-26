@@ -103,7 +103,7 @@
 
         /* --- Main Content Styles --- */
         .main-content { flex: 1; padding: 50px 60px; overflow-y: auto; scroll-behavior: smooth; }
-        .header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 40px; position: relative; }
+        .header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 30px; position: relative; }
         .header h1 { font-size: 32px; font-weight: 600; letter-spacing: -0.5px; margin-bottom: 12px; }
         
         .top-agency-select {
@@ -118,6 +118,34 @@
         #lguSelectContainer { display: none; align-items: center; gap: 10px; opacity: 0; }
         #lguSelectContainer.visible { display: flex; opacity: 1; animation: fadeIn 0.3s ease forwards; }
         @keyframes fadeIn { from { opacity: 0; transform: translateX(-10px); } to { opacity: 1; transform: translateX(0); } }
+
+        /* --- Quick Stats Row (Card-based stats) --- */
+        .stats-row {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-bottom: 35px;
+        }
+        .stat-card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+            border: 1px solid var(--glass-border);
+            border-radius: 16px;
+            padding: 22px;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            transition: transform 0.3s ease, border-color 0.3s;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+        .stat-card:hover {
+            transform: translateY(-3px);
+            border-color: var(--accent);
+            background: rgba(25, 35, 55, 0.3);
+        }
+        .stat-icon { color: var(--accent); width: 22px; height: 22px; opacity: 0.8; }
+        .stat-title { font-size: 12px; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.5px; font-weight: 600; }
+        .stat-value { font-size: 22px; font-weight: 600; color: var(--text-main); letter-spacing: -0.5px;}
 
         /* --- Custom Datetime Picker Styling --- */
         .datetime-wrapper {
@@ -437,6 +465,40 @@
             </div>
         </div>
 
+        <div class="stats-row">
+            <div class="stat-card">
+                <div style="display: flex; justify-content: space-between; align-items: center;">
+                    <span class="stat-title">Latest Advisory</span>
+                    <i data-lucide="radio-tower" class="stat-icon"></i>
+                </div>
+                <span class="stat-value" style="color: #ef4444;">RED ALERT</span>
+            </div>
+            
+            <div class="stat-card">
+                <div style="display: flex; justify-content: space-between; align-items: center;">
+                    <span class="stat-title">Active Weather</span>
+                    <i data-lucide="cloud-lightning" class="stat-icon"></i>
+                </div>
+                <span class="stat-value">TYPHOON</span>
+            </div>
+            
+            <div class="stat-card">
+                <div style="display: flex; justify-content: space-between; align-items: center;">
+                    <span class="stat-title">Data Scanned</span>
+                    <i data-lucide="file-scan" class="stat-icon"></i>
+                </div>
+                <span class="stat-value">12 Logs</span>
+            </div>
+            
+            <div class="stat-card">
+                <div style="display: flex; justify-content: space-between; align-items: center;">
+                    <span class="stat-title">Active EOCs</span>
+                    <i data-lucide="tent" class="stat-icon"></i>
+                </div>
+                <span class="stat-value">4 Activated</span>
+            </div>
+        </div>
+
         <form id="sitrepForm">
             <div class="dashboard-grid" id="mainDashboardGrid">
                 
@@ -567,3 +629,212 @@
         // Initialize time inputs with current time
         function setInitialTime() {
             let now = new Date();
+            let h = now.getHours();
+            let m = now.getMinutes();
+            let ampm = h >= 12 ? 'PM' : 'AM';
+            
+            h = h % 12;
+            h = h ? h : 12; // the hour '0' should be '12'
+            
+            hrInput.value = h.toString().padStart(2, '0');
+            minInput.value = m.toString().padStart(2, '0');
+            
+            if(ampm === 'PM') {
+                btnPm.classList.add('active');
+                btnAm.classList.remove('active');
+            } else {
+                btnAm.classList.add('active');
+                btnPm.classList.remove('active');
+            }
+        }
+        
+        // Listeners for Digital Editor
+        hrInput.addEventListener('blur', formatTimeDisplay);
+        minInput.addEventListener('blur', formatTimeDisplay);
+        // Pressing Enter functions like blur
+        hrInput.addEventListener('keypress', (e) => { if(e.key === 'Enter') hrInput.blur(); });
+        minInput.addEventListener('keypress', (e) => { if(e.key === 'Enter') minInput.blur(); });
+
+        btnAm.addEventListener('click', (e) => { 
+            e.stopPropagation();
+            btnAm.classList.add('active'); 
+            btnPm.classList.remove('active'); 
+            formatTimeDisplay(); 
+        });
+        btnPm.addEventListener('click', (e) => { 
+            e.stopPropagation();
+            btnPm.classList.add('active'); 
+            btnAm.classList.remove('active'); 
+            formatTimeDisplay(); 
+        });
+
+        // --- Calendar Render ---
+        function renderCalendar(date) {
+            dtDays.innerHTML = '';
+            dtMonthYear.innerText = date.toLocaleString('default', { month: 'long', year: 'numeric' });
+            
+            const year = date.getFullYear();
+            const month = date.getMonth();
+            const firstDay = new Date(year, month, 1).getDay();
+            const daysInMonth = new Date(year, month + 1, 0).getDate();
+            const prevMonthDays = new Date(year, month, 0).getDate();
+            
+            // Prev month trailing days
+            for(let i = firstDay; i > 0; i--) {
+                const dayEl = document.createElement('div');
+                dayEl.className = 'dt-day other-month';
+                dayEl.innerText = prevMonthDays - i + 1;
+                dtDays.appendChild(dayEl);
+            }
+            
+            // Current month days
+            for(let i = 1; i <= daysInMonth; i++) {
+                const dayEl = document.createElement('div');
+                dayEl.className = 'dt-day';
+                if(isDateSelected && i === selectedDate.getDate() && month === selectedDate.getMonth() && year === selectedDate.getFullYear()) {
+                    dayEl.classList.add('active');
+                }
+                dayEl.innerText = i;
+                dayEl.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    selectedDate = new Date(year, month, i);
+                    isDateSelected = true;
+                    // Format time immediately upon clicking a date
+                    let ampm = btnAm.classList.contains('active') ? 'AM' : 'PM';
+                    let timeStr = `${hrInput.value}:${minInput.value} ${ampm}`;
+                    dtDisplayText.innerText = `${formatDate(selectedDate)}  ${timeStr}`;
+                    
+                    renderCalendar(currentDate); 
+                    dtPopup.classList.remove('show');
+                });
+                dtDays.appendChild(dayEl);
+            }
+            
+            // Next month leading days (fill 42 slots)
+            const totalCells = dtDays.children.length;
+            for(let i = 1; i <= 42 - totalCells; i++) {
+                const dayEl = document.createElement('div');
+                dayEl.className = 'dt-day other-month';
+                dayEl.innerText = i;
+                dtDays.appendChild(dayEl);
+            }
+        }
+
+        // Init Setup
+        setInitialTime();
+
+        // Popup Handlers
+        dtTrigger.addEventListener('click', (e) => {
+            e.stopPropagation();
+            dtPopup.classList.toggle('show');
+            renderCalendar(currentDate);
+        });
+        document.getElementById('dtPrev').addEventListener('click', (e) => {
+            e.stopPropagation();
+            currentDate.setMonth(currentDate.getMonth() - 1);
+            renderCalendar(currentDate);
+        });
+        document.getElementById('dtNext').addEventListener('click', (e) => {
+            e.stopPropagation();
+            currentDate.setMonth(currentDate.getMonth() + 1);
+            renderCalendar(currentDate);
+        });
+        document.getElementById('dtToday').addEventListener('click', (e) => {
+            e.stopPropagation();
+            currentDate = new Date();
+            selectedDate = new Date();
+            isDateSelected = true;
+            setInitialTime(); // Reset time to exactly right now
+            let ampm = btnAm.classList.contains('active') ? 'AM' : 'PM';
+            let timeStr = `${hrInput.value}:${minInput.value} ${ampm}`;
+            dtDisplayText.innerText = `${formatDate(selectedDate)}  ${timeStr}`;
+            renderCalendar(currentDate);
+            dtPopup.classList.remove('show');
+        });
+        document.getElementById('dtClear').addEventListener('click', (e) => {
+            e.stopPropagation();
+            isDateSelected = false;
+            dtDisplayText.innerText = 'Select Date & Time';
+            setInitialTime(); // Revert back to system time on clear
+            renderCalendar(currentDate);
+        });
+        
+        // Prevent popup closing when clicking inside it
+        dtPopup.addEventListener('click', (e) => {
+            e.stopPropagation();
+        });
+
+        // Close when clicking outside
+        document.addEventListener('click', (e) => {
+            if(!dtPopup.contains(e.target) && !dtTrigger.contains(e.target)) {
+                dtPopup.classList.remove('show');
+            }
+        });
+
+        // --- Sidebar Dropdown Logic ---
+        const overviewToggle = document.getElementById('overviewToggle');
+        const overviewSubMenu = document.getElementById('overviewSubMenu');
+        const overviewIcon = overviewToggle.querySelector('.dropdown-icon');
+
+        overviewToggle.addEventListener('click', () => {
+            overviewSubMenu.classList.toggle('open');
+            overviewIcon.classList.toggle('rotate');
+        });
+
+        // --- Dynamic Dashboard Visibility Logic ---
+        const mainAgencySelect = document.getElementById('mainReportingAgency');
+        const lguSelectContainer = document.getElementById('lguSelectContainer');
+        const lguSelect = document.getElementById('lguSelect');
+        const dashboardGrid = document.getElementById('mainDashboardGrid');
+        const submitBtn = document.getElementById('submitBtn');
+
+        mainAgencySelect.addEventListener('change', function() {
+            dashboardGrid.classList.remove('mode-ldrmc', 'mode-other');
+            if (this.value === 'LDRRMC') {
+                lguSelectContainer.classList.add('visible');
+                lguSelect.required = true;
+                dashboardGrid.classList.add('mode-ldrmc');
+                submitBtn.classList.add('visible');
+            } else if (this.value !== '') {
+                lguSelectContainer.classList.remove('visible');
+                lguSelect.required = false;
+                lguSelect.value = ''; 
+                dashboardGrid.classList.add('mode-other');
+                submitBtn.classList.add('visible');
+            } else {
+                lguSelectContainer.classList.remove('visible');
+                lguSelect.required = false;
+                submitBtn.classList.remove('visible');
+            }
+        });
+
+        // --- Auto-Uppercase Feature ---
+        const textInputs = document.querySelectorAll('input[type="text"], textarea');
+        textInputs.forEach(input => {
+            input.addEventListener('input', function() {
+                const start = this.selectionStart;
+                const end = this.selectionEnd;
+                this.value = this.value.toUpperCase();
+                this.setSelectionRange(start, end);
+            });
+        });
+
+        // --- Scanner Trigger ---
+        const scannerArea = document.querySelector('.scanner-area');
+        const fileUpload = document.getElementById('fileUpload');
+        scannerArea.addEventListener('click', () => { fileUpload.click(); });
+
+        // --- Pill Button Toggle Logic ---
+        const pills = document.querySelectorAll('.activity-pill');
+        pills.forEach(pill => {
+            pill.addEventListener('change', function(e) {
+                if(e.target.checked) {
+                    this.classList.add('active');
+                } else {
+                    this.classList.remove('active');
+                }
+            });
+        });
+    </script>
+</body>
+</html>
