@@ -22,7 +22,6 @@
         * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Inter', sans-serif; }
 
         body {
-            /* Animated Weather Disturbance Background */
             background: linear-gradient(-45deg, #0f172a, #1e293b, #0f2027, #203a43);
             background-size: 400% 400%;
             animation: stormFront 20s ease infinite;
@@ -66,7 +65,6 @@
         .profile-info p { font-size: 11px; color: var(--text-muted); letter-spacing: 0.5px; text-transform: uppercase; margin-top: 2px;}
 
         .nav-menu { list-style: none; display: flex; flex-direction: column; gap: 6px; }
-        
         .nav-item-container { display: flex; flex-direction: column; }
         
         .nav-item {
@@ -81,7 +79,6 @@
             border: 1px solid var(--glass-border); box-shadow: 0 4px 15px rgba(0,0,0,0.2);
         }
 
-        /* Sidebar Dropdown Styles */
         .dropdown-icon { margin-left: auto; transition: transform 0.3s ease; width: 16px; height: 16px; }
         .dropdown-icon.rotate { transform: rotate(180deg); }
         
@@ -105,12 +102,8 @@
         .nav-sub-item:hover { background: var(--glass-hover); color: var(--text-main); }
 
         /* --- Main Content Styles --- */
-        .main-content { 
-            flex: 1; padding: 50px 60px; overflow-y: auto; 
-            scroll-behavior: smooth;
-        }
-
-        .header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 40px; }
+        .main-content { flex: 1; padding: 50px 60px; overflow-y: auto; scroll-behavior: smooth; }
+        .header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 40px; position: relative; }
         .header h1 { font-size: 32px; font-weight: 600; letter-spacing: -0.5px; margin-bottom: 12px; }
         
         .top-agency-select {
@@ -122,47 +115,76 @@
         select option, select optgroup { background: #1e293b; color: white; font-family: 'Inter', sans-serif;} 
         optgroup { font-weight: 600; color: var(--accent); }
 
-        /* Conditional LGU Dropdown */
         #lguSelectContainer { display: none; align-items: center; gap: 10px; opacity: 0; }
         #lguSelectContainer.visible { display: flex; opacity: 1; animation: fadeIn 0.3s ease forwards; }
         @keyframes fadeIn { from { opacity: 0; transform: translateX(-10px); } to { opacity: 1; transform: translateX(0); } }
 
-        /* Custom Datetime Picker Styling */
+        /* --- Custom Datetime Picker Styling --- */
         .datetime-wrapper {
-            display: inline-flex; align-items: center; gap: 10px;
+            display: inline-flex; align-items: center; gap: 10px; cursor: pointer;
             background: rgba(0,0,0,0.3); border: 1px solid var(--glass-border);
-            border-radius: 12px; padding: 8px 14px; transition: 0.3s;
-            box-shadow: inset 0 2px 5px rgba(0,0,0,0.2);
+            border-radius: 12px; padding: 10px 16px; transition: 0.3s;
+            box-shadow: inset 0 2px 5px rgba(0,0,0,0.2); user-select: none;
         }
-        .datetime-wrapper:hover, .datetime-wrapper:focus-within {
+        .datetime-wrapper:hover {
             border-color: var(--accent); background: rgba(0,0,0,0.4);
             box-shadow: 0 0 10px rgba(245, 158, 11, 0.2), inset 0 2px 5px rgba(0,0,0,0.2);
         }
-        .custom-datetime {
-            background: transparent; border: none; color: var(--text-main);
-            font-family: 'Inter', sans-serif; font-size: 13px; font-weight: 500;
-            outline: none; cursor: pointer;
+        #dtDisplayText { font-size: 13px; font-weight: 500; }
+
+        /* Custom Popup Grid */
+        .dt-popup {
+            display: none; position: absolute; top: calc(100% + 10px); right: 0;
+            background: rgba(22, 30, 44, 0.95); backdrop-filter: blur(25px); -webkit-backdrop-filter: blur(25px);
+            border: 1px solid var(--glass-border); border-radius: 16px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.5); z-index: 100;
+            width: 420px; flex-direction: row; text-align: left;
+            overflow: hidden;
         }
-        /* Forces the native calendar icon to turn white so it fits the theme */
-        .custom-datetime::-webkit-calendar-picker-indicator {
-            cursor: pointer; filter: invert(1); opacity: 0.6; transition: 0.2s;
-        }
-        .custom-datetime::-webkit-calendar-picker-indicator:hover { opacity: 1; }
+        .dt-popup.show { display: flex; animation: slideDown 0.2s ease forwards; }
+        @keyframes slideDown { from { opacity: 0; transform: translateY(-10px); } to { opacity: 1; transform: translateY(0); } }
+
+        .dt-calendar-sec { flex: 1.2; padding: 20px; border-right: 1px solid var(--glass-border); display: flex; flex-direction: column;}
+        .dt-time-sec { flex: 0.8; padding: 20px; display: flex; flex-direction: column; align-items: center; background: rgba(0,0,0,0.1); }
+
+        .dt-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; font-size: 14px; font-weight: 600; }
+        .dt-nav i { width: 16px; height: 16px; cursor: pointer; color: var(--text-muted); transition: 0.2s; }
+        .dt-nav i:hover { color: var(--text-main); }
+        .dt-weekdays { display: grid; grid-template-columns: repeat(7, 1fr); gap: 5px; text-align: center; font-size: 11px; color: var(--text-muted); margin-bottom: 10px; font-weight: 500;}
+        .dt-days { display: grid; grid-template-columns: repeat(7, 1fr); gap: 5px; text-align: center; font-size: 12px; }
+        .dt-day { padding: 6px 0; cursor: pointer; border-radius: 6px; transition: 0.2s; color: var(--text-muted); font-weight: 500;}
+        .dt-day:hover { background: var(--glass-hover); color: var(--text-main); }
+        .dt-day.active { background: rgba(245, 158, 11, 0.2); color: var(--accent); font-weight: 600; border: 1px solid var(--accent); }
+        .dt-day.other-month { opacity: 0.3; }
+        
+        .dt-actions { display: flex; justify-content: space-between; font-size: 12px; margin-top: auto; padding-top: 15px;}
+        .dt-actions span { cursor: pointer; transition: 0.2s; font-weight: 500; }
+        .dt-actions span:hover { opacity: 0.8; }
+
+        /* Analog Clock */
+        .analog-clock { width: 110px; height: 110px; border-radius: 50%; border: 2px solid rgba(255,255,255,0.05); position: relative; margin: 25px 0; background: rgba(0,0,0,0.25); box-shadow: inset 0 2px 10px rgba(0,0,0,0.3); }
+        .clock-face { width: 100%; height: 100%; position: relative; }
+        .clock-center { width: 6px; height: 6px; background: var(--accent); border-radius: 50%; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); z-index: 10; }
+        .hand { position: absolute; bottom: 50%; left: 50%; transform-origin: bottom center; border-radius: 4px; z-index: 5; transition: transform 0.05s cubic-bezier(0.4, 2.08, 0.55, 0.44); }
+        .hour-hand { width: 3px; height: 30px; margin-left: -1.5px; background: var(--text-main); }
+        .min-hand { width: 2px; height: 40px; margin-left: -1px; background: var(--text-muted); }
+        .sec-hand { width: 1px; height: 45px; margin-left: -0.5px; background: var(--accent); z-index: 6; }
+        
+        .clock-num { position: absolute; font-size: 10px; color: rgba(255,255,255,0.4); font-weight: 500; transform: translate(-50%, -50%); }
+        .num12 { top: 12px; left: 50%; }
+        .num3 { top: 50%; right: 2px; }
+        .num6 { bottom: 0px; left: 50%; }
+        .num9 { top: 50%; left: 10px; }
+        
+        .dt-time-header { font-size: 12px; font-weight: 600; display: flex; justify-content: space-between; width: 100%; align-items: center; background: rgba(0,0,0,0.2); padding: 8px 12px; border-radius: 8px; border: 1px solid var(--glass-border); cursor: pointer;}
+        .dt-time-footer { font-size: 11px; color: var(--text-muted); display: flex; gap: 8px; align-items: center; margin-top: auto; font-weight: 500;}
 
         /* --- Dynamic Dashboard Grid Logic --- */
         .dashboard-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
-        
-        /* Hide all cards by default */
         .ldrmc-card, .other-card { display: none; }
-        
-        /* Show specific cards based on the form's mode */
         .dashboard-grid.mode-ldrmc .ldrmc-card { display: block; }
         .dashboard-grid.mode-other .other-card { display: block; }
-        
-        /* Ensure the empty state placeholder vanishes when active */
         .mode-ldrmc #dashboardPlaceholder, .mode-other #dashboardPlaceholder { display: none; }
-
-        /* Form Button hiding logic */
         #submitBtn { display: none; }
         #submitBtn.visible { display: block; }
 
@@ -173,63 +195,35 @@
             box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3);
         }
         .card.full-width { grid-column: span 2; }
-        .card-title {
-            font-size: 13px; text-transform: uppercase; letter-spacing: 1px;
-            color: var(--accent); margin-bottom: 25px; font-weight: 600;
-            display: flex; align-items: center; gap: 8px;
-        }
+        .card-title { font-size: 13px; text-transform: uppercase; letter-spacing: 1px; color: var(--accent); margin-bottom: 25px; font-weight: 600; display: flex; align-items: center; gap: 8px; }
 
         /* --- Inputs & Pills --- */
-        .input-row {
-            display: flex; align-items: center; justify-content: space-between;
-            padding: 14px 0; border-bottom: 1px solid var(--glass-border);
-        }
+        .input-row { display: flex; align-items: center; justify-content: space-between; padding: 14px 0; border-bottom: 1px solid var(--glass-border); }
         .input-row:last-child { border-bottom: none; padding-bottom: 0; }
         .input-row label { font-size: 13px; color: var(--text-muted); font-weight: 500; flex: 1; }
-        .input-row input {
-            flex: 1; background: transparent; border: none; color: var(--text-main);
-            font-size: 14px; text-align: right; outline: none; transition: color 0.2s;
-        }
+        .input-row input { flex: 1; background: transparent; border: none; color: var(--text-main); font-size: 14px; text-align: right; outline: none; transition: color 0.2s; }
         .input-row input::placeholder { color: rgba(255, 255, 255, 0.2); }
         .input-row input:focus { color: var(--accent); }
 
         .input-block { margin-bottom: 20px; }
         .input-block:last-child { margin-bottom: 0; }
         .input-block label { display: block; font-size: 13px; color: var(--text-muted); margin-bottom: 10px; font-weight: 500;}
-        .input-block textarea {
-            width: 100%; background: var(--input-bg); border: 1px solid transparent;
-            color: var(--text-main); font-size: 14px; padding: 15px; border-radius: 16px;
-            resize: vertical; min-height: 80px; outline: none; transition: 0.3s;
-        }
+        .input-block textarea { width: 100%; background: var(--input-bg); border: 1px solid transparent; color: var(--text-main); font-size: 14px; padding: 15px; border-radius: 16px; resize: vertical; min-height: 80px; outline: none; transition: 0.3s; }
         .input-block textarea:focus { border-color: rgba(245, 158, 11, 0.5); background: rgba(0,0,0,0.4); }
 
         .activities-container { display: flex; flex-wrap: wrap; gap: 10px; }
-        .activity-pill {
-            background: var(--input-bg); border: 1px solid transparent;
-            padding: 10px 18px; border-radius: 30px; font-size: 13px;
-            color: var(--text-muted); cursor: pointer; transition: 0.3s;
-            display: flex; align-items: center; gap: 8px; user-select: none;
-        }
+        .activity-pill { background: var(--input-bg); border: 1px solid transparent; padding: 10px 18px; border-radius: 30px; font-size: 13px; color: var(--text-muted); cursor: pointer; transition: 0.3s; display: flex; align-items: center; gap: 8px; user-select: none; }
         .activity-pill:hover { background: var(--glass-hover); }
         .activity-pill.active { background: rgba(245, 158, 11, 0.15); border-color: var(--accent); color: var(--accent); }
         .activity-pill input { display: none; }
 
         /* --- OCR Scanner UI --- */
-        .scanner-area {
-            border: 2px dashed rgba(245, 158, 11, 0.3); border-radius: 16px;
-            padding: 40px; text-align: center; cursor: pointer; transition: 0.3s;
-            background: rgba(0,0,0,0.15);
-        }
+        .scanner-area { border: 2px dashed rgba(245, 158, 11, 0.3); border-radius: 16px; padding: 60px 40px; text-align: center; cursor: pointer; transition: 0.3s; background: rgba(0,0,0,0.15); }
         .scanner-area:hover { background: rgba(0,0,0,0.3); border-color: var(--accent); }
-        .scanner-icon { color: var(--accent); margin-bottom: 15px; }
+        .scanner-icon { color: var(--text-main); margin-bottom: 15px; }
 
         /* --- Buttons --- */
-        .btn-primary {
-            background: linear-gradient(135deg, var(--accent), #d97706);
-            color: white; border: none; padding: 15px 30px; border-radius: 14px;
-            font-size: 15px; font-weight: 500; cursor: pointer; transition: 0.3s;
-            float: right; margin-top: 30px; box-shadow: 0 8px 25px rgba(245, 158, 11, 0.2);
-        }
+        .btn-primary { background: linear-gradient(135deg, var(--accent), #d97706); color: white; border: none; padding: 15px 30px; border-radius: 14px; font-size: 15px; font-weight: 500; cursor: pointer; transition: 0.3s; float: right; margin-top: 30px; box-shadow: 0 8px 25px rgba(245, 158, 11, 0.2); }
         .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 12px 30px rgba(245, 158, 11, 0.4); }
 
         ::-webkit-scrollbar { width: 6px; }
@@ -314,7 +308,6 @@
                         <label style="font-size: 13px; color: var(--text-muted); font-weight: 500;">Reporting Agency:</label>
                         <select class="top-agency-select" id="mainReportingAgency">
                             <option value="" disabled selected>Select Agency...</option>
-                            
                             <optgroup label="PDRRM COUNCIL">
                                 <option value="PDRRMO">PDRRMO</option>
                                 <option value="PSWDO">PSWDO</option>
@@ -330,11 +323,9 @@
                                 <option value="BFP- TARLAC PROVINCE">BFP- TARLAC PROVINCE</option>
                                 <option value="PEO/PGSO/DEPED/DILG/TAU/CARITAS TARLAC">PEO/PGSO/DEPED/DILG/TAU/CARITAS TARLAC</option>
                             </optgroup>
-
                             <optgroup label="LDRRMCs">
                                 <option value="LDRRMC">LDRRMC (MDRRMO / CDRRMO)</option>
                             </optgroup>
-
                             <optgroup label="OTHER PARTNER AGENCIES/GROUP">
                                 <option value="7TH CIVIL MILITARY OP. BN, PA">7TH CIVIL MILITARY OPERATION BATTALION, PA</option>
                                 <option value="ARMOR DIVISION, CAMP O'DONNEL, PA">ARMOR DIVISION, CAMP O'DONNEL, PA</option>
@@ -374,11 +365,54 @@
                 </div>
             </div>
             
-            <div style="text-align: right;">
-                <label style="font-size: 12px; color: var(--text-muted); font-weight: 500; display: block; margin-bottom: 5px;">Report As Of:</label>
-                <div class="datetime-wrapper">
+            <div style="text-align: right; position: relative;">
+                <label style="font-size: 12px; color: var(--text-muted); font-weight: 500; display: block; margin-bottom: 5px;">Report Date & Time</label>
+                
+                <div class="datetime-wrapper" id="customDtTrigger">
                     <i data-lucide="calendar-clock" style="color: var(--accent); width: 16px; height: 16px;"></i>
-                    <input type="datetime-local" class="custom-datetime">
+                    <span id="dtDisplayText">Select Date & Time</span>
+                </div>
+
+                <div class="dt-popup" id="dtPopup">
+                    <div class="dt-calendar-sec">
+                        <div class="dt-header">
+                            <span id="dtMonthYear">May 2026</span>
+                            <div class="dt-nav" style="display: flex; gap: 10px;">
+                                <i data-lucide="arrow-up" id="dtPrev"></i>
+                                <i data-lucide="arrow-down" id="dtNext"></i>
+                            </div>
+                        </div>
+                        <div class="dt-weekdays">
+                            <span>Su</span><span>Mo</span><span>Tu</span><span>We</span><span>Th</span><span>Fr</span><span>Sa</span>
+                        </div>
+                        <div class="dt-days" id="dtDays">
+                            </div>
+                        <div class="dt-actions">
+                            <span id="dtClear">Clear</span>
+                            <span style="color: var(--accent);" id="dtToday">Today</span>
+                        </div>
+                    </div>
+                    <div class="dt-time-sec">
+                        <div class="dt-time-header">
+                            <span id="dtDigitalTime">11:17 AM</span>
+                            <i data-lucide="chevron-down" style="width:14px; color: var(--text-muted);"></i>
+                        </div>
+                        <div class="analog-clock">
+                            <div class="clock-face">
+                                <div class="clock-num num12">12</div>
+                                <div class="clock-num num3">3</div>
+                                <div class="clock-num num6">6</div>
+                                <div class="clock-num num9">9</div>
+                                <div class="hand hour-hand" id="hourHand"></div>
+                                <div class="hand min-hand" id="minHand"></div>
+                                <div class="hand sec-hand" id="secHand"></div>
+                                <div class="clock-center"></div>
+                            </div>
+                        </div>
+                        <div class="dt-time-footer">
+                            <span style="background: rgba(0,0,0,0.3); padding: 3px 8px; border-radius: 4px; font-weight: 600;">000</span> : <span id="dtDigitalTimeSmall">11:17 AM</span>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -428,17 +462,10 @@
 
                 <div class="card other-card">
                     <div class="card-title"><i data-lucide="scan-line"></i> External Data Scanner</div>
-                    <select class="top-agency-select" style="width: 100%; margin-bottom: 20px;">
-                        <option value="agri">Agriculture (Crop Damage Table)</option>
-                        <option value="pho">Provincial Health Office (PHO Table)</option>
-                        <option value="pswdo">PSWDO Report</option>
-                        <option value="custom">+ Add / Edit Custom Format...</option>
-                    </select>
-                    
                     <div class="scanner-area">
-                        <i data-lucide="image-plus" class="scanner-icon" width="36" height="36"></i>
-                        <p style="font-size: 14px; font-weight: 500; color: var(--text-main);">Drop document image here</p>
-                        <p style="font-size: 12px; color: var(--text-muted); margin-top: 8px;">JPEG or PNG (Tables auto-extract)</p>
+                        <i data-lucide="scan" class="scanner-icon" width="42" height="42"></i>
+                        <p style="font-size: 15px; font-weight: 500; color: var(--text-main); margin-bottom: 5px;">Scan Status: IDLE</p>
+                        <p style="font-size: 13px; color: var(--text-muted);">Drop document image here to begin data extraction.</p>
                         <input type="file" id="fileUpload" style="display: none;" accept="image/*">
                     </div>
                 </div>
@@ -469,6 +496,135 @@
     <script>
         lucide.createIcons();
 
+        // --- Custom Datetime Picker Logic ---
+        const dtTrigger = document.getElementById('customDtTrigger');
+        const dtPopup = document.getElementById('dtPopup');
+        const dtDisplayText = document.getElementById('dtDisplayText');
+        const dtDays = document.getElementById('dtDays');
+        const dtMonthYear = document.getElementById('dtMonthYear');
+        
+        let currentDate = new Date();
+        let selectedDate = new Date();
+        let isDateSelected = false;
+        
+        const formatTime = (date) => date.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' });
+        const formatDate = (date) => {
+            const d = date.getDate();
+            const m = date.toLocaleString('default', { month: 'short' });
+            const y = date.getFullYear();
+            return `${d} ${m} ${y}`;
+        };
+
+        // Real-time Analog Clock
+        function updateClock() {
+            const now = new Date();
+            const sec = now.getSeconds();
+            const min = now.getMinutes();
+            const hr = now.getHours();
+            
+            const secDeg = ((sec / 60) * 360);
+            const minDeg = ((min / 60) * 360) + ((sec/60)*6);
+            const hrDeg = ((hr / 12) * 360) + ((min/60)*30);
+            
+            document.getElementById('secHand').style.transform = `rotate(${secDeg}deg)`;
+            document.getElementById('minHand').style.transform = `rotate(${minDeg}deg)`;
+            document.getElementById('hourHand').style.transform = `rotate(${hrDeg}deg)`;
+            
+            const timeStr = formatTime(now);
+            document.getElementById('dtDigitalTime').innerText = timeStr;
+            document.getElementById('dtDigitalTimeSmall').innerText = timeStr;
+            
+            if(isDateSelected) {
+                const datePart = dtDisplayText.innerText.split(' ').slice(0,3).join(' ');
+                dtDisplayText.innerText = `${datePart}  ${timeStr}`;
+            }
+        }
+        setInterval(updateClock, 1000);
+        updateClock();
+
+        // Calendar Render
+        function renderCalendar(date) {
+            dtDays.innerHTML = '';
+            dtMonthYear.innerText = date.toLocaleString('default', { month: 'long', year: 'numeric' });
+            
+            const year = date.getFullYear();
+            const month = date.getMonth();
+            const firstDay = new Date(year, month, 1).getDay();
+            const daysInMonth = new Date(year, month + 1, 0).getDate();
+            const prevMonthDays = new Date(year, month, 0).getDate();
+            
+            // Prev month trailing days
+            for(let i = firstDay; i > 0; i--) {
+                const dayEl = document.createElement('div');
+                dayEl.className = 'dt-day other-month';
+                dayEl.innerText = prevMonthDays - i + 1;
+                dtDays.appendChild(dayEl);
+            }
+            
+            // Current month days
+            for(let i = 1; i <= daysInMonth; i++) {
+                const dayEl = document.createElement('div');
+                dayEl.className = 'dt-day';
+                if(isDateSelected && i === selectedDate.getDate() && month === selectedDate.getMonth() && year === selectedDate.getFullYear()) {
+                    dayEl.classList.add('active');
+                }
+                dayEl.innerText = i;
+                dayEl.addEventListener('click', () => {
+                    selectedDate = new Date(year, month, i);
+                    isDateSelected = true;
+                    dtDisplayText.innerText = `${formatDate(selectedDate)}  ${formatTime(new Date())}`;
+                    renderCalendar(currentDate); 
+                    dtPopup.classList.remove('show');
+                });
+                dtDays.appendChild(dayEl);
+            }
+            
+            // Next month leading days (fill 42 slots)
+            const totalCells = dtDays.children.length;
+            for(let i = 1; i <= 42 - totalCells; i++) {
+                const dayEl = document.createElement('div');
+                dayEl.className = 'dt-day other-month';
+                dayEl.innerText = i;
+                dtDays.appendChild(dayEl);
+            }
+        }
+
+        dtTrigger.addEventListener('click', (e) => {
+            e.stopPropagation();
+            dtPopup.classList.toggle('show');
+            renderCalendar(currentDate);
+        });
+        document.getElementById('dtPrev').addEventListener('click', (e) => {
+            e.stopPropagation();
+            currentDate.setMonth(currentDate.getMonth() - 1);
+            renderCalendar(currentDate);
+        });
+        document.getElementById('dtNext').addEventListener('click', (e) => {
+            e.stopPropagation();
+            currentDate.setMonth(currentDate.getMonth() + 1);
+            renderCalendar(currentDate);
+        });
+        document.getElementById('dtToday').addEventListener('click', (e) => {
+            e.stopPropagation();
+            currentDate = new Date();
+            selectedDate = new Date();
+            isDateSelected = true;
+            dtDisplayText.innerText = `${formatDate(selectedDate)}  ${formatTime(new Date())}`;
+            renderCalendar(currentDate);
+            dtPopup.classList.remove('show');
+        });
+        document.getElementById('dtClear').addEventListener('click', (e) => {
+            e.stopPropagation();
+            isDateSelected = false;
+            dtDisplayText.innerText = 'Select Date & Time';
+            renderCalendar(currentDate);
+        });
+        document.addEventListener('click', (e) => {
+            if(!dtPopup.contains(e.target) && !dtTrigger.contains(e.target)) {
+                dtPopup.classList.remove('show');
+            }
+        });
+
         // --- Sidebar Dropdown Logic ---
         const overviewToggle = document.getElementById('overviewToggle');
         const overviewSubMenu = document.getElementById('overviewSubMenu');
@@ -487,29 +643,19 @@
         const submitBtn = document.getElementById('submitBtn');
 
         mainAgencySelect.addEventListener('change', function() {
-            // First, clear any active modes
             dashboardGrid.classList.remove('mode-ldrmc', 'mode-other');
-            
             if (this.value === 'LDRRMC') {
-                // Show LGU Dropdown
                 lguSelectContainer.classList.add('visible');
                 lguSelect.required = true;
-                
-                // Show Green Box Cards
                 dashboardGrid.classList.add('mode-ldrmc');
                 submitBtn.classList.add('visible');
-
             } else if (this.value !== '') {
-                // Hide LGU Dropdown if active
                 lguSelectContainer.classList.remove('visible');
                 lguSelect.required = false;
                 lguSelect.value = ''; 
-                
-                // Show Red Box Cards (Other Agencies)
                 dashboardGrid.classList.add('mode-other');
                 submitBtn.classList.add('visible');
             } else {
-                // Failsafe empty state
                 lguSelectContainer.classList.remove('visible');
                 lguSelect.required = false;
                 submitBtn.classList.remove('visible');
