@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Tarlac PDRRMO | Situational Report Monitoring</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <script src="https://unpkg.com/lucide@latest"></script>
     <style>
         :root {
@@ -12,11 +12,11 @@
             --text-main: #f8fafc;
             --text-muted: #94a3b8;
             --accent: #f59e0b; 
-            --glass-bg: rgba(15, 23, 42, 0.2); 
+            --glass-bg: rgba(15, 23, 42, 0.4); 
             --glass-border: rgba(255, 255, 255, 0.08);
             --glass-hover: rgba(255, 255, 255, 0.12);
             --input-bg: rgba(0, 0, 0, 0.25);
-            --sidebar-bg: rgba(10, 15, 30, 0.3);
+            --sidebar-bg: rgba(10, 15, 30, 0.4);
         }
 
         * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Inter', sans-serif; }
@@ -52,7 +52,6 @@
             overflow-y: auto; 
         }
 
-        /* Interactive Profile / Home Button */
         .profile {
             display: flex; align-items: center; gap: 15px; margin-bottom: 40px; padding: 10px;
             flex-shrink: 0; cursor: pointer; transition: all 0.3s ease; border-radius: 16px;
@@ -106,9 +105,14 @@
             white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
         }
         .nav-sub-item:hover { background: var(--glass-hover); color: var(--text-main); }
+        .nav-sub-item.active { color: var(--accent); font-weight: 600; }
 
         /* --- Main Content Styles --- */
-        .main-content { flex: 1; padding: 50px 60px; overflow-y: auto; scroll-behavior: smooth; }
+        .main-content { flex: 1; padding: 50px 60px; overflow-y: auto; scroll-behavior: smooth; position: relative;}
+        
+        /* Master Container for standard views (Forms + Empty State) */
+        #masterFormView { display: block; animation: fadeIn 0.4s ease; }
+
         .header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 30px; position: relative; }
         .header h1 { font-size: 32px; font-weight: 600; letter-spacing: -0.5px; margin-bottom: 12px; }
         
@@ -123,7 +127,7 @@
 
         #lguSelectContainer { display: none; align-items: center; gap: 10px; opacity: 0; }
         #lguSelectContainer.visible { display: flex; opacity: 1; animation: fadeIn 0.3s ease forwards; }
-        @keyframes fadeIn { from { opacity: 0; transform: translateX(-10px); } to { opacity: 1; transform: translateX(0); } }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(-5px); } to { opacity: 1; transform: translateY(0); } }
 
         /* --- Custom Datetime Picker Styling --- */
         .datetime-wrapper {
@@ -138,7 +142,6 @@
         }
         #dtDisplayText { font-size: 13px; font-weight: 500; }
 
-        /* Custom Popup Grid */
         .dt-popup {
             display: none; position: absolute; top: calc(100% + 10px); right: 0;
             background: rgba(22, 30, 44, 0.95); backdrop-filter: blur(25px); -webkit-backdrop-filter: blur(25px);
@@ -167,115 +170,68 @@
         .dt-actions span { cursor: pointer; transition: 0.2s; font-weight: 500; }
         .dt-actions span:hover { opacity: 0.8; }
 
-        /* --- Sleek Digital Time Picker --- */
         .dt-time-header { font-size: 12px; font-weight: 600; color: var(--text-muted); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 15px; text-align: center;}
-        
-        .digital-time-picker {
-            display: flex; flex-direction: column; align-items: center; justify-content: center;
-            gap: 15px; margin: auto 0;
-        }
-        
+        .digital-time-picker { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 15px; margin: auto 0; }
         .time-inputs {
-            display: flex; align-items: center; gap: 8px;
-            background: rgba(0,0,0,0.25); padding: 15px 20px; border-radius: 16px;
+            display: flex; align-items: center; gap: 8px; background: rgba(0,0,0,0.25); padding: 15px 20px; border-radius: 16px;
             box-shadow: inset 0 2px 10px rgba(0,0,0,0.3); border: 1px solid var(--glass-border);
         }
-        
         .time-input {
             width: 48px; background: transparent; border: none; color: var(--text-main);
-            font-size: 32px; font-weight: 600; text-align: center; outline: none;
-            font-family: 'Inter', sans-serif; transition: color 0.3s;
+            font-size: 32px; font-weight: 600; text-align: center; outline: none; transition: color 0.3s;
         }
         .time-input:focus { color: var(--accent); }
-        
         .time-input::-webkit-outer-spin-button, .time-input::-webkit-inner-spin-button { -webkit-appearance: none; margin: 0; }
         .time-input[type=number] { -moz-appearance: textfield; }
-        
         .time-separator { font-size: 32px; font-weight: 600; color: var(--text-muted); padding-bottom: 4px;}
-        
-        .ampm-toggle {
-            display: flex; background: rgba(0,0,0,0.3); border-radius: 10px; overflow: hidden;
-            border: 1px solid var(--glass-border); width: 100%;
-        }
-        
+        .ampm-toggle { display: flex; background: rgba(0,0,0,0.3); border-radius: 10px; overflow: hidden; border: 1px solid var(--glass-border); width: 100%; }
         .ampm-btn {
             flex: 1; background: transparent; border: none; color: var(--text-muted); padding: 10px 0;
             font-size: 13px; font-weight: 600; cursor: pointer; transition: 0.3s;
         }
         .ampm-btn.active { background: rgba(245, 158, 11, 0.2); color: var(--accent); }
-
         .dt-time-footer { font-size: 11px; color: var(--text-muted); display: flex; justify-content: center; gap: 8px; align-items: center; margin-top: auto; font-weight: 500;}
 
-        /* --- Landing View & Static Advisory Grid --- */
+        /* --- Empty State View --- */
         #landingView { display: block; animation: fadeIn 0.3s ease; }
+        .insights-header { font-size: 13px; text-transform: uppercase; letter-spacing: 1px; color: var(--text-muted); margin-bottom: 20px; font-weight: 600; display: flex; align-items: center; gap: 8px; }
+        .advisory-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 24px; width: 100%; }
         
-        .insights-header {
-            font-size: 13px; text-transform: uppercase; letter-spacing: 1px; color: var(--text-muted); margin-bottom: 20px; font-weight: 600; display: flex; align-items: center; gap: 8px;
-        }
-        
-        .advisory-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-            gap: 24px;
-            width: 100%;
-        }
-
-        /* --- Tweet Wall Card Styling --- */
+        /* Tweet Cards */
         .tweet-card {
-            background: var(--glass-bg);
-            backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
-            border: 1px solid var(--glass-border); border-radius: 18px;
-            padding: 22px; width: 100%; 
-            display: flex; flex-direction: column; gap: 14px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-            transition: border-color 0.3s, transform 0.3s, background 0.3s;
-            cursor: default;
+            background: var(--glass-bg); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+            border: 1px solid var(--glass-border); border-radius: 18px; padding: 22px; width: 100%; 
+            display: flex; flex-direction: column; gap: 14px; box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            transition: border-color 0.3s, transform 0.3s, background 0.3s; cursor: default;
         }
-        .tweet-card:hover {
-            transform: translateY(-3px);
-            border-color: rgba(245, 158, 11, 0.4);
-            background: rgba(245, 158, 11, 0.05);
-        }
+        .tweet-card:hover { transform: translateY(-3px); border-color: rgba(245, 158, 11, 0.4); background: rgba(245, 158, 11, 0.05); }
         .tweet-header { display: flex; align-items: center; gap: 12px; }
-        .tweet-avatar {
-            width: 42px; height: 42px; border-radius: 50%;
-            display: flex; align-items: center; justify-content: center;
-            color: white; font-weight: 700; font-size: 16px;
-        }
-        
-        /* Avatar Color Themes */
+        .tweet-avatar { width: 42px; height: 42px; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-weight: 700; font-size: 16px; }
         .av-pdrrmo { background: linear-gradient(135deg, var(--accent), #d97706); box-shadow: 0 4px 10px rgba(245, 158, 11, 0.3); }
         .av-pagasa { background: linear-gradient(135deg, #3b82f6, #1d4ed8); box-shadow: 0 4px 10px rgba(59, 130, 246, 0.3); }
         .av-pswdo  { background: linear-gradient(135deg, #10b981, #047857); box-shadow: 0 4px 10px rgba(16, 185, 129, 0.3); }
         .av-bfp    { background: linear-gradient(135deg, #ef4444, #b91c1c); box-shadow: 0 4px 10px rgba(239, 68, 68, 0.3); }
-
         .tweet-meta { display: flex; flex-direction: column; line-height: 1.2; }
         .tweet-name { font-size: 14px; font-weight: 600; color: var(--text-main); display: flex; align-items: center; gap: 4px; }
         .tweet-handle { font-size: 12px; color: var(--text-muted); }
         .tweet-body { font-size: 13px; color: var(--text-muted); line-height: 1.6; }
         .tweet-body strong { color: var(--text-main); font-weight: 500; }
-        .tweet-footer { 
-            font-size: 11px; color: var(--text-muted); display: flex; align-items: center; justify-content: space-between; 
-            border-top: 1px solid var(--glass-border); padding-top: 12px; margin-top: 5px; 
-        }
+        .tweet-footer { font-size: 11px; color: var(--text-muted); display: flex; align-items: center; justify-content: space-between; border-top: 1px solid var(--glass-border); padding-top: 12px; margin-top: 5px; }
 
-        /* --- Dynamic Dashboard Grid Logic --- */
+        /* --- Dynamic Form Grid Logic --- */
         #sitrepForm { display: none; animation: fadeIn 0.3s ease; }
         .dashboard-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
         .ldrmc-card, .other-card { display: none; }
         .dashboard-grid.mode-ldrmc .ldrmc-card { display: block; }
         .dashboard-grid.mode-other .other-card { display: block; }
-
-        /* Mac OS style boxes */
+        
         .card {
             background: var(--glass-bg); backdrop-filter: blur(40px); -webkit-backdrop-filter: blur(40px);
-            border: 1px solid var(--glass-border); border-radius: 24px; padding: 30px;
-            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3);
+            border: 1px solid var(--glass-border); border-radius: 24px; padding: 30px; box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3);
         }
         .card.full-width { grid-column: span 2; }
         .card-title { font-size: 13px; text-transform: uppercase; letter-spacing: 1px; color: var(--accent); margin-bottom: 25px; font-weight: 600; display: flex; align-items: center; gap: 8px; }
 
-        /* --- Inputs --- */
         .input-row { display: flex; align-items: center; justify-content: space-between; padding: 14px 0; border-bottom: 1px solid var(--glass-border); }
         .input-row:last-child { border-bottom: none; padding-bottom: 0; }
         .input-row label { font-size: 13px; color: var(--text-muted); font-weight: 500; flex: 1; }
@@ -289,30 +245,77 @@
         .input-block textarea { width: 100%; background: var(--input-bg); border: 1px solid transparent; color: var(--text-main); font-size: 14px; padding: 15px; border-radius: 16px; resize: vertical; min-height: 80px; outline: none; transition: 0.3s; }
         .input-block textarea:focus { border-color: rgba(245, 158, 11, 0.5); background: rgba(0,0,0,0.4); }
 
-        /* --- OCR Scanner UI & Modernized PDF Viewer --- */
         .scanner-area { border: 2px dashed rgba(245, 158, 11, 0.3); border-radius: 16px; padding: 60px 40px; text-align: center; cursor: pointer; transition: 0.3s; background: rgba(0,0,0,0.15); }
         .scanner-area:hover { background: rgba(0,0,0,0.3); border-color: var(--accent); }
         .scanner-icon { color: var(--text-main); margin-bottom: 15px; }
 
-        #pdfViewerContainer {
-            display: none; 
-            margin-top: 24px; 
-            border-radius: 12px; 
-            overflow: hidden; 
-            height: 700px; 
-            border: 1px solid var(--glass-border); 
-            background: #323639; 
-            box-shadow: 0 20px 40px rgba(0,0,0,0.4);
-            animation: fadeIn 0.4s ease;
-        }
-
+        #pdfViewerContainer { display: none; margin-top: 24px; border-radius: 12px; overflow: hidden; height: 700px; border: 1px solid var(--glass-border); background: #323639; box-shadow: 0 20px 40px rgba(0,0,0,0.4); animation: fadeIn 0.4s ease; }
         #pdfViewer { width: 100%; height: 100%; border: none; border-radius: 12px; }
 
-        /* --- Buttons --- */
         #submitBtn { display: none; }
         #submitBtn.visible { display: block; }
         .btn-primary { background: linear-gradient(135deg, var(--accent), #d97706); color: white; border: none; padding: 15px 30px; border-radius: 14px; font-size: 15px; font-weight: 500; cursor: pointer; transition: 0.3s; float: right; margin-top: 30px; box-shadow: 0 8px 25px rgba(245, 158, 11, 0.2); }
         .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 12px 30px rgba(245, 158, 11, 0.4); }
+
+        /* ========================================= */
+        /* --- NEW: SUMMARY SITUATIONAL REPORT VIEW --- */
+        /* ========================================= */
+        #summarySitRepView {
+            display: none;
+            animation: fadeIn 0.4s ease forwards;
+            padding-bottom: 50px;
+        }
+
+        .summary-header-doc {
+            text-align: center; border-bottom: 2px solid var(--glass-border); padding-bottom: 25px; margin-bottom: 30px;
+        }
+        .summary-header-doc h2 { font-size: 24px; font-weight: 700; color: var(--text-main); letter-spacing: 0.5px; margin-bottom: 5px; }
+        .summary-header-doc p { font-size: 14px; color: var(--accent); font-weight: 500; text-transform: uppercase; letter-spacing: 1px; }
+        .summary-header-doc .doc-meta { font-size: 13px; color: var(--text-muted); margin-top: 10px; font-style: italic; }
+
+        .summary-grid {
+            display: grid; grid-template-columns: 1fr 1fr; gap: 24px;
+        }
+
+        .s-card {
+            background: rgba(10, 15, 30, 0.5); border: 1px solid var(--glass-border); border-radius: 20px;
+            padding: 25px; box-shadow: 0 10px 30px rgba(0,0,0,0.2); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+        }
+        .s-card.full { grid-column: span 2; }
+        .s-card h3 { font-size: 13px; text-transform: uppercase; color: var(--accent); letter-spacing: 1px; margin-bottom: 20px; display: flex; align-items: center; gap: 8px; border-bottom: 1px solid rgba(255,255,255,0.05); padding-bottom: 12px;}
+
+        /* Badges & Highlights */
+        .status-badge { display: inline-block; padding: 6px 12px; border-radius: 8px; font-size: 12px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; }
+        .badge-red { background: rgba(239, 68, 68, 0.15); color: #ef4444; border: 1px solid rgba(239, 68, 68, 0.3); }
+        .badge-orange { background: rgba(245, 158, 11, 0.15); color: var(--accent); border: 1px solid rgba(245, 158, 11, 0.3); }
+
+        .s-fact { display: flex; align-items: center; justify-content: space-between; margin-bottom: 15px; }
+        .s-fact span.label { font-size: 13px; color: var(--text-muted); }
+        
+        .s-highlight-box { background: rgba(239, 68, 68, 0.05); border-left: 3px solid #ef4444; padding: 15px; border-radius: 0 8px 8px 0; font-size: 13px; line-height: 1.6; color: var(--text-main); margin-bottom: 15px;}
+        .s-highlight-box strong { color: #ef4444; }
+
+        /* Clean Table for Weather */
+        .s-table { width: 100%; border-collapse: collapse; font-size: 13px; }
+        .s-table th { text-align: left; padding: 10px; color: var(--text-muted); font-weight: 500; border-bottom: 1px solid var(--glass-border); text-transform: uppercase; font-size: 11px; letter-spacing: 0.5px;}
+        .s-table td { padding: 10px; color: var(--text-main); border-bottom: 1px solid rgba(255,255,255,0.03); }
+        .s-table tr:last-child td { border-bottom: none; }
+        .weather-pill { font-size: 11px; padding: 4px 8px; border-radius: 6px; background: rgba(255,255,255,0.1); color: var(--text-muted); }
+        .weather-pill.fair { background: rgba(16, 185, 129, 0.15); color: #10b981; }
+        .weather-pill.cloudy { background: rgba(59, 130, 246, 0.15); color: #3b82f6; }
+
+        /* Action List */
+        .action-list { list-style: none; padding: 0; }
+        .action-list li { padding: 12px 0; border-bottom: 1px dashed rgba(255,255,255,0.05); display: flex; gap: 15px; align-items: flex-start;}
+        .action-list li:last-child { border-bottom: none; }
+        .action-icon { background: rgba(245, 158, 11, 0.1); width: 32px; height: 32px; border-radius: 50%; display: flex; justify-content: center; align-items: center; color: var(--accent); flex-shrink: 0; }
+        .action-content h4 { font-size: 14px; font-weight: 600; color: var(--text-main); margin-bottom: 4px;}
+        .action-content p { font-size: 13px; color: var(--text-muted); line-height: 1.5; }
+
+        /* Check list for lifelines */
+        .lifeline-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
+        .ll-item { display: flex; align-items: center; gap: 10px; background: rgba(0,0,0,0.2); padding: 12px 15px; border-radius: 12px; font-size: 13px; color: var(--text-main);}
+        .ll-icon.ok { color: #10b981; }
 
         ::-webkit-scrollbar { width: 6px; }
         ::-webkit-scrollbar-track { background: transparent; }
@@ -333,7 +336,7 @@
         </div>
         
         <ul class="nav-menu">
-            <!-- SITUATION OVERVIEW (Now contains Consolidated Reports based on forms a-k) -->
+            <!-- SITUATION OVERVIEW -->
             <li class="nav-item-container">
                 <div class="nav-item active" id="overviewToggle">
                     <i data-lucide="layout-dashboard"></i> SITUATION OVERVIEW
@@ -353,9 +356,12 @@
                 </ul>
             </li>
 
-            <li class="nav-item" style="margin-bottom: 5px;"><i data-lucide="file-text"></i> Summary Situational Report</li>
+            <!-- NEW: Summary Situational Report Button -->
+            <li class="nav-item" style="margin-bottom: 5px;" id="btnViewSummarySitRep">
+                <i data-lucide="file-text"></i> Summary Situational Report
+            </li>
 
-            <!-- AGENCY RECORDS (Agencies moved here) -->
+            <!-- AGENCY RECORDS -->
             <li class="nav-item-container">
                 <div class="nav-item" id="agencyRecordsToggle">
                     <i data-lucide="users"></i> AGENCY RECORDS
@@ -408,272 +414,335 @@
     </aside>
 
     <main class="main-content">
-        <div class="header">
-            <div>
-                <h1>Situational Report</h1>
-                
-                <div style="display: flex; align-items: center; gap: 15px; flex-wrap: wrap;">
-                    <div style="display: flex; align-items: center; gap: 10px;">
-                        <label style="font-size: 13px; color: var(--text-muted); font-weight: 500;">Reporting Agency:</label>
-                        <select class="top-agency-select" id="mainReportingAgency">
-                            <option value="" disabled selected>Select Agency...</option>
-                            <optgroup label="PDRRM COUNCIL">
-                                <option value="PDRRMO">PDRRMO</option>
-                                <option value="PSWDO">PSWDO</option>
-                                <option value="PHO">PHO</option>
-                                <option value="DA-OPA">DA-OPA</option>
-                                <option value="PROVINCIAL ENGINEERING (PEO)">PROVINCIAL ENGINEERING (PEO)</option>
-                                <option value="TACTICAL OPERATION GROUP 3- PAF">TACTICAL OPERATION GROUP 3- PHILIPPINE AIR FORCE</option>
-                                <option value="TARLAC POLICE PROVINCIAL OFFICE">TARLAC POLICE PROVINCIAL OFFICE</option>
-                                <option value="3RD MECH INF BN, PA">3RD MECH INF BN, PA</option>
-                                <option value="522 ECB, PA">522 ECB, PA</option>
-                                <option value="DPWH 1ST DEO">DPWH 1ST DEO</option>
-                                <option value="PDOHO">PDOHO</option>
-                                <option value="BFP- TARLAC PROVINCE">BFP- TARLAC PROVINCE</option>
-                                <option value="PEO/PGSO/DEPED/DILG/TAU/CARITAS TARLAC">PEO/PGSO/DEPED/DILG/TAU/CARITAS TARLAC</option>
-                            </optgroup>
-                            <optgroup label="LDRRMCs">
-                                <option value="LDRRMC">LDRRMC (MDRRMO / CDRRMO)</option>
-                            </optgroup>
-                            <optgroup label="OTHER PARTNER AGENCIES/GROUP">
-                                <option value="7TH CIVIL MILITARY OP. BN, PA">7TH CIVIL MILITARY OPERATION BATTALION, PA</option>
-                                <option value="ARMOR DIVISION, CAMP O'DONNEL, PA">ARMOR DIVISION, CAMP O'DONNEL, PA</option>
-                                <option value="VAT">VOLUNTEERS ASSOCIATION OF TARLAC (VAT)</option>
-                            </optgroup>
-                        </select>
-                    </div>
-
-                    <div id="lguSelectContainer">
-                        <i data-lucide="chevron-right" style="color: var(--text-muted); width: 16px;"></i>
-                        <select class="top-agency-select" id="lguSelect">
-                            <option value="" disabled selected>Select Municipality/City...</option>
-                            <optgroup label="City (CDRRMO)">
-                                <option value="Tarlac City">Tarlac City</option>
-                            </optgroup>
-                            <optgroup label="Municipalities (MDRRMO)">
-                                <option value="Anao">Anao</option>
-                                <option value="Bamban">Bamban</option>
-                                <option value="Camiling">Camiling</option>
-                                <option value="Capas">Capas</option>
-                                <option value="Concepcion">Concepcion</option>
-                                <option value="Gerona">Gerona</option>
-                                <option value="La Paz">La Paz</option>
-                                <option value="Mayantoc">Mayantoc</option>
-                                <option value="Moncada">Moncada</option>
-                                <option value="Paniqui">Paniqui</option>
-                                <option value="Pura">Pura</option>
-                                <option value="Ramos">Ramos</option>
-                                <option value="San Clemente">San Clemente</option>
-                                <option value="San Jose">San Jose</option>
-                                <option value="San Manuel">San Manuel</option>
-                                <option value="Santa Ignacia">Santa Ignacia</option>
-                                <option value="Victoria">Victoria</option>
-                            </optgroup>
-                        </select>
-                    </div>
-                </div>
-            </div>
-            
-            <div style="text-align: right; position: relative;">
-                <label style="font-size: 12px; color: var(--text-muted); font-weight: 500; display: block; margin-bottom: 5px;">"As Of" Date & Time</label>
-                
-                <div class="datetime-wrapper" id="customDtTrigger">
-                    <i data-lucide="calendar-clock" style="color: var(--accent); width: 16px; height: 16px;"></i>
-                    <span id="dtDisplayText">Select Date & Time</span>
-                </div>
-
-                <div class="dt-popup" id="dtPopup">
-                    <div class="dt-calendar-sec">
-                        <div class="dt-header">
-                            <span id="dtMonthYear">May 2026</span>
-                            <div class="dt-nav" style="display: flex; gap: 10px;">
-                                <i data-lucide="arrow-up" id="dtPrev"></i>
-                                <i data-lucide="arrow-down" id="dtNext"></i>
-                            </div>
-                        </div>
-                        <div class="dt-weekdays">
-                            <span>Su</span><span>Mo</span><span>Tu</span><span>We</span><span>Th</span><span>Fr</span><span>Sa</span>
-                        </div>
-                        <div class="dt-days" id="dtDays">
-                            </div>
-                        <div class="dt-actions">
-                            <span id="dtClear">Clear</span>
-                            <span style="color: var(--accent);" id="dtToday">Today</span>
-                        </div>
-                    </div>
-                    <div class="dt-time-sec">
-                        <div class="dt-time-header">Set Report Time</div>
-                        
-                        <div class="digital-time-picker">
-                            <div class="time-inputs">
-                                <input type="number" id="dtHour" class="time-input" min="1" max="12" value="12">
-                                <span class="time-separator">:</span>
-                                <input type="number" id="dtMin" class="time-input" min="0" max="59" value="00">
-                            </div>
-                            <div class="ampm-toggle">
-                                <button type="button" id="btnAm" class="ampm-btn active">AM</button>
-                                <button type="button" id="btnPm" class="ampm-btn">PM</button>
-                            </div>
-                        </div>
-
-                        <div class="dt-time-footer">
-                            <span style="background: rgba(0,0,0,0.3); padding: 3px 8px; border-radius: 4px; font-weight: 600;">PST</span> Philippine Standard Time
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- LANDING VIEW: Visible only when no agency is selected -->
-        <div id="landingView">
-            <div style="text-align: center; padding: 60px; color: var(--text-muted); background: var(--glass-bg); border-radius: 24px; border: 1px dashed var(--glass-border); margin-bottom: 40px;">
-                <i data-lucide="clipboard-edit" style="width: 48px; height: 48px; color: rgba(255,255,255,0.2); margin-bottom: 15px;"></i>
-                <h3 style="font-size: 16px; font-weight: 500; color: var(--text-main);">No Agency Selected</h3>
-                <p style="font-size: 13px; margin-top: 5px;">Please select a reporting agency from the top menu to view the relevant report format.</p>
-            </div>
-
-            <!-- Static "Tweet Wall" Grid -->
-            <div class="insights-header">
-                <i data-lucide="bell-ring" style="color: var(--accent);"></i> LATEST AGENCY ADVISORY
-            </div>
-            
-            <div class="advisory-grid">
-                
-                <div class="tweet-card">
-                    <div class="tweet-header">
-                        <div class="tweet-avatar av-pdrrmo">T</div>
-                        <div class="tweet-meta">
-                            <span class="tweet-name">Tarlac PDRRMO <i data-lucide="badge-check" style="width:14px; height:14px; color:var(--accent);"></i></span>
-                            <span class="tweet-handle">@PDRRMOCouncil</span>
-                        </div>
-                    </div>
-                    <div class="tweet-body">
-                        🚨 <strong>RED ALERT</strong> status raised for Tarlac Province due to Severe Tropical Storm. All LDRRMCs are advised to activate EOCs and preposition goods.
-                    </div>
-                    <div class="tweet-footer">
-                        <span>Scanned via Document OCR</span>
-                        <span>4:37 PM • May 26</span>
-                    </div>
-                </div>
-                
-                <div class="tweet-card">
-                    <div class="tweet-header">
-                        <div class="tweet-avatar av-pagasa"><i data-lucide="cloud-lightning" style="width:20px;height:20px;"></i></div>
-                        <div class="tweet-meta">
-                            <span class="tweet-name">DOST-PAGASA</span>
-                            <span class="tweet-handle">@dost_pagasa</span>
-                        </div>
-                    </div>
-                    <div class="tweet-body">
-                        <strong>Typhoon Update:</strong> TCWS No. 3 hoisted over Tarlac. Expect heavy to intense rains over the next 24 hours. Possible flash floods in low-lying areas.
-                    </div>
-                    <div class="tweet-footer">
-                        <span>Extracted from Advisory #4</span>
-                        <span>3:15 PM • May 26</span>
-                    </div>
-                </div>
-
-                <div class="tweet-card">
-                    <div class="tweet-header">
-                        <div class="tweet-avatar av-pswdo"><i data-lucide="package" style="width:20px;height:20px;"></i></div>
-                        <div class="tweet-meta">
-                            <span class="tweet-name">PSWDO Tarlac</span>
-                            <span class="tweet-handle">@TarlacPSWDO</span>
-                        </div>
-                    </div>
-                    <div class="tweet-body">
-                        Relief operations ready. Over <strong>2,500 family food packs</strong> have been successfully prepositioned in 3 major provincial hubs.
-                    </div>
-                    <div class="tweet-footer">
-                        <span>Inventory Log Scan</span>
-                        <span>2:00 PM • May 26</span>
-                    </div>
-                </div>
-
-                <div class="tweet-card">
-                    <div class="tweet-header">
-                        <div class="tweet-avatar av-bfp"><i data-lucide="flame" style="width:20px;height:20px;"></i></div>
-                        <div class="tweet-meta">
-                            <span class="tweet-name">BFP Tarlac Province</span>
-                            <span class="tweet-handle">@BureauOfFire</span>
-                        </div>
-                    </div>
-                    <div class="tweet-body">
-                        Search and Rescue (SAR) teams are now on <strong>standby alert</strong>. All water assets and rescue equipment checks completed across all municipalities.
-                    </div>
-                    <div class="tweet-footer">
-                        <span>Memo OCR Extract</span>
-                        <span>1:45 PM • May 26</span>
-                    </div>
-                </div>
-                
-            </div>
-        </div>
-
-        <!-- FORMS VIEW: Visible only when an agency IS selected -->
-        <form id="sitrepForm">
-            <div class="dashboard-grid" id="mainDashboardGrid">
-                
-                <!-- LDRRMC Cards -->
-                <div class="card ldrmc-card">
-                    <div class="card-title"><i data-lucide="cloud-rain"></i> General Status</div>
-                    <div class="input-row"><label>a. Weather Condition</label><input type="text" placeholder="Tap to type..."></div>
-                    <div class="input-row"><label>b. Affected Population</label><input type="text" placeholder="Tap to type..."></div>
-                    <div class="input-row"><label>c. Forced Evacuation</label><input type="text" placeholder="Tap to type..."></div>
-                    <div class="input-row"><label>d. Casualty</label><input type="text" placeholder="E.G., ZERO CASUALTIES"></div>
-                </div>
-
-                <div class="card ldrmc-card">
-                    <div class="card-title"><i data-lucide="alert-triangle"></i> Damages & Interruptions</div>
-                    <div class="input-row"><label>e. Class/Work Suspension</label><input type="text" placeholder="Tap to type..."></div>
-                    <div class="input-row"><label>f. Flooded Areas</label><input type="text" placeholder="Tap to type..."></div>
-                    <div class="input-row"><label>j. Power & Water</label><input type="text" placeholder="Tap to type..."></div>
-                    <div class="input-row"><label>k. Other Incidents</label><input type="text" placeholder="Tap to type..."></div>
-                </div>
-
-                <div class="card full-width ldrmc-card">
-                    <div class="card-title"><i data-lucide="map-pin"></i> Critical Damages</div>
-                    <div class="dashboard-grid">
-                        <div class="input-block">
-                            <label>g. Damages on Infrastructure</label>
-                            <textarea placeholder="Provide detailed infrastructure report here..."></textarea>
-                        </div>
-                        <div class="input-block">
-                            <label>h. Damages on Agriculture</label>
-                            <textarea placeholder="Provide detailed agricultural damage report here..."></textarea>
-                        </div>
-                        <div class="input-block full-width" style="grid-column: span 2;">
-                            <label>i. Status of Roads and Bridges</label>
-                            <textarea placeholder="Report on road passability and bridge structural integrity..."></textarea>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Non-LDRRMC / "Other" Cards -->
-                <div class="card other-card full-width">
-                    <div class="card-title"><i data-lucide="file-scan"></i> PDF Document Scanner</div>
+        
+        <!-- ============================================== -->
+        <!-- MASTER FORM VIEW (Header + Empty State + Forms) -->
+        <!-- ============================================== -->
+        <div id="masterFormView">
+            <div class="header">
+                <div>
+                    <h1>Situational Report</h1>
                     
-                    <div class="scanner-area">
-                        <i data-lucide="scan" class="scanner-icon" width="42" height="42"></i>
-                        <p style="font-size: 15px; font-weight: 500; color: var(--text-main); margin-bottom: 5px;" id="scanStatusText">Scan Status: IDLE</p>
-                        <p style="font-size: 13px; color: var(--text-muted);">Drop PDF document here to begin data extraction.</p>
-                        <!-- Updated to accept strictly PDF files -->
-                        <input type="file" id="fileUpload" style="display: none;" accept=".pdf,application/pdf">
+                    <div style="display: flex; align-items: center; gap: 15px; flex-wrap: wrap;">
+                        <div style="display: flex; align-items: center; gap: 10px;">
+                            <label style="font-size: 13px; color: var(--text-muted); font-weight: 500;">Reporting Agency:</label>
+                            <select class="top-agency-select" id="mainReportingAgency">
+                                <option value="" disabled selected>Select Agency...</option>
+                                <optgroup label="PDRRM COUNCIL">
+                                    <option value="PDRRMO">PDRRMO</option>
+                                    <option value="PSWDO">PSWDO</option>
+                                    <option value="PHO">PHO</option>
+                                    <option value="DA-OPA">DA-OPA</option>
+                                    <option value="PROVINCIAL ENGINEERING (PEO)">PROVINCIAL ENGINEERING (PEO)</option>
+                                    <option value="TACTICAL OPERATION GROUP 3- PAF">TACTICAL OPERATION GROUP 3- PHILIPPINE AIR FORCE</option>
+                                    <option value="TARLAC POLICE PROVINCIAL OFFICE">TARLAC POLICE PROVINCIAL OFFICE</option>
+                                    <option value="3RD MECH INF BN, PA">3RD MECH INF BN, PA</option>
+                                    <option value="522 ECB, PA">522 ECB, PA</option>
+                                    <option value="DPWH 1ST DEO">DPWH 1ST DEO</option>
+                                    <option value="PDOHO">PDOHO</option>
+                                    <option value="BFP- TARLAC PROVINCE">BFP- TARLAC PROVINCE</option>
+                                    <option value="PEO/PGSO/DEPED/DILG/TAU/CARITAS TARLAC">PEO/PGSO/DEPED/DILG/TAU/CARITAS TARLAC</option>
+                                </optgroup>
+                                <optgroup label="LDRRMCs">
+                                    <option value="LDRRMC">LDRRMC (MDRRMO / CDRRMO)</option>
+                                </optgroup>
+                                <optgroup label="OTHER PARTNER AGENCIES/GROUP">
+                                    <option value="7TH CIVIL MILITARY OP. BN, PA">7TH CIVIL MILITARY OPERATION BATTALION, PA</option>
+                                    <option value="ARMOR DIVISION, CAMP O'DONNEL, PA">ARMOR DIVISION, CAMP O'DONNEL, PA</option>
+                                    <option value="VAT">VOLUNTEERS ASSOCIATION OF TARLAC (VAT)</option>
+                                </optgroup>
+                            </select>
+                        </div>
+
+                        <div id="lguSelectContainer">
+                            <i data-lucide="chevron-right" style="color: var(--text-muted); width: 16px;"></i>
+                            <select class="top-agency-select" id="lguSelect">
+                                <option value="" disabled selected>Select Municipality/City...</option>
+                                <optgroup label="City (CDRRMO)">
+                                    <option value="Tarlac City">Tarlac City</option>
+                                </optgroup>
+                                <optgroup label="Municipalities (MDRRMO)">
+                                    <option value="Anao">Anao</option>
+                                    <option value="Bamban">Bamban</option>
+                                    <option value="Camiling">Camiling</option>
+                                    <option value="Capas">Capas</option>
+                                    <option value="Concepcion">Concepcion</option>
+                                    <option value="Gerona">Gerona</option>
+                                    <option value="La Paz">La Paz</option>
+                                    <option value="Mayantoc">Mayantoc</option>
+                                    <option value="Moncada">Moncada</option>
+                                    <option value="Paniqui">Paniqui</option>
+                                    <option value="Pura">Pura</option>
+                                    <option value="Ramos">Ramos</option>
+                                    <option value="San Clemente">San Clemente</option>
+                                    <option value="San Jose">San Jose</option>
+                                    <option value="San Manuel">San Manuel</option>
+                                    <option value="Santa Ignacia">Santa Ignacia</option>
+                                    <option value="Victoria">Victoria</option>
+                                </optgroup>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                
+                <div style="text-align: right; position: relative;">
+                    <label style="font-size: 12px; color: var(--text-muted); font-weight: 500; display: block; margin-bottom: 5px;">"As Of" Date & Time</label>
+                    <div class="datetime-wrapper" id="customDtTrigger">
+                        <i data-lucide="calendar-clock" style="color: var(--accent); width: 16px; height: 16px;"></i>
+                        <span id="dtDisplayText">Select Date & Time</span>
                     </div>
 
-                    <!-- Seamless Modernized PDF Viewer -->
-                    <div id="pdfViewerContainer">
-                        <iframe id="pdfViewer" src="" style="width: 100%; height: 100%; border: none;"></iframe>
+                    <div class="dt-popup" id="dtPopup">
+                        <div class="dt-calendar-sec">
+                            <div class="dt-header">
+                                <span id="dtMonthYear">May 2026</span>
+                                <div class="dt-nav" style="display: flex; gap: 10px;">
+                                    <i data-lucide="arrow-up" id="dtPrev"></i>
+                                    <i data-lucide="arrow-down" id="dtNext"></i>
+                                </div>
+                            </div>
+                            <div class="dt-weekdays"><span>Su</span><span>Mo</span><span>Tu</span><span>We</span><span>Th</span><span>Fr</span><span>Sa</span></div>
+                            <div class="dt-days" id="dtDays"></div>
+                            <div class="dt-actions"><span id="dtClear">Clear</span><span style="color: var(--accent);" id="dtToday">Today</span></div>
+                        </div>
+                        <div class="dt-time-sec">
+                            <div class="dt-time-header">Set Report Time</div>
+                            <div class="digital-time-picker">
+                                <div class="time-inputs">
+                                    <input type="number" id="dtHour" class="time-input" min="1" max="12" value="12">
+                                    <span class="time-separator">:</span>
+                                    <input type="number" id="dtMin" class="time-input" min="0" max="59" value="00">
+                                </div>
+                                <div class="ampm-toggle">
+                                    <button type="button" id="btnAm" class="ampm-btn active">AM</button>
+                                    <button type="button" id="btnPm" class="ampm-btn">PM</button>
+                                </div>
+                            </div>
+                            <div class="dt-time-footer"><span style="background: rgba(0,0,0,0.3); padding: 3px 8px; border-radius: 4px; font-weight: 600;">PST</span> Philippine Standard Time</div>
+                        </div>
                     </div>
+                </div>
+            </div>
+
+            <!-- LANDING VIEW (Empty State) -->
+            <div id="landingView">
+                <div style="text-align: center; padding: 60px; color: var(--text-muted); background: var(--glass-bg); border-radius: 24px; border: 1px dashed var(--glass-border); margin-bottom: 40px;">
+                    <i data-lucide="clipboard-edit" style="width: 48px; height: 48px; color: rgba(255,255,255,0.2); margin-bottom: 15px;"></i>
+                    <h3 style="font-size: 16px; font-weight: 500; color: var(--text-main);">No Agency Selected</h3>
+                    <p style="font-size: 13px; margin-top: 5px;">Please select a reporting agency from the top menu to view the relevant report format.</p>
+                </div>
+                <!-- Static "Tweet Wall" Grid -->
+                <div class="insights-header"><i data-lucide="bell-ring" style="color: var(--accent);"></i> LATEST AGENCY ADVISORY</div>
+                <div class="advisory-grid">
+                    <div class="tweet-card">
+                        <div class="tweet-header">
+                            <div class="tweet-avatar av-pdrrmo">T</div>
+                            <div class="tweet-meta">
+                                <span class="tweet-name">Tarlac PDRRMO <i data-lucide="badge-check" style="width:14px; height:14px; color:var(--accent);"></i></span>
+                                <span class="tweet-handle">@PDRRMOCouncil</span>
+                            </div>
+                        </div>
+                        <div class="tweet-body">🚨 <strong>RED ALERT</strong> status raised for Tarlac Province due to Severe Tropical Storm. All LDRRMCs are advised to activate EOCs and preposition goods.</div>
+                        <div class="tweet-footer"><span>Scanned via Document OCR</span><span>4:37 PM • May 26</span></div>
+                    </div>
+                    <div class="tweet-card">
+                        <div class="tweet-header">
+                            <div class="tweet-avatar av-pagasa"><i data-lucide="cloud-lightning" style="width:20px;height:20px;"></i></div>
+                            <div class="tweet-meta"><span class="tweet-name">DOST-PAGASA</span><span class="tweet-handle">@dost_pagasa</span></div>
+                        </div>
+                        <div class="tweet-body"><strong>Typhoon Update:</strong> TCWS No. 1 hoisted over Tarlac. Expect heavy rains over the next 24 hours. Possible flash floods in low-lying areas.</div>
+                        <div class="tweet-footer"><span>Extracted from Advisory #5</span><span>3:15 PM • May 26</span></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- FORMS VIEW -->
+            <form id="sitrepForm">
+                <div class="dashboard-grid" id="mainDashboardGrid">
+                    <!-- LDRRMC Cards -->
+                    <div class="card ldrmc-card">
+                        <div class="card-title"><i data-lucide="cloud-rain"></i> General Status</div>
+                        <div class="input-row"><label>a. Weather Condition</label><input type="text" placeholder="Tap to type..."></div>
+                        <div class="input-row"><label>b. Affected Population</label><input type="text" placeholder="Tap to type..."></div>
+                        <div class="input-row"><label>c. Forced Evacuation</label><input type="text" placeholder="Tap to type..."></div>
+                        <div class="input-row"><label>d. Casualty</label><input type="text" placeholder="E.G., ZERO CASUALTIES"></div>
+                    </div>
+                    <div class="card ldrmc-card">
+                        <div class="card-title"><i data-lucide="alert-triangle"></i> Damages & Interruptions</div>
+                        <div class="input-row"><label>e. Class/Work Suspension</label><input type="text" placeholder="Tap to type..."></div>
+                        <div class="input-row"><label>f. Flooded Areas</label><input type="text" placeholder="Tap to type..."></div>
+                        <div class="input-row"><label>j. Power & Water</label><input type="text" placeholder="Tap to type..."></div>
+                        <div class="input-row"><label>k. Other Incidents</label><input type="text" placeholder="Tap to type..."></div>
+                    </div>
+                    <div class="card full-width ldrmc-card">
+                        <div class="card-title"><i data-lucide="map-pin"></i> Critical Damages</div>
+                        <div class="dashboard-grid">
+                            <div class="input-block">
+                                <label>g. Damages on Infrastructure</label>
+                                <textarea placeholder="Provide detailed infrastructure report here..."></textarea>
+                            </div>
+                            <div class="input-block">
+                                <label>h. Damages on Agriculture</label>
+                                <textarea placeholder="Provide detailed agricultural damage report here..."></textarea>
+                            </div>
+                            <div class="input-block full-width" style="grid-column: span 2;">
+                                <label>i. Status of Roads and Bridges</label>
+                                <textarea placeholder="Report on road passability and bridge structural integrity..."></textarea>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Non-LDRRMC / Scanner -->
+                    <div class="card other-card full-width">
+                        <div class="card-title"><i data-lucide="file-scan"></i> PDF Document Scanner</div>
+                        <div class="scanner-area">
+                            <i data-lucide="scan" class="scanner-icon" width="42" height="42"></i>
+                            <p style="font-size: 15px; font-weight: 500; color: var(--text-main); margin-bottom: 5px;" id="scanStatusText">Scan Status: IDLE</p>
+                            <p style="font-size: 13px; color: var(--text-muted);">Drop PDF document here to begin data extraction.</p>
+                            <input type="file" id="fileUpload" style="display: none;" accept=".pdf,application/pdf">
+                        </div>
+                        <div id="pdfViewerContainer">
+                            <iframe id="pdfViewer" src="" style="width: 100%; height: 100%; border: none;"></iframe>
+                        </div>
+                    </div>
+                </div>
+                <button type="button" class="btn-primary" id="submitBtn" onclick="alert('Google Sheets Sync Triggered')">
+                    <i data-lucide="send" style="width: 16px; height: 16px; display: inline; vertical-align: middle; margin-right: 5px;"></i> Log to Database
+                </button>
+            </form>
+        </div>
+
+        <!-- ============================================== -->
+        <!-- NEW: SUMMARY SITUATIONAL REPORT VIEW -->
+        <!-- ============================================== -->
+        <div id="summarySitRepView">
+            
+            <div class="summary-header-doc">
+                <h2>SITREP & ADVISORY UPDATE #1</h2>
+                <p>Effects of TC "Uwan" in the Province of Tarlac</p>
+                <div class="doc-meta">As of 05:00 PM, 08 November 2025 • Generated via Data OCR</div>
+            </div>
+
+            <div class="summary-grid">
+                
+                <!-- Overview & Suspensions -->
+                <div class="s-card">
+                    <h3><i data-lucide="radio-tower"></i> Overview & Alerts</h3>
+                    <div class="s-fact">
+                        <span class="label">PDRRMC Operations Center</span>
+                        <span class="status-badge badge-red">RED ALERT STATUS</span>
+                    </div>
+                    <div class="s-fact">
+                        <span class="label">Current Wind Signal (PAGASA)</span>
+                        <span class="status-badge badge-orange">TCWS NO. 1</span>
+                    </div>
+                    <p style="font-size: 12px; color: var(--text-muted); line-height: 1.5; margin-top: 15px;">
+                        TY Uwan continues to rapidly intensify as it begins to move closer towards the Philippine Sea east of Bicol Region.
+                    </p>
+                </div>
+
+                <div class="s-card">
+                    <h3><i data-lucide="alert-triangle"></i> Damages, Suspensions & Lifelines</h3>
+                    
+                    <div class="s-highlight-box">
+                        <strong><i data-lucide="file-warning" style="width:14px;height:14px;vertical-align:middle;margin-right:4px;"></i> Executive Order No. 44, s. 2025</strong><br>
+                        Suspension of work operations in government offices and classes in all levels, public and private on Monday, Nov 10.
+                    </div>
+
+                    <div class="lifeline-grid">
+                        <div class="ll-item"><i data-lucide="check-circle-2" class="ll-icon ok"></i> Roads Passable</div>
+                        <div class="ll-item"><i data-lucide="check-circle-2" class="ll-icon ok"></i> Power Stable</div>
+                        <div class="ll-item"><i data-lucide="check-circle-2" class="ll-icon ok"></i> Water Stable</div>
+                        <div class="ll-item"><i data-lucide="check-circle-2" class="ll-icon ok"></i> Comms Stable</div>
+                    </div>
+                    <p style="font-size: 11px; color: var(--text-muted); text-align: center; margin-top: 15px;">
+                        *Zero reported casualties, flooded areas, or agri/infra damages as of this report.
+                    </p>
+                </div>
+
+                <!-- Weather Conditions Table -->
+                <div class="s-card full">
+                    <h3><i data-lucide="cloud-rain"></i> Weather Conditions per Municipality</h3>
+                    <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px;">
+                        <!-- 1st District -->
+                        <div>
+                            <table class="s-table">
+                                <thead><tr><th colspan="2" style="color: var(--accent);">1st District</th></tr></thead>
+                                <tbody>
+                                    <tr><td>Anao</td><td style="text-align: right;"><span class="weather-pill cloudy">Cloudy</span></td></tr>
+                                    <tr><td>Mayantoc</td><td style="text-align: right;"><span class="weather-pill cloudy">Cloudy</span></td></tr>
+                                    <tr><td>Moncada</td><td style="text-align: right;"><span class="weather-pill fair">Fair Weather</span></td></tr>
+                                    <tr><td>Paniqui</td><td style="text-align: right;"><span class="weather-pill cloudy">Cloudy</span></td></tr>
+                                    <tr><td>Pura</td><td style="text-align: right;"><span class="weather-pill cloudy">Cloudy</span></td></tr>
+                                    <tr><td>Ramos</td><td style="text-align: right;"><span class="weather-pill fair">Fair Weather</span></td></tr>
+                                    <tr><td>San Clemente</td><td style="text-align: right;"><span class="weather-pill cloudy">Cloudy</span></td></tr>
+                                    <tr><td>San Manuel</td><td style="text-align: right;"><span class="weather-pill fair">Fair Weather</span></td></tr>
+                                    <tr><td>Camiling</td><td style="text-align: right;"><span style="color: rgba(255,255,255,0.2); font-size: 11px;">No Response</span></td></tr>
+                                    <tr><td>Sta. Ignacia</td><td style="text-align: right;"><span style="color: rgba(255,255,255,0.2); font-size: 11px;">No Response</span></td></tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        
+                        <!-- 2nd District -->
+                        <div>
+                            <table class="s-table">
+                                <thead><tr><th colspan="2" style="color: var(--accent);">2nd District</th></tr></thead>
+                                <tbody>
+                                    <tr><td>Gerona</td><td style="text-align: right;"><span class="weather-pill cloudy">Cloudy</span></td></tr>
+                                    <tr><td>Tarlac City</td><td style="text-align: right;"><span class="weather-pill fair">Fair Weather</span></td></tr>
+                                    <tr><td>San Jose</td><td style="text-align: right;"><span style="color: rgba(255,255,255,0.2); font-size: 11px;">No Response</span></td></tr>
+                                    <tr><td>Victoria</td><td style="text-align: right;"><span style="color: rgba(255,255,255,0.2); font-size: 11px;">No Response</span></td></tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <!-- 3rd District -->
+                        <div>
+                            <table class="s-table">
+                                <thead><tr><th colspan="2" style="color: var(--accent);">3rd District</th></tr></thead>
+                                <tbody>
+                                    <tr><td>Bamban</td><td style="text-align: right;"><span class="weather-pill fair">Fair Weather</span></td></tr>
+                                    <tr><td>Capas</td><td style="text-align: right;"><span class="weather-pill cloudy">Cloudy</span></td></tr>
+                                    <tr><td>Concepcion</td><td style="text-align: right;"><span class="weather-pill fair">Fair Weather</span></td></tr>
+                                    <tr><td>Lapaz</td><td style="text-align: right;"><span class="weather-pill fair">Fair Weather</span></td></tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Disaster Preparedness Actions -->
+                <div class="s-card full">
+                    <h3><i data-lucide="shield-check"></i> Disaster Preparedness & Actions Taken</h3>
+                    
+                    <ul class="action-list">
+                        <li>
+                            <div class="action-icon"><i data-lucide="shield-alert"></i></div>
+                            <div class="action-content">
+                                <h4>PDRRMO</h4>
+                                <p>Facilitated Pre-Disaster Risk Assessment (PDRA) & Scenario-Building Meeting (Nov 08). Issued Memo Advisories regarding precautionary measures and pre-emptive evacuations. Conducted maintenance check and inventory of search and rescue equipment.</p>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="action-icon" style="color: #10b981; background: rgba(16, 185, 129, 0.1);"><i data-lucide="package"></i></div>
+                            <div class="action-content">
+                                <h4>PSWDO & TOG 3 - PAF</h4>
+                                <p>Commenced stockpiling and repacking of food and non-food items (Nov 07). Tactical Operations Group 3 (Philippine Air Force) augmented manpower for hauling and repacking operations.</p>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="action-icon" style="color: #3b82f6; background: rgba(59, 130, 246, 0.1);"><i data-lucide="building-2"></i></div>
+                            <div class="action-content">
+                                <h4>LGU Pura (LDRRMC)</h4>
+                                <p>Activated Emergency Operations Center (EOC) on a 24/7 basis. Conducted local PDRA to identify high-risk barangays. Instructed barangays to prepare for possible pre-emptive evacuation. Conducted pruning operations on overgrown trees.</p>
+                            </div>
+                        </li>
+                    </ul>
 
                 </div>
 
             </div>
-            
-            <button type="button" class="btn-primary" id="submitBtn" onclick="alert('Google Sheets Sync Triggered')">
-                <i data-lucide="send" style="width: 16px; height: 16px; display: inline; vertical-align: middle; margin-right: 5px;"></i> Log to Database
-            </button>
-        </form>
+        </div>
+
     </main>
 
     <script>
@@ -686,7 +755,6 @@
         const dtDays = document.getElementById('dtDays');
         const dtMonthYear = document.getElementById('dtMonthYear');
         
-        // Digital Picker Elements
         const hrInput = document.getElementById('dtHour');
         const minInput = document.getElementById('dtMin');
         const btnAm = document.getElementById('btnAm');
@@ -703,31 +771,24 @@
             return `${d} ${m} ${y}`;
         };
 
-        // --- Digital Time Picker Formatter ---
         function formatTimeDisplay() {
             let h = parseInt(hrInput.value);
             let m = parseInt(minInput.value);
             let ampm = btnAm.classList.contains('active') ? 'AM' : 'PM';
             
-            // Enforce constraints
             if (isNaN(h) || h < 1) h = 1;
             if (h > 12) h = 12;
             if (isNaN(m) || m < 0) m = 0;
             if (m > 59) m = 59;
             
-            // Pad with zero and set values back to inputs
             hrInput.value = h.toString().padStart(2, '0');
             minInput.value = m.toString().padStart(2, '0');
             
             const timeStr = `${hrInput.value}:${minInput.value} ${ampm}`;
             
-            // Update the top trigger text only if a date is already picked
-            if (isDateSelected) {
-                dtDisplayText.innerText = `${formatDate(selectedDate)}  ${timeStr}`;
-            }
+            if (isDateSelected) { dtDisplayText.innerText = `${formatDate(selectedDate)}  ${timeStr}`; }
         }
 
-        // Initialize time inputs with current time
         function setInitialTime() {
             let now = new Date();
             let h = now.getHours();
@@ -735,146 +796,78 @@
             let ampm = h >= 12 ? 'PM' : 'AM';
             
             h = h % 12;
-            h = h ? h : 12; // the hour '0' should be '12'
+            h = h ? h : 12;
             
             hrInput.value = h.toString().padStart(2, '0');
             minInput.value = m.toString().padStart(2, '0');
             
             if(ampm === 'PM') {
-                btnPm.classList.add('active');
-                btnAm.classList.remove('active');
+                btnPm.classList.add('active'); btnAm.classList.remove('active');
             } else {
-                btnAm.classList.add('active');
-                btnPm.classList.remove('active');
+                btnAm.classList.add('active'); btnPm.classList.remove('active');
             }
         }
         
-        // Listeners for Digital Editor
         hrInput.addEventListener('blur', formatTimeDisplay);
         minInput.addEventListener('blur', formatTimeDisplay);
-        // Pressing Enter functions like blur
         hrInput.addEventListener('keypress', (e) => { if(e.key === 'Enter') hrInput.blur(); });
         minInput.addEventListener('keypress', (e) => { if(e.key === 'Enter') minInput.blur(); });
+        btnAm.addEventListener('click', (e) => { e.stopPropagation(); btnAm.classList.add('active'); btnPm.classList.remove('active'); formatTimeDisplay(); });
+        btnPm.addEventListener('click', (e) => { e.stopPropagation(); btnPm.classList.add('active'); btnAm.classList.remove('active'); formatTimeDisplay(); });
 
-        btnAm.addEventListener('click', (e) => { 
-            e.stopPropagation();
-            btnAm.classList.add('active'); 
-            btnPm.classList.remove('active'); 
-            formatTimeDisplay(); 
-        });
-        btnPm.addEventListener('click', (e) => { 
-            e.stopPropagation();
-            btnPm.classList.add('active'); 
-            btnAm.classList.remove('active'); 
-            formatTimeDisplay(); 
-        });
-
-        // --- Calendar Render ---
         function renderCalendar(date) {
             dtDays.innerHTML = '';
             dtMonthYear.innerText = date.toLocaleString('default', { month: 'long', year: 'numeric' });
-            
-            const year = date.getFullYear();
-            const month = date.getMonth();
-            const firstDay = new Date(year, month, 1).getDay();
-            const daysInMonth = new Date(year, month + 1, 0).getDate();
+            const year = date.getFullYear(); const month = date.getMonth();
+            const firstDay = new Date(year, month, 1).getDay(); const daysInMonth = new Date(year, month + 1, 0).getDate();
             const prevMonthDays = new Date(year, month, 0).getDate();
             
-            // Prev month trailing days
             for(let i = firstDay; i > 0; i--) {
-                const dayEl = document.createElement('div');
-                dayEl.className = 'dt-day other-month';
-                dayEl.innerText = prevMonthDays - i + 1;
-                dtDays.appendChild(dayEl);
+                const dayEl = document.createElement('div'); dayEl.className = 'dt-day other-month';
+                dayEl.innerText = prevMonthDays - i + 1; dtDays.appendChild(dayEl);
             }
             
-            // Current month days
             for(let i = 1; i <= daysInMonth; i++) {
-                const dayEl = document.createElement('div');
-                dayEl.className = 'dt-day';
+                const dayEl = document.createElement('div'); dayEl.className = 'dt-day';
                 if(isDateSelected && i === selectedDate.getDate() && month === selectedDate.getMonth() && year === selectedDate.getFullYear()) {
                     dayEl.classList.add('active');
                 }
                 dayEl.innerText = i;
                 dayEl.addEventListener('click', (e) => {
-                    e.stopPropagation();
-                    selectedDate = new Date(year, month, i);
-                    isDateSelected = true;
-                    // Format time immediately upon clicking a date
+                    e.stopPropagation(); selectedDate = new Date(year, month, i); isDateSelected = true;
                     let ampm = btnAm.classList.contains('active') ? 'AM' : 'PM';
                     let timeStr = `${hrInput.value}:${minInput.value} ${ampm}`;
                     dtDisplayText.innerText = `${formatDate(selectedDate)}  ${timeStr}`;
-                    
-                    renderCalendar(currentDate); 
-                    dtPopup.classList.remove('show');
+                    renderCalendar(currentDate); dtPopup.classList.remove('show');
                 });
                 dtDays.appendChild(dayEl);
             }
             
-            // Next month leading days (fill 42 slots)
             const totalCells = dtDays.children.length;
             for(let i = 1; i <= 42 - totalCells; i++) {
-                const dayEl = document.createElement('div');
-                dayEl.className = 'dt-day other-month';
-                dayEl.innerText = i;
-                dtDays.appendChild(dayEl);
+                const dayEl = document.createElement('div'); dayEl.className = 'dt-day other-month';
+                dayEl.innerText = i; dtDays.appendChild(dayEl);
             }
         }
 
-        // Init Setup
         setInitialTime();
 
-        // Popup Handlers
-        dtTrigger.addEventListener('click', (e) => {
-            e.stopPropagation();
-            dtPopup.classList.toggle('show');
-            renderCalendar(currentDate);
-        });
-        document.getElementById('dtPrev').addEventListener('click', (e) => {
-            e.stopPropagation();
-            currentDate.setMonth(currentDate.getMonth() - 1);
-            renderCalendar(currentDate);
-        });
-        document.getElementById('dtNext').addEventListener('click', (e) => {
-            e.stopPropagation();
-            currentDate.setMonth(currentDate.getMonth() + 1);
-            renderCalendar(currentDate);
-        });
+        dtTrigger.addEventListener('click', (e) => { e.stopPropagation(); dtPopup.classList.toggle('show'); renderCalendar(currentDate); });
+        document.getElementById('dtPrev').addEventListener('click', (e) => { e.stopPropagation(); currentDate.setMonth(currentDate.getMonth() - 1); renderCalendar(currentDate); });
+        document.getElementById('dtNext').addEventListener('click', (e) => { e.stopPropagation(); currentDate.setMonth(currentDate.getMonth() + 1); renderCalendar(currentDate); });
         document.getElementById('dtToday').addEventListener('click', (e) => {
-            e.stopPropagation();
-            currentDate = new Date();
-            selectedDate = new Date();
-            isDateSelected = true;
-            setInitialTime(); // Reset time to exactly right now
-            let ampm = btnAm.classList.contains('active') ? 'AM' : 'PM';
-            let timeStr = `${hrInput.value}:${minInput.value} ${ampm}`;
-            dtDisplayText.innerText = `${formatDate(selectedDate)}  ${timeStr}`;
-            renderCalendar(currentDate);
-            dtPopup.classList.remove('show');
+            e.stopPropagation(); currentDate = new Date(); selectedDate = new Date(); isDateSelected = true; setInitialTime(); 
+            let ampm = btnAm.classList.contains('active') ? 'AM' : 'PM'; let timeStr = `${hrInput.value}:${minInput.value} ${ampm}`;
+            dtDisplayText.innerText = `${formatDate(selectedDate)}  ${timeStr}`; renderCalendar(currentDate); dtPopup.classList.remove('show');
         });
         document.getElementById('dtClear').addEventListener('click', (e) => {
-            e.stopPropagation();
-            isDateSelected = false;
-            dtDisplayText.innerText = 'Select Date & Time';
-            setInitialTime(); // Revert back to system time on clear
-            renderCalendar(currentDate);
+            e.stopPropagation(); isDateSelected = false; dtDisplayText.innerText = 'Select Date & Time';
+            setInitialTime(); renderCalendar(currentDate);
         });
-        
-        // Prevent popup closing when clicking inside it
-        dtPopup.addEventListener('click', (e) => {
-            e.stopPropagation();
-        });
+        dtPopup.addEventListener('click', (e) => { e.stopPropagation(); });
+        document.addEventListener('click', (e) => { if(!dtPopup.contains(e.target) && !dtTrigger.contains(e.target)) { dtPopup.classList.remove('show'); } });
 
-        // Close when clicking outside
-        document.addEventListener('click', (e) => {
-            if(!dtPopup.contains(e.target) && !dtTrigger.contains(e.target)) {
-                dtPopup.classList.remove('show');
-            }
-        });
-
-        // --- Sidebar Dropdown Logic ---
-        
-        // Overview Toggle
+        // --- Sidebar Dropdown & Navigation Logic ---
         const overviewToggle = document.getElementById('overviewToggle');
         const overviewSubMenu = document.getElementById('overviewSubMenu');
         const overviewIcon = overviewToggle.querySelector('.dropdown-icon');
@@ -884,7 +877,6 @@
             overviewIcon.classList.toggle('rotate');
         });
 
-        // Agency Records Toggle
         const agencyToggle = document.getElementById('agencyRecordsToggle');
         const agencySubMenu = document.getElementById('agencyRecordsSubMenu');
         const agencyIcon = agencyToggle.querySelector('.dropdown-icon');
@@ -894,7 +886,43 @@
             agencyIcon.classList.toggle('rotate');
         });
 
-        // --- Dynamic Dashboard Visibility Logic ---
+        // Sub-menu highlight logic
+        const allNavItems = document.querySelectorAll('.nav-item, .nav-sub-item');
+        allNavItems.forEach(item => {
+            item.addEventListener('click', function() {
+                // If it's a dropdown toggle, don't remove active states of others
+                if(this.id === 'overviewToggle' || this.id === 'agencyRecordsToggle') return;
+                
+                // Remove active from all
+                document.querySelectorAll('.nav-item.active, .nav-sub-item.active').forEach(el => el.classList.remove('active'));
+                
+                // Add active to clicked
+                this.classList.add('active');
+            });
+        });
+
+        // --- View Switching Logic ---
+        const masterFormView = document.getElementById('masterFormView');
+        const summarySitRepView = document.getElementById('summarySitRepView');
+        const btnViewSummarySitRep = document.getElementById('btnViewSummarySitRep');
+
+        // Show Summary View
+        btnViewSummarySitRep.addEventListener('click', () => {
+            masterFormView.style.display = 'none';
+            summarySitRepView.style.display = 'block';
+        });
+
+        // Any other sub-item click (like picking an agency or a consolidated report view) will return to master form for now
+        // (In a real app, clicking "Weather Conditions" would load a specific table, but here we just return to the main dashboard state)
+        document.querySelectorAll('#overviewSubMenu .nav-sub-item, #agencyRecordsSubMenu .nav-sub-item').forEach(item => {
+            item.addEventListener('click', () => {
+                summarySitRepView.style.display = 'none';
+                masterFormView.style.display = 'block';
+            });
+        });
+
+
+        // --- Dynamic Form Visibility Logic (Main Form View) ---
         const mainAgencySelect = document.getElementById('mainReportingAgency');
         const lguSelectContainer = document.getElementById('lguSelectContainer');
         const lguSelect = document.getElementById('lguSelect');
@@ -903,7 +931,6 @@
         const landingView = document.getElementById('landingView');
         const sitrepForm = document.getElementById('sitrepForm');
         
-        // Reset PDF viewer state
         const pdfViewerContainer = document.getElementById('pdfViewerContainer');
         const scanStatusText = document.getElementById('scanStatusText');
 
@@ -930,46 +957,34 @@
                 lguSelect.required = false;
                 submitBtn.classList.remove('visible');
             }
-            // Re-initialize icons just in case newly displayed ones need rendering
             lucide.createIcons();
         });
 
-        // --- Auto-Uppercase Feature ---
-        const textInputs = document.querySelectorAll('input[type="text"], textarea');
-        textInputs.forEach(input => {
+        // Auto-Uppercase
+        document.querySelectorAll('input[type="text"], textarea').forEach(input => {
             input.addEventListener('input', function() {
-                const start = this.selectionStart;
-                const end = this.selectionEnd;
-                this.value = this.value.toUpperCase();
-                this.setSelectionRange(start, end);
+                const start = this.selectionStart; const end = this.selectionEnd;
+                this.value = this.value.toUpperCase(); this.setSelectionRange(start, end);
             });
         });
 
-        // --- OCR Scanner Trigger & PDF Loader ---
+        // OCR Scanner Logic
         const scannerArea = document.querySelector('.scanner-area');
         const fileUpload = document.getElementById('fileUpload');
         const pdfViewer = document.getElementById('pdfViewer');
 
-        if(scannerArea) {
-            scannerArea.addEventListener('click', () => { fileUpload.click(); });
-        }
-
+        if(scannerArea) { scannerArea.addEventListener('click', () => { fileUpload.click(); }); }
         if(fileUpload) {
             fileUpload.addEventListener('change', function(e) {
                 const file = e.target.files[0];
-                
                 if (file && file.type === 'application/pdf') {
-                    // Create object URL to display the PDF locally in the browser
                     const fileURL = URL.createObjectURL(file);
                     pdfViewer.src = fileURL;
-                    
-                    // Show the viewer and update status text
                     pdfViewerContainer.style.display = 'block';
                     scanStatusText.innerText = 'Scan Status: PDF LOADED & READY';
                     scanStatusText.style.color = 'var(--accent)';
                 } else if (file) {
                     alert('Please upload a valid PDF file.');
-                    // Reset input
                     e.target.value = '';
                 }
             });
