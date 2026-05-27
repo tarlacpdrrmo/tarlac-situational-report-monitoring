@@ -71,7 +71,7 @@
         .profile-info p { font-size: 11px; color: var(--text-muted); letter-spacing: 0.5px; text-transform: uppercase; margin-top: 2px;}
 
         .nav-menu { list-style: none; display: flex; flex-direction: column; gap: 6px; }
-        .nav-item-container { display: flex; flex-direction: column; }
+        .nav-item-container { display: flex; flex-direction: column; margin-bottom: 5px; }
         
         .nav-item {
             display: flex; align-items: center; gap: 14px;
@@ -299,19 +299,14 @@
             margin-top: 24px; 
             border-radius: 12px; 
             overflow: hidden; 
-            height: 700px; /* Taller for better document viewing */
+            height: 700px; 
             border: 1px solid var(--glass-border); 
-            background: #323639; /* Deep dark background so it blends nicely with browser's native PDF viewer */
+            background: #323639; 
             box-shadow: 0 20px 40px rgba(0,0,0,0.4);
             animation: fadeIn 0.4s ease;
         }
 
-        #pdfViewer {
-            width: 100%; 
-            height: 100%; 
-            border: none;
-            border-radius: 12px; /* Smooth corners inside */
-        }
+        #pdfViewer { width: 100%; height: 100%; border: none; border-radius: 12px; }
 
         /* --- Buttons --- */
         #submitBtn { display: none; }
@@ -338,13 +333,36 @@
         </div>
         
         <ul class="nav-menu">
+            <!-- SITUATION OVERVIEW (Now contains Consolidated Reports based on forms a-k) -->
             <li class="nav-item-container">
                 <div class="nav-item active" id="overviewToggle">
                     <i data-lucide="layout-dashboard"></i> SITUATION OVERVIEW
+                    <i data-lucide="chevron-down" class="dropdown-icon rotate"></i>
+                </div>
+                
+                <ul class="nav-sub-menu open" id="overviewSubMenu">
+                    <li class="sub-group-title">CONSOLIDATED REPORTS</li>
+                    <li class="nav-sub-item" title="Summary of Weather Conditions">Weather Conditions Summary</li>
+                    <li class="nav-sub-item" title="Affected Population & Evacuation Data">Population & Evacuation</li>
+                    <li class="nav-sub-item" title="Reported Casualties Record">Casualties Record</li>
+                    <li class="nav-sub-item" title="Class/Work Suspensions & Utilities">Suspensions & Interruptions</li>
+                    <li class="nav-sub-item" title="Consolidated Flooded Areas">Flooded Areas Report</li>
+                    <li class="nav-sub-item" title="Infrastructure & Agriculture Damages">Infra & Agri Damages</li>
+                    <li class="nav-sub-item" title="Status of Roads and Bridges">Roads & Bridges Status</li>
+                    <li class="nav-sub-item" title="Other Incidents Log">Other Incidents Log</li>
+                </ul>
+            </li>
+
+            <li class="nav-item" style="margin-bottom: 5px;"><i data-lucide="file-text"></i> Summary Situational Report</li>
+
+            <!-- AGENCY RECORDS (Agencies moved here) -->
+            <li class="nav-item-container">
+                <div class="nav-item" id="agencyRecordsToggle">
+                    <i data-lucide="users"></i> AGENCY RECORDS
                     <i data-lucide="chevron-down" class="dropdown-icon"></i>
                 </div>
                 
-                <ul class="nav-sub-menu" id="overviewSubMenu">
+                <ul class="nav-sub-menu" id="agencyRecordsSubMenu">
                     <li class="sub-group-title">PDRRM COUNCIL</li>
                     <li class="nav-sub-item">PDRRMO</li>
                     <li class="nav-sub-item">PSWDO</li>
@@ -380,15 +398,12 @@
                     <li class="nav-sub-item">Santa Ignacia</li>
                     <li class="nav-sub-item">Victoria</li>
 
-                    <li class="sub-group-title">OTHER PARTNER AGENCIES/GROUP</li>
+                    <li class="sub-group-title">OTHER PARTNER AGENCIES</li>
                     <li class="nav-sub-item" title="7TH CIVIL MILITARY OPERATION BATTALION, PA">7TH CIVIL MILITARY OP. BN, PA</li>
                     <li class="nav-sub-item" title="ARMOR DIVISION, CAMP O'DONNEL, PA">ARMOR DIVISION, CAMP O'DONNEL, PA</li>
                     <li class="nav-sub-item" title="VOLUNTEERS ASSOCIATION OF TARLAC (VAT)">VOLUNTEERS ASSOC. OF TARLAC (VAT)</li>
                 </ul>
             </li>
-
-            <li class="nav-item"><i data-lucide="file-text"></i> Summary Situational Report</li>
-            <li class="nav-item"><i data-lucide="users"></i> Agency Records</li>
         </ul>
     </aside>
 
@@ -858,6 +873,8 @@
         });
 
         // --- Sidebar Dropdown Logic ---
+        
+        // Overview Toggle
         const overviewToggle = document.getElementById('overviewToggle');
         const overviewSubMenu = document.getElementById('overviewSubMenu');
         const overviewIcon = overviewToggle.querySelector('.dropdown-icon');
@@ -865,6 +882,16 @@
         overviewToggle.addEventListener('click', () => {
             overviewSubMenu.classList.toggle('open');
             overviewIcon.classList.toggle('rotate');
+        });
+
+        // Agency Records Toggle
+        const agencyToggle = document.getElementById('agencyRecordsToggle');
+        const agencySubMenu = document.getElementById('agencyRecordsSubMenu');
+        const agencyIcon = agencyToggle.querySelector('.dropdown-icon');
+
+        agencyToggle.addEventListener('click', () => {
+            agencySubMenu.classList.toggle('open');
+            agencyIcon.classList.toggle('rotate');
         });
 
         // --- Dynamic Dashboard Visibility Logic ---
