@@ -181,14 +181,6 @@
         .input-block textarea { width: 100%; background: var(--input-bg); border: 1px solid transparent; color: var(--text-main); font-size: 14px; padding: 15px; border-radius: 16px; resize: vertical; min-height: 80px; outline: none; transition: 0.3s; }
         .input-block textarea:focus { border-color: rgba(245, 158, 11, 0.5); background: rgba(0,0,0,0.4); }
 
-        /* Scanner & Viewer */
-        .scanner-area { border: 2px dashed rgba(245, 158, 11, 0.3); border-radius: 16px; padding: 60px 40px; text-align: center; cursor: pointer; transition: 0.3s; background: rgba(0,0,0,0.15); }
-        .scanner-area:hover { background: rgba(0,0,0,0.3); border-color: var(--accent); }
-        .scanner-icon { color: var(--text-main); margin-bottom: 15px; }
-
-        #pdfViewerContainer { display: none; margin-top: 24px; border-radius: 12px; overflow: hidden; height: 700px; border: 1px solid var(--glass-border); background: #323639; box-shadow: 0 20px 40px rgba(0,0,0,0.4); animation: fadeIn 0.4s ease; }
-        #pdfViewer { width: 100%; height: 100%; border: none; border-radius: 12px; }
-
         /* Submit */
         #submitBtn { display: none; }
         #submitBtn.visible { display: block; }
@@ -297,7 +289,9 @@
 </head>
 <body>
 
+    <!-- SIDEBAR -->
     <aside class="sidebar">
+        <!-- Clickable Profile -> Home -->
         <div class="profile" onclick="window.location.reload();" title="Return to Dashboard Home">
             <div class="profile-img">T</div>
             <div class="profile-info">
@@ -307,6 +301,7 @@
         </div>
         
         <ul class="nav-menu">
+            <!-- SITUATION OVERVIEW -->
             <li class="nav-item-container">
                 <div class="nav-item active" id="overviewToggle">
                     <i data-lucide="layout-dashboard"></i> SITUATION OVERVIEW
@@ -326,10 +321,12 @@
                 </ul>
             </li>
 
+            <!-- Summary Situational Report Button -->
             <li class="nav-item" style="margin-bottom: 5px;" id="btnViewSummarySitRep">
                 <i data-lucide="file-text"></i> Summary Situational Report
             </li>
 
+            <!-- AGENCY RECORDS -->
             <li class="nav-item-container">
                 <div class="nav-item" id="agencyRecordsToggle">
                     <i data-lucide="users"></i> AGENCY RECORDS
@@ -383,6 +380,9 @@
 
     <main class="main-content">
         
+        <!-- ============================================== -->
+        <!-- MASTER FORM VIEW (Landing State & Input Forms) -->
+        <!-- ============================================== -->
         <div id="masterFormView">
             <div class="header">
                 <div>
@@ -477,12 +477,14 @@
                 </div>
             </div>
 
+            <!-- Empty State -->
             <div id="landingView">
                 <div style="text-align: center; padding: 60px; color: var(--text-muted); background: var(--glass-bg); border-radius: 24px; border: 1px dashed var(--glass-border); margin-bottom: 40px;">
                     <i data-lucide="clipboard-edit" style="width: 48px; height: 48px; color: rgba(255,255,255,0.2); margin-bottom: 15px;"></i>
                     <h3 style="font-size: 16px; font-weight: 500; color: var(--text-main);">No Agency Selected</h3>
                     <p style="font-size: 13px; margin-top: 5px;">Please select a reporting agency from the top menu to view the relevant report format.</p>
                 </div>
+                <!-- Static Advisory Grid -->
                 <div class="insights-header"><i data-lucide="bell-ring" style="color: var(--accent);"></i> LATEST AGENCY ADVISORY</div>
                 <div class="advisory-grid">
                     <div class="tweet-card">
@@ -494,7 +496,7 @@
                             </div>
                         </div>
                         <div class="tweet-body">🚨 <strong>RED ALERT</strong> status raised for Tarlac Province due to Severe Tropical Storm. All LDRRMCs are advised to activate EOCs and preposition goods.</div>
-                        <div class="tweet-footer"><span>Scanned via Document OCR</span><span>4:37 PM • May 26</span></div>
+                        <div class="tweet-footer"><span>System Automated Alert</span><span>4:37 PM • May 26</span></div>
                     </div>
                     <div class="tweet-card">
                         <div class="tweet-header">
@@ -526,6 +528,9 @@
             <form id="sitrepForm">
                 <div class="dashboard-grid" id="mainDashboardGrid">
                     
+                    <!-- ============================================== -->
+                    <!-- LDRRMC CARDS (Visible only for LDRRMC)         -->
+                    <!-- ============================================== -->
                     <div class="card ldrmc-card">
                         <div class="card-title"><i data-lucide="cloud-rain"></i> General Status</div>
                         <div class="input-row"><label>a. Weather Condition</label><input type="text" placeholder="Tap to type..."></div>
@@ -560,36 +565,79 @@
                         </div>
                     </div>
 
-                    <div class="card other-card full-width">
-                        <div class="card-title"><i data-lucide="file-scan"></i> PDF Document Scanner</div>
-                        
-                        <div class="scanner-area">
-                            <i data-lucide="scan" class="scanner-icon" width="42" height="42"></i>
-                            <p style="font-size: 15px; font-weight: 500; color: var(--text-main); margin-bottom: 5px;" id="scanStatusText">Scan Status: IDLE</p>
-                            <p style="font-size: 13px; color: var(--text-muted);">Drop PDF document here to begin data extraction.</p>
-                            <input type="file" id="fileUpload" style="display: none;" accept=".pdf,application/pdf">
-                        </div>
+                    <!-- ============================================== -->
+                    <!-- NEW "OTHER" CARDS (Items A to T)               -->
+                    <!-- Visible for PDRRMO and Partner Agencies        -->
+                    <!-- ============================================== -->
+                    
+                    <div class="card other-card">
+                        <div class="card-title"><i data-lucide="activity"></i> Incidents & Impact</div>
+                        <div class="input-row"><label>A.1 Flooded Areas</label><input type="text" placeholder="None reported..."></div>
+                        <div class="input-row"><label>A.2 Other Incidents</label><input type="text" placeholder="None reported..."></div>
+                        <div class="input-row"><label>B. Affected Population</label><input type="text" placeholder="None reported..."></div>
+                        <div class="input-row"><label>C. Casualties</label><input type="text" placeholder="None reported..."></div>
+                    </div>
 
-                        <div id="pdfViewerContainer">
-                            <iframe id="pdfViewer" src="" style="width: 100%; height: 100%; border: none;"></iframe>
+                    <div class="card other-card">
+                        <div class="card-title"><i data-lucide="home"></i> Damages</div>
+                        <div class="input-row"><label>D. Damaged Houses</label><input type="text" placeholder="None reported..."></div>
+                        <div class="input-row"><label>E. Damage to Agriculture</label><input type="text" placeholder="None reported..."></div>
+                        <div class="input-row"><label>F. Damage to Infrastructure</label><input type="text" placeholder="None reported..."></div>
+                        <div class="input-row"><label>G. Damage to Other Assets</label><input type="text" placeholder="None reported..."></div>
+                    </div>
+
+                    <div class="card other-card full-width">
+                        <div class="card-title"><i data-lucide="zap"></i> Status of Lifelines</div>
+                        <div class="dashboard-grid" style="gap: 20px;">
+                            <div>
+                                <div class="input-row"><label>H. Roads and Bridges</label><input type="text" placeholder="All passable..."></div>
+                                <div class="input-row"><label>I. Power Supply</label><input type="text" placeholder="No interruption..."></div>
+                                <div class="input-row"><label>J. Water Supply</label><input type="text" placeholder="No interruption..."></div>
+                            </div>
+                            <div>
+                                <div class="input-row"><label>K. Communication Lines</label><input type="text" placeholder="No interruption..."></div>
+                                <div class="input-row"><label>L. Airport(s)</label><input type="text" placeholder="N/A"></div>
+                                <div class="input-row"><label>M. Seaport(s)</label><input type="text" placeholder="N/A"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card other-card full-width">
+                        <div class="card-title"><i data-lucide="shield-alert"></i> Governance & Evacuation</div>
+                        <div class="dashboard-grid" style="gap: 20px;">
+                            <div>
+                                <div class="input-row"><label>N. Suspension of Work</label><input type="text" placeholder="Tap to type..."></div>
+                                <div class="input-row"><label>O. Suspension of Classes</label><input type="text" placeholder="Tap to type..."></div>
+                                <div class="input-row"><label>P. State of Calamity</label><input type="text" placeholder="No declaration..."></div>
+                                <div class="input-row"><label>T. Assistance Provided</label><input type="text" placeholder="None as of this sitrep..."></div>
+                            </div>
+                            <div>
+                                <div class="input-row"><label>Q. Pre-Emptive Evac (People)</label><input type="text" placeholder="None reported..."></div>
+                                <div class="input-row"><label>R. Pre-Emptive Evac (Animals)</label><input type="text" placeholder="None reported..."></div>
+                                <div class="input-row"><label>S. Families Assisted</label><input type="text" placeholder="None reported..."></div>
+                            </div>
                         </div>
                     </div>
 
                 </div>
                 
+                <!-- Submit Button -->
                 <button type="button" class="btn-primary" id="submitBtn" onclick="alert('Google Sheets Sync Triggered')">
                     <i data-lucide="send" style="width: 16px; height: 16px;"></i> Log to Database
                 </button>
             </form>
         </div>
 
+        <!-- ============================================== -->
+        <!-- SUMMARY SITUATIONAL REPORT VIEW -->
+        <!-- ============================================== -->
         <div id="summarySitRepView">
             
             <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 30px;">
                 <div class="summary-header-doc">
                     <h2>SITREP & ADVISORY UPDATE #1</h2>
                     <p>Effects of TC "Uwan" in the Province of Tarlac</p>
-                    <div class="doc-meta">As of 05:00 PM, 08 November 2025 • Generated via Data OCR</div>
+                    <div class="doc-meta">As of 05:00 PM, 08 November 2025 • Generated via Data Extract</div>
                 </div>
                 
                 <button type="button" class="btn-primary inline-btn" onclick="window.print()">
@@ -598,6 +646,7 @@
             </div>
 
             <div class="summary-grid">
+                <!-- Overview & Alerts -->
                 <div class="s-card">
                     <h3><i data-lucide="radio-tower"></i> Overview & Alerts</h3>
                     <div class="s-fact">
@@ -613,6 +662,7 @@
                     </p>
                 </div>
 
+                <!-- Damages, Suspensions & Lifelines -->
                 <div class="s-card">
                     <h3><i data-lucide="alert-triangle"></i> Damages, Suspensions & Lifelines</h3>
                     <div class="s-highlight-box">
@@ -630,6 +680,7 @@
                     </p>
                 </div>
 
+                <!-- Weather Conditions Table -->
                 <div class="s-card full">
                     <h3><i data-lucide="cloud-rain"></i> Weather Conditions per Municipality</h3>
                     <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px;">
@@ -675,6 +726,7 @@
                     </div>
                 </div>
 
+                <!-- Actions Taken -->
                 <div class="s-card full">
                     <h3><i data-lucide="shield-check"></i> Disaster Preparedness & Actions Taken</h3>
                     <ul class="action-list">
@@ -706,8 +758,12 @@
 
     </main>
 
+    <!-- ====================================================================== -->
+    <!-- HIDDEN OFFICIAL PRINT TEMPLATE (Reveals Only on Ctrl+P / window.print) -->
+    <!-- ====================================================================== -->
     <div id="printDocument">
         
+        <!-- Document Header -->
         <table class="p-header-table">
             <tr>
                 <td style="width: 100px; text-align: center;">
@@ -729,6 +785,7 @@
 
         <div class="p-red-banner">PROVINCIAL DISASTER RISK REDUCTION AND MANAGEMENT OFFICE</div>
 
+        <!-- Routing Information -->
         <table class="p-routing-table">
             <tr><td class="p-routing-label">For</td><td class="p-routing-colon">:</td><td class="p-routing-value">HON. CHRISTIAN TELL A. YAP<span class="p-routing-sub">Governor and PDRRMC Chairperson</span></td></tr>
             <tr><td class="p-routing-label">Thru</td><td class="p-routing-colon">:</td><td class="p-routing-value">ATTY. MALOU MATIAS-NAVARRO<span class="p-routing-sub">Acting Provincial Administrator</span></td></tr>
@@ -739,6 +796,7 @@
         
         <hr class="p-hr">
 
+        <!-- Body Content -->
         <div class="p-content">
             <ol class="roman">
                 <li>SITUATION OVERVIEW
@@ -875,6 +933,9 @@
         </div>
     </div>
     
+    <!-- ====================================================================== -->
+    <!-- JAVASCRIPT LOGIC -->
+    <!-- ====================================================================== -->
     <script>
         // 1. Initialize Icons
         lucide.createIcons();
@@ -1086,8 +1147,6 @@
         const submitBtn = document.getElementById('submitBtn');
         const landingView = document.getElementById('landingView');
         const sitrepForm = document.getElementById('sitrepForm');
-        const pdfViewerContainer = document.getElementById('pdfViewerContainer');
-        const scanStatusText = document.getElementById('scanStatusText');
 
         mainAgencySelect.addEventListener('change', function() {
             if (this.value === 'LDRRMC') {
@@ -1125,30 +1184,6 @@
             });
         });
 
-        // 7. OCR Scanner & PDF Loader Trigger
-        const scannerArea = document.querySelector('.scanner-area');
-        const fileUpload = document.getElementById('fileUpload');
-        const pdfViewer = document.getElementById('pdfViewer');
-
-        if(scannerArea) {
-            scannerArea.addEventListener('click', () => { fileUpload.click(); });
-        }
-
-        if(fileUpload) {
-            fileUpload.addEventListener('change', function(e) {
-                const file = e.target.files[0];
-                if (file && file.type === 'application/pdf') {
-                    const fileURL = URL.createObjectURL(file);
-                    pdfViewer.src = fileURL;
-                    pdfViewerContainer.style.display = 'block';
-                    scanStatusText.innerText = 'Scan Status: PDF LOADED & READY';
-                    scanStatusText.style.color = 'var(--accent)';
-                } else if (file) {
-                    alert('Please upload a valid PDF file.');
-                    e.target.value = '';
-                }
-            });
-        }
     </script>
 </body>
 </html>
