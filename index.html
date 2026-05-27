@@ -160,8 +160,12 @@
         /* --- Dynamic Dashboard Forms --- */
         #sitrepForm { display: none; animation: fadeIn 0.3s ease; }
         .dashboard-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
-        .ldrmc-card, .other-card { display: none; }
+        
+        /* The 3 View Modes */
+        .ldrmc-card, .pdrrmo-card, .other-card { display: none; }
+        
         .dashboard-grid.mode-ldrmc .ldrmc-card { display: block; }
+        .dashboard-grid.mode-pdrrmo .pdrrmo-card { display: block; }
         .dashboard-grid.mode-other .other-card { display: block; }
 
         .card { background: var(--glass-bg); backdrop-filter: blur(40px); -webkit-backdrop-filter: blur(40px); border: 1px solid var(--glass-border); border-radius: 24px; padding: 30px; box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3); }
@@ -180,6 +184,11 @@
         .input-block label { display: block; font-size: 13px; color: var(--text-muted); margin-bottom: 10px; font-weight: 500;}
         .input-block textarea { width: 100%; background: var(--input-bg); border: 1px solid transparent; color: var(--text-main); font-size: 14px; padding: 15px; border-radius: 16px; resize: vertical; min-height: 80px; outline: none; transition: 0.3s; }
         .input-block textarea:focus { border-color: rgba(245, 158, 11, 0.5); background: rgba(0,0,0,0.4); }
+
+        /* Scanner & Viewer Styles */
+        .scanner-area { border: 2px dashed rgba(245, 158, 11, 0.3); border-radius: 16px; padding: 60px 40px; text-align: center; cursor: pointer; transition: 0.3s; background: rgba(0,0,0,0.15); }
+        .scanner-area:hover { background: rgba(0,0,0,0.3); border-color: var(--accent); }
+        .scanner-icon { color: var(--text-main); margin-bottom: 15px; }
 
         /* Submit */
         #submitBtn { display: none; }
@@ -529,7 +538,7 @@
                 <div class="dashboard-grid" id="mainDashboardGrid">
                     
                     <!-- ============================================== -->
-                    <!-- LDRRMC CARDS (Visible only for LDRRMC)         -->
+                    <!-- 1. LDRRMC CARDS (Visible only for LDRRMC)      -->
                     <!-- ============================================== -->
                     <div class="card ldrmc-card">
                         <div class="card-title"><i data-lucide="cloud-rain"></i> General Status</div>
@@ -566,11 +575,10 @@
                     </div>
 
                     <!-- ============================================== -->
-                    <!-- NEW "OTHER" CARDS (Items A to T)               -->
-                    <!-- Visible for PDRRMO and Partner Agencies        -->
+                    <!-- 2. PDRRMO CARDS (Items A to T)                 -->
+                    <!-- Visible ONLY for PDRRMO                        -->
                     <!-- ============================================== -->
-                    
-                    <div class="card other-card">
+                    <div class="card pdrrmo-card">
                         <div class="card-title"><i data-lucide="activity"></i> Incidents & Impact</div>
                         <div class="input-row"><label>A.1 Flooded Areas</label><input type="text" placeholder="None reported..."></div>
                         <div class="input-row"><label>A.2 Other Incidents</label><input type="text" placeholder="None reported..."></div>
@@ -578,7 +586,7 @@
                         <div class="input-row"><label>C. Casualties</label><input type="text" placeholder="None reported..."></div>
                     </div>
 
-                    <div class="card other-card">
+                    <div class="card pdrrmo-card">
                         <div class="card-title"><i data-lucide="home"></i> Damages</div>
                         <div class="input-row"><label>D. Damaged Houses</label><input type="text" placeholder="None reported..."></div>
                         <div class="input-row"><label>E. Damage to Agriculture</label><input type="text" placeholder="None reported..."></div>
@@ -586,7 +594,7 @@
                         <div class="input-row"><label>G. Damage to Other Assets</label><input type="text" placeholder="None reported..."></div>
                     </div>
 
-                    <div class="card other-card full-width">
+                    <div class="card pdrrmo-card full-width">
                         <div class="card-title"><i data-lucide="zap"></i> Status of Lifelines</div>
                         <div class="dashboard-grid" style="gap: 20px;">
                             <div>
@@ -602,7 +610,7 @@
                         </div>
                     </div>
 
-                    <div class="card other-card full-width">
+                    <div class="card pdrrmo-card full-width">
                         <div class="card-title"><i data-lucide="shield-alert"></i> Governance & Evacuation</div>
                         <div class="dashboard-grid" style="gap: 20px;">
                             <div>
@@ -616,6 +624,26 @@
                                 <div class="input-row"><label>R. Pre-Emptive Evac (Animals)</label><input type="text" placeholder="None reported..."></div>
                                 <div class="input-row"><label>S. Families Assisted</label><input type="text" placeholder="None reported..."></div>
                             </div>
+                        </div>
+                    </div>
+
+                    <!-- ============================================== -->
+                    <!-- 3. OTHER AGENCIES CARD (PDF Scanner)           -->
+                    <!-- Visible for Partner Agencies (BFP, PNP, etc.)  -->
+                    <!-- ============================================== -->
+                    <div class="card other-card full-width">
+                        <div class="card-title"><i data-lucide="file-scan"></i> PDF Document Scanner</div>
+                        
+                        <div class="scanner-area">
+                            <i data-lucide="scan" class="scanner-icon" width="42" height="42"></i>
+                            <p style="font-size: 15px; font-weight: 500; color: var(--text-main); margin-bottom: 5px;" id="scanStatusText">Scan Status: IDLE</p>
+                            <p style="font-size: 13px; color: var(--text-muted);">Drop PDF document here to begin data extraction.</p>
+                            <input type="file" id="fileUpload" style="display: none;" accept=".pdf,application/pdf">
+                        </div>
+
+                        <!-- Seamless Modernized PDF Viewer -->
+                        <div id="pdfViewerContainer" style="display: none; margin-top: 24px; border-radius: 12px; overflow: hidden; height: 700px; border: 1px solid var(--glass-border); background: #323639; box-shadow: 0 20px 40px rgba(0,0,0,0.4); animation: fadeIn 0.4s ease;">
+                            <iframe id="pdfViewer" src="" style="width: 100%; height: 100%; border: none;"></iframe>
                         </div>
                     </div>
 
@@ -1139,7 +1167,7 @@
             });
         });
 
-        // 5. Dynamic Form Visibility Logic (LDRRMC vs Non-LDRRMC)
+        // 5. Dynamic Form Visibility Logic (3 Modes: LDRRMC, PDRRMO, Other)
         const mainAgencySelect = document.getElementById('mainReportingAgency');
         const lguSelectContainer = document.getElementById('lguSelectContainer');
         const lguSelect = document.getElementById('lguSelect');
@@ -1150,13 +1178,26 @@
 
         mainAgencySelect.addEventListener('change', function() {
             if (this.value === 'LDRRMC') {
+                // Mode 1: LDRRMC
                 landingView.style.display = 'none';
                 sitrepForm.style.display = 'block';
                 lguSelectContainer.classList.add('visible');
                 lguSelect.required = true;
                 dashboardGrid.className = 'dashboard-grid mode-ldrmc';
                 submitBtn.classList.add('visible');
+
+            } else if (this.value === 'PDRRMO') {
+                // Mode 2: PDRRMO (A-T Fields)
+                landingView.style.display = 'none';
+                sitrepForm.style.display = 'block';
+                lguSelectContainer.classList.remove('visible');
+                lguSelect.required = false;
+                lguSelect.value = ''; 
+                dashboardGrid.className = 'dashboard-grid mode-pdrrmo';
+                submitBtn.classList.add('visible');
+
             } else if (this.value !== '') {
+                // Mode 3: Other Agencies (PDF Scanner)
                 landingView.style.display = 'none';
                 sitrepForm.style.display = 'block';
                 lguSelectContainer.classList.remove('visible');
@@ -1164,7 +1205,9 @@
                 lguSelect.value = ''; 
                 dashboardGrid.className = 'dashboard-grid mode-other';
                 submitBtn.classList.add('visible');
+
             } else {
+                // Landing state
                 landingView.style.display = 'block';
                 sitrepForm.style.display = 'none';
                 lguSelectContainer.classList.remove('visible');
@@ -1184,6 +1227,32 @@
             });
         });
 
+        // 7. OCR Scanner & PDF Loader Trigger (For "Other" Agencies)
+        const scannerArea = document.querySelector('.scanner-area');
+        const fileUpload = document.getElementById('fileUpload');
+        const pdfViewer = document.getElementById('pdfViewer');
+        const pdfViewerContainer = document.getElementById('pdfViewerContainer');
+        const scanStatusText = document.getElementById('scanStatusText');
+
+        if(scannerArea) {
+            scannerArea.addEventListener('click', () => { fileUpload.click(); });
+        }
+
+        if(fileUpload) {
+            fileUpload.addEventListener('change', function(e) {
+                const file = e.target.files[0];
+                if (file && file.type === 'application/pdf') {
+                    const fileURL = URL.createObjectURL(file);
+                    pdfViewer.src = fileURL;
+                    pdfViewerContainer.style.display = 'block';
+                    scanStatusText.innerText = 'Scan Status: PDF LOADED & READY';
+                    scanStatusText.style.color = 'var(--accent)';
+                } else if (file) {
+                    alert('Please upload a valid PDF file.');
+                    e.target.value = '';
+                }
+            });
+        }
     </script>
 </body>
 </html>
