@@ -47,7 +47,7 @@
         .sidebar {
             width: 290px; background: var(--sidebar-bg); backdrop-filter: blur(40px);
             -webkit-backdrop-filter: blur(40px); border-right: 1px solid var(--glass-border);
-            padding: 40px 20px; display: flex; flex-direction: column; z-index: 10;
+            padding: 40px 20px; display: flex; flex-direction: column; z-index: 10; overflow-y: auto;
         }
 
         .profile {
@@ -69,10 +69,10 @@
             color: var(--text-muted); cursor: pointer; transition: all 0.2s ease; font-size: 14px; font-weight: 500;
         }
         .nav-item:hover { background: var(--glass-hover); color: var(--text-main); }
-        .nav-item.active { background: var(--glass-bg); color: var(--text-main); border: 1px solid var(--glass-border); box-shadow: 0 4px 15px rgba(0,0,0,0.2); }
+        .nav-item.active { background: var(--glass-bg); color: var(--text-main); border: 1px solid var(--glass-border); box-shadow: 0 4px 15px rgba(0,0,0,0.2); color: var(--accent);}
 
         /* --- Main Content Styles --- */
-        .main-content { flex: 1; padding: 50px 60px; overflow-y: auto; scroll-behavior: smooth; position: relative;}
+        .main-content { flex: 1; padding: 40px 50px; overflow-y: auto; scroll-behavior: smooth; position: relative;}
         
         .view-section { display: none; animation: fadeIn 0.4s ease forwards; }
         .view-section.active { display: block; }
@@ -111,9 +111,7 @@
             cursor: pointer; transition: 0.3s; background: rgba(0,0,0,0.15); margin-bottom: 20px;
         }
         .scanner-area:hover { background: rgba(0,0,0,0.3); border-color: var(--accent); }
-        .pdf-viewer {
-            display: none; width: 100%; height: 500px; border-radius: 12px; border: 1px solid var(--glass-border); background: #323639; margin-bottom: 20px;
-        }
+        .pdf-viewer { display: none; width: 100%; height: 500px; border-radius: 12px; border: 1px solid var(--glass-border); background: #323639; margin-bottom: 20px; }
 
         /* Buttons */
         .btn-group { display: flex; gap: 12px; margin-top: 20px; }
@@ -138,26 +136,6 @@
             display: none; background: rgba(16, 185, 129, 0.1); border: 1px solid rgba(16, 185, 129, 0.3);
             padding: 20px; border-radius: 16px; margin-top: 20px; text-align: center;
         }
-
-        /* --- Tweet Wall (Situation Overview) Styles --- */
-        .advisory-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 24px; width: 100%; }
-        .tweet-card { background: var(--glass-bg); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); border: 1px solid var(--glass-border); border-radius: 18px; padding: 22px; width: 100%; display: flex; flex-direction: column; gap: 14px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); transition: 0.3s; cursor: pointer; }
-        .tweet-card:hover { transform: translateY(-3px); border-color: rgba(245, 158, 11, 0.4); background: rgba(245, 158, 11, 0.05); }
-        
-        .tweet-header { display: flex; align-items: center; gap: 12px; }
-        .tweet-avatar { width: 42px; height: 42px; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-weight: 700; font-size: 14px; box-shadow: 0 4px 10px rgba(0,0,0,0.2); }
-        .av-city { background: linear-gradient(135deg, #3b82f6, #1d4ed8); }
-        .av-muni { background: linear-gradient(135deg, #10b981, #047857); }
-        .av-agency { background: linear-gradient(135deg, #8b5cf6, #5b21b6); }
-        
-        .tweet-meta { display: flex; flex-direction: column; line-height: 1.2; }
-        .tweet-name { font-size: 14px; font-weight: 600; color: var(--text-main); display: flex; align-items: center; gap: 4px; }
-        .tweet-handle { font-size: 11px; color: var(--accent); margin-top: 2px; }
-        
-        .tweet-body { font-size: 13px; color: var(--text-muted); line-height: 1.6; }
-        .tweet-body strong { color: var(--text-main); font-weight: 500; }
-        .tweet-footer { font-size: 11px; color: var(--text-muted); display: flex; align-items: center; justify-content: space-between; border-top: 1px solid var(--glass-border); padding-top: 12px; margin-top: 5px; }
-
 
         /* --- Datetime Picker Styling --- */
         .datetime-wrapper {
@@ -195,6 +173,45 @@
         .ampm-toggle { display: flex; background: rgba(0,0,0,0.3); border-radius: 10px; overflow: hidden; border: 1px solid var(--glass-border); width: 100%; }
         .ampm-btn { flex: 1; background: transparent; border: none; color: var(--text-muted); padding: 10px 0; font-size: 13px; font-weight: 600; cursor: pointer; transition: 0.3s; }
         .ampm-btn.active { background: rgba(245, 158, 11, 0.2); color: var(--accent); }
+
+        /* --- Tweet Wall Styles --- */
+        .advisory-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 24px; width: 100%; margin-top: 20px;}
+        .tweet-card { background: var(--glass-bg); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); border: 1px solid var(--glass-border); border-radius: 18px; padding: 22px; width: 100%; display: flex; flex-direction: column; gap: 14px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); transition: 0.3s; cursor: pointer; }
+        .tweet-card:hover { transform: translateY(-3px); border-color: rgba(245, 158, 11, 0.4); background: rgba(245, 158, 11, 0.05); }
+        .tweet-header { display: flex; align-items: center; gap: 12px; }
+        .tweet-avatar { width: 42px; height: 42px; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-weight: 700; font-size: 14px; box-shadow: 0 4px 10px rgba(0,0,0,0.2); }
+        .av-city { background: linear-gradient(135deg, #3b82f6, #1d4ed8); }
+        .av-muni { background: linear-gradient(135deg, #10b981, #047857); }
+        .av-agency { background: linear-gradient(135deg, #8b5cf6, #5b21b6); }
+        .tweet-meta { display: flex; flex-direction: column; line-height: 1.2; }
+        .tweet-name { font-size: 14px; font-weight: 600; color: var(--text-main); display: flex; align-items: center; gap: 4px; }
+        .tweet-handle { font-size: 11px; color: var(--accent); margin-top: 2px; }
+        .tweet-body { font-size: 13px; color: var(--text-muted); line-height: 1.6; }
+        .tweet-body strong { color: var(--text-main); font-weight: 500; }
+        .tweet-footer { font-size: 11px; color: var(--text-muted); display: flex; align-items: center; justify-content: space-between; border-top: 1px solid var(--glass-border); padding-top: 12px; margin-top: 5px; }
+
+        /* --- Generated Master SitRep UI --- */
+        #generatedMasterReport { display: none; animation: fadeIn 0.5s ease forwards; }
+        
+        .master-header { text-align: center; margin-bottom: 25px; padding-bottom: 20px; border-bottom: 1px dashed rgba(255,255,255,0.1); }
+        .master-header h2 { font-size: 22px; color: var(--accent); letter-spacing: 1px; margin-bottom: 5px;}
+        .master-header p { font-size: 13px; color: var(--text-muted); }
+
+        .report-section { background: rgba(0,0,0,0.2); border-radius: 16px; padding: 25px; border: 1px solid var(--glass-border); margin-bottom: 25px;}
+        .report-section h3 { font-size: 15px; color: var(--text-main); border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 10px; margin-bottom: 15px; display: flex; align-items: center; gap: 8px;}
+        
+        .pdrrmo-data-grid { display: grid; grid-template-columns: 1fr; gap: 15px; }
+        .data-item label { font-size: 11px; text-transform: uppercase; color: var(--accent); font-weight: 600; display: block; margin-bottom: 4px; letter-spacing: 0.5px;}
+        .data-item div { font-size: 14px; color: var(--text-main); background: rgba(0,0,0,0.15); padding: 12px 15px; border-radius: 10px; border-left: 3px solid var(--accent); line-height: 1.5;}
+
+        /* LDRRMC District Table UI */
+        .district-table { width: 100%; border-collapse: collapse; font-size: 12px; margin-bottom: 20px; }
+        .district-table th { background: rgba(245, 158, 11, 0.15); color: var(--accent); text-align: left; padding: 12px; text-transform: uppercase; letter-spacing: 1px; border: 1px solid var(--glass-border); }
+        .district-table td { padding: 12px; border: 1px solid var(--glass-border); color: var(--text-muted); vertical-align: top; }
+        .district-table td strong { color: var(--text-main); font-weight: 500; display: block; margin-top: 8px; font-size: 11px; text-transform: uppercase;}
+        .district-table td strong:first-child { margin-top: 0; }
+        .lgu-name { font-weight: 600; color: white !important; font-size: 14px; background: rgba(255,255,255,0.05); text-align: center; vertical-align: middle !important; width: 150px;}
+
     </style>
 </head>
 <body>
@@ -204,8 +221,8 @@
         <div class="profile">
             <div class="profile-img"><i data-lucide="shield-check" style="width: 24px; height: 24px;"></i></div>
             <div class="profile-info">
-                <p>Monitoring Center</p>
-                <h4>Tarlac PDRRMO</h4>
+                <p>Tarlac PDRRMO</p>
+                <h4>Monitoring Center</h4>
             </div>
         </div>
         
@@ -219,7 +236,7 @@
 
     <main class="main-content">
         
-        <!-- 1. SITUATION OVERVIEW (Formerly Home Page) -->
+        <!-- 1. SITUATION OVERVIEW -->
         <div id="homeView" class="view-section active">
             <div class="header">
                 <div>
@@ -228,8 +245,110 @@
                 </div>
             </div>
             
-            <div class="advisory-grid">
-                
+            <!-- This container is hidden by default. It shows up when PDRRMO SitRep is SAVED -->
+            <div id="generatedMasterReport" class="glass-card" style="border-color: var(--accent); background: rgba(15, 23, 42, 0.7);">
+                <div class="master-header">
+                    <h2><i data-lucide="file-check-2" style="display:inline-block; vertical-align:middle; margin-right:8px;"></i> CONSOLIDATED SITREP & ADVISORY REPORT</h2>
+                    <p id="generatedTimestamp">Generated As Of: --</p>
+                </div>
+
+                <!-- Part 1: PDRRMO Inputs (From Image 2) -->
+                <div class="report-section">
+                    <h3><i data-lucide="megaphone" style="color:var(--accent); width:18px;"></i> PDRRMO Advisory</h3>
+                    <div class="pdrrmo-data-grid">
+                        <div class="data-item"><label>A. Synopsis</label><div id="outSyn">--</div></div>
+                        <div class="data-item"><label>B. Other Incidents Monitored (Responses)</label><div id="outInc">--</div></div>
+                        <div class="data-item"><label>C. Suspension on Work (National/Provincial)</label><div id="outWork">--</div></div>
+                        <div class="data-item"><label>D. Suspension on Classes (National/Provincial)</label><div id="outClass">--</div></div>
+                        <div class="data-item"><label>E. Declaration of State of Calamity</label><div id="outCal">--</div></div>
+                    </div>
+                </div>
+
+                <!-- Part 2: LDRRMC Consolidated (From Image 1: Cut in Districts) -->
+                <div class="report-section">
+                    <h3><i data-lucide="map" style="color:var(--accent); width:18px;"></i> LDRRMCs ALL UPDATE CONSOLIDATED REPORT</h3>
+                    <p style="font-size: 12px; color: var(--text-muted); margin-bottom: 15px;">Generated per Municipality/City LDRRMCs and cut in district to see respective LGU statuses.</p>
+                    
+                    <!-- 1ST DISTRICT TABLE -->
+                    <table class="district-table">
+                        <thead>
+                            <tr><th colspan="2">1ST DISTRICT OF TARLAC</th></tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td class="lgu-name">Anao (MDRRMO)</td>
+                                <td>
+                                    <strong>A. Weather Condition:</strong> Light Rains
+                                    <strong>B. Affected Pop:</strong> 0 | <strong>C. Evacuation:</strong> None | <strong>D. Casualty:</strong> 0
+                                    <strong>E. Suspensions:</strong> Classes suspended (All levels)
+                                    <strong>F. Flooded Areas:</strong> None | <strong>G-H. Damages:</strong> None reported
+                                    <strong>I. Roads/Bridges:</strong> Passable | <strong>J. Lifelines:</strong> Stable
+                                    <strong>K. Other Incidents / Activities:</strong> EOC Activated. Continuous monitoring of river basins.
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="lgu-name">Moncada (MDRRMO)</td>
+                                <td>
+                                    <strong>A. Weather Condition:</strong> Cloudy
+                                    <strong>B. Affected Pop:</strong> 0 | <strong>C. Evacuation:</strong> None | <strong>D. Casualty:</strong> 0
+                                    <strong>E. Suspensions:</strong> Classes suspended
+                                    <strong>F. Flooded Areas:</strong> None | <strong>G-H. Damages:</strong> None reported
+                                    <strong>I. Roads/Bridges:</strong> Passable | <strong>J. Lifelines:</strong> Stable
+                                    <strong>K. Other Incidents / Activities:</strong> Standby alert. Roving inspections conducted.
+                                </td>
+                            </tr>
+                            <!-- Note: Added placeholders for visual proof of concept. Data would loop here dynamically from DB. -->
+                        </tbody>
+                    </table>
+
+                    <!-- 2ND DISTRICT TABLE -->
+                    <table class="district-table">
+                        <thead>
+                            <tr><th colspan="2">2ND DISTRICT OF TARLAC</th></tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td class="lgu-name">Tarlac City (CDRRMO)</td>
+                                <td>
+                                    <strong>A. Weather Condition:</strong> Fair Weather
+                                    <strong>B. Affected Pop:</strong> 0 | <strong>C. Evacuation:</strong> None | <strong>D. Casualty:</strong> 0
+                                    <strong>E. Suspensions:</strong> None
+                                    <strong>F. Flooded Areas:</strong> None | <strong>G-H. Damages:</strong> None reported
+                                    <strong>I. Roads/Bridges:</strong> Passable | <strong>J. Lifelines:</strong> Stable
+                                    <strong>K. Other Incidents / Activities:</strong> Pre-emptive evacuation centers prepared. EOC on White Alert.
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <!-- 3RD DISTRICT TABLE -->
+                    <table class="district-table">
+                        <thead>
+                            <tr><th colspan="2">3RD DISTRICT OF TARLAC</th></tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td class="lgu-name">Bamban (MDRRMO)</td>
+                                <td>
+                                    <strong>A. Weather Condition:</strong> Cloudy
+                                    <strong>B. Affected Pop:</strong> 0 | <strong>C. Evacuation:</strong> None | <strong>D. Casualty:</strong> 0
+                                    <strong>E. Suspensions:</strong> Pre-school suspended
+                                    <strong>F. Flooded Areas:</strong> None | <strong>G-H. Damages:</strong> None reported
+                                    <strong>I. Roads/Bridges:</strong> Passable | <strong>J. Lifelines:</strong> Stable
+                                    <strong>K. Other Incidents / Activities:</strong> Conducted inventory of SAR equipment. Close coordination with Brgys.
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div style="text-align: right;">
+                    <button class="btn btn-primary" onclick="window.print()"><i data-lucide="printer" style="width:16px;"></i> Print Document</button>
+                </div>
+            </div>
+
+            <!-- Default Tweet Wall -->
+            <div class="advisory-grid" id="tweetWallSection">
                 <!-- Tweet Card: Tarlac City -->
                 <div class="tweet-card">
                     <div class="tweet-header">
@@ -301,7 +420,6 @@
                         <span>5 hours ago</span>
                     </div>
                 </div>
-
             </div>
         </div>
 
@@ -321,7 +439,6 @@
                         <span id="dtDisplayText">Select Date & Time</span>
                     </div>
 
-                    <!-- Datetime Popup -->
                     <div class="dt-popup" id="dtPopup">
                         <div class="dt-calendar-sec">
                             <div class="dt-header">
@@ -364,7 +481,6 @@
                     <option value="partner">OTHER PARTNER AGENCIES/GROUP</option>
                 </select>
 
-                <!-- Dynamic Sub-Select -->
                 <div id="subSelectContainer" style="display: none;">
                     <label style="color: var(--text-muted); font-size: 13px; margin-bottom: 10px; display: block;">SELECT SPECIFIC ENTITY:</label>
                     <select id="secondaryCategory" class="glass-select"></select>
@@ -372,25 +488,20 @@
             </div>
 
             <div id="dynamicWorkflowArea">
-                
                 <!-- WORKFLOW A: PDRRMC COUNCIL -->
                 <div id="formCouncil" class="workflow-form glass-card">
                     <div class="card-title"><i data-lucide="shield"></i> PDRRMC Council Action</div>
-                    
                     <div class="input-group">
                         <label>WRITE WHAT IS ACTUAL ACTION TAKEN AS OF THIS TIME OF REPORT:</label>
                         <textarea placeholder="Enter actual actions taken..."></textarea>
                     </div>
-
                     <div class="scanner-area" onclick="document.getElementById('councilPdf').click()">
                         <i data-lucide="file-up" style="margin-bottom: 10px; color: var(--text-main);"></i>
                         <p>UPLOAD PDF FILE BASED ON WHAT YOU CHOOSE</p>
                         <input type="file" id="councilPdf" style="display: none;" accept="application/pdf" onchange="enableGenerate('council')">
                     </div>
-
                     <button class="btn btn-primary" id="btnGenCouncil" style="display: none;" onclick="generatePdf('council')">CLICK GENERATE</button>
                     <iframe class="pdf-viewer" id="viewerCouncil"></iframe>
-
                     <div class="save-prompt" id="promptCouncil">
                         <p style="margin-bottom: 15px; font-weight: 500;">Would you like to SAVE to Google Drive API / Google Sheet?</p>
                         <div style="display: flex; justify-content: center; gap: 10px;">
@@ -403,16 +514,13 @@
                 <!-- WORKFLOW B: OTHER PARTNER AGENCIES -->
                 <div id="formPartner" class="workflow-form glass-card">
                     <div class="card-title"><i data-lucide="users"></i> Partner Agency Report</div>
-                    
                     <div class="scanner-area" onclick="document.getElementById('partnerPdf').click()">
                         <i data-lucide="file-up" style="margin-bottom: 10px; color: var(--text-main);"></i>
                         <p>UPLOAD PDF FILE BASED ON WHAT YOU CHOOSE</p>
                         <input type="file" id="partnerPdf" style="display: none;" accept="application/pdf" onchange="enableGenerate('partner')">
                     </div>
-
                     <button class="btn btn-primary" id="btnGenPartner" style="display: none;" onclick="generatePdf('partner')">CLICK GENERATE</button>
                     <iframe class="pdf-viewer" id="viewerPartner"></iframe>
-
                     <div class="save-prompt" id="promptPartner">
                         <p style="margin-bottom: 15px; font-weight: 500;">Would you like to SAVE to Google Drive API / Google Sheet?</p>
                         <div style="display: flex; justify-content: center; gap: 10px;">
@@ -425,7 +533,6 @@
                 <!-- WORKFLOW C: LDRRMCs -->
                 <div id="formLdrmc" class="workflow-form glass-card">
                     <div class="card-title"><i data-lucide="map-pin"></i> Fill Out The Information</div>
-                    
                     <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px;">
                         <div>
                             <div class="input-group"><label>A. Weather Condition</label><input type="text"></div>
@@ -444,9 +551,7 @@
                         </div>
                     </div>
                     <div class="input-group" style="margin-top: 10px;"><label>Other Activities:</label><textarea></textarea></div>
-
                     <button class="btn btn-primary" onclick="submitLdrmc()">CLICK SUBMIT</button>
-
                     <div class="save-prompt" id="promptLdrmc">
                         <p style="margin-bottom: 15px; font-weight: 500;">Would you like to SAVE to Google Drive API / Google Sheet?</p>
                         <div style="display: flex; justify-content: center; gap: 10px;">
@@ -455,32 +560,36 @@
                         </div>
                     </div>
                 </div>
-
             </div>
         </div>
 
         <!-- 3. PDRRMO SITREP & ADVISORY REPORT -->
         <div id="pdrrmoView" class="view-section">
             <div class="header">
-                <h1>PDRRMO SitRep and Advisory Report</h1>
-                <p>LDRRMCs All Update Consolidated Report. To be filled out by PDRRMO based on the reporting agencies (Additional).</p>
+                <div>
+                    <h1>PDRRMO SitRep and Advisory Report</h1>
+                    <p>LDRRMCs All Update Consolidated Report. To be filled out by PDRRMO based on the reporting agencies (Additional).</p>
+                </div>
             </div>
             <div class="glass-card">
-                <div class="input-group"><label>A. Synopsis</label><textarea></textarea></div>
-                <div class="input-group"><label>B. Other Incidents Monitored (PDRRMO Responses)</label><textarea></textarea></div>
-                <div class="input-group"><label>C. Suspension on Work (by National/ Provincial level):</label><input type="text"></div>
-                <div class="input-group"><label>D. Suspension on Classes (by National/ Provincial level):</label><input type="text"></div>
-                <div class="input-group"><label>E. Declaration of State of Calamity:</label><input type="text"></div>
+                <!-- Added IDs to these inputs to capture data for the final report -->
+                <div class="input-group"><label>A. Synopsis</label><textarea id="inpSyn"></textarea></div>
+                <div class="input-group"><label>B. Other Incidents Monitored (PDRRMO Responses)</label><textarea id="inpInc"></textarea></div>
+                <div class="input-group"><label>C. Suspension on Work (by National/ Provincial level):</label><input type="text" id="inpWork"></div>
+                <div class="input-group"><label>D. Suspension on Classes (by National/ Provincial level):</label><input type="text" id="inpClass"></div>
+                <div class="input-group"><label>E. Declaration of State of Calamity:</label><input type="text" id="inpCal"></div>
                 
-                <button class="btn btn-primary" onclick="alert('PDRRMO Sitrep Saved to Google Drive API/Google Sheet');">SAVE REPORT</button>
+                <button class="btn btn-primary" id="btnSavePdrrmo" style="margin-top: 15px;">SAVE REPORT</button>
             </div>
         </div>
 
         <!-- 4. LDRRMCs/AGENCIES RECORDS -->
         <div id="recordsView" class="view-section">
             <div class="header">
-                <h1>LDRRMCs / Agencies Records</h1>
-                <p>All records scanned with their council name, separated based on what council/agency is chosen.</p>
+                <div>
+                    <h1>LDRRMCs / Agencies Records</h1>
+                    <p>All records scanned with their council name, separated based on what council/agency is chosen.</p>
+                </div>
             </div>
             
             <div class="glass-card">
@@ -515,19 +624,52 @@
         const navItems = document.querySelectorAll('.nav-item');
         const views = document.querySelectorAll('.view-section');
 
+        function switchToView(targetViewId) {
+            navItems.forEach(n => n.classList.remove('active'));
+            document.querySelector(`[data-target="${targetViewId}"]`).classList.add('active');
+
+            views.forEach(v => v.classList.remove('active'));
+            document.getElementById(targetViewId).classList.add('active');
+        }
+
         navItems.forEach(item => {
             item.addEventListener('click', () => {
-                navItems.forEach(n => n.classList.remove('active'));
-                item.classList.add('active');
-
-                const targetViewId = item.getAttribute('data-target');
-                views.forEach(v => v.classList.remove('active'));
-                document.getElementById(targetViewId).classList.add('active');
+                switchToView(item.getAttribute('data-target'));
             });
         });
 
         // ----------------------------------------------------
-        // 2. Encoding Page Routing Logic
+        // 2. Integration Logic (PDRRMO Save -> Master Report Gen)
+        // ----------------------------------------------------
+        document.getElementById('btnSavePdrrmo').addEventListener('click', function() {
+            // 1. Capture data from PDRRMO inputs
+            const syn = document.getElementById('inpSyn').value;
+            const inc = document.getElementById('inpInc').value;
+            const work = document.getElementById('inpWork').value;
+            const cls = document.getElementById('inpClass').value;
+            const cal = document.getElementById('inpCal').value;
+
+            // 2. Populate the Master Report Outputs
+            document.getElementById('outSyn').innerText = syn || "No data provided.";
+            document.getElementById('outInc').innerText = inc || "No data provided.";
+            document.getElementById('outWork').innerText = work || "No data provided.";
+            document.getElementById('outClass').innerText = cls || "No data provided.";
+            document.getElementById('outCal').innerText = cal || "No data provided.";
+
+            // 3. Set the generated timestamp (Using the Custom Datetime widget if set, else current time)
+            const dtText = document.getElementById('dtDisplayText').innerText;
+            document.getElementById('generatedTimestamp').innerText = dtText !== "Select Date & Time" ? `Generated As Of: ${dtText}` : `Generated As Of: ${new Date().toLocaleString()}`;
+
+            // 4. Update UI in Situation Overview
+            document.getElementById('generatedMasterReport').style.display = 'block';
+            
+            // 5. Notify & Redirect
+            alert("Success! PDRRMO Data saved and Consolidated LDRRMC Report generated.");
+            switchToView('homeView');
+        });
+
+        // ----------------------------------------------------
+        // 3. Encoding Page Routing Logic
         // ----------------------------------------------------
         const primaryCat = document.getElementById('primaryCategory');
         const subSelectContainer = document.getElementById('subSelectContainer');
@@ -569,11 +711,9 @@
         });
 
         // ----------------------------------------------------
-        // 3. Workflow Interactions
+        // 4. Workflow Interactions
         // ----------------------------------------------------
-        function enableGenerate(type) {
-            document.getElementById(`btnGen${capitalize(type)}`).style.display = 'inline-block';
-        }
+        function enableGenerate(type) { document.getElementById(`btnGen${capitalize(type)}`).style.display = 'inline-block'; }
 
         function generatePdf(type) {
             const fileInput = document.getElementById(`${type}Pdf`);
@@ -588,9 +728,7 @@
             }
         }
 
-        function submitLdrmc() {
-            document.getElementById('promptLdrmc').style.display = 'block';
-        }
+        function submitLdrmc() { document.getElementById('promptLdrmc').style.display = 'block'; }
 
         function executeSave() {
             alert('Saved to Google Drive API / Google Sheet successfully!');
@@ -617,19 +755,16 @@
             });
         }
 
-        function capitalize(s) {
-            return s.charAt(0).toUpperCase() + s.slice(1);
-        }
+        function capitalize(s) { return s.charAt(0).toUpperCase() + s.slice(1); }
 
         // ----------------------------------------------------
-        // 4. Custom Datetime Picker Logic
+        // 5. Custom Datetime Picker Logic
         // ----------------------------------------------------
         const dtTrigger = document.getElementById('customDtTrigger');
         const dtPopup = document.getElementById('dtPopup');
         const dtDisplayText = document.getElementById('dtDisplayText');
         const dtDays = document.getElementById('dtDays');
         const dtMonthYear = document.getElementById('dtMonthYear');
-        
         const hrInput = document.getElementById('dtHour');
         const minInput = document.getElementById('dtMin');
         const btnAm = document.getElementById('btnAm');
@@ -756,7 +891,6 @@
         document.addEventListener('click', (e) => {
             if(!dtPopup.contains(e.target) && !dtTrigger.contains(e.target)) { dtPopup.classList.remove('show'); }
         });
-
     </script>
 </body>
 </html>
