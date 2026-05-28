@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SitRep Workflow System</title>
+    <title>Tarlac PDRRMO | SitRep Workflow System</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <script src="https://unpkg.com/lucide@latest"></script>
     <style>
@@ -114,7 +114,6 @@
         .pdf-viewer { display: none; width: 100%; height: 500px; border-radius: 12px; border: 1px solid var(--glass-border); background: #323639; margin-bottom: 20px; }
 
         /* Buttons */
-        .btn-group { display: flex; gap: 12px; margin-top: 20px; }
         .btn {
             background: rgba(255, 255, 255, 0.1); color: white; border: 1px solid var(--glass-border);
             padding: 12px 24px; border-radius: 12px; font-size: 14px; font-weight: 500; cursor: pointer; transition: 0.3s;
@@ -125,6 +124,7 @@
         .btn-primary:hover { box-shadow: 0 6px 20px rgba(245, 158, 11, 0.4); transform: translateY(-2px); }
         .btn-danger { background: rgba(239, 68, 68, 0.2); color: #ef4444; border-color: rgba(239, 68, 68, 0.3); }
         .btn-danger:hover { background: rgba(239, 68, 68, 0.4); }
+        .btn:disabled { opacity: 0.5; cursor: not-allowed; transform: none !important; }
 
         /* Dynamic Workflow Containers */
         #dynamicWorkflowArea { display: none; margin-top: 20px; }
@@ -212,11 +212,22 @@
         .district-table td strong:first-child { margin-top: 0; }
         .lgu-name { font-weight: 600; color: white !important; font-size: 14px; background: rgba(255,255,255,0.05); text-align: center; vertical-align: middle !important; width: 150px;}
 
+        @media print {
+            body { background: white !important; animation: none !important; color: black !important; overflow: visible; }
+            .sidebar, .header, #tweetWallSection, .btn { display: none !important; }
+            .main-content { padding: 0 !important; }
+            * { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
+            #generatedMasterReport { box-shadow: none !important; border: none !important; background: white !important; }
+            .report-section { background: white !important; border: none !important; }
+            .master-header h2, .report-section h3, .data-item label, .district-table th { color: black !important; }
+            .data-item div, .district-table td, .district-table td strong { color: black !important; background: transparent !important; }
+            .district-table th, .district-table td { border: 1px solid black !important; }
+            .data-item div { border-left: 2px solid black !important; padding: 5px 10px; }
+        }
     </style>
 </head>
 <body>
 
-    <!-- SIDE PANEL -->
     <aside class="sidebar">
         <div class="profile">
             <div class="profile-img"><i data-lucide="shield-check" style="width: 24px; height: 24px;"></i></div>
@@ -236,7 +247,6 @@
 
     <main class="main-content">
         
-        <!-- 1. SITUATION OVERVIEW -->
         <div id="homeView" class="view-section active">
             <div class="header">
                 <div>
@@ -245,14 +255,12 @@
                 </div>
             </div>
             
-            <!-- This container is hidden by default. It shows up when PDRRMO SitRep is SAVED -->
             <div id="generatedMasterReport" class="glass-card" style="border-color: var(--accent); background: rgba(15, 23, 42, 0.7);">
                 <div class="master-header">
                     <h2><i data-lucide="file-check-2" style="display:inline-block; vertical-align:middle; margin-right:8px;"></i> CONSOLIDATED SITREP & ADVISORY REPORT</h2>
                     <p id="generatedTimestamp">Generated As Of: --</p>
                 </div>
 
-                <!-- Part 1: PDRRMO Inputs (From Image 2) -->
                 <div class="report-section">
                     <h3><i data-lucide="megaphone" style="color:var(--accent); width:18px;"></i> PDRRMO Advisory</h3>
                     <div class="pdrrmo-data-grid">
@@ -264,12 +272,10 @@
                     </div>
                 </div>
 
-                <!-- Part 2: LDRRMC Consolidated (From Image 1: Cut in Districts) -->
                 <div class="report-section">
                     <h3><i data-lucide="map" style="color:var(--accent); width:18px;"></i> LDRRMCs ALL UPDATE CONSOLIDATED REPORT</h3>
                     <p style="font-size: 12px; color: var(--text-muted); margin-bottom: 15px;">Generated per Municipality/City LDRRMCs and cut in district to see respective LGU statuses.</p>
                     
-                    <!-- 1ST DISTRICT TABLE -->
                     <table class="district-table">
                         <thead>
                             <tr><th colspan="2">1ST DISTRICT OF TARLAC</th></tr>
@@ -297,11 +303,9 @@
                                     <strong>K. Other Incidents / Activities:</strong> Standby alert. Roving inspections conducted.
                                 </td>
                             </tr>
-                            <!-- Note: Added placeholders for visual proof of concept. Data would loop here dynamically from DB. -->
                         </tbody>
                     </table>
 
-                    <!-- 2ND DISTRICT TABLE -->
                     <table class="district-table">
                         <thead>
                             <tr><th colspan="2">2ND DISTRICT OF TARLAC</th></tr>
@@ -321,7 +325,6 @@
                         </tbody>
                     </table>
 
-                    <!-- 3RD DISTRICT TABLE -->
                     <table class="district-table">
                         <thead>
                             <tr><th colspan="2">3RD DISTRICT OF TARLAC</th></tr>
@@ -343,13 +346,11 @@
                 </div>
 
                 <div style="text-align: right;">
-                    <button class="btn btn-primary" onclick="window.print()"><i data-lucide="printer" style="width:16px;"></i> Print Document</button>
+                    <button class="btn btn-primary" onclick="window.print()" style="display:inline-block;"><i data-lucide="printer" style="width:16px;"></i> Print Document</button>
                 </div>
             </div>
 
-            <!-- Default Tweet Wall -->
             <div class="advisory-grid" id="tweetWallSection">
-                <!-- Tweet Card: Tarlac City -->
                 <div class="tweet-card">
                     <div class="tweet-header">
                         <div class="tweet-avatar av-city">TC</div>
@@ -367,7 +368,6 @@
                     </div>
                 </div>
 
-                <!-- Tweet Card: Bamban -->
                 <div class="tweet-card">
                     <div class="tweet-header">
                         <div class="tweet-avatar av-muni">B</div>
@@ -385,7 +385,6 @@
                     </div>
                 </div>
 
-                <!-- Tweet Card: PSWDO -->
                 <div class="tweet-card">
                     <div class="tweet-header">
                         <div class="tweet-avatar av-agency"><i data-lucide="package"></i></div>
@@ -402,28 +401,9 @@
                         <span>3 hours ago</span>
                     </div>
                 </div>
-
-                <!-- Tweet Card: Anao -->
-                <div class="tweet-card">
-                    <div class="tweet-header">
-                        <div class="tweet-avatar av-muni">A</div>
-                        <div class="tweet-meta">
-                            <span class="tweet-name">Anao (MDRRMO)</span>
-                            <span class="tweet-handle">Weather: Light Rain | Casualties: 0</span>
-                        </div>
-                    </div>
-                    <div class="tweet-body">
-                        <strong>Advisory:</strong> Continuous monitoring of local river basins. Suspension of classes remains active. No forced evacuations required at this time.
-                    </div>
-                    <div class="tweet-footer">
-                        <span><i data-lucide="edit-3" style="width:10px;height:10px;margin-right:4px;vertical-align:middle;"></i> Encoded via Form</span>
-                        <span>5 hours ago</span>
-                    </div>
-                </div>
             </div>
         </div>
 
-        <!-- 2. ENCODING PAGE -->
         <div id="encodingView" class="view-section">
             <div class="header" style="border-bottom: none; padding-bottom: 0;">
                 <div>
@@ -431,7 +411,6 @@
                     <p>Choose an agency below to begin encoding.</p>
                 </div>
 
-                <!-- Custom Datetime Widget -->
                 <div style="text-align: right; position: relative;">
                     <label style="font-size: 12px; color: var(--text-muted); font-weight: 500; display: block; margin-bottom: 5px;">"As Of" Timestamp</label>
                     <div class="datetime-wrapper" id="customDtTrigger">
@@ -488,7 +467,6 @@
             </div>
 
             <div id="dynamicWorkflowArea">
-                <!-- WORKFLOW A: PDRRMC COUNCIL -->
                 <div id="formCouncil" class="workflow-form glass-card">
                     <div class="card-title"><i data-lucide="shield"></i> PDRRMC Council Action</div>
                     <div class="input-group">
@@ -505,13 +483,12 @@
                     <div class="save-prompt" id="promptCouncil">
                         <p style="margin-bottom: 15px; font-weight: 500;">Would you like to SAVE to Google Drive API / Google Sheet?</p>
                         <div style="display: flex; justify-content: center; gap: 10px;">
-                            <button class="btn btn-primary" onclick="executeSave()">SAVE</button>
+                            <button class="btn btn-primary" onclick="executeSave('council')">SAVE</button>
                             <button class="btn btn-danger" onclick="executeNo()">NO</button>
                         </div>
                     </div>
                 </div>
 
-                <!-- WORKFLOW B: OTHER PARTNER AGENCIES -->
                 <div id="formPartner" class="workflow-form glass-card">
                     <div class="card-title"><i data-lucide="users"></i> Partner Agency Report</div>
                     <div class="scanner-area" onclick="document.getElementById('partnerPdf').click()">
@@ -524,38 +501,39 @@
                     <div class="save-prompt" id="promptPartner">
                         <p style="margin-bottom: 15px; font-weight: 500;">Would you like to SAVE to Google Drive API / Google Sheet?</p>
                         <div style="display: flex; justify-content: center; gap: 10px;">
-                            <button class="btn btn-primary" onclick="executeSave()">SAVE</button>
+                            <button class="btn btn-primary" onclick="executeSave('partner')">SAVE</button>
                             <button class="btn btn-danger" onclick="executeNo()">NO</button>
                         </div>
                     </div>
                 </div>
 
-                <!-- WORKFLOW C: LDRRMCs -->
                 <div id="formLdrmc" class="workflow-form glass-card">
                     <div class="card-title"><i data-lucide="map-pin"></i> Fill Out The Information</div>
                     <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px;">
                         <div>
-                            <div class="input-group"><label>A. Weather Condition</label><input type="text"></div>
-                            <div class="input-group"><label>B. Affected Population</label><input type="text"></div>
-                            <div class="input-group"><label>C. Pre-Emptive/Forced Evacuation</label><input type="text"></div>
-                            <div class="input-group"><label>D. Casualty</label><input type="text"></div>
-                            <div class="input-group"><label>E. Suspension of Class/Work</label><input type="text"></div>
-                            <div class="input-group"><label>F. Flooded Areas</label><input type="text"></div>
+                            <div class="input-group"><label>A. Weather Condition</label><input type="text" id="ld_A"></div>
+                            <div class="input-group"><label>B. Affected Population</label><input type="text" id="ld_B"></div>
+                            <div class="input-group"><label>C. Pre-Emptive/Forced Evacuation</label><input type="text" id="ld_C"></div>
+                            <div class="input-group"><label>D. Casualty</label><input type="text" id="ld_D"></div>
+                            <div class="input-group"><label>E. Suspension of Class/Work</label><input type="text" id="ld_E"></div>
+                            <div class="input-group"><label>F. Flooded Areas</label><input type="text" id="ld_F"></div>
                         </div>
                         <div>
-                            <div class="input-group"><label>G. Damages on Infrastructure</label><input type="text"></div>
-                            <div class="input-group"><label>H. Damages on Agriculture</label><input type="text"></div>
-                            <div class="input-group"><label>I. Status of Roads & Bridges</label><input type="text"></div>
-                            <div class="input-group"><label>J. Power and Water Interruptions</label><input type="text"></div>
-                            <div class="input-group"><label>K. Other Incidents Monitored</label><input type="text"></div>
+                            <div class="input-group"><label>G. Damages on Infrastructure</label><input type="text" id="ld_G"></div>
+                            <div class="input-group"><label>H. Damages on Agriculture</label><input type="text" id="ld_H"></div>
+                            <div class="input-group"><label>I. Status of Roads & Bridges</label><input type="text" id="ld_I"></div>
+                            <div class="input-group"><label>J. Power and Water Interruptions</label><input type="text" id="ld_J"></div>
+                            <div class="input-group"><label>K. Other Incidents Monitored</label><input type="text" id="ld_K"></div>
                         </div>
                     </div>
-                    <div class="input-group" style="margin-top: 10px;"><label>Other Activities:</label><textarea></textarea></div>
+                    <div class="input-group" style="margin-top: 10px;"><label>Other Activities:</label><textarea id="ld_Other"></textarea></div>
+                    
                     <button class="btn btn-primary" onclick="submitLdrmc()">CLICK SUBMIT</button>
+                    
                     <div class="save-prompt" id="promptLdrmc">
                         <p style="margin-bottom: 15px; font-weight: 500;">Would you like to SAVE to Google Drive API / Google Sheet?</p>
                         <div style="display: flex; justify-content: center; gap: 10px;">
-                            <button class="btn btn-primary" onclick="executeSave()">SAVE</button>
+                            <button class="btn btn-primary" id="btnConfirmSaveLdrmc" onclick="executeSave('ldrmc')">SAVE</button>
                             <button class="btn btn-danger" onclick="executeNo()">NO</button>
                         </div>
                     </div>
@@ -563,7 +541,6 @@
             </div>
         </div>
 
-        <!-- 3. PDRRMO SITREP & ADVISORY REPORT -->
         <div id="pdrrmoView" class="view-section">
             <div class="header">
                 <div>
@@ -572,7 +549,6 @@
                 </div>
             </div>
             <div class="glass-card">
-                <!-- Added IDs to these inputs to capture data for the final report -->
                 <div class="input-group"><label>A. Synopsis</label><textarea id="inpSyn"></textarea></div>
                 <div class="input-group"><label>B. Other Incidents Monitored (PDRRMO Responses)</label><textarea id="inpInc"></textarea></div>
                 <div class="input-group"><label>C. Suspension on Work (by National/ Provincial level):</label><input type="text" id="inpWork"></div>
@@ -583,7 +559,6 @@
             </div>
         </div>
 
-        <!-- 4. LDRRMCs/AGENCIES RECORDS -->
         <div id="recordsView" class="view-section">
             <div class="header">
                 <div>
@@ -617,6 +592,12 @@
 
     <script>
         lucide.createIcons();
+
+        // =====================================================================
+        // YOUR GOOGLE APPS SCRIPT WEB APP URL GOES HERE:
+        // =====================================================================
+        const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycby6PFajbl68wQPRWRO-m3mwW0bAZvkqsngBuVtZAI4XrDJ2RRHi3jRviQWIe6rpZhBh/exec"; 
+
 
         // ----------------------------------------------------
         // 1. Sidebar Navigation Logic
@@ -656,7 +637,7 @@
             document.getElementById('outClass').innerText = cls || "No data provided.";
             document.getElementById('outCal').innerText = cal || "No data provided.";
 
-            // 3. Set the generated timestamp (Using the Custom Datetime widget if set, else current time)
+            // 3. Set the generated timestamp
             const dtText = document.getElementById('dtDisplayText').innerText;
             document.getElementById('generatedTimestamp').innerText = dtText !== "Select Date & Time" ? `Generated As Of: ${dtText}` : `Generated As Of: ${new Date().toLocaleString()}`;
 
@@ -665,6 +646,14 @@
             
             // 5. Notify & Redirect
             alert("Success! PDRRMO Data saved and Consolidated LDRRMC Report generated.");
+            
+            // Clear PDRRMO form
+            document.getElementById('inpSyn').value = "";
+            document.getElementById('inpInc').value = "";
+            document.getElementById('inpWork').value = "";
+            document.getElementById('inpClass').value = "";
+            document.getElementById('inpCal').value = "";
+
             switchToView('homeView');
         });
 
@@ -711,7 +700,7 @@
         });
 
         // ----------------------------------------------------
-        // 4. Workflow Interactions
+        // 4. Workflow Interactions & Google Sheets Submission
         // ----------------------------------------------------
         function enableGenerate(type) { document.getElementById(`btnGen${capitalize(type)}`).style.display = 'inline-block'; }
 
@@ -730,9 +719,60 @@
 
         function submitLdrmc() { document.getElementById('promptLdrmc').style.display = 'block'; }
 
-        function executeSave() {
-            alert('Saved to Google Drive API / Google Sheet successfully!');
-            resetEncodingView();
+        // Core execution logic combining UI resets and Data Fetch
+        function executeSave(type) {
+            if (type === 'ldrmc') {
+                const btn = document.getElementById('btnConfirmSaveLdrmc');
+                const originalText = btn.innerText;
+                btn.innerText = "SAVING...";
+                btn.disabled = true;
+
+                // Gather all data from the form
+                const payload = {
+                    lgu: document.getElementById('secondaryCategory').value,
+                    reportTime: document.getElementById('dtDisplayText').innerText,
+                    weather: document.getElementById('ld_A').value,
+                    population: document.getElementById('ld_B').value,
+                    evacuation: document.getElementById('ld_C').value,
+                    casualty: document.getElementById('ld_D').value,
+                    suspension: document.getElementById('ld_E').value,
+                    flooded: document.getElementById('ld_F').value,
+                    infra: document.getElementById('ld_G').value,
+                    agri: document.getElementById('ld_H').value,
+                    roads: document.getElementById('ld_I').value,
+                    power: document.getElementById('ld_J').value,
+                    incidents: document.getElementById('ld_K').value,
+                    other: document.getElementById('ld_Other').value
+                };
+
+                // Send POST request to Google Apps Script
+                fetch(GOOGLE_SCRIPT_URL, {
+                    method: 'POST',
+                    mode: 'no-cors', // Bypasses CORS requirements for simple Sheet writes
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload)
+                })
+                .then(() => {
+                    alert('LDRRMC Report saved to Google Sheets successfully!');
+                    btn.innerText = originalText;
+                    btn.disabled = false;
+                    
+                    // Clear fields
+                    document.querySelectorAll('#formLdrmc input[type="text"], #formLdrmc textarea').forEach(el => el.value = '');
+                    resetEncodingView();
+                })
+                .catch(error => {
+                    console.error('Error!', error.message);
+                    alert('Failed to connect to Google Sheets. Check your script URL.');
+                    btn.innerText = originalText;
+                    btn.disabled = false;
+                });
+
+            } else {
+                // Fallback for Council/Partner forms (Until linked to Drive API)
+                alert('Saved successfully!');
+                resetEncodingView();
+            }
         }
 
         function executeNo() {
