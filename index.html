@@ -106,19 +106,12 @@
         .input-group textarea { resize: vertical; min-height: 80px; }
 
         /* Scanner Area */
-        .scanner-area {
-            border: 2px dashed rgba(245, 158, 11, 0.3); border-radius: 16px; padding: 40px; text-align: center;
-            cursor: pointer; transition: 0.3s; background: rgba(0,0,0,0.15); margin-bottom: 20px;
-        }
+        .scanner-area { border: 2px dashed rgba(245, 158, 11, 0.3); border-radius: 16px; padding: 40px; text-align: center; cursor: pointer; transition: 0.3s; background: rgba(0,0,0,0.15); margin-bottom: 20px; }
         .scanner-area:hover { background: rgba(0,0,0,0.3); border-color: var(--accent); }
         .pdf-viewer { display: none; width: 100%; height: 500px; border-radius: 12px; border: 1px solid var(--glass-border); background: #323639; margin-bottom: 20px; }
 
         /* Buttons */
-        .btn {
-            background: rgba(255, 255, 255, 0.1); color: white; border: 1px solid var(--glass-border);
-            padding: 12px 24px; border-radius: 12px; font-size: 14px; font-weight: 500; cursor: pointer; transition: 0.3s;
-            display: flex; align-items: center; gap: 8px;
-        }
+        .btn { background: rgba(255, 255, 255, 0.1); color: white; border: 1px solid var(--glass-border); padding: 12px 24px; border-radius: 12px; font-size: 14px; font-weight: 500; cursor: pointer; transition: 0.3s; display: flex; align-items: center; gap: 8px; }
         .btn:hover { background: rgba(255, 255, 255, 0.2); }
         .btn-primary { background: linear-gradient(135deg, var(--accent), #d97706); border: none; box-shadow: 0 4px 15px rgba(245, 158, 11, 0.2); }
         .btn-primary:hover { box-shadow: 0 6px 20px rgba(245, 158, 11, 0.4); transform: translateY(-2px); }
@@ -132,22 +125,13 @@
         .workflow-form.active { display: block; animation: fadeIn 0.4s ease; }
 
         /* Save/No Prompts */
-        .save-prompt {
-            display: none; background: rgba(16, 185, 129, 0.1); border: 1px solid rgba(16, 185, 129, 0.3);
-            padding: 20px; border-radius: 16px; margin-top: 20px; text-align: center;
-        }
+        .save-prompt { display: none; background: rgba(16, 185, 129, 0.1); border: 1px solid rgba(16, 185, 129, 0.3); padding: 20px; border-radius: 16px; margin-top: 20px; text-align: center; }
 
         /* --- Datetime Picker Styling --- */
-        .datetime-wrapper {
-            display: inline-flex; align-items: center; gap: 10px; cursor: pointer; background: rgba(0,0,0,0.3);
-            border: 1px solid var(--glass-border); border-radius: 12px; padding: 10px 16px; transition: 0.3s; box-shadow: inset 0 2px 5px rgba(0,0,0,0.2); user-select: none;
-        }
+        .datetime-wrapper { display: inline-flex; align-items: center; gap: 10px; cursor: pointer; background: rgba(0,0,0,0.3); border: 1px solid var(--glass-border); border-radius: 12px; padding: 10px 16px; transition: 0.3s; box-shadow: inset 0 2px 5px rgba(0,0,0,0.2); user-select: none; }
         .datetime-wrapper:hover { border-color: var(--accent); background: rgba(0,0,0,0.4); box-shadow: 0 0 10px rgba(245, 158, 11, 0.2); }
         #dtDisplayText { font-size: 13px; font-weight: 500; }
-        .dt-popup {
-            display: none; position: absolute; top: calc(100% + 10px); right: 0; background: rgba(22, 30, 44, 0.95); backdrop-filter: blur(25px); -webkit-backdrop-filter: blur(25px);
-            border: 1px solid var(--glass-border); border-radius: 16px; box-shadow: 0 20px 40px rgba(0,0,0,0.5); z-index: 100; width: 450px; flex-direction: row; text-align: left; overflow: hidden;
-        }
+        .dt-popup { display: none; position: absolute; top: calc(100% + 10px); right: 0; background: rgba(22, 30, 44, 0.95); backdrop-filter: blur(25px); -webkit-backdrop-filter: blur(25px); border: 1px solid var(--glass-border); border-radius: 16px; box-shadow: 0 20px 40px rgba(0,0,0,0.5); z-index: 100; width: 450px; flex-direction: row; text-align: left; overflow: hidden; }
         .dt-popup.show { display: flex; animation: fadeIn 0.2s ease forwards; }
         .dt-calendar-sec { flex: 1.2; padding: 20px; border-right: 1px solid var(--glass-border); display: flex; flex-direction: column;}
         .dt-time-sec { flex: 0.9; padding: 20px; display: flex; flex-direction: column; background: rgba(0,0,0,0.1); }
@@ -190,7 +174,9 @@
         .tweet-body strong { color: var(--text-main); font-weight: 500; }
         .tweet-footer { font-size: 11px; color: var(--text-muted); display: flex; align-items: center; justify-content: space-between; border-top: 1px solid var(--glass-border); padding-top: 12px; margin-top: 5px; }
 
-        /* --- Generated Master SitRep UI --- */
+        /* ========================================================== */
+        /* --- REDESIGNED GENERATED MASTER SITREP UI --- */
+        /* ========================================================== */
         #generatedMasterReport { display: none; animation: fadeIn 0.5s ease forwards; }
         
         .master-header { text-align: center; margin-bottom: 25px; padding-bottom: 20px; border-bottom: 1px dashed rgba(255,255,255,0.1); }
@@ -198,31 +184,48 @@
         .master-header p { font-size: 13px; color: var(--text-muted); }
 
         .report-section { background: rgba(0,0,0,0.2); border-radius: 16px; padding: 25px; border: 1px solid var(--glass-border); margin-bottom: 25px;}
-        .report-section h3 { font-size: 15px; color: var(--text-main); border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 10px; margin-bottom: 15px; display: flex; align-items: center; gap: 8px;}
+        .report-section h3 { font-size: 16px; color: var(--text-main); border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 12px; margin-bottom: 20px; display: flex; align-items: center; gap: 8px;}
         
+        /* PDRRMO Advisory Block */
         .pdrrmo-data-grid { display: grid; grid-template-columns: 1fr; gap: 15px; }
-        .data-item label { font-size: 11px; text-transform: uppercase; color: var(--accent); font-weight: 600; display: block; margin-bottom: 4px; letter-spacing: 0.5px;}
-        .data-item div { font-size: 14px; color: var(--text-main); background: rgba(0,0,0,0.15); padding: 12px 15px; border-radius: 10px; border-left: 3px solid var(--accent); line-height: 1.5;}
+        .data-item label { font-size: 11px; text-transform: uppercase; color: var(--accent); font-weight: 600; display: block; margin-bottom: 6px; letter-spacing: 0.5px;}
+        .data-item div { font-size: 14px; color: var(--text-main); background: rgba(0,0,0,0.15); padding: 15px; border-radius: 10px; border-left: 3px solid var(--accent); line-height: 1.6;}
 
-        /* LDRRMC District Table UI */
-        .district-table { width: 100%; border-collapse: collapse; font-size: 12px; margin-bottom: 20px; }
-        .district-table th { background: rgba(245, 158, 11, 0.15); color: var(--accent); text-align: left; padding: 12px; text-transform: uppercase; letter-spacing: 1px; border: 1px solid var(--glass-border); }
-        .district-table td { padding: 12px; border: 1px solid var(--glass-border); color: var(--text-muted); vertical-align: top; }
-        .district-table td strong { color: var(--text-main); font-weight: 500; display: block; margin-top: 8px; font-size: 11px; text-transform: uppercase;}
-        .district-table td strong:first-child { margin-top: 0; }
-        .lgu-name { font-weight: 600; color: white !important; font-size: 14px; background: rgba(255,255,255,0.05); text-align: center; vertical-align: middle !important; width: 150px;}
+        /* --- UPDATED: Beautiful District Tables --- */
+        .district-table { width: 100%; border-collapse: collapse; margin-bottom: 35px; background: rgba(0,0,0,0.15); border-radius: 12px; overflow: hidden; border: 1px solid var(--glass-border);}
+        .district-table th { background: rgba(245, 158, 11, 0.15); color: var(--accent); text-align: left; padding: 16px 20px; text-transform: uppercase; letter-spacing: 1.5px; border-bottom: 1px solid var(--glass-border); font-size: 14px;}
+        .district-table td { padding: 22px; border-bottom: 1px solid var(--glass-border); vertical-align: middle; }
+        .district-table tr:last-child td { border-bottom: none; }
+        
+        .lgu-name-cell { width: 160px; font-weight: 600; font-size: 15px; color: white; border-right: 1px dashed rgba(255,255,255,0.1); text-align: center; }
+        .lgu-name-cell span { font-size: 11px; color: var(--text-muted); font-weight: 400; display: block; margin-top: 2px;}
+
+        /* Structured LGU Data Grid inside the table */
+        .lgu-data-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; width: 100%;}
+        .lgu-data-item { display: flex; flex-direction: column; gap: 4px; }
+        .lgu-data-item label { color: var(--accent); font-size: 11px; text-transform: uppercase; letter-spacing: 0.5px; font-weight: 600; margin:0;}
+        .lgu-data-item span { color: var(--text-main); font-weight: 500; font-size: 13px; line-height: 1.4;}
+        
+        .lgu-other { grid-column: span 3; margin-top: 5px; padding-top: 15px; border-top: 1px dashed rgba(255,255,255,0.1); }
+        .lgu-no-data { text-align: center; color: var(--text-muted); font-size: 13px; font-style: italic; padding: 20px; width: 100%;}
 
         @media print {
             body { background: white !important; animation: none !important; color: black !important; overflow: visible; }
             .sidebar, .header, #tweetWallSection, .btn { display: none !important; }
             .main-content { padding: 0 !important; }
             * { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
-            #generatedMasterReport { box-shadow: none !important; border: none !important; background: white !important; }
-            .report-section { background: white !important; border: none !important; }
-            .master-header h2, .report-section h3, .data-item label, .district-table th { color: black !important; }
-            .data-item div, .district-table td, .district-table td strong { color: black !important; background: transparent !important; }
+            
+            #generatedMasterReport { box-shadow: none !important; border: none !important; background: white !important; padding: 0 !important;}
+            .report-section { background: white !important; border: none !important; padding: 0; margin-bottom: 40px;}
+            
+            .master-header h2, .report-section h3, .data-item label, .district-table th, .lgu-data-item label { color: black !important; }
+            .data-item div, .district-table td, .lgu-name-cell, .lgu-data-item span, .lgu-name-cell span { color: black !important; background: transparent !important; }
+            
             .district-table th, .district-table td { border: 1px solid black !important; }
-            .data-item div { border-left: 2px solid black !important; padding: 5px 10px; }
+            .data-item div { border-left: 2px solid black !important; padding: 5px 10px; border-radius: 0; }
+            .lgu-name-cell { border-right: 1px solid black !important; }
+            .lgu-other { border-top: 1px solid #ccc !important; }
+            .district-table { border: 2px solid black !important; margin-bottom: 20px; break-inside: avoid; }
         }
     </style>
 </head>
@@ -262,7 +265,7 @@
                 </div>
 
                 <div class="report-section">
-                    <h3><i data-lucide="megaphone" style="color:var(--accent); width:18px;"></i> PDRRMO Advisory</h3>
+                    <h3><i data-lucide="megaphone" style="color:var(--accent); width:20px;"></i> PDRRMO Advisory</h3>
                     <div class="pdrrmo-data-grid">
                         <div class="data-item"><label>A. Synopsis</label><div id="outSyn">--</div></div>
                         <div class="data-item"><label>B. Other Incidents Monitored (Responses)</label><div id="outInc">--</div></div>
@@ -273,80 +276,154 @@
                 </div>
 
                 <div class="report-section">
-                    <h3><i data-lucide="map" style="color:var(--accent); width:18px;"></i> LDRRMCs ALL UPDATE CONSOLIDATED REPORT</h3>
-                    <p style="font-size: 12px; color: var(--text-muted); margin-bottom: 15px;">Generated per Municipality/City LDRRMCs and cut in district to see respective LGU statuses.</p>
+                    <h3><i data-lucide="map" style="color:var(--accent); width:20px;"></i> LDRRMCs ALL UPDATE CONSOLIDATED REPORT</h3>
+                    <p style="font-size: 13px; color: var(--text-muted); margin-bottom: 20px;">Generated per Municipality/City LDRRMCs and divided by district.</p>
                     
                     <table class="district-table">
-                        <thead>
-                            <tr><th colspan="2">1ST DISTRICT OF TARLAC</th></tr>
-                        </thead>
+                        <thead><tr><th colspan="2">1ST DISTRICT OF TARLAC</th></tr></thead>
                         <tbody>
                             <tr>
-                                <td class="lgu-name">Anao (MDRRMO)</td>
+                                <td class="lgu-name-cell">Anao<span>MDRRMO</span></td>
                                 <td>
-                                    <strong>A. Weather Condition:</strong> Light Rains
-                                    <strong>B. Affected Pop:</strong> 0 | <strong>C. Evacuation:</strong> None | <strong>D. Casualty:</strong> 0
-                                    <strong>E. Suspensions:</strong> Classes suspended (All levels)
-                                    <strong>F. Flooded Areas:</strong> None | <strong>G-H. Damages:</strong> None reported
-                                    <strong>I. Roads/Bridges:</strong> Passable | <strong>J. Lifelines:</strong> Stable
-                                    <strong>K. Other Incidents / Activities:</strong> EOC Activated. Continuous monitoring of river basins.
+                                    <div class="lgu-data-grid">
+                                        <div class="lgu-data-item"><label>A. Weather</label><span>Light Rains</span></div>
+                                        <div class="lgu-data-item"><label>B. Affected Pop.</label><span>0</span></div>
+                                        <div class="lgu-data-item"><label>C. Evacuation</label><span>None</span></div>
+                                        <div class="lgu-data-item"><label>D. Casualty</label><span>0</span></div>
+                                        <div class="lgu-data-item"><label>E. Suspensions</label><span>All Levels</span></div>
+                                        <div class="lgu-data-item"><label>F. Flooded Areas</label><span>None</span></div>
+                                        <div class="lgu-data-item"><label>G-H. Agri/Infra Damage</label><span>None reported</span></div>
+                                        <div class="lgu-data-item"><label>I. Roads & Bridges</label><span>Passable</span></div>
+                                        <div class="lgu-data-item"><label>J. Lifelines (Pwr/Wtr)</label><span>Stable</span></div>
+                                        <div class="lgu-data-item lgu-other"><label>K. Other Incidents / Activities</label><span>EOC Activated. Continuous monitoring of river basins.</span></div>
+                                    </div>
                                 </td>
                             </tr>
                             <tr>
-                                <td class="lgu-name">Moncada (MDRRMO)</td>
+                                <td class="lgu-name-cell">Camiling<span>MDRRMO</span></td>
+                                <td><div class="lgu-no-data"><i data-lucide="clock" style="width:18px; opacity:0.5;"></i><br>Awaiting Report Submission</div></td>
+                            </tr>
+                            <tr>
+                                <td class="lgu-name-cell">Mayantoc<span>MDRRMO</span></td>
+                                <td><div class="lgu-no-data"><i data-lucide="clock" style="width:18px; opacity:0.5;"></i><br>Awaiting Report Submission</div></td>
+                            </tr>
+                            <tr>
+                                <td class="lgu-name-cell">Moncada<span>MDRRMO</span></td>
                                 <td>
-                                    <strong>A. Weather Condition:</strong> Cloudy
-                                    <strong>B. Affected Pop:</strong> 0 | <strong>C. Evacuation:</strong> None | <strong>D. Casualty:</strong> 0
-                                    <strong>E. Suspensions:</strong> Classes suspended
-                                    <strong>F. Flooded Areas:</strong> None | <strong>G-H. Damages:</strong> None reported
-                                    <strong>I. Roads/Bridges:</strong> Passable | <strong>J. Lifelines:</strong> Stable
-                                    <strong>K. Other Incidents / Activities:</strong> Standby alert. Roving inspections conducted.
+                                    <div class="lgu-data-grid">
+                                        <div class="lgu-data-item"><label>A. Weather</label><span>Cloudy</span></div>
+                                        <div class="lgu-data-item"><label>B. Affected Pop.</label><span>0</span></div>
+                                        <div class="lgu-data-item"><label>C. Evacuation</label><span>None</span></div>
+                                        <div class="lgu-data-item"><label>D. Casualty</label><span>0</span></div>
+                                        <div class="lgu-data-item"><label>E. Suspensions</label><span>Classes suspended</span></div>
+                                        <div class="lgu-data-item"><label>F. Flooded Areas</label><span>None</span></div>
+                                        <div class="lgu-data-item"><label>G-H. Agri/Infra Damage</label><span>None reported</span></div>
+                                        <div class="lgu-data-item"><label>I. Roads & Bridges</label><span>Passable</span></div>
+                                        <div class="lgu-data-item"><label>J. Lifelines (Pwr/Wtr)</label><span>Stable</span></div>
+                                        <div class="lgu-data-item lgu-other"><label>K. Other Incidents / Activities</label><span>Standby alert. Roving inspections conducted across all barangays.</span></div>
+                                    </div>
                                 </td>
+                            </tr>
+                            <tr>
+                                <td class="lgu-name-cell">Paniqui<span>MDRRMO</span></td>
+                                <td><div class="lgu-no-data"><i data-lucide="clock" style="width:18px; opacity:0.5;"></i><br>Awaiting Report Submission</div></td>
+                            </tr>
+                            <tr>
+                                <td class="lgu-name-cell">Pura<span>MDRRMO</span></td>
+                                <td><div class="lgu-no-data"><i data-lucide="clock" style="width:18px; opacity:0.5;"></i><br>Awaiting Report Submission</div></td>
+                            </tr>
+                            <tr>
+                                <td class="lgu-name-cell">Ramos<span>MDRRMO</span></td>
+                                <td><div class="lgu-no-data"><i data-lucide="clock" style="width:18px; opacity:0.5;"></i><br>Awaiting Report Submission</div></td>
+                            </tr>
+                            <tr>
+                                <td class="lgu-name-cell">San Clemente<span>MDRRMO</span></td>
+                                <td><div class="lgu-no-data"><i data-lucide="clock" style="width:18px; opacity:0.5;"></i><br>Awaiting Report Submission</div></td>
+                            </tr>
+                            <tr>
+                                <td class="lgu-name-cell">San Manuel<span>MDRRMO</span></td>
+                                <td><div class="lgu-no-data"><i data-lucide="clock" style="width:18px; opacity:0.5;"></i><br>Awaiting Report Submission</div></td>
+                            </tr>
+                            <tr>
+                                <td class="lgu-name-cell">Santa Ignacia<span>MDRRMO</span></td>
+                                <td><div class="lgu-no-data"><i data-lucide="clock" style="width:18px; opacity:0.5;"></i><br>Awaiting Report Submission</div></td>
                             </tr>
                         </tbody>
                     </table>
 
                     <table class="district-table">
-                        <thead>
-                            <tr><th colspan="2">2ND DISTRICT OF TARLAC</th></tr>
-                        </thead>
+                        <thead><tr><th colspan="2">2ND DISTRICT OF TARLAC</th></tr></thead>
                         <tbody>
                             <tr>
-                                <td class="lgu-name">Tarlac City (CDRRMO)</td>
+                                <td class="lgu-name-cell">Gerona<span>MDRRMO</span></td>
+                                <td><div class="lgu-no-data"><i data-lucide="clock" style="width:18px; opacity:0.5;"></i><br>Awaiting Report Submission</div></td>
+                            </tr>
+                            <tr>
+                                <td class="lgu-name-cell">San Jose<span>MDRRMO</span></td>
+                                <td><div class="lgu-no-data"><i data-lucide="clock" style="width:18px; opacity:0.5;"></i><br>Awaiting Report Submission</div></td>
+                            </tr>
+                            <tr>
+                                <td class="lgu-name-cell" style="background: rgba(59, 130, 246, 0.1);">Tarlac City<span>CDRRMO</span></td>
                                 <td>
-                                    <strong>A. Weather Condition:</strong> Fair Weather
-                                    <strong>B. Affected Pop:</strong> 0 | <strong>C. Evacuation:</strong> None | <strong>D. Casualty:</strong> 0
-                                    <strong>E. Suspensions:</strong> None
-                                    <strong>F. Flooded Areas:</strong> None | <strong>G-H. Damages:</strong> None reported
-                                    <strong>I. Roads/Bridges:</strong> Passable | <strong>J. Lifelines:</strong> Stable
-                                    <strong>K. Other Incidents / Activities:</strong> Pre-emptive evacuation centers prepared. EOC on White Alert.
+                                    <div class="lgu-data-grid">
+                                        <div class="lgu-data-item"><label>A. Weather</label><span>Fair Weather</span></div>
+                                        <div class="lgu-data-item"><label>B. Affected Pop.</label><span>0</span></div>
+                                        <div class="lgu-data-item"><label>C. Evacuation</label><span>None</span></div>
+                                        <div class="lgu-data-item"><label>D. Casualty</label><span>0</span></div>
+                                        <div class="lgu-data-item"><label>E. Suspensions</label><span>None</span></div>
+                                        <div class="lgu-data-item"><label>F. Flooded Areas</label><span>None</span></div>
+                                        <div class="lgu-data-item"><label>G-H. Agri/Infra Damage</label><span>None reported</span></div>
+                                        <div class="lgu-data-item"><label>I. Roads & Bridges</label><span>Passable</span></div>
+                                        <div class="lgu-data-item"><label>J. Lifelines (Pwr/Wtr)</label><span>Stable</span></div>
+                                        <div class="lgu-data-item lgu-other"><label>K. Other Incidents / Activities</label><span>Pre-emptive evacuation centers prepared. EOC on White Alert.</span></div>
+                                    </div>
                                 </td>
+                            </tr>
+                            <tr>
+                                <td class="lgu-name-cell">Victoria<span>MDRRMO</span></td>
+                                <td><div class="lgu-no-data"><i data-lucide="clock" style="width:18px; opacity:0.5;"></i><br>Awaiting Report Submission</div></td>
                             </tr>
                         </tbody>
                     </table>
 
                     <table class="district-table">
-                        <thead>
-                            <tr><th colspan="2">3RD DISTRICT OF TARLAC</th></tr>
-                        </thead>
+                        <thead><tr><th colspan="2">3RD DISTRICT OF TARLAC</th></tr></thead>
                         <tbody>
                             <tr>
-                                <td class="lgu-name">Bamban (MDRRMO)</td>
+                                <td class="lgu-name-cell">Bamban<span>MDRRMO</span></td>
                                 <td>
-                                    <strong>A. Weather Condition:</strong> Cloudy
-                                    <strong>B. Affected Pop:</strong> 0 | <strong>C. Evacuation:</strong> None | <strong>D. Casualty:</strong> 0
-                                    <strong>E. Suspensions:</strong> Pre-school suspended
-                                    <strong>F. Flooded Areas:</strong> None | <strong>G-H. Damages:</strong> None reported
-                                    <strong>I. Roads/Bridges:</strong> Passable | <strong>J. Lifelines:</strong> Stable
-                                    <strong>K. Other Incidents / Activities:</strong> Conducted inventory of SAR equipment. Close coordination with Brgys.
+                                    <div class="lgu-data-grid">
+                                        <div class="lgu-data-item"><label>A. Weather</label><span>Cloudy</span></div>
+                                        <div class="lgu-data-item"><label>B. Affected Pop.</label><span>0</span></div>
+                                        <div class="lgu-data-item"><label>C. Evacuation</label><span>None</span></div>
+                                        <div class="lgu-data-item"><label>D. Casualty</label><span>0</span></div>
+                                        <div class="lgu-data-item"><label>E. Suspensions</label><span>Pre-school suspended</span></div>
+                                        <div class="lgu-data-item"><label>F. Flooded Areas</label><span>None</span></div>
+                                        <div class="lgu-data-item"><label>G-H. Agri/Infra Damage</label><span>None reported</span></div>
+                                        <div class="lgu-data-item"><label>I. Roads & Bridges</label><span>Passable</span></div>
+                                        <div class="lgu-data-item"><label>J. Lifelines (Pwr/Wtr)</label><span>Stable</span></div>
+                                        <div class="lgu-data-item lgu-other"><label>K. Other Incidents / Activities</label><span>Conducted inventory of SAR equipment. Close coordination with Brgys regarding low-lying areas.</span></div>
+                                    </div>
                                 </td>
+                            </tr>
+                            <tr>
+                                <td class="lgu-name-cell">Capas<span>MDRRMO</span></td>
+                                <td><div class="lgu-no-data"><i data-lucide="clock" style="width:18px; opacity:0.5;"></i><br>Awaiting Report Submission</div></td>
+                            </tr>
+                            <tr>
+                                <td class="lgu-name-cell">Concepcion<span>MDRRMO</span></td>
+                                <td><div class="lgu-no-data"><i data-lucide="clock" style="width:18px; opacity:0.5;"></i><br>Awaiting Report Submission</div></td>
+                            </tr>
+                            <tr>
+                                <td class="lgu-name-cell">La Paz<span>MDRRMO</span></td>
+                                <td><div class="lgu-no-data"><i data-lucide="clock" style="width:18px; opacity:0.5;"></i><br>Awaiting Report Submission</div></td>
                             </tr>
                         </tbody>
                     </table>
                 </div>
 
                 <div style="text-align: right;">
-                    <button class="btn btn-primary" onclick="window.print()" style="display:inline-block;"><i data-lucide="printer" style="width:16px;"></i> Print Document</button>
+                    <button class="btn btn-primary" onclick="window.print()" style="display:inline-block;"><i data-lucide="printer" style="width:16px;"></i> Print Official Document</button>
                 </div>
             </div>
 
@@ -667,7 +744,7 @@
         const forms = document.querySelectorAll('.workflow-form');
 
         const dataCouncil = ["PDRRMO", "PSWDO", "PHO", "DA-OPA", "PROVINCIAL ENGINEREERING (PEO)", "TACTICAL OPERATION GROUP 3- PHILIPPINE AIR FORCE", "TARLAC POLICE PROVINCIAL OFFICE", "3RD MECH INF BN, PA", "522 ECB, PA", "DPWPH 1ST DEO", "PDOHO", "BFP- TARLAC PROVINCE", "PEO/PGSO/DEPED/DILG/TAU/CARITAS TARLAC"];
-        const dataLdrmc = ["Tarlac City (1 CDRRMO)", "Anao (17 MDRRMO)", "Bamban", "Camiling", "Capas", "Concepcion", "Gerona", "La Paz", "Mayantoc", "Moncada", "Paniqui", "Pura", "Ramos", "San Clemente", "San Jose", "San Manuel", "Santa Ignacia", "Victoria"];
+        const dataLdrmc = ["Anao", "Camiling", "Mayantoc", "Moncada", "Paniqui", "Pura", "Ramos", "San Clemente", "San Manuel", "Santa Ignacia", "Gerona", "San Jose", "Tarlac City", "Victoria", "Bamban", "Capas", "Concepcion", "La Paz"];
         const dataPartner = ["7TH CIVIL MILITARY OPERATION BATTALION, PA", "ARMOR DIVISION, CAMP O'DONNEL, PA", "VOLUNTEERS ASSOCIATION OF TARLAC (VAT)"];
 
         primaryCat.addEventListener('change', (e) => {
@@ -684,7 +761,7 @@
             targetData.forEach(item => {
                 const opt = document.createElement('option');
                 opt.value = item;
-                opt.innerText = item;
+                opt.innerText = item + (val === 'ldrmc' ? (item === "Tarlac City" ? " (CDRRMO)" : " (MDRRMO)") : "");
                 secondaryCat.appendChild(opt);
             });
         });
@@ -719,7 +796,6 @@
 
         function submitLdrmc() { document.getElementById('promptLdrmc').style.display = 'block'; }
 
-        // Core execution logic combining UI resets and Data Fetch
         function executeSave(type) {
             if (type === 'ldrmc') {
                 const btn = document.getElementById('btnConfirmSaveLdrmc');
@@ -769,7 +845,6 @@
                 });
 
             } else {
-                // Fallback for Council/Partner forms (Until linked to Drive API)
                 alert('Saved successfully!');
                 resetEncodingView();
             }
