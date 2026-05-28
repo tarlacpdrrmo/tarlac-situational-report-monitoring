@@ -195,7 +195,23 @@
         .modal-overlay.show .modal-card { transform: translateY(0) scale(1); }
         .modal-icon { width: 48px; height: 48px; background: rgba(245, 158, 11, 0.1); color: var(--accent); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 20px auto; }
 
-        /* --- Generated Master SitRep UI --- */
+        /* --- TWEET WALL STYLES --- */
+        .advisory-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 24px; width: 100%; margin-top: 20px;}
+        .tweet-card { background: var(--glass-bg); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); border: 1px solid var(--glass-border); border-radius: 18px; padding: 22px; width: 100%; display: flex; flex-direction: column; gap: 14px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); transition: 0.3s; cursor: pointer; }
+        .tweet-card:hover { transform: translateY(-3px); border-color: rgba(245, 158, 11, 0.4); background: rgba(245, 158, 11, 0.05); }
+        .tweet-header { display: flex; align-items: center; gap: 12px; }
+        .tweet-avatar { width: 42px; height: 42px; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-weight: 700; font-size: 14px; box-shadow: 0 4px 10px rgba(0,0,0,0.2); }
+        .av-city { background: linear-gradient(135deg, #3b82f6, #1d4ed8); }
+        .av-muni { background: linear-gradient(135deg, #10b981, #047857); }
+        .av-agency { background: linear-gradient(135deg, #8b5cf6, #5b21b6); }
+        .tweet-meta { display: flex; flex-direction: column; line-height: 1.2; }
+        .tweet-name { font-size: 14px; font-weight: 600; color: var(--text-main); display: flex; align-items: center; gap: 4px; }
+        .tweet-handle { font-size: 11px; color: var(--accent); margin-top: 2px; }
+        .tweet-body { font-size: 13px; color: var(--text-muted); line-height: 1.6; }
+        .tweet-body strong { color: var(--text-main); font-weight: 500; }
+        .tweet-footer { font-size: 11px; color: var(--text-muted); display: flex; align-items: center; justify-content: space-between; border-top: 1px solid var(--glass-border); padding-top: 12px; margin-top: 5px; }
+
+        /* --- GENERATED MASTER SITREP UI --- */
         #generatedMasterReport { display: none; animation: fadeIn 0.5s ease forwards; }
         .master-header { text-align: center; margin-bottom: 25px; padding-bottom: 20px; border-bottom: 1px dashed rgba(255,255,255,0.1); }
         .master-header h2 { font-size: 22px; color: var(--accent); letter-spacing: 1px; margin-bottom: 5px;}
@@ -218,13 +234,10 @@
         .lgu-data-item span { color: var(--text-main); font-weight: 500; font-size: 13px; line-height: 1.4;}
         .lgu-other { grid-column: span 3; margin-top: 5px; padding-top: 15px; border-top: 1px dashed rgba(255,255,255,0.1); }
         .lgu-no-data { text-align: center; color: var(--text-muted); font-size: 13px; font-style: italic; padding: 20px; width: 100%;}
-        
-        /* Tweet Wall Defaults hidden here for brevity but intact below */
     </style>
 </head>
 <body>
 
-    <!-- GLOBAL SAVE CONFIRMATION MODAL -->
     <div id="saveModal" class="modal-overlay">
         <div class="modal-card">
             <div class="modal-icon"><i data-lucide="cloud-upload" style="width: 24px; height: 24px;"></i></div>
@@ -237,7 +250,6 @@
         </div>
     </div>
 
-    <!-- SIDE PANEL -->
     <aside class="sidebar">
         <div class="profile">
             <div class="profile-img"><i data-lucide="shield-check" style="width: 24px; height: 24px;"></i></div>
@@ -257,7 +269,6 @@
 
     <main class="main-content">
         
-        <!-- 1. SITUATION OVERVIEW -->
         <div id="homeView" class="view-section active">
             <div class="header">
                 <div>
@@ -315,9 +326,61 @@
                     <button class="btn btn-primary" onclick="window.print()" style="display:inline-block;"><i data-lucide="printer" style="width:16px;"></i> Print Official Document</button>
                 </div>
             </div>
+
+            <div class="advisory-grid" id="tweetWallSection">
+                <div class="tweet-card">
+                    <div class="tweet-header">
+                        <div class="tweet-avatar av-city">TC</div>
+                        <div class="tweet-meta">
+                            <span class="tweet-name">Tarlac City (CDRRMO) <i data-lucide="badge-check" style="width:14px; height:14px; color:var(--accent);"></i></span>
+                            <span class="tweet-handle">Weather: Fair | Casualties: 0</span>
+                        </div>
+                    </div>
+                    <div class="tweet-body">
+                        <strong>General Status:</strong> All major roads are passable. No flooded areas reported. Emergency Operations Center (EOC) remains on White Alert. Pre-emptive evacuation centers are ready if needed.
+                    </div>
+                    <div class="tweet-footer">
+                        <span><i data-lucide="edit-3" style="width:10px;height:10px;margin-right:4px;vertical-align:middle;"></i> Encoded via Form</span>
+                        <span>10 mins ago</span>
+                    </div>
+                </div>
+
+                <div class="tweet-card">
+                    <div class="tweet-header">
+                        <div class="tweet-avatar av-muni">B</div>
+                        <div class="tweet-meta">
+                            <span class="tweet-name">Bamban (MDRRMO)</span>
+                            <span class="tweet-handle">Weather: Cloudy | Casualties: 0</span>
+                        </div>
+                    </div>
+                    <div class="tweet-body">
+                        <strong>Status Update:</strong> Conducted inventory of SAR equipment. Maintained close coordination with Brgy. DRRMCs regarding low-lying areas. Zero reported interruptions in power and water supply.
+                    </div>
+                    <div class="tweet-footer">
+                        <span><i data-lucide="edit-3" style="width:10px;height:10px;margin-right:4px;vertical-align:middle;"></i> Encoded via Form</span>
+                        <span>1 hour ago</span>
+                    </div>
+                </div>
+
+                <div class="tweet-card">
+                    <div class="tweet-header">
+                        <div class="tweet-avatar av-agency"><i data-lucide="package"></i></div>
+                        <div class="tweet-meta">
+                            <span class="tweet-name">PSWDO Tarlac</span>
+                            <span class="tweet-handle">Action Taken Report</span>
+                        </div>
+                    </div>
+                    <div class="tweet-body">
+                        Relief operations readiness confirmed. Successfully prepositioned over <strong>2,500 family food packs</strong> in major provincial hubs. Manpower on standby for potential hauling.
+                    </div>
+                    <div class="tweet-footer">
+                        <span><i data-lucide="file-text" style="width:10px;height:10px;margin-right:4px;vertical-align:middle;"></i> Extracted from PDF</span>
+                        <span>3 hours ago</span>
+                    </div>
+                </div>
+            </div>
         </div>
 
-        <!-- 2. ENCODING PAGE -->
         <div id="encodingView" class="view-section">
             <div class="header" style="border-bottom: none; padding-bottom: 0;">
                 <div>
@@ -325,7 +388,6 @@
                     <p>Choose an agency below to begin encoding.</p>
                 </div>
 
-                <!-- Modern Datetime Widget -->
                 <div style="text-align: right; position: relative;">
                     <label style="font-size: 12px; color: var(--text-muted); font-weight: 600; display: block; margin-bottom: 6px; letter-spacing: 0.5px;">"As Of" Timestamp <span style="color: var(--error);">*</span></label>
                     <div class="datetime-wrapper" id="customDtTrigger">
@@ -383,7 +445,6 @@
             </div>
 
             <div id="dynamicWorkflowArea">
-                <!-- WORKFLOW A: PDRRMC COUNCIL -->
                 <div id="formCouncil" class="workflow-form glass-card">
                     <div class="card-title"><i data-lucide="shield"></i> PDRRMC Council Action</div>
                     <div class="input-group">
@@ -395,11 +456,10 @@
                         <p>UPLOAD PDF FILE BASED ON WHAT YOU CHOOSE</p>
                         <input type="file" id="councilPdf" style="display: none;" accept="application/pdf" onchange="enableGenerate('council')">
                     </div>
-                    <button class="btn btn-primary" id="btnGenCouncil" style="display: none;" onclick="generatePdf('council')">CLICK GENERATE</button>
+                    <button class="btn btn-primary" id="btnGenCouncil" style="display: none;" onclick="openModal('council')">CLICK GENERATE</button>
                     <iframe class="pdf-viewer" id="viewerCouncil"></iframe>
                 </div>
 
-                <!-- WORKFLOW B: OTHER PARTNER AGENCIES -->
                 <div id="formPartner" class="workflow-form glass-card">
                     <div class="card-title"><i data-lucide="users"></i> Partner Agency Report</div>
                     <div class="scanner-area" onclick="document.getElementById('partnerPdf').click()">
@@ -407,11 +467,10 @@
                         <p>UPLOAD PDF FILE BASED ON WHAT YOU CHOOSE</p>
                         <input type="file" id="partnerPdf" style="display: none;" accept="application/pdf" onchange="enableGenerate('partner')">
                     </div>
-                    <button class="btn btn-primary" id="btnGenPartner" style="display: none;" onclick="generatePdf('partner')">CLICK GENERATE</button>
+                    <button class="btn btn-primary" id="btnGenPartner" style="display: none;" onclick="openModal('partner')">CLICK GENERATE</button>
                     <iframe class="pdf-viewer" id="viewerPartner"></iframe>
                 </div>
 
-                <!-- WORKFLOW C: LDRRMCs -->
                 <div id="formLdrmc" class="workflow-form glass-card">
                     <div class="card-title"><i data-lucide="map-pin"></i> Fill Out The Information</div>
                     <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px;">
@@ -433,13 +492,11 @@
                     </div>
                     <div class="input-group" style="margin-top: 10px;"><label>Other Activities:</label><textarea id="ld_Other"></textarea></div>
                     
-                    <!-- Modified: Now Opens the Validation/Modal logic -->
                     <button class="btn btn-primary" onclick="openModal('ldrmc')">CLICK SUBMIT</button>
                 </div>
             </div>
         </div>
 
-        <!-- 3. PDRRMO SITREP & ADVISORY REPORT -->
         <div id="pdrrmoView" class="view-section">
             <div class="header">
                 <div>
@@ -458,7 +515,6 @@
             </div>
         </div>
 
-        <!-- 4. LDRRMCs/AGENCIES RECORDS -->
         <div id="recordsView" class="view-section">
             <div class="header">
                 <div>
@@ -491,7 +547,7 @@
         // =====================================================================
         // YOUR GOOGLE APPS SCRIPT WEB APP URL GOES HERE:
         // =====================================================================
-        const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/YOUR_SCRIPT_ID_HERE/exec"; 
+        const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycby6PFajbl68wQPRWRO-m3mwW0bAZvkqsngBuVtZAI4XrDJ2RRHi3jRviQWIe6rpZhBh/exec"; 
 
         // ----------------------------------------------------
         // Navigation Logic
@@ -528,7 +584,17 @@
                 return; // Stop execution, don't show modal
             }
 
-            // Validation passed, open modal
+            // Validation passed, check for PDF generation first if Council/Partner
+            if(type === 'council' || type === 'partner') {
+                const fileInput = document.getElementById(`${type}Pdf`);
+                const viewer = document.getElementById(`viewer${capitalize(type)}`);
+                if (fileInput.files.length > 0) {
+                    viewer.src = URL.createObjectURL(fileInput.files[0]);
+                    viewer.style.display = 'block';
+                }
+            }
+
+            // Open modal
             currentSaveType = type;
             saveModal.classList.add('show');
         }
@@ -643,16 +709,6 @@
         });
 
         function enableGenerate(type) { document.getElementById(`btnGen${capitalize(type)}`).style.display = 'inline-block'; }
-
-        function generatePdf(type) {
-            const fileInput = document.getElementById(`${type}Pdf`);
-            const viewer = document.getElementById(`viewer${capitalize(type)}`);
-            if (fileInput.files.length > 0) {
-                viewer.src = URL.createObjectURL(fileInput.files[0]);
-                viewer.style.display = 'block';
-                openModal(type); // Triggers the save modal after generating
-            }
-        }
 
         function resetEncodingView() {
             primaryCat.value = "";
