@@ -212,8 +212,12 @@
         .tweet-body strong { color: var(--text-main); font-weight: 500; }
         .tweet-footer { font-size: 10px; color: var(--text-muted); display: flex; align-items: center; justify-content: space-between; border-top: 1px solid var(--glass-border); padding-top: 10px; margin-top: 4px; }
 
-        /* --- GENERATED MASTER SITREP UI (TIGHTENED & COMPACT) --- */
-        #generatedMasterReport { animation: fadeIn 0.5s ease forwards; }
+        /* --- GENERATED MASTER SITREP UI (FIXED WIDTH & TIGHTENED) --- */
+        #generatedMasterReport { 
+            animation: fadeIn 0.5s ease forwards; 
+            max-width: 980px; /* Constrains the entire report so it doesn't stretch */
+            margin: 0 auto 30px auto; /* Centers the report horizontally */
+        }
         .master-header { text-align: center; margin-bottom: 20px; padding-bottom: 15px; border-bottom: 1px dashed rgba(255,255,255,0.1); }
         .master-header h2 { font-size: 18px; color: var(--accent); letter-spacing: 0.5px; margin-bottom: 4px;}
         .master-header p { font-size: 12px; color: var(--text-muted); }
@@ -221,13 +225,35 @@
         .report-section { background: rgba(0,0,0,0.2); border-radius: 16px; padding: 20px; border: 1px solid var(--glass-border); margin-bottom: 20px;}
         .report-section h3 { font-size: 15px; color: var(--text-main); border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 10px; margin-bottom: 15px; display: flex; align-items: center; gap: 8px;}
         
-        /* Compacted PDRRMO Grid */
-        .pdrrmo-data-grid { display: grid; grid-template-columns: 1fr; gap: 10px; }
+        /* 2-Column PDRRMO Grid to fix empty right-side space */
+        .pdrrmo-data-grid { 
+            display: grid; 
+            grid-template-columns: 1fr 1fr; /* Forces 2 equal columns */
+            gap: 15px 20px; 
+        }
+        .pdrrmo-data-grid .data-item:last-child { 
+            grid-column: span 2; /* Makes the last item span all the way across */
+        }
         .data-item label { font-size: 10px; text-transform: uppercase; color: var(--accent); font-weight: 600; display: block; margin-bottom: 4px; letter-spacing: 0.5px;}
         .data-item div { font-size: 13px; color: var(--text-main); background: rgba(0,0,0,0.15); padding: 10px 14px; border-radius: 8px; border-left: 3px solid var(--accent); line-height: 1.4;}
         
-        /* Compact District Tables */
-        .district-table { width: 100%; border-collapse: collapse; margin-bottom: 25px; background: rgba(0,0,0,0.15); border-radius: 10px; overflow: hidden; border: 1px solid var(--glass-border);}
+        /* District Tables Layout Adjusted */
+        .district-table { 
+            width: 100%; 
+            table-layout: fixed; /* Ensures specific column widths */
+            border-collapse: collapse; 
+            margin-bottom: 25px; 
+            background: rgba(0,0,0,0.15); 
+            border-radius: 10px; 
+            overflow: hidden; 
+            border: 1px solid var(--glass-border);
+        }
+        
+        /* Specific column percentages to eliminate huge middle gaps */
+        .district-table th:nth-child(1) { width: 35%; }
+        .district-table th:nth-child(2) { width: 45%; }
+        .district-table th:nth-child(3) { width: 20%; text-align: right; }
+
         .district-table th { background: rgba(245, 158, 11, 0.15); color: var(--accent); text-align: left; padding: 10px 15px; text-transform: uppercase; letter-spacing: 1px; border-bottom: 1px solid var(--glass-border); font-size: 11px;}
         .district-table tr { cursor: pointer; transition: background 0.2s; border-bottom: 1px solid var(--glass-border); }
         .district-table tr:hover { background: rgba(255,255,255,0.05); }
@@ -333,7 +359,7 @@
                     
                     <!-- 1ST DISTRICT (COMPACT) -->
                     <table class="district-table">
-                        <thead><tr><th>1ST DISTRICT OF TARLAC</th><th>Status</th><th style="text-align: right;">Action</th></tr></thead>
+                        <thead><tr><th>1ST DISTRICT OF TARLAC</th><th>Status</th><th>Action</th></tr></thead>
                         <tbody>
                             <tr onclick="viewLguDetails('Anao', 'Anao MDRRMO')"><td class="lgu-name-cell">Anao<span>MDRRMO</span></td><td><span class="status-badge pending" id="status-Anao"><i data-lucide="clock" style="width:12px;"></i> Awaiting Report</span></td><td style="text-align: right;"><button class="btn btn-sm">View Details</button></td></tr>
                             <tr onclick="viewLguDetails('Camiling', 'Camiling MDRRMO')"><td class="lgu-name-cell">Camiling<span>MDRRMO</span></td><td><span class="status-badge pending" id="status-Camiling"><i data-lucide="clock" style="width:12px;"></i> Awaiting Report</span></td><td style="text-align: right;"><button class="btn btn-sm">View Details</button></td></tr>
@@ -350,7 +376,7 @@
 
                     <!-- 2ND DISTRICT (COMPACT) -->
                     <table class="district-table">
-                        <thead><tr><th>2ND DISTRICT OF TARLAC</th><th>Status</th><th style="text-align: right;">Action</th></tr></thead>
+                        <thead><tr><th>2ND DISTRICT OF TARLAC</th><th>Status</th><th>Action</th></tr></thead>
                         <tbody>
                             <tr onclick="viewLguDetails('Gerona', 'Gerona MDRRMO')"><td class="lgu-name-cell">Gerona<span>MDRRMO</span></td><td><span class="status-badge pending" id="status-Gerona"><i data-lucide="clock" style="width:12px;"></i> Awaiting Report</span></td><td style="text-align: right;"><button class="btn btn-sm">View Details</button></td></tr>
                             <tr onclick="viewLguDetails('SanJose', 'San Jose MDRRMO')"><td class="lgu-name-cell">San Jose<span>MDRRMO</span></td><td><span class="status-badge pending" id="status-SanJose"><i data-lucide="clock" style="width:12px;"></i> Awaiting Report</span></td><td style="text-align: right;"><button class="btn btn-sm">View Details</button></td></tr>
@@ -361,7 +387,7 @@
 
                     <!-- 3RD DISTRICT (COMPACT) -->
                     <table class="district-table">
-                        <thead><tr><th>3RD DISTRICT OF TARLAC</th><th>Status</th><th style="text-align: right;">Action</th></tr></thead>
+                        <thead><tr><th>3RD DISTRICT OF TARLAC</th><th>Status</th><th>Action</th></tr></thead>
                         <tbody>
                             <tr onclick="viewLguDetails('Bamban', 'Bamban MDRRMO')"><td class="lgu-name-cell">Bamban<span>MDRRMO</span></td><td><span class="status-badge pending" id="status-Bamban"><i data-lucide="clock" style="width:12px;"></i> Awaiting Report</span></td><td style="text-align: right;"><button class="btn btn-sm">View Details</button></td></tr>
                             <tr onclick="viewLguDetails('Capas', 'Capas MDRRMO')"><td class="lgu-name-cell">Capas<span>MDRRMO</span></td><td><span class="status-badge pending" id="status-Capas"><i data-lucide="clock" style="width:12px;"></i> Awaiting Report</span></td><td style="text-align: right;"><button class="btn btn-sm">View Details</button></td></tr>
