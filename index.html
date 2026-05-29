@@ -8,10 +8,11 @@
     <script src="https://unpkg.com/lucide@latest"></script>
     <style>
         :root {
-            /* Stormy macOS Glassmorphism Palette */
+            /* Sleek Professional Tech Palette (Sky Blue) */
             --text-main: #f8fafc;
             --text-muted: #94a3b8;
-            --accent: #f59e0b; 
+            --accent: #38bdf8;       /* Bright Sky Blue */
+            --accent-dark: #0284c7;  /* Deep Sky Blue */
             --glass-bg: rgba(15, 23, 42, 0.4); 
             --glass-border: rgba(255, 255, 255, 0.08);
             --glass-hover: rgba(255, 255, 255, 0.12);
@@ -24,7 +25,7 @@
         * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Inter', sans-serif; }
 
         body {
-            background: linear-gradient(-45deg, #0f172a, #1e293b, #0f2027, #203a43);
+            background: linear-gradient(-45deg, #0f172a, #1e293b, #0f2027, #1e3a5f);
             background-size: 400% 400%;
             animation: stormFront 20s ease infinite;
             color: var(--text-main);
@@ -50,6 +51,41 @@
             25% { transform: translateX(-5px); }
             75% { transform: translateX(5px); }
         }
+        
+        @keyframes spin { 
+            100% { transform: rotate(360deg); } 
+        }
+        .spin { animation: spin 1s linear infinite; }
+
+        /* --- SKELETON LOADING ANIMATIONS --- */
+        @keyframes skeleton-loading {
+            0% { background-position: 200% 0; }
+            100% { background-position: -200% 0; }
+        }
+        .skeleton-box {
+            background: linear-gradient(90deg, rgba(255,255,255,0.03) 25%, rgba(255,255,255,0.08) 50%, rgba(255,255,255,0.03) 75%);
+            background-size: 200% 100%;
+            animation: skeleton-loading 1.5s infinite linear;
+            border-radius: 8px;
+            color: transparent !important;
+            border: none !important;
+            pointer-events: none;
+        }
+        .skeleton-text {
+            height: 14px;
+            background: linear-gradient(90deg, rgba(255,255,255,0.03) 25%, rgba(255,255,255,0.08) 50%, rgba(255,255,255,0.03) 75%);
+            background-size: 200% 100%;
+            animation: skeleton-loading 1.5s infinite linear;
+            border-radius: 4px;
+            display: inline-block;
+        }
+        .data-value.skeleton-active {
+            border-left-color: transparent;
+            background: linear-gradient(90deg, rgba(255,255,255,0.03) 25%, rgba(255,255,255,0.08) 50%, rgba(255,255,255,0.03) 75%);
+            background-size: 200% 100%;
+            animation: skeleton-loading 1.5s infinite linear;
+            color: transparent;
+        }
 
         /* --- Sidebar Styles --- */
         .sidebar {
@@ -64,9 +100,9 @@
         }
         .profile:hover { background: var(--glass-hover); }
         .profile-img {
-            width: 48px; height: 48px; background: linear-gradient(135deg, #f59e0b, #d97706); border-radius: 50%;
+            width: 48px; height: 48px; background: linear-gradient(135deg, var(--accent), var(--accent-dark)); border-radius: 50%;
             display: flex; justify-content: center; align-items: center; color: white;
-            box-shadow: 0 4px 15px rgba(245, 158, 11, 0.3); flex-shrink: 0;
+            box-shadow: 0 4px 15px rgba(56, 189, 248, 0.3); flex-shrink: 0;
         }
         .profile-info h4 { font-size: 15px; font-weight: 600; letter-spacing: 0.5px; margin-top: 2px; }
         .profile-info p { font-size: 11px; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.5px; font-weight: 600;}
@@ -115,15 +151,15 @@
         .input-group input:focus, .input-group textarea:focus { border-color: var(--accent); }
         .input-group textarea { resize: vertical; min-height: 80px; }
 
-        .scanner-area { border: 2px dashed rgba(245, 158, 11, 0.3); border-radius: 12px; padding: 30px; text-align: center; cursor: pointer; transition: 0.3s; background: rgba(0,0,0,0.15); margin-bottom: 20px; }
+        .scanner-area { border: 2px dashed rgba(56, 189, 248, 0.3); border-radius: 12px; padding: 30px; text-align: center; cursor: pointer; transition: 0.3s; background: rgba(0,0,0,0.15); margin-bottom: 20px; }
         .scanner-area:hover { background: rgba(0,0,0,0.3); border-color: var(--accent); }
         .pdf-viewer { display: none; width: 100%; height: 500px; border-radius: 12px; border: 1px solid var(--glass-border); background: #323639; margin-bottom: 20px; }
 
         /* Buttons */
         .btn { background: rgba(255, 255, 255, 0.1); color: white; border: 1px solid var(--glass-border); padding: 10px 20px; border-radius: 10px; font-size: 13px; font-weight: 500; cursor: pointer; transition: 0.3s; display: inline-flex; align-items: center; justify-content: center; gap: 8px; }
         .btn:hover { background: rgba(255, 255, 255, 0.2); }
-        .btn-primary { background: linear-gradient(135deg, var(--accent), #d97706); border: none; box-shadow: 0 4px 15px rgba(245, 158, 11, 0.2); }
-        .btn-primary:hover { box-shadow: 0 6px 20px rgba(245, 158, 11, 0.4); transform: translateY(-2px); }
+        .btn-primary { background: linear-gradient(135deg, var(--accent), var(--accent-dark)); border: none; box-shadow: 0 4px 15px rgba(56, 189, 248, 0.2); }
+        .btn-primary:hover { box-shadow: 0 6px 20px rgba(56, 189, 248, 0.4); transform: translateY(-2px); }
         .btn-danger { background: rgba(239, 68, 68, 0.15); color: #f87171; border-color: rgba(239, 68, 68, 0.3); }
         .btn-danger:hover { background: rgba(239, 68, 68, 0.3); color: white;}
         .btn-sm { padding: 6px 12px; font-size: 11px; border-radius: 8px; }
@@ -164,7 +200,7 @@
         .dt-days { display: grid; grid-template-columns: repeat(7, 1fr); gap: 4px; text-align: center; font-size: 13px; font-weight: 500;}
         .dt-day { padding: 8px 0; cursor: pointer; border-radius: 8px; transition: all 0.2s; color: var(--text-main); }
         .dt-day:hover { background: rgba(255,255,255,0.1); }
-        .dt-day.active { background: var(--accent); color: white; box-shadow: 0 4px 10px rgba(245, 158, 11, 0.4); font-weight: 600;}
+        .dt-day.active { background: var(--accent); color: white; box-shadow: 0 4px 10px rgba(56, 189, 248, 0.4); font-weight: 600;}
         .dt-day.other-month { opacity: 0.3; }
         
         .dt-time-sec { padding: 15px 20px; background: rgba(0,0,0,0.2); display: flex; align-items: center; justify-content: space-between; gap: 15px;}
@@ -197,13 +233,13 @@
             box-shadow: 0 25px 50px -12px rgba(0,0,0,0.5); text-align: center;
         }
         .modal-overlay.show .modal-card { transform: translateY(0) scale(1); }
-        .modal-icon { width: 44px; height: 44px; background: rgba(245, 158, 11, 0.1); color: var(--accent); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 15px auto; }
+        .modal-icon { width: 44px; height: 44px; background: rgba(56, 189, 248, 0.1); color: var(--accent); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 15px auto; }
 
         /* --- TWEET WALL SIDEBAR STYLES --- */
         .advisory-sidebar { width: 360px; flex-shrink: 0; display: flex; flex-direction: column; }
         .tweet-wall-container { display: flex; flex-direction: column; gap: 16px; width: 100%; margin-top: 15px; }
         .tweet-card { background: var(--glass-bg); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); border: 1px solid var(--glass-border); border-radius: 16px; padding: 18px; width: 100%; display: flex; flex-direction: column; gap: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); transition: 0.3s; cursor: pointer; }
-        .tweet-card:hover { transform: translateY(-3px); border-color: rgba(245, 158, 11, 0.4); background: rgba(245, 158, 11, 0.05); }
+        .tweet-card:hover { transform: translateY(-3px); border-color: rgba(56, 189, 248, 0.4); background: rgba(56, 189, 248, 0.05); }
         .tweet-header { display: flex; align-items: center; gap: 12px; }
         .tweet-avatar { width: 38px; height: 38px; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-weight: 700; font-size: 13px; box-shadow: 0 4px 10px rgba(0,0,0,0.2); }
         .av-city { background: linear-gradient(135deg, #3b82f6, #1d4ed8); }
@@ -230,36 +266,19 @@
         .report-section { background: rgba(0,0,0,0.2); border-radius: 16px; padding: 20px; border: 1px solid var(--glass-border); margin-bottom: 20px;}
         .report-section h3 { font-size: 15px; color: var(--text-main); border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 10px; margin-bottom: 15px; display: flex; align-items: center; gap: 8px;}
         
-        /* 2-Column PDRRMO Grid to fix empty right-side space */
-        .pdrrmo-data-grid { 
-            display: grid; 
-            grid-template-columns: 1fr 1fr; /* Forces 2 equal columns */
-            gap: 15px 20px; 
-        }
-        .pdrrmo-data-grid .data-item:last-child { 
-            grid-column: span 2; /* Makes the last item span all the way across */
-        }
+        /* 2-Column PDRRMO Grid */
+        .pdrrmo-data-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px 20px; }
+        .pdrrmo-data-grid .data-item:last-child { grid-column: span 2; }
         .data-item label { font-size: 10px; text-transform: uppercase; color: var(--accent); font-weight: 600; display: block; margin-bottom: 4px; letter-spacing: 0.5px;}
-        .data-item div { font-size: 13px; color: var(--text-main); background: rgba(0,0,0,0.15); padding: 10px 14px; border-radius: 8px; border-left: 3px solid var(--accent); line-height: 1.4;}
+        .data-value { font-size: 13px; color: var(--text-main); background: rgba(0,0,0,0.15); padding: 10px 14px; border-radius: 8px; border-left: 3px solid var(--accent); line-height: 1.4; min-height: 38px;}
         
         /* District Tables Layout Adjusted */
-        .district-table { 
-            width: 100%; 
-            table-layout: fixed; /* Ensures specific column widths */
-            border-collapse: collapse; 
-            margin-bottom: 25px; 
-            background: rgba(0,0,0,0.15); 
-            border-radius: 10px; 
-            overflow: hidden; 
-            border: 1px solid var(--glass-border);
-        }
-        
-        /* Specific column percentages to eliminate huge middle gaps */
+        .district-table { width: 100%; table-layout: fixed; border-collapse: collapse; margin-bottom: 25px; background: rgba(0,0,0,0.15); border-radius: 10px; overflow: hidden; border: 1px solid var(--glass-border); }
         .district-table th:nth-child(1) { width: 35%; }
         .district-table th:nth-child(2) { width: 45%; }
         .district-table th:nth-child(3) { width: 20%; text-align: right; }
 
-        .district-table th { background: rgba(245, 158, 11, 0.15); color: var(--accent); text-align: left; padding: 10px 15px; text-transform: uppercase; letter-spacing: 1px; border-bottom: 1px solid var(--glass-border); font-size: 11px;}
+        .district-table th { background: rgba(56, 189, 248, 0.1); color: var(--accent); text-align: left; padding: 10px 15px; text-transform: uppercase; letter-spacing: 1px; border-bottom: 1px solid var(--glass-border); font-size: 11px;}
         .district-table tr { cursor: pointer; transition: background 0.2s; border-bottom: 1px solid var(--glass-border); }
         .district-table tr:hover { background: rgba(255,255,255,0.05); }
         .district-table tr:last-child { border-bottom: none; }
@@ -341,24 +360,24 @@
                 </div>
             </div>
             
-            <!-- NEW SIDE-BY-SIDE DASHBOARD LAYOUT -->
+            <!-- SIDE-BY-SIDE DASHBOARD LAYOUT -->
             <div class="dashboard-container">
                 
                 <!-- LEFT SIDE: MAIN CONSOLIDATED REPORT -->
                 <div id="generatedMasterReport" class="glass-card" style="border-color: var(--accent); background: rgba(15, 23, 42, 0.7);">
                     <div class="master-header">
                         <h2><i data-lucide="file-check-2" style="display:inline-block; vertical-align:middle; margin-right:6px; width:20px;"></i> CONSOLIDATED SITREP & ADVISORY REPORT</h2>
-                        <p id="generatedTimestamp">Initializing Database Connection...</p>
+                        <p id="generatedTimestamp"><i data-lucide="loader-2" class="spin" style="width:14px; display:inline-block; vertical-align:middle; margin-right:4px;"></i> Fetching live database records...</p>
                     </div>
 
                     <div class="report-section">
                         <h3><i data-lucide="megaphone" style="color:var(--accent); width:18px;"></i> PDRRMO Advisory</h3>
                         <div class="pdrrmo-data-grid">
-                            <div class="data-item"><label>A. Synopsis</label><div id="outSyn">Awaiting data...</div></div>
-                            <div class="data-item"><label>B. Other Incidents Monitored (Responses)</label><div id="outInc">Awaiting data...</div></div>
-                            <div class="data-item"><label>C. Suspension on Work (National/Provincial)</label><div id="outWork">Awaiting data...</div></div>
-                            <div class="data-item"><label>D. Suspension on Classes (National/Provincial)</label><div id="outClass">Awaiting data...</div></div>
-                            <div class="data-item"><label>E. Declaration of State of Calamity</label><div id="outCal">Awaiting data...</div></div>
+                            <div class="data-item"><label>A. Synopsis</label><div id="outSyn" class="data-value skeleton-active"></div></div>
+                            <div class="data-item"><label>B. Other Incidents Monitored (Responses)</label><div id="outInc" class="data-value skeleton-active"></div></div>
+                            <div class="data-item"><label>C. Suspension on Work (National/Provincial)</label><div id="outWork" class="data-value skeleton-active"></div></div>
+                            <div class="data-item"><label>D. Suspension on Classes (National/Provincial)</label><div id="outClass" class="data-value skeleton-active"></div></div>
+                            <div class="data-item"><label>E. Declaration of State of Calamity</label><div id="outCal" class="data-value skeleton-active"></div></div>
                         </div>
                     </div>
 
@@ -370,16 +389,16 @@
                         <table class="district-table">
                             <thead><tr><th>1ST DISTRICT OF TARLAC</th><th>Status</th><th>Action</th></tr></thead>
                             <tbody>
-                                <tr onclick="viewLguDetails('Anao', 'Anao MDRRMO')"><td class="lgu-name-cell">Anao<span>MDRRMO</span></td><td><span class="status-badge pending" id="status-Anao"><i data-lucide="clock" style="width:12px;"></i> Awaiting Report</span></td><td style="text-align: right;"><button class="btn btn-sm">View Details</button></td></tr>
-                                <tr onclick="viewLguDetails('Camiling', 'Camiling MDRRMO')"><td class="lgu-name-cell">Camiling<span>MDRRMO</span></td><td><span class="status-badge pending" id="status-Camiling"><i data-lucide="clock" style="width:12px;"></i> Awaiting Report</span></td><td style="text-align: right;"><button class="btn btn-sm">View Details</button></td></tr>
-                                <tr onclick="viewLguDetails('Mayantoc', 'Mayantoc MDRRMO')"><td class="lgu-name-cell">Mayantoc<span>MDRRMO</span></td><td><span class="status-badge pending" id="status-Mayantoc"><i data-lucide="clock" style="width:12px;"></i> Awaiting Report</span></td><td style="text-align: right;"><button class="btn btn-sm">View Details</button></td></tr>
-                                <tr onclick="viewLguDetails('Moncada', 'Moncada MDRRMO')"><td class="lgu-name-cell">Moncada<span>MDRRMO</span></td><td><span class="status-badge pending" id="status-Moncada"><i data-lucide="clock" style="width:12px;"></i> Awaiting Report</span></td><td style="text-align: right;"><button class="btn btn-sm">View Details</button></td></tr>
-                                <tr onclick="viewLguDetails('Paniqui', 'Paniqui MDRRMO')"><td class="lgu-name-cell">Paniqui<span>MDRRMO</span></td><td><span class="status-badge pending" id="status-Paniqui"><i data-lucide="clock" style="width:12px;"></i> Awaiting Report</span></td><td style="text-align: right;"><button class="btn btn-sm">View Details</button></td></tr>
-                                <tr onclick="viewLguDetails('Pura', 'Pura MDRRMO')"><td class="lgu-name-cell">Pura<span>MDRRMO</span></td><td><span class="status-badge pending" id="status-Pura"><i data-lucide="clock" style="width:12px;"></i> Awaiting Report</span></td><td style="text-align: right;"><button class="btn btn-sm">View Details</button></td></tr>
-                                <tr onclick="viewLguDetails('Ramos', 'Ramos MDRRMO')"><td class="lgu-name-cell">Ramos<span>MDRRMO</span></td><td><span class="status-badge pending" id="status-Ramos"><i data-lucide="clock" style="width:12px;"></i> Awaiting Report</span></td><td style="text-align: right;"><button class="btn btn-sm">View Details</button></td></tr>
-                                <tr onclick="viewLguDetails('SanClemente', 'San Clemente MDRRMO')"><td class="lgu-name-cell">San Clemente<span>MDRRMO</span></td><td><span class="status-badge pending" id="status-SanClemente"><i data-lucide="clock" style="width:12px;"></i> Awaiting Report</span></td><td style="text-align: right;"><button class="btn btn-sm">View Details</button></td></tr>
-                                <tr onclick="viewLguDetails('SanManuel', 'San Manuel MDRRMO')"><td class="lgu-name-cell">San Manuel<span>MDRRMO</span></td><td><span class="status-badge pending" id="status-SanManuel"><i data-lucide="clock" style="width:12px;"></i> Awaiting Report</span></td><td style="text-align: right;"><button class="btn btn-sm">View Details</button></td></tr>
-                                <tr onclick="viewLguDetails('SantaIgnacia', 'Santa Ignacia MDRRMO')"><td class="lgu-name-cell">Santa Ignacia<span>MDRRMO</span></td><td><span class="status-badge pending" id="status-SantaIgnacia"><i data-lucide="clock" style="width:12px;"></i> Awaiting Report</span></td><td style="text-align: right;"><button class="btn btn-sm">View Details</button></td></tr>
+                                <tr onclick="viewLguDetails('Anao', 'Anao MDRRMO')"><td class="lgu-name-cell">Anao<span>MDRRMO</span></td><td><span class="status-badge skeleton-box" id="status-Anao" style="width: 100px; height: 22px; display:inline-block;"></span></td><td style="text-align: right;"><button class="btn btn-sm">View Details</button></td></tr>
+                                <tr onclick="viewLguDetails('Camiling', 'Camiling MDRRMO')"><td class="lgu-name-cell">Camiling<span>MDRRMO</span></td><td><span class="status-badge skeleton-box" id="status-Camiling" style="width: 100px; height: 22px; display:inline-block;"></span></td><td style="text-align: right;"><button class="btn btn-sm">View Details</button></td></tr>
+                                <tr onclick="viewLguDetails('Mayantoc', 'Mayantoc MDRRMO')"><td class="lgu-name-cell">Mayantoc<span>MDRRMO</span></td><td><span class="status-badge skeleton-box" id="status-Mayantoc" style="width: 100px; height: 22px; display:inline-block;"></span></td><td style="text-align: right;"><button class="btn btn-sm">View Details</button></td></tr>
+                                <tr onclick="viewLguDetails('Moncada', 'Moncada MDRRMO')"><td class="lgu-name-cell">Moncada<span>MDRRMO</span></td><td><span class="status-badge skeleton-box" id="status-Moncada" style="width: 100px; height: 22px; display:inline-block;"></span></td><td style="text-align: right;"><button class="btn btn-sm">View Details</button></td></tr>
+                                <tr onclick="viewLguDetails('Paniqui', 'Paniqui MDRRMO')"><td class="lgu-name-cell">Paniqui<span>MDRRMO</span></td><td><span class="status-badge skeleton-box" id="status-Paniqui" style="width: 100px; height: 22px; display:inline-block;"></span></td><td style="text-align: right;"><button class="btn btn-sm">View Details</button></td></tr>
+                                <tr onclick="viewLguDetails('Pura', 'Pura MDRRMO')"><td class="lgu-name-cell">Pura<span>MDRRMO</span></td><td><span class="status-badge skeleton-box" id="status-Pura" style="width: 100px; height: 22px; display:inline-block;"></span></td><td style="text-align: right;"><button class="btn btn-sm">View Details</button></td></tr>
+                                <tr onclick="viewLguDetails('Ramos', 'Ramos MDRRMO')"><td class="lgu-name-cell">Ramos<span>MDRRMO</span></td><td><span class="status-badge skeleton-box" id="status-Ramos" style="width: 100px; height: 22px; display:inline-block;"></span></td><td style="text-align: right;"><button class="btn btn-sm">View Details</button></td></tr>
+                                <tr onclick="viewLguDetails('SanClemente', 'San Clemente MDRRMO')"><td class="lgu-name-cell">San Clemente<span>MDRRMO</span></td><td><span class="status-badge skeleton-box" id="status-SanClemente" style="width: 100px; height: 22px; display:inline-block;"></span></td><td style="text-align: right;"><button class="btn btn-sm">View Details</button></td></tr>
+                                <tr onclick="viewLguDetails('SanManuel', 'San Manuel MDRRMO')"><td class="lgu-name-cell">San Manuel<span>MDRRMO</span></td><td><span class="status-badge skeleton-box" id="status-SanManuel" style="width: 100px; height: 22px; display:inline-block;"></span></td><td style="text-align: right;"><button class="btn btn-sm">View Details</button></td></tr>
+                                <tr onclick="viewLguDetails('SantaIgnacia', 'Santa Ignacia MDRRMO')"><td class="lgu-name-cell">Santa Ignacia<span>MDRRMO</span></td><td><span class="status-badge skeleton-box" id="status-SantaIgnacia" style="width: 100px; height: 22px; display:inline-block;"></span></td><td style="text-align: right;"><button class="btn btn-sm">View Details</button></td></tr>
                             </tbody>
                         </table>
 
@@ -387,10 +406,10 @@
                         <table class="district-table">
                             <thead><tr><th>2ND DISTRICT OF TARLAC</th><th>Status</th><th>Action</th></tr></thead>
                             <tbody>
-                                <tr onclick="viewLguDetails('Gerona', 'Gerona MDRRMO')"><td class="lgu-name-cell">Gerona<span>MDRRMO</span></td><td><span class="status-badge pending" id="status-Gerona"><i data-lucide="clock" style="width:12px;"></i> Awaiting Report</span></td><td style="text-align: right;"><button class="btn btn-sm">View Details</button></td></tr>
-                                <tr onclick="viewLguDetails('SanJose', 'San Jose MDRRMO')"><td class="lgu-name-cell">San Jose<span>MDRRMO</span></td><td><span class="status-badge pending" id="status-SanJose"><i data-lucide="clock" style="width:12px;"></i> Awaiting Report</span></td><td style="text-align: right;"><button class="btn btn-sm">View Details</button></td></tr>
-                                <tr onclick="viewLguDetails('TarlacCity', 'Tarlac City CDRRMO')" style="background: rgba(59, 130, 246, 0.05);"><td class="lgu-name-cell">Tarlac City<span>CDRRMO</span></td><td><span class="status-badge pending" id="status-TarlacCity"><i data-lucide="clock" style="width:12px;"></i> Awaiting Report</span></td><td style="text-align: right;"><button class="btn btn-sm">View Details</button></td></tr>
-                                <tr onclick="viewLguDetails('Victoria', 'Victoria MDRRMO')"><td class="lgu-name-cell">Victoria<span>MDRRMO</span></td><td><span class="status-badge pending" id="status-Victoria"><i data-lucide="clock" style="width:12px;"></i> Awaiting Report</span></td><td style="text-align: right;"><button class="btn btn-sm">View Details</button></td></tr>
+                                <tr onclick="viewLguDetails('Gerona', 'Gerona MDRRMO')"><td class="lgu-name-cell">Gerona<span>MDRRMO</span></td><td><span class="status-badge skeleton-box" id="status-Gerona" style="width: 100px; height: 22px; display:inline-block;"></span></td><td style="text-align: right;"><button class="btn btn-sm">View Details</button></td></tr>
+                                <tr onclick="viewLguDetails('SanJose', 'San Jose MDRRMO')"><td class="lgu-name-cell">San Jose<span>MDRRMO</span></td><td><span class="status-badge skeleton-box" id="status-SanJose" style="width: 100px; height: 22px; display:inline-block;"></span></td><td style="text-align: right;"><button class="btn btn-sm">View Details</button></td></tr>
+                                <tr onclick="viewLguDetails('TarlacCity', 'Tarlac City CDRRMO')" style="background: rgba(56, 189, 248, 0.05);"><td class="lgu-name-cell">Tarlac City<span>CDRRMO</span></td><td><span class="status-badge skeleton-box" id="status-TarlacCity" style="width: 100px; height: 22px; display:inline-block;"></span></td><td style="text-align: right;"><button class="btn btn-sm">View Details</button></td></tr>
+                                <tr onclick="viewLguDetails('Victoria', 'Victoria MDRRMO')"><td class="lgu-name-cell">Victoria<span>MDRRMO</span></td><td><span class="status-badge skeleton-box" id="status-Victoria" style="width: 100px; height: 22px; display:inline-block;"></span></td><td style="text-align: right;"><button class="btn btn-sm">View Details</button></td></tr>
                             </tbody>
                         </table>
 
@@ -398,10 +417,10 @@
                         <table class="district-table">
                             <thead><tr><th>3RD DISTRICT OF TARLAC</th><th>Status</th><th>Action</th></tr></thead>
                             <tbody>
-                                <tr onclick="viewLguDetails('Bamban', 'Bamban MDRRMO')"><td class="lgu-name-cell">Bamban<span>MDRRMO</span></td><td><span class="status-badge pending" id="status-Bamban"><i data-lucide="clock" style="width:12px;"></i> Awaiting Report</span></td><td style="text-align: right;"><button class="btn btn-sm">View Details</button></td></tr>
-                                <tr onclick="viewLguDetails('Capas', 'Capas MDRRMO')"><td class="lgu-name-cell">Capas<span>MDRRMO</span></td><td><span class="status-badge pending" id="status-Capas"><i data-lucide="clock" style="width:12px;"></i> Awaiting Report</span></td><td style="text-align: right;"><button class="btn btn-sm">View Details</button></td></tr>
-                                <tr onclick="viewLguDetails('Concepcion', 'Concepcion MDRRMO')"><td class="lgu-name-cell">Concepcion<span>MDRRMO</span></td><td><span class="status-badge pending" id="status-Concepcion"><i data-lucide="clock" style="width:12px;"></i> Awaiting Report</span></td><td style="text-align: right;"><button class="btn btn-sm">View Details</button></td></tr>
-                                <tr onclick="viewLguDetails('LaPaz', 'La Paz MDRRMO')"><td class="lgu-name-cell">La Paz<span>MDRRMO</span></td><td><span class="status-badge pending" id="status-LaPaz"><i data-lucide="clock" style="width:12px;"></i> Awaiting Report</span></td><td style="text-align: right;"><button class="btn btn-sm">View Details</button></td></tr>
+                                <tr onclick="viewLguDetails('Bamban', 'Bamban MDRRMO')"><td class="lgu-name-cell">Bamban<span>MDRRMO</span></td><td><span class="status-badge skeleton-box" id="status-Bamban" style="width: 100px; height: 22px; display:inline-block;"></span></td><td style="text-align: right;"><button class="btn btn-sm">View Details</button></td></tr>
+                                <tr onclick="viewLguDetails('Capas', 'Capas MDRRMO')"><td class="lgu-name-cell">Capas<span>MDRRMO</span></td><td><span class="status-badge skeleton-box" id="status-Capas" style="width: 100px; height: 22px; display:inline-block;"></span></td><td style="text-align: right;"><button class="btn btn-sm">View Details</button></td></tr>
+                                <tr onclick="viewLguDetails('Concepcion', 'Concepcion MDRRMO')"><td class="lgu-name-cell">Concepcion<span>MDRRMO</span></td><td><span class="status-badge skeleton-box" id="status-Concepcion" style="width: 100px; height: 22px; display:inline-block;"></span></td><td style="text-align: right;"><button class="btn btn-sm">View Details</button></td></tr>
+                                <tr onclick="viewLguDetails('LaPaz', 'La Paz MDRRMO')"><td class="lgu-name-cell">La Paz<span>MDRRMO</span></td><td><span class="status-badge skeleton-box" id="status-LaPaz" style="width: 100px; height: 22px; display:inline-block;"></span></td><td style="text-align: right;"><button class="btn btn-sm">View Details</button></td></tr>
                             </tbody>
                         </table>
                     </div>
@@ -418,21 +437,31 @@
                     </h3>
                     
                     <div id="tweetWallSection" class="tweet-wall-container">
-                        <!-- Default Message Card -->
-                        <div class="tweet-card">
+                        <!-- Initial Skeleton Loaders for Tweet Wall -->
+                        <div class="tweet-card skeleton-tweet">
                             <div class="tweet-header">
-                                <div class="tweet-avatar av-agency"><i data-lucide="package" style="width:18px;"></i></div>
-                                <div class="tweet-meta">
-                                    <span class="tweet-name">System Update</span>
-                                    <span class="tweet-handle">Monitoring Active</span>
+                                <div class="tweet-avatar skeleton-box" style="background: transparent;"></div>
+                                <div class="tweet-meta" style="gap: 6px;">
+                                    <div class="skeleton-text" style="width: 120px;"></div>
+                                    <div class="skeleton-text" style="width: 80px; height: 10px;"></div>
                                 </div>
                             </div>
                             <div class="tweet-body">
-                                The Situation Overview board is now listening for dynamic LDRRMC submissions. Form submissions will automatically update the table to the left and appear here.
+                                <div class="skeleton-text" style="width: 100%; margin-bottom: 6px;"></div>
+                                <div class="skeleton-text" style="width: 85%;"></div>
                             </div>
-                            <div class="tweet-footer">
-                                <span><i data-lucide="info" style="width:10px;height:10px;margin-right:4px;vertical-align:middle;"></i> Admin Message</span>
-                                <span>Just now</span>
+                        </div>
+                        <div class="tweet-card skeleton-tweet">
+                            <div class="tweet-header">
+                                <div class="tweet-avatar skeleton-box" style="background: transparent;"></div>
+                                <div class="tweet-meta" style="gap: 6px;">
+                                    <div class="skeleton-text" style="width: 100px;"></div>
+                                    <div class="skeleton-text" style="width: 70px; height: 10px;"></div>
+                                </div>
+                            </div>
+                            <div class="tweet-body">
+                                <div class="skeleton-text" style="width: 90%; margin-bottom: 6px;"></div>
+                                <div class="skeleton-text" style="width: 60%;"></div>
                             </div>
                         </div>
                     </div>
@@ -643,6 +672,8 @@
             const badge = document.getElementById(`status-${lguId}`);
             if(badge) {
                 badge.className = 'status-badge submitted';
+                badge.style.width = 'auto'; // Remove explicit skeleton width
+                badge.style.height = 'auto'; // Remove explicit skeleton height
                 badge.innerHTML = '<i data-lucide="check-circle" style="width:12px;"></i> Report Submitted';
                 lucide.createIcons(); 
             }
@@ -803,7 +834,8 @@
                 document.getElementById('outWork').innerText = document.getElementById('inpWork').value || "No data provided.";
                 document.getElementById('outClass').innerText = document.getElementById('inpClass').value || "No data provided.";
                 document.getElementById('outCal').innerText = document.getElementById('inpCal').value || "No data provided.";
-                document.getElementById('generatedTimestamp').innerText = `Generated As Of: ${document.getElementById('dtDisplayText').innerText}`;
+                document.getElementById('generatedTimestamp').innerHTML = `<i data-lucide='check-circle' style='width:14px; display:inline-block; vertical-align:middle; margin-right:4px;'></i> Generated As Of: ${document.getElementById('dtDisplayText').innerText}`;
+                lucide.createIcons();
                 
                 alert("Success! PDRRMO Advisory attached to Consolidated LDRRMC Report.");
                 
@@ -958,18 +990,15 @@
         document.addEventListener('click', (e) => { if(!dtPopup.contains(e.target) && !dtTrigger.contains(e.target)) dtPopup.classList.remove('show'); });
 
         // =====================================================================
-        // NEW FEATURE: PULL DATA FROM GOOGLE SHEETS ON PAGE LOAD
+        // LIVE PULL WITH SKELETON LOADERS
         // =====================================================================
         function fetchHistoricalData() {
-            document.getElementById('generatedTimestamp').innerText = "Fetching live data from database...";
-            
             fetch(GOOGLE_SCRIPT_URL)
                 .then(response => response.json())
                 .then(result => {
                     if(result.status === "success" && result.data.length > 0) {
                         const rows = result.data;
                         
-                        // We skip row 0 because it contains your headers in Google Sheets
                         for(let i = 1; i < rows.length; i++) {
                             const row = rows[i];
                             if(!row[1]) continue; 
@@ -999,14 +1028,61 @@
                             updateMasterTable(exactLguId, payload);
                             addTweetCard(lguName, payload);
                         }
-                        document.getElementById('generatedTimestamp').innerText = `Live Data Synchronized`;
+                        document.getElementById('generatedTimestamp').innerHTML = `<i data-lucide='check-circle' style='width:14px; display:inline-block; vertical-align:middle; margin-right:4px;'></i> Live Data Synchronized`;
                     } else {
                         document.getElementById('generatedTimestamp').innerText = "No historical data found.";
                     }
                 })
                 .catch(error => {
                     console.error("Error fetching data:", error);
-                    document.getElementById('generatedTimestamp').innerText = "Error pulling database records.";
+                    document.getElementById('generatedTimestamp').innerHTML = `<i data-lucide='alert-triangle' style='width:14px; display:inline-block; vertical-align:middle; margin-right:4px; color:var(--error);'></i> Error pulling database records.`;
+                })
+                .finally(() => {
+                    // 1. Remove Skeleton from PDRRMO Area
+                    const pdrrmoIds = ['outSyn', 'outInc', 'outWork', 'outClass', 'outCal'];
+                    pdrrmoIds.forEach(id => {
+                        const el = document.getElementById(id);
+                        if(el.classList.contains('skeleton-active')) {
+                            el.classList.remove('skeleton-active');
+                            el.innerText = 'Awaiting data...';
+                        }
+                    });
+
+                    // 2. Remove Skeleton from empty Table Badges & Revert to Awaiting Report
+                    document.querySelectorAll('.status-badge.skeleton-box').forEach(badge => {
+                        badge.classList.remove('skeleton-box');
+                        badge.classList.add('pending');
+                        badge.style.width = 'auto';
+                        badge.style.height = 'auto';
+                        badge.innerHTML = '<i data-lucide="clock" style="width:12px;"></i> Awaiting Report';
+                    });
+
+                    // 3. Remove fake Skeleton Tweets
+                    document.querySelectorAll('.skeleton-tweet').forEach(t => t.remove());
+
+                    // 4. Default admin message if the sheet was completely empty
+                    const wall = document.getElementById('tweetWallSection');
+                    if (wall.children.length === 0) {
+                        wall.innerHTML = `
+                            <div class="tweet-card">
+                                <div class="tweet-header">
+                                    <div class="tweet-avatar av-agency"><i data-lucide="package" style="width:18px;"></i></div>
+                                    <div class="tweet-meta">
+                                        <span class="tweet-name">System Update</span>
+                                        <span class="tweet-handle">Monitoring Active</span>
+                                    </div>
+                                </div>
+                                <div class="tweet-body">
+                                    The Situation Overview board is now listening for dynamic LDRRMC submissions. Form submissions will automatically update the table to the left and appear here.
+                                </div>
+                                <div class="tweet-footer">
+                                    <span><i data-lucide="info" style="width:10px;height:10px;margin-right:4px;vertical-align:middle;"></i> Admin Message</span>
+                                    <span>Just now</span>
+                                </div>
+                            </div>
+                        `;
+                    }
+                    lucide.createIcons();
                 });
         }
 
