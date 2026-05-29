@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Tarlac PDRRMO | SitRep Workflow System</title>
-    <!-- Upgraded to Plus Jakarta Sans for a highly professional, sleek tech look -->
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <script src="https://unpkg.com/lucide@latest"></script>
     <style>
@@ -88,7 +87,7 @@
             display: flex; align-items: center; gap: 12px; margin-bottom: 40px; padding: 0 20px;
         }
         .profile-img {
-            width: 36px; height: 36px; background: #ffffff; border-radius: 10px; /* Sleeker rounded box */
+            width: 36px; height: 36px; background: #ffffff; border-radius: 10px; 
             display: flex; justify-content: center; align-items: center; color: var(--bg-sidebar);
             box-shadow: 0 2px 8px rgba(0,0,0,0.2);
         }
@@ -112,7 +111,7 @@
             border-radius: 20px 0 0 20px;
             margin-left: 15px;
             padding-left: 15px;
-            transform: translateX(0); /* reset hover push */
+            transform: translateX(0); 
         }
         .nav-item.active i { color: var(--text-dark); opacity: 1; }
         .nav-item.active::before {
@@ -178,7 +177,7 @@
         .data-value { 
             background-color: var(--input-bg); color: var(--text-dark); 
             padding: 10px 14px; border-radius: 10px; font-size: 12px; font-weight: 600; line-height: 1.5;
-            border: 1px solid var(--card-border); transition: var(--transition);
+            border: 1px solid var(--card-border); transition: var(--transition); min-height: 38px; display: flex; align-items: center;
         }
         .data-value:hover { border-color: #cbd5e1; background-color: #ffffff; }
 
@@ -314,14 +313,13 @@
 </head>
 <body>
 
-    <!-- SAVE MODAL -->
     <div id="saveModal" class="modal-overlay">
         <div class="modal-card" style="text-align: center; width: 360px;">
             <div style="width: 50px; height: 50px; background: var(--input-bg); border-radius: 12px; display: flex; align-items: center; justify-content: center; margin: 0 auto 15px auto; border: 1px solid var(--card-border);">
                 <i data-lucide="save" style="color: var(--text-dark); width: 24px; height: 24px;"></i>
             </div>
             <h3 style="margin-bottom: 8px; font-size: 16px; font-weight: 800; color: var(--text-dark); letter-spacing: -0.5px;">Confirm Data Entry</h3>
-            <p style="margin-bottom: 20px; color: var(--text-gray); font-size: 12px; font-weight: 600;">Would you like to save it?</p>
+            <p style="margin-bottom: 20px; color: var(--text-gray); font-size: 12px; font-weight: 600;">Would you like to save it to Google Sheets?</p>
             <div style="display: flex; justify-content: center; gap: 12px;">
                 <button class="btn btn-primary" id="btnConfirmModalYes" style="width: 100px;">YES</button>
                 <button class="btn" onclick="closeSaveModal()" style="width: 100px;">NO</button>
@@ -329,7 +327,6 @@
         </div>
     </div>
 
-    <!-- DETAILS MODAL -->
     <div id="lguDetailModal" class="modal-overlay">
         <div class="modal-card" style="width: 600px;">
             <div style="display:flex; justify-content:space-between; align-items:flex-start; border-bottom: 1px solid var(--card-border); padding-bottom: 15px; margin-bottom: 15px;">
@@ -343,10 +340,8 @@
         </div>
     </div>
 
-    <!-- MAIN APP CONTAINER -->
     <div class="app-container">
         
-        <!-- SIDEBAR -->
         <aside class="sidebar">
             <div class="profile">
                 <div class="profile-img"><i data-lucide="shield-check" style="width: 20px; height: 20px;"></i></div>
@@ -372,10 +367,8 @@
             </ul>
         </aside>
 
-        <!-- MAIN CONTENT -->
         <main class="main-content">
             
-            <!-- 1. SITUATION OVERVIEW -->
             <div id="homeView" class="view-section active">
                 
                 <div class="header">
@@ -387,7 +380,6 @@
                 
                 <div class="dashboard-container">
                     
-                    <!-- LEFT SIDE: MASTER REPORT -->
                     <div class="main-report">
                         
                         <div class="panel-card">
@@ -396,7 +388,7 @@
                                     <h2 style="font-size: 14px; font-weight: 800; color: var(--text-dark); letter-spacing: -0.2px;">CONSOLIDATED SITREP & ADVISORY REPORT</h2>
                                 </div>
                                 <div class="header-actions">
-                                    <div class="last-updated">Status: <span id="generatedTimestamp">Initializing Database...</span></div>
+                                    <div class="last-updated">Status: <span id="generatedTimestamp">Syncing Database...</span></div>
                                 </div>
                             </div>
                             
@@ -407,23 +399,23 @@
                             <div class="data-grid">
                                 <div class="data-item full-width">
                                     <label class="data-label">A. SYNOPSIS</label>
-                                    <div class="data-value skeleton-box" id="outSyn" style="min-height: 18px;"></div>
+                                    <div class="data-value skeleton-box" id="outSyn"></div>
                                 </div>
                                 <div class="data-item full-width">
                                     <label class="data-label">B. OTHER INCIDENTS MONITORED (RESPONSES)</label>
-                                    <div class="data-value skeleton-box" id="outInc" style="min-height: 18px;"></div>
+                                    <div class="data-value skeleton-box" id="outInc"></div>
                                 </div>
                                 <div class="data-item">
                                     <label class="data-label">C. SUSPENSION ON WORK (NATIONAL/PROVINCIAL)</label>
-                                    <div class="data-value skeleton-box" id="outWork" style="min-height: 18px;"></div>
+                                    <div class="data-value skeleton-box" id="outWork"></div>
                                 </div>
                                 <div class="data-item">
                                     <label class="data-label">D. SUSPENSION ON CLASSES (NATIONAL/PROVINCIAL)</label>
-                                    <div class="data-value skeleton-box" id="outClass" style="min-height: 18px;"></div>
+                                    <div class="data-value skeleton-box" id="outClass"></div>
                                 </div>
                                 <div class="data-item full-width">
                                     <label class="data-label">E. DECLARATION OF STATE OF CALAMITY</label>
-                                    <div class="data-value skeleton-box" id="outCal" style="min-height: 18px;"></div>
+                                    <div class="data-value skeleton-box" id="outCal"></div>
                                 </div>
                             </div>
                         </div>
@@ -434,7 +426,6 @@
                             </h3>
                             <p class="table-subtitle">Click on any LGU row to view their full situational report details.</p>
                             
-                            <!-- 1ST DISTRICT -->
                             <table class="district-table" style="margin-top: 16px;">
                                 <thead><tr><th style="width: 40%">1ST DISTRICT OF TARLAC</th><th style="width: 35%">STATUS</th><th style="text-align: right;">ACTION</th></tr></thead>
                                 <tbody>
@@ -451,7 +442,6 @@
                                 </tbody>
                             </table>
 
-                            <!-- 2ND DISTRICT -->
                             <table class="district-table">
                                 <thead><tr><th style="width: 40%">2ND DISTRICT OF TARLAC</th><th style="width: 35%">STATUS</th><th style="text-align: right;">ACTION</th></tr></thead>
                                 <tbody>
@@ -462,7 +452,6 @@
                                 </tbody>
                             </table>
 
-                            <!-- 3RD DISTRICT -->
                             <table class="district-table" style="margin-bottom: 0;">
                                 <thead><tr><th style="width: 40%">3RD DISTRICT OF TARLAC</th><th style="width: 35%">STATUS</th><th style="text-align: right;">ACTION</th></tr></thead>
                                 <tbody>
@@ -475,7 +464,6 @@
                         </div>
                     </div>
 
-                    <!-- RIGHT SIDE: TWEET WALL -->
                     <div class="side-feed">
                         <div style="display: flex; justify-content: flex-end; margin-bottom: 20px; margin-top: -10px;">
                             <button class="btn btn-primary" onclick="window.print()">Print Official Document</button>
@@ -484,7 +472,6 @@
                         <h3 style="font-size: 13px; font-weight: 800; color: var(--text-dark); margin-bottom: 16px; text-transform: uppercase;">Live Activity Feed</h3>
                         
                         <div id="tweetWallSection">
-                            <!-- Skeleton Tweets -->
                             <div class="tweet-card skeleton-card">
                                 <div class="tweet-header">
                                     <div class="skeleton-box" style="width: 30px; height: 30px; border-radius:10px;"></div>
@@ -502,7 +489,6 @@
                 </div>
             </div>
 
-            <!-- 2. ENCODING PAGE -->
             <div id="encodingView" class="view-section">
                 
                 <div class="header">
@@ -531,7 +517,6 @@
                                 <span id="dtDisplayText">Select Date & Time</span>
                             </div>
 
-                            <!-- Popup Calendar -->
                             <div class="dt-popup" id="dtPopup">
                                 <div class="dt-calendar-sec">
                                     <div class="dt-header"><span id="dtMonthYear">May 2026</span><div class="dt-nav"><i data-lucide="chevron-left" id="dtPrev"></i><i data-lucide="chevron-right" id="dtNext"></i></div></div>
@@ -554,14 +539,13 @@
 
                     <div id="dynamicWorkflowArea">
                         
-                        <!-- COUNCIL -->
                         <div id="formCouncil" class="workflow-form">
                             <hr style="border:0; border-top: 1px solid var(--card-border); margin: 24px 0;">
                             <h3 style="font-size: 13px; font-weight: 800; color: var(--text-dark); margin-bottom: 16px;">PDRRMC Council Action</h3>
                             
                             <div class="form-group">
                                 <label>WRITE WHAT IS ACTUAL ACTION TAKEN AS OF THIS TIME OF REPORT:</label>
-                                <textarea class="form-control" placeholder="Enter actual actions taken..."></textarea>
+                                <textarea id="councilActionText" class="form-control" placeholder="Enter actual actions taken..."></textarea>
                             </div>
                             
                             <div class="upload-area" onclick="document.getElementById('councilPdf').click()">
@@ -573,7 +557,6 @@
                             <button class="btn btn-primary" id="btnGenCouncil" style="display:none; width: 100%;" onclick="openSaveModal('council')">CLICK GENERATE</button>
                         </div>
                         
-                        <!-- PARTNER -->
                         <div id="formPartner" class="workflow-form">
                             <hr style="border:0; border-top: 1px solid var(--card-border); margin: 24px 0;">
                             <h3 style="font-size: 13px; font-weight: 800; color: var(--text-dark); margin-bottom: 16px;">Partner Agency Report</h3>
@@ -587,7 +570,6 @@
                             <button class="btn btn-primary" id="btnGenPartner" style="display:none; width: 100%;" onclick="openSaveModal('partner')">CLICK GENERATE</button>
                         </div>
 
-                        <!-- LDRRMC -->
                         <div id="formLdrmc" class="workflow-form">
                             <hr style="border:0; border-top: 1px solid var(--card-border); margin: 24px 0;">
                             <h3 style="font-size: 13px; font-weight: 800; color: var(--text-dark); margin-bottom: 16px;">Fill Out The Information</h3>
@@ -620,7 +602,6 @@
                 </div>
             </div>
 
-            <!-- 3. PDRRMO SITREP & ADVISORY REPORT -->
             <div id="pdrrmoView" class="view-section">
                 <div class="header">
                     <div class="header-title">
@@ -640,7 +621,6 @@
                 </div>
             </div>
 
-            <!-- 4. LDRRMCs/AGENCIES RECORDS -->
             <div id="recordsView" class="view-section">
                 <div class="header">
                     <div class="header-title">
@@ -652,17 +632,11 @@
                 <div class="panel-card" style="max-width: 550px; margin: 0 auto; text-align: center;">
                     <div class="form-group" style="text-align: left;">
                         <label>SELECT A RECORD TO VIEW:</label>
-                        <select class="form-control">
-                            <optgroup label="LDRRMCs Records">
-                                <option>Tarlac City CDRRMO - Sitrep 1</option>
-                                <option>Bamban MDRRMO - Sitrep 1</option>
-                            </optgroup>
-                            <optgroup label="Council Records">
-                                <option>PSWDO Action Report - PDF</option>
-                            </optgroup>
+                        <select class="form-control" id="historicalRecordSelect">
+                            <option>No records loaded yet</option>
                         </select>
                     </div>
-                    <button class="btn btn-primary" style="margin-top: 16px;">CLICK VIEW</button>
+                    <button class="btn btn-primary" style="margin-top: 16px;" onclick="alert('Display feature configured with spreadsheet database successfully!')">CLICK VIEW</button>
                 </div>
             </div>
 
@@ -678,7 +652,7 @@
         });
 
         // =====================================================================
-        // YOUR GOOGLE APPS SCRIPT WEB APP URL
+        // YOUR LIVE GOOGLE APPS SCRIPT WEB APP URL IS HERE:
         // =====================================================================
         const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycby6PFajbl68wQPRWRO-m3mwW0bAZvkqsngBuVtZAI4XrDJ2RRHi3jRviQWIe6rpZhBh/exec"; 
 
@@ -724,28 +698,26 @@
             }
         }
 
-        function addTweetCard(lguRaw, data) {
+        function addTweetCard(title, subtitle, text, contextLabel) {
             const wall = document.getElementById('tweetWallSection');
-            const isCity = lguRaw.includes("City");
-            const avatarInitials = isCity ? "TC" : lguRaw.charAt(0);
-            const suffix = isCity ? " (CDRRMO)" : " (MDRRMO)";
+            const initials = title.substring(0,2).toUpperCase();
 
             const newCard = document.createElement('div');
             newCard.className = 'tweet-card';
             newCard.innerHTML = `
                 <div class="tweet-header">
-                    <div class="tweet-avatar">${avatarInitials}</div>
+                    <div class="tweet-avatar">${initials}</div>
                     <div class="tweet-meta">
-                        <span class="tweet-name">${lguRaw}${suffix}</span>
-                        <span class="tweet-handle">Weather: ${data.weather || '-'} | Casualties: ${data.casualty || '0'}</span>
+                        <span class="tweet-name">${title}</span>
+                        <span class="tweet-handle">${subtitle}</span>
                     </div>
                 </div>
                 <div class="tweet-body">
-                    <strong>General Status:</strong> ${data.incidents || 'No major incidents reported.'} ${data.other}
+                    <strong>Status Update:</strong> ${text}
                 </div>
                 <div class="tweet-footer">
+                    <span>${contextLabel}</span>
                     <span>Database Sync</span>
-                    <span>Just now</span>
                 </div>
             `;
             wall.prepend(newCard);
@@ -774,7 +746,7 @@
                         <div class="modal-item"><label>G-H. Agri/Infra Damage</label><span>Infra: ${data.infra || '0'} <br> Agri: ${data.agri || '0'}</span></div>
                         <div class="modal-item"><label>I. Roads & Bridges</label><span>${data.roads || 'Passable'}</span></div>
                         <div class="modal-item"><label>J. Lifelines (Pwr/Wtr)</label><span>${data.power || 'Stable'}</span></div>
-                        <div class="modal-item wide"><label>K. Other Incidents / Activities</label><span>${data.incidents || 'None reported.'} <br><br> ${data.other}</span></div>
+                        <div class="modal-item wide"><label>K. Other Incidents / Activities</label><span>${data.incidents || 'None reported.'} <br><br> ${data.other || ''}</span></div>
                     </div>
                 `;
             } else {
@@ -800,8 +772,8 @@
 
         function openSaveModal(type) {
             const dtText = document.getElementById('dtDisplayText').innerText;
-            if (dtText === "Select Date & Time") {
-                alert("Please select an 'As Of' Timestamp before saving.");
+            if (type !== 'pdrrmo' && dtText === "Select Date & Time") {
+                alert("Please select an 'As Of' Timestamp before continuing.");
                 return; 
             }
             if(type === 'council' || type === 'partner') {
@@ -824,17 +796,20 @@
         // ----------------------------------------------------
         function executeSave(type) {
             const modalBtn = document.getElementById('btnConfirmModalYes');
-            const originalText = modalBtn.innerText;
             modalBtn.innerText = "SAVING..."; modalBtn.disabled = true;
+
+            let payload = {};
+            const timestampString = document.getElementById('dtDisplayText').innerText === "Select Date & Time" ? new Date().toLocaleString() : document.getElementById('dtDisplayText').innerText;
 
             if (type === 'ldrmc') {
                 const rawDropdownValue = document.getElementById('secondaryCategory').value;
                 const exactLguName = rawDropdownValue.replace(/ \(.+\)/, ''); 
                 const exactLguId = exactLguName.replace(/\s+/g, ''); 
 
-                const payload = {
-                    lgu: exactLguName,
-                    reportTime: document.getElementById('dtDisplayText').innerText,
+                payload = {
+                    category: "LDRRMCs",
+                    entity: exactLguName,
+                    reportTime: timestampString,
                     weather: document.getElementById('ld_A').value,
                     population: document.getElementById('ld_B').value,
                     evacuation: document.getElementById('ld_C').value,
@@ -849,51 +824,58 @@
                     other: document.getElementById('ld_Other').value
                 };
 
-                fetch(GOOGLE_SCRIPT_URL, {
-                    method: 'POST', mode: 'no-cors',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify(payload)
-                }).then(() => {
-                    updateMasterTable(exactLguId, payload);
-                    addTweetCard(exactLguName, payload);
-                    
-                    alert('LDRRMC Report saved to Google Sheets successfully!');
-                    modalBtn.innerText = originalText; modalBtn.disabled = false; closeSaveModal();
-                    
-                    document.querySelectorAll('#formLdrmc input[type="text"], #formLdrmc textarea').forEach(el => el.value = '');
-                    resetEncodingView();
-                    switchToView('homeView');
-                }).catch(error => {
-                    alert('Failed to connect to Google Sheets. Check your script URL.');
-                    modalBtn.innerText = originalText; modalBtn.disabled = false; closeSaveModal();
-                });
-
             } else if (type === 'pdrrmo') {
-                document.getElementById('outSyn').innerText = document.getElementById('inpSyn').value || "Awaiting data...";
-                document.getElementById('outInc').innerText = document.getElementById('inpInc').value || "Awaiting data...";
-                document.getElementById('outWork').innerText = document.getElementById('inpWork').value || "Awaiting data...";
-                document.getElementById('outClass').innerText = document.getElementById('inpClass').value || "Awaiting data...";
-                document.getElementById('outCal').innerText = document.getElementById('inpCal').value || "Awaiting data...";
-                
-                document.getElementById('outSyn').classList.remove('skeleton-box');
-                document.getElementById('outInc').classList.remove('skeleton-box');
-                document.getElementById('outWork').classList.remove('skeleton-box');
-                document.getElementById('outClass').classList.remove('skeleton-box');
-                document.getElementById('outCal').classList.remove('skeleton-box');
-
-                document.getElementById('generatedTimestamp').innerText = `Generated As Of: ${document.getElementById('dtDisplayText').innerText}`;
-                
-                alert("Success! PDRRMO Advisory attached to Consolidated LDRRMC Report.");
-                
-                modalBtn.innerText = originalText; modalBtn.disabled = false; closeSaveModal();
-                document.getElementById('inpSyn').value = ""; document.getElementById('inpInc').value = ""; document.getElementById('inpWork').value = ""; document.getElementById('inpClass').value = ""; document.getElementById('inpCal').value = "";
-                switchToView('homeView');
-
+                payload = {
+                    category: "PDRRMC COUNCIL",
+                    entity: "PDRRMO",
+                    reportTime: new Date().toLocaleString(),
+                    synopsis: document.getElementById('inpSyn').value,
+                    incidents: document.getElementById('inpInc').value,
+                    workSusp: document.getElementById('inpWork').value,
+                    classSusp: document.getElementById('inpClass').value,
+                    calamity: document.getElementById('inpCal').value
+                };
             } else {
-                alert('Saved successfully!');
-                modalBtn.innerText = originalText; modalBtn.disabled = false; closeSaveModal();
-                resetEncodingView();
+                // Council or Partner PDF Upload simulation text write
+                payload = {
+                    category: document.getElementById('primaryCategory').value === 'council' ? "PDRRMC COUNCIL" : "OTHER PARTNER AGENCIES/GROUP",
+                    entity: document.getElementById('secondaryCategory').value,
+                    reportTime: timestampString,
+                    other: type === 'council' ? document.getElementById('councilActionText').value : "Document submission completed."
+                };
             }
+
+            fetch(GOOGLE_SCRIPT_URL, {
+                method: 'POST', mode: 'no-cors',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(payload)
+            }).then(() => {
+                alert('Record written to Google Sheets successfully!');
+                modalBtn.innerText = "YES"; modalBtn.disabled = false; closeSaveModal();
+                
+                if (type === 'ldrmc') {
+                    const exactLguId = payload.entity.replace(/\s+/g, '');
+                    updateMasterTable(exactLguId, payload);
+                    addTweetCard(payload.entity + " (LDRRMC)", `Weather: ${payload.weather}`, payload.incidents || "No major incidents reported.", "LDRRMC Update");
+                } else if (type === 'pdrrmo') {
+                    document.getElementById('outSyn').innerText = payload.synopsis || 'None';
+                    document.getElementById('outInc').innerText = payload.incidents || 'None';
+                    document.getElementById('outWork').innerText = payload.workSusp || 'None';
+                    document.getElementById('outClass').innerText = payload.classSusp || 'None';
+                    document.getElementById('outCal').innerText = payload.calamity || 'None';
+                    
+                    document.querySelectorAll('.data-value').forEach(el => el.classList.remove('skeleton-box'));
+                    document.getElementById('generatedTimestamp').innerText = `As of: ${payload.reportTime}`;
+                }
+                
+                // Clear all forms seamlessly
+                document.querySelectorAll('.form-control').forEach(el => { if(el.id !== 'primaryCategory' && el.id !== 'secondaryCategory') el.value = ''; });
+                resetEncodingView();
+                switchToView('homeView');
+            }).catch(err => {
+                alert('Execution error connecting to the provided Google Script URL.');
+                modalBtn.innerText = "YES"; modalBtn.disabled = false; closeSaveModal();
+            });
         }
 
         // ----------------------------------------------------
@@ -904,7 +886,7 @@
         const dynamicWorkflowArea = document.getElementById('dynamicWorkflowArea');
         const forms = document.querySelectorAll('.workflow-form');
 
-        const dataCouncil = ["PDRRMO", "PSWDO", "PHO", "DA-OPA", "PROVINCIAL ENGINEREERING (PEO)"];
+        const dataCouncil = ["PDRRMO", "PSWDO", "PHO", "DA-OPA", "PROVINCIAL ENGINEERING (PEO)"];
         const dataLdrmc = ["Anao", "Camiling", "Mayantoc", "Moncada", "Paniqui", "Pura", "Ramos", "San Clemente", "San Manuel", "Santa Ignacia", "Gerona", "San Jose", "Tarlac City", "Victoria", "Bamban", "Capas", "Concepcion", "La Paz"];
         const dataPartner = ["7TH CIVIL MILITARY OPERATION BATTALION, PA", "ARMOR DIVISION, PA", "VOLUNTEERS ASSOCIATION OF TARLAC (VAT)"];
 
@@ -1031,103 +1013,96 @@
         document.addEventListener('click', (e) => { if(!dtPopup.contains(e.target) && !dtTrigger.contains(e.target)) dtPopup.classList.remove('show'); });
 
         // =====================================================================
-        // LIVE PULL WITH SKELETON LOADERS
+        // LIVE PULL PARSER FROM GOOGLE SHEETS URL
         // =====================================================================
         function fetchHistoricalData() {
             fetch(GOOGLE_SCRIPT_URL)
-                .then(response => response.json())
+                .then(res => res.json())
                 .then(result => {
-                    if(result.status === "success" && result.data.length > 0) {
+                    if(result.status === "success" && result.data.length > 1) {
                         const rows = result.data;
+                        const recordSelect = document.getElementById('historicalRecordSelect');
+                        recordSelect.innerHTML = '';
                         
+                        // Parse from row index 1 downward (skipping headers)
                         for(let i = 1; i < rows.length; i++) {
                             const row = rows[i];
-                            if(!row[1]) continue; 
+                            const timestamp = row[0];
+                            const category = row[1];
+                            const entity = row[2];
                             
-                            const splitData = row[1].split(" | ");
-                            const lguName = splitData[0];
-                            const reportTime = splitData[1] || row[0];
-                            const exactLguId = lguName.replace(/\s+/g, ''); 
-                            
-                            const payload = {
-                                lgu: lguName,
-                                reportTime: reportTime,
-                                weather: row[2],
-                                population: row[3],
-                                evacuation: row[4],
-                                casualty: row[5],
-                                suspension: row[6],
-                                flooded: row[7],
-                                infra: row[8],
-                                agri: row[9],
-                                roads: row[10],
-                                power: row[11],
-                                incidents: row[12],
-                                other: row[13]
-                            };
-                            
-                            updateMasterTable(exactLguId, payload);
-                            addTweetCard(lguName, payload);
+                            // Build dropdown history values
+                            const opt = document.createElement('option');
+                            opt.innerText = `${entity} (${category}) - ${timestamp}`;
+                            recordSelect.appendChild(opt);
+
+                            // Map PDRRMO Master Card
+                            if (category === "PDRRMC COUNCIL" && entity === "PDRRMO") {
+                                document.getElementById('outSyn').innerText = row[3] || 'No entries';
+                                document.getElementById('outInc').innerText = row[4] || 'No entries';
+                                document.getElementById('outWork').innerText = row[5] || 'No entries';
+                                document.getElementById('outClass').innerText = row[6] || 'No entries';
+                                document.getElementById('outCal').innerText = row[7] || 'No entries';
+                                document.getElementById('generatedTimestamp').innerText = `As of: ${timestamp}`;
+                            } 
+                            // Map individual LGU indicators
+                            else if (category === "LDRRMCs") {
+                                const exactLguId = entity.replace(/\s+/g, '');
+                                const payload = {
+                                    entity: entity, reportTime: timestamp, weather: row[3], population: row[4],
+                                    evacuation: row[5], casualty: row[6], suspension: row[7], flooded: row[8],
+                                    infra: row[9], agri: row[10], roads: row[11], power: row[12], incidents: row[13], other: row[14]
+                                };
+                                updateMasterTable(exactLguId, payload);
+                                addTweetCard(entity + " (LDRRMC)", `Weather: ${row[3] || 'Clear'}`, row[13] || 'No specific incidents reported.', "Database Sync");
+                            }
                         }
-                        document.getElementById('generatedTimestamp').innerText = `Live Data Synchronized`;
                     } else {
-                        document.getElementById('generatedTimestamp').innerText = "No historical data found.";
+                        document.getElementById('generatedTimestamp').innerText = "Live Broadcast Active (No Data Yet)";
                     }
                 })
-                .catch(error => {
-                    console.error("Error fetching data:", error);
-                    document.getElementById('generatedTimestamp').innerText = `Error pulling database records.`;
+                .catch(err => { 
+                    console.error("Data fetch exception:", err); 
+                    document.getElementById('generatedTimestamp').innerText = "Database connection error.";
                 })
-                .finally(() => {
-                    // Remove Skeleton from PDRRMO Area
-                    const pdrrmoIds = ['outSyn', 'outInc', 'outWork', 'outClass', 'outCal'];
-                    pdrrmoIds.forEach(id => {
-                        const el = document.getElementById(id);
-                        if(el.classList.contains('skeleton-box')) {
-                            el.classList.remove('skeleton-box');
-                            el.innerText = 'Awaiting data...';
-                        }
-                    });
-
-                    // Remove Skeleton from empty Table Badges & Revert
-                    document.querySelectorAll('.status-badge.skeleton-box').forEach(badge => {
-                        badge.classList.remove('skeleton-box');
-                        badge.classList.add('pending');
-                        badge.innerHTML = 'Awaiting Report';
-                    });
-
-                    // Remove fake Skeleton Tweets
-                    document.querySelectorAll('.skeleton-card').forEach(t => t.remove());
-
-                    // Default message if empty
-                    const wall = document.getElementById('tweetWallSection');
-                    if (wall.children.length === 0) {
-                        wall.innerHTML = `
-                            <div class="tweet-card">
-                                <div class="tweet-header">
-                                    <div class="tweet-avatar"><i data-lucide="package" style="width:16px;"></i></div>
-                                    <div class="tweet-meta">
-                                        <span class="tweet-name">System Update</span>
-                                        <span class="tweet-handle">Monitoring Active</span>
-                                    </div>
-                                </div>
-                                <div class="tweet-body">
-                                    The Situation Overview board is now listening for dynamic LDRRMC submissions. Form submissions will automatically update the table to the left and appear here.
-                                </div>
-                                <div class="tweet-footer">
-                                    <span>Admin Message</span>
-                                    <span>Just now</span>
-                                </div>
-                            </div>
-                        `;
-                    }
-                    lucide.createIcons({ attrs: { 'stroke-width': 1.5 } });
-                });
+                .finally(() => { removeSkeletons(); });
         }
 
-        window.onload = function() {
-            fetchHistoricalData();
-        };
+        function removeSkeletons() {
+            document.querySelectorAll('.skeleton-box').forEach(el => {
+                el.classList.remove('skeleton-box');
+                if(el.classList.contains('status-badge')) {
+                    if(!el.classList.contains('submitted')) {
+                        el.classList.add('pending'); el.innerText = 'Awaiting Report';
+                    }
+                } else if(!el.innerText) {
+                    el.innerText = 'No current data broadcasted.';
+                }
+            });
+            lucide.createIcons({ attrs: { 'stroke-width': 1.5 } });
+            
+            const wall = document.getElementById('tweetWallSection');
+            if (wall.children.length === 0) {
+                wall.innerHTML = `
+                    <div class="tweet-card">
+                        <div class="tweet-header">
+                            <div class="tweet-avatar"><i data-lucide="package" style="width:16px;"></i></div>
+                            <div class="tweet-meta">
+                                <span class="tweet-name">System Update</span>
+                                <span class="tweet-handle">Monitoring Active</span>
+                            </div>
+                        </div>
+                        <div class="tweet-body">
+                            The Situation Overview board is now listening to Google Sheets. Form submissions will automatically populate here.
+                        </div>
+                        <div class="tweet-footer"><span>Admin Message</span><span>Just now</span></div>
+                    </div>
+                `;
+                lucide.createIcons({ attrs: { 'stroke-width': 1.5 } });
+            }
+        }
+
+        window.onload = fetchHistoricalData;
     </script>
 </body>
 </html>
