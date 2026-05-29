@@ -4,21 +4,24 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Tarlac PDRRMO | SitRep Workflow System</title>
+    <!-- Upgraded to Plus Jakarta Sans for a highly professional, sleek tech look -->
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <script src="https://unpkg.com/lucide@latest"></script>
     <style>
         :root {
-            /* Premium Light Slate Palette */
-            --bg-page: #f1f5f9;         
-            --bg-app: #ffffff;          
+            /* Premium Light Slate Palette (Clean, High-End) */
+            --bg-page: #f1f5f9;         /* Soft slate background */
+            --bg-app: #ffffff;          /* Pure white app container */
+            
+            /* Sleek, deep slate for the sidebar instead of standard navy */
             --bg-sidebar: #0f172a;      
             
             --card-bg: #ffffff;
-            --card-border: #e2e8f0;     
-            --input-bg: #f8fafc;        
+            --card-border: #e2e8f0;     /* Crisp, clean borders */
+            --input-bg: #f8fafc;        /* Ultra-light slate for inputs/badges */
             
-            --text-dark: #1e293b;       
-            --text-gray: #64748b;       
+            --text-dark: #1e293b;       /* Deep slate for headings (softer than black) */
+            --text-gray: #64748b;       /* Professional slate-gray for labels */
             
             --btn-dark: #0f172a;        
             --btn-dark-hover: #1e293b;
@@ -27,6 +30,7 @@
             --success: #059669;
             --success-bg: #d1fae5;
             
+            /* Fluid animation curve */
             --transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
         }
 
@@ -41,7 +45,7 @@
             width: 100vw;
             overflow: hidden;
             padding: 15px; 
-            -webkit-font-smoothing: antialiased; 
+            -webkit-font-smoothing: antialiased; /* Makes text rendering crisper */
         }
 
         /* --- SMOOTH ANIMATIONS --- */
@@ -84,7 +88,7 @@
             display: flex; align-items: center; gap: 12px; margin-bottom: 40px; padding: 0 20px;
         }
         .profile-img {
-            width: 36px; height: 36px; background: #ffffff; border-radius: 10px; 
+            width: 36px; height: 36px; background: #ffffff; border-radius: 10px; /* Sleeker rounded box */
             display: flex; justify-content: center; align-items: center; color: var(--bg-sidebar);
             box-shadow: 0 2px 8px rgba(0,0,0,0.2);
         }
@@ -108,7 +112,7 @@
             border-radius: 20px 0 0 20px;
             margin-left: 15px;
             padding-left: 15px;
-            transform: translateX(0); 
+            transform: translateX(0); /* reset hover push */
         }
         .nav-item.active i { color: var(--text-dark); opacity: 1; }
         .nav-item.active::before {
@@ -157,6 +161,11 @@
         }
         .panel-card:hover { box-shadow: 0 8px 25px rgba(15, 23, 42, 0.04); }
         
+        .card-title {
+            font-size: 13px; font-weight: 800; color: var(--text-dark);
+            margin-bottom: 15px; display: flex; align-items: center; gap: 8px;
+        }
+
         .dashboard-container { display: flex; gap: 20px; align-items: flex-start; }
         .main-report { flex: 1; min-width: 0; }
         .side-feed { width: 280px; flex-shrink: 0; }
@@ -300,10 +309,12 @@
         .modal-item.wide { grid-column: span 2; border-top: 1px solid var(--card-border); padding-top: 12px; margin-top: 5px;}
         .modal-item label { font-size: 9px; color: var(--text-gray); font-weight: 800; text-transform: uppercase; letter-spacing: 0.5px;}
         .modal-item span { font-size: 12px; color: var(--text-dark); font-weight: 700;}
+
     </style>
 </head>
 <body>
 
+    <!-- SAVE MODAL -->
     <div id="saveModal" class="modal-overlay">
         <div class="modal-card" style="text-align: center; width: 360px;">
             <div style="width: 50px; height: 50px; background: var(--input-bg); border-radius: 12px; display: flex; align-items: center; justify-content: center; margin: 0 auto 15px auto; border: 1px solid var(--card-border);">
@@ -318,6 +329,7 @@
         </div>
     </div>
 
+    <!-- DETAILS MODAL -->
     <div id="lguDetailModal" class="modal-overlay">
         <div class="modal-card" style="width: 600px;">
             <div style="display:flex; justify-content:space-between; align-items:flex-start; border-bottom: 1px solid var(--card-border); padding-bottom: 15px; margin-bottom: 15px;">
@@ -331,8 +343,10 @@
         </div>
     </div>
 
+    <!-- MAIN APP CONTAINER -->
     <div class="app-container">
         
+        <!-- SIDEBAR -->
         <aside class="sidebar">
             <div class="profile">
                 <div class="profile-img"><i data-lucide="shield-check" style="width: 20px; height: 20px;"></i></div>
@@ -358,8 +372,10 @@
             </ul>
         </aside>
 
+        <!-- MAIN CONTENT -->
         <main class="main-content">
             
+            <!-- 1. SITUATION OVERVIEW -->
             <div id="homeView" class="view-section active">
                 
                 <div class="header">
@@ -371,6 +387,7 @@
                 
                 <div class="dashboard-container">
                     
+                    <!-- LEFT SIDE: MASTER REPORT -->
                     <div class="main-report">
                         
                         <div class="panel-card">
@@ -417,134 +434,48 @@
                             </h3>
                             <p class="table-subtitle">Click on any LGU row to view their full situational report details.</p>
                             
+                            <!-- 1ST DISTRICT -->
                             <table class="district-table" style="margin-top: 16px;">
-                                <thead>
-                                    <tr>
-                                        <th style="width: 40%">1ST DISTRICT OF TARLAC</th>
-                                        <th style="width: 35%">STATUS</th>
-                                        <th style="text-align: right;">ACTION</th>
-                                    </tr>
-                                </thead>
+                                <thead><tr><th style="width: 40%">1ST DISTRICT OF TARLAC</th><th style="width: 35%">STATUS</th><th style="text-align: right;">ACTION</th></tr></thead>
                                 <tbody>
-                                    <tr onclick="viewLguDetails('Anao', 'Anao MDRRMO')">
-                                        <td><div class="lgu-name">Anao<span>MDRRMO</span></div></td>
-                                        <td><div class="status-badge pending skeleton-box" id="status-Anao" style="width: 80px; height: 20px;"></div></td>
-                                        <td style="text-align: right;"><button class="btn btn-sm">View Details</button></td>
-                                    </tr>
-                                    <tr onclick="viewLguDetails('Camiling', 'Camiling MDRRMO')">
-                                        <td><div class="lgu-name">Camiling<span>MDRRMO</span></div></td>
-                                        <td><div class="status-badge pending skeleton-box" id="status-Camiling" style="width: 80px; height: 20px;"></div></td>
-                                        <td style="text-align: right;"><button class="btn btn-sm">View Details</button></td>
-                                    </tr>
-                                    <tr onclick="viewLguDetails('Mayantoc', 'Mayantoc MDRRMO')">
-                                        <td><div class="lgu-name">Mayantoc<span>MDRRMO</span></div></td>
-                                        <td><div class="status-badge pending skeleton-box" id="status-Mayantoc" style="width: 80px; height: 20px;"></div></td>
-                                        <td style="text-align: right;"><button class="btn btn-sm">View Details</button></td>
-                                    </tr>
-                                    <tr onclick="viewLguDetails('Moncada', 'Moncada MDRRMO')">
-                                        <td><div class="lgu-name">Moncada<span>MDRRMO</span></div></td>
-                                        <td><div class="status-badge pending skeleton-box" id="status-Moncada" style="width: 80px; height: 20px;"></div></td>
-                                        <td style="text-align: right;"><button class="btn btn-sm">View Details</button></td>
-                                    </tr>
-                                    <tr onclick="viewLguDetails('Paniqui', 'Paniqui MDRRMO')">
-                                        <td><div class="lgu-name">Paniqui<span>MDRRMO</span></div></td>
-                                        <td><div class="status-badge pending skeleton-box" id="status-Paniqui" style="width: 80px; height: 20px;"></div></td>
-                                        <td style="text-align: right;"><button class="btn btn-sm">View Details</button></td>
-                                    </tr>
-                                    <tr onclick="viewLguDetails('Pura', 'Pura MDRRMO')">
-                                        <td><div class="lgu-name">Pura<span>MDRRMO</span></div></td>
-                                        <td><div class="status-badge pending skeleton-box" id="status-Pura" style="width: 80px; height: 20px;"></div></td>
-                                        <td style="text-align: right;"><button class="btn btn-sm">View Details</button></td>
-                                    </tr>
-                                    <tr onclick="viewLguDetails('Ramos', 'Ramos MDRRMO')">
-                                        <td><div class="lgu-name">Ramos<span>MDRRMO</span></div></td>
-                                        <td><div class="status-badge pending skeleton-box" id="status-Ramos" style="width: 80px; height: 20px;"></div></td>
-                                        <td style="text-align: right;"><button class="btn btn-sm">View Details</button></td>
-                                    </tr>
-                                    <tr onclick="viewLguDetails('SanClemente', 'San Clemente MDRRMO')">
-                                        <td><div class="lgu-name">San Clemente<span>MDRRMO</span></div></td>
-                                        <td><div class="status-badge pending skeleton-box" id="status-SanClemente" style="width: 80px; height: 20px;"></div></td>
-                                        <td style="text-align: right;"><button class="btn btn-sm">View Details</button></td>
-                                    </tr>
-                                    <tr onclick="viewLguDetails('SanManuel', 'San Manuel MDRRMO')">
-                                        <td><div class="lgu-name">San Manuel<span>MDRRMO</span></div></td>
-                                        <td><div class="status-badge pending skeleton-box" id="status-SanManuel" style="width: 80px; height: 20px;"></div></td>
-                                        <td style="text-align: right;"><button class="btn btn-sm">View Details</button></td>
-                                    </tr>
-                                    <tr onclick="viewLguDetails('SantaIgnacia', 'Santa Ignacia MDRRMO')">
-                                        <td><div class="lgu-name">Santa Ignacia<span>MDRRMO</span></div></td>
-                                        <td><div class="status-badge pending skeleton-box" id="status-SantaIgnacia" style="width: 80px; height: 20px;"></div></td>
-                                        <td style="text-align: right;"><button class="btn btn-sm">View Details</button></td>
-                                    </tr>
+                                    <tr onclick="viewLguDetails('Anao', 'Anao MDRRMO')"><td><div class="lgu-name">Anao<span>MDRRMO</span></div></td><td><div class="status-badge pending skeleton-box" id="status-Anao" style="width: 80px; height: 20px;"></div></td><td style="text-align: right;"><button class="btn btn-sm">View Details</button></td></tr>
+                                    <tr onclick="viewLguDetails('Camiling', 'Camiling MDRRMO')"><td><div class="lgu-name">Camiling<span>MDRRMO</span></div></td><td><div class="status-badge pending skeleton-box" id="status-Camiling" style="width: 80px; height: 20px;"></div></td><td style="text-align: right;"><button class="btn btn-sm">View Details</button></td></tr>
+                                    <tr onclick="viewLguDetails('Mayantoc', 'Mayantoc MDRRMO')"><td><div class="lgu-name">Mayantoc<span>MDRRMO</span></div></td><td><div class="status-badge pending skeleton-box" id="status-Mayantoc" style="width: 80px; height: 20px;"></div></td><td style="text-align: right;"><button class="btn btn-sm">View Details</button></td></tr>
+                                    <tr onclick="viewLguDetails('Moncada', 'Moncada MDRRMO')"><td><div class="lgu-name">Moncada<span>MDRRMO</span></div></td><td><div class="status-badge pending skeleton-box" id="status-Moncada" style="width: 80px; height: 20px;"></div></td><td style="text-align: right;"><button class="btn btn-sm">View Details</button></td></tr>
+                                    <tr onclick="viewLguDetails('Paniqui', 'Paniqui MDRRMO')"><td><div class="lgu-name">Paniqui<span>MDRRMO</span></div></td><td><div class="status-badge pending skeleton-box" id="status-Paniqui" style="width: 80px; height: 20px;"></div></td><td style="text-align: right;"><button class="btn btn-sm">View Details</button></td></tr>
+                                    <tr onclick="viewLguDetails('Pura', 'Pura MDRRMO')"><td><div class="lgu-name">Pura<span>MDRRMO</span></div></td><td><div class="status-badge pending skeleton-box" id="status-Pura" style="width: 80px; height: 20px;"></div></td><td style="text-align: right;"><button class="btn btn-sm">View Details</button></td></tr>
+                                    <tr onclick="viewLguDetails('Ramos', 'Ramos MDRRMO')"><td><div class="lgu-name">Ramos<span>MDRRMO</span></div></td><td><div class="status-badge pending skeleton-box" id="status-Ramos" style="width: 80px; height: 20px;"></div></td><td style="text-align: right;"><button class="btn btn-sm">View Details</button></td></tr>
+                                    <tr onclick="viewLguDetails('SanClemente', 'San Clemente MDRRMO')"><td><div class="lgu-name">San Clemente<span>MDRRMO</span></div></td><td><div class="status-badge pending skeleton-box" id="status-SanClemente" style="width: 80px; height: 20px;"></div></td><td style="text-align: right;"><button class="btn btn-sm">View Details</button></td></tr>
+                                    <tr onclick="viewLguDetails('SanManuel', 'San Manuel MDRRMO')"><td><div class="lgu-name">San Manuel<span>MDRRMO</span></div></td><td><div class="status-badge pending skeleton-box" id="status-SanManuel" style="width: 80px; height: 20px;"></div></td><td style="text-align: right;"><button class="btn btn-sm">View Details</button></td></tr>
+                                    <tr onclick="viewLguDetails('SantaIgnacia', 'Santa Ignacia MDRRMO')"><td><div class="lgu-name">Santa Ignacia<span>MDRRMO</span></div></td><td><div class="status-badge pending skeleton-box" id="status-SantaIgnacia" style="width: 80px; height: 20px;"></div></td><td style="text-align: right;"><button class="btn btn-sm">View Details</button></td></tr>
                                 </tbody>
                             </table>
 
+                            <!-- 2ND DISTRICT -->
                             <table class="district-table">
-                                <thead>
-                                    <tr>
-                                        <th style="width: 40%">2ND DISTRICT OF TARLAC</th>
-                                        <th style="width: 35%">STATUS</th>
-                                        <th style="text-align: right;">ACTION</th>
-                                    </tr>
-                                </thead>
+                                <thead><tr><th style="width: 40%">2ND DISTRICT OF TARLAC</th><th style="width: 35%">STATUS</th><th style="text-align: right;">ACTION</th></tr></thead>
                                 <tbody>
-                                    <tr onclick="viewLguDetails('Gerona', 'Gerona MDRRMO')">
-                                        <td><div class="lgu-name">Gerona<span>MDRRMO</span></div></td>
-                                        <td><div class="status-badge pending skeleton-box" id="status-Gerona" style="width: 80px; height: 20px;"></div></td>
-                                        <td style="text-align: right;"><button class="btn btn-sm">View Details</button></td>
-                                    </tr>
-                                    <tr onclick="viewLguDetails('SanJose', 'San Jose MDRRMO')">
-                                        <td><div class="lgu-name">San Jose<span>MDRRMO</span></div></td>
-                                        <td><div class="status-badge pending skeleton-box" id="status-SanJose" style="width: 80px; height: 20px;"></div></td>
-                                        <td style="text-align: right;"><button class="btn btn-sm">View Details</button></td>
-                                    </tr>
-                                    <tr onclick="viewLguDetails('TarlacCity', 'Tarlac City CDRRMO')">
-                                        <td><div class="lgu-name">Tarlac City<span>CDRRMO</span></div></td>
-                                        <td><div class="status-badge pending skeleton-box" id="status-TarlacCity" style="width: 80px; height: 20px;"></div></td>
-                                        <td style="text-align: right;"><button class="btn btn-sm">View Details</button></td>
-                                    </tr>
-                                    <tr onclick="viewLguDetails('Victoria', 'Victoria MDRRMO')">
-                                        <td><div class="lgu-name">Victoria<span>MDRRMO</span></div></td>
-                                        <td><div class="status-badge pending skeleton-box" id="status-Victoria" style="width: 80px; height: 20px;"></div></td>
-                                        <td style="text-align: right;"><button class="btn btn-sm">View Details</button></td>
-                                    </tr>
+                                    <tr onclick="viewLguDetails('Gerona', 'Gerona MDRRMO')"><td><div class="lgu-name">Gerona<span>MDRRMO</span></div></td><td><div class="status-badge pending skeleton-box" id="status-Gerona" style="width: 80px; height: 20px;"></div></td><td style="text-align: right;"><button class="btn btn-sm">View Details</button></td></tr>
+                                    <tr onclick="viewLguDetails('SanJose', 'San Jose MDRRMO')"><td><div class="lgu-name">San Jose<span>MDRRMO</span></div></td><td><div class="status-badge pending skeleton-box" id="status-SanJose" style="width: 80px; height: 20px;"></div></td><td style="text-align: right;"><button class="btn btn-sm">View Details</button></td></tr>
+                                    <tr onclick="viewLguDetails('TarlacCity', 'Tarlac City CDRRMO')"><td><div class="lgu-name">Tarlac City<span>CDRRMO</span></div></td><td><div class="status-badge pending skeleton-box" id="status-TarlacCity" style="width: 80px; height: 20px;"></div></td><td style="text-align: right;"><button class="btn btn-sm">View Details</button></td></tr>
+                                    <tr onclick="viewLguDetails('Victoria', 'Victoria MDRRMO')"><td><div class="lgu-name">Victoria<span>MDRRMO</span></div></td><td><div class="status-badge pending skeleton-box" id="status-Victoria" style="width: 80px; height: 20px;"></div></td><td style="text-align: right;"><button class="btn btn-sm">View Details</button></td></tr>
                                 </tbody>
                             </table>
 
+                            <!-- 3RD DISTRICT -->
                             <table class="district-table" style="margin-bottom: 0;">
-                                <thead>
-                                    <tr>
-                                        <th style="width: 40%">3RD DISTRICT OF TARLAC</th>
-                                        <th style="width: 35%">STATUS</th>
-                                        <th style="text-align: right;">ACTION</th>
-                                    </tr>
-                                </thead>
+                                <thead><tr><th style="width: 40%">3RD DISTRICT OF TARLAC</th><th style="width: 35%">STATUS</th><th style="text-align: right;">ACTION</th></tr></thead>
                                 <tbody>
-                                    <tr onclick="viewLguDetails('Bamban', 'Bamban MDRRMO')">
-                                        <td><div class="lgu-name">Bamban<span>MDRRMO</span></div></td>
-                                        <td><div class="status-badge pending skeleton-box" id="status-Bamban" style="width: 80px; height: 20px;"></div></td>
-                                        <td style="text-align: right;"><button class="btn btn-sm">View Details</button></td>
-                                    </tr>
-                                    <tr onclick="viewLguDetails('Capas', 'Capas MDRRMO')">
-                                        <td><div class="lgu-name">Capas<span>MDRRMO</span></div></td>
-                                        <td><div class="status-badge pending skeleton-box" id="status-Capas" style="width: 80px; height: 20px;"></div></td>
-                                        <td style="text-align: right;"><button class="btn btn-sm">View Details</button></td>
-                                    </tr>
-                                    <tr onclick="viewLguDetails('Concepcion', 'Concepcion MDRRMO')">
-                                        <td><div class="lgu-name">Concepcion<span>MDRRMO</span></div></td>
-                                        <td><div class="status-badge pending skeleton-box" id="status-Concepcion" style="width: 80px; height: 20px;"></div></td>
-                                        <td style="text-align: right;"><button class="btn btn-sm">View Details</button></td>
-                                    </tr>
-                                    <tr onclick="viewLguDetails('LaPaz', 'La Paz MDRRMO')">
-                                        <td><div class="lgu-name">La Paz<span>MDRRMO</span></div></td>
-                                        <td><div class="status-badge pending skeleton-box" id="status-LaPaz" style="width: 80px; height: 20px;"></div></td>
-                                        <td style="text-align: right;"><button class="btn btn-sm">View Details</button></td>
-                                    </tr>
+                                    <tr onclick="viewLguDetails('Bamban', 'Bamban MDRRMO')"><td><div class="lgu-name">Bamban<span>MDRRMO</span></div></td><td><div class="status-badge pending skeleton-box" id="status-Bamban" style="width: 80px; height: 20px;"></div></td><td style="text-align: right;"><button class="btn btn-sm">View Details</button></td></tr>
+                                    <tr onclick="viewLguDetails('Capas', 'Capas MDRRMO')"><td><div class="lgu-name">Capas<span>MDRRMO</span></div></td><td><div class="status-badge pending skeleton-box" id="status-Capas" style="width: 80px; height: 20px;"></div></td><td style="text-align: right;"><button class="btn btn-sm">View Details</button></td></tr>
+                                    <tr onclick="viewLguDetails('Concepcion', 'Concepcion MDRRMO')"><td><div class="lgu-name">Concepcion<span>MDRRMO</span></div></td><td><div class="status-badge pending skeleton-box" id="status-Concepcion" style="width: 80px; height: 20px;"></div></td><td style="text-align: right;"><button class="btn btn-sm">View Details</button></td></tr>
+                                    <tr onclick="viewLguDetails('LaPaz', 'La Paz MDRRMO')"><td><div class="lgu-name">La Paz<span>MDRRMO</span></div></td><td><div class="status-badge pending skeleton-box" id="status-LaPaz" style="width: 80px; height: 20px;"></div></td><td style="text-align: right;"><button class="btn btn-sm">View Details</button></td></tr>
                                 </tbody>
                             </table>
                         </div>
                     </div>
 
+                    <!-- RIGHT SIDE: TWEET WALL -->
                     <div class="side-feed">
                         <div style="display: flex; justify-content: flex-end; margin-bottom: 20px; margin-top: -10px;">
                             <button class="btn btn-primary" onclick="window.print()">Print Official Document</button>
@@ -553,6 +484,7 @@
                         <h3 style="font-size: 13px; font-weight: 800; color: var(--text-dark); margin-bottom: 16px; text-transform: uppercase;">Live Activity Feed</h3>
                         
                         <div id="tweetWallSection">
+                            <!-- Skeleton Tweets -->
                             <div class="tweet-card skeleton-card">
                                 <div class="tweet-header">
                                     <div class="skeleton-box" style="width: 30px; height: 30px; border-radius:10px;"></div>
@@ -570,6 +502,7 @@
                 </div>
             </div>
 
+            <!-- 2. ENCODING PAGE -->
             <div id="encodingView" class="view-section">
                 
                 <div class="header">
@@ -598,6 +531,7 @@
                                 <span id="dtDisplayText">Select Date & Time</span>
                             </div>
 
+                            <!-- Popup Calendar -->
                             <div class="dt-popup" id="dtPopup">
                                 <div class="dt-calendar-sec">
                                     <div class="dt-header"><span id="dtMonthYear">May 2026</span><div class="dt-nav"><i data-lucide="chevron-left" id="dtPrev"></i><i data-lucide="chevron-right" id="dtNext"></i></div></div>
@@ -620,13 +554,14 @@
 
                     <div id="dynamicWorkflowArea">
                         
+                        <!-- COUNCIL -->
                         <div id="formCouncil" class="workflow-form">
                             <hr style="border:0; border-top: 1px solid var(--card-border); margin: 24px 0;">
                             <h3 style="font-size: 13px; font-weight: 800; color: var(--text-dark); margin-bottom: 16px;">PDRRMC Council Action</h3>
                             
                             <div class="form-group">
                                 <label>WRITE WHAT IS ACTUAL ACTION TAKEN AS OF THIS TIME OF REPORT:</label>
-                                <textarea id="councilActionText" class="form-control" placeholder="Enter actual actions taken..."></textarea>
+                                <textarea class="form-control" placeholder="Enter actual actions taken..."></textarea>
                             </div>
                             
                             <div class="upload-area" onclick="document.getElementById('councilPdf').click()">
@@ -638,6 +573,7 @@
                             <button class="btn btn-primary" id="btnGenCouncil" style="display:none; width: 100%;" onclick="openSaveModal('council')">CLICK GENERATE</button>
                         </div>
                         
+                        <!-- PARTNER -->
                         <div id="formPartner" class="workflow-form">
                             <hr style="border:0; border-top: 1px solid var(--card-border); margin: 24px 0;">
                             <h3 style="font-size: 13px; font-weight: 800; color: var(--text-dark); margin-bottom: 16px;">Partner Agency Report</h3>
@@ -651,6 +587,7 @@
                             <button class="btn btn-primary" id="btnGenPartner" style="display:none; width: 100%;" onclick="openSaveModal('partner')">CLICK GENERATE</button>
                         </div>
 
+                        <!-- LDRRMC -->
                         <div id="formLdrmc" class="workflow-form">
                             <hr style="border:0; border-top: 1px solid var(--card-border); margin: 24px 0;">
                             <h3 style="font-size: 13px; font-weight: 800; color: var(--text-dark); margin-bottom: 16px;">Fill Out The Information</h3>
@@ -683,6 +620,7 @@
                 </div>
             </div>
 
+            <!-- 3. PDRRMO SITREP & ADVISORY REPORT -->
             <div id="pdrrmoView" class="view-section">
                 <div class="header">
                     <div class="header-title">
@@ -702,6 +640,7 @@
                 </div>
             </div>
 
+            <!-- 4. LDRRMCs/AGENCIES RECORDS -->
             <div id="recordsView" class="view-section">
                 <div class="header">
                     <div class="header-title">
@@ -713,7 +652,7 @@
                 <div class="panel-card" style="max-width: 550px; margin: 0 auto; text-align: center;">
                     <div class="form-group" style="text-align: left;">
                         <label>SELECT A RECORD TO VIEW:</label>
-                        <select class="form-control" id="historicalRecordSelect">
+                        <select class="form-control">
                             <optgroup label="LDRRMCs Records">
                                 <option>Tarlac City CDRRMO - Sitrep 1</option>
                                 <option>Bamban MDRRMO - Sitrep 1</option>
@@ -731,7 +670,7 @@
     </div>
 
     <script>
-        // Initialize Icons
+        // Use thin elegant stroke width for icons
         lucide.createIcons({
             attrs: {
                 'stroke-width': 1.5
@@ -739,7 +678,7 @@
         });
 
         // =====================================================================
-        // LIVE GOOGLE APPS SCRIPT WEB APP URL
+        // YOUR GOOGLE APPS SCRIPT WEB APP URL
         // =====================================================================
         const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycby6PFajbl68wQPRWRO-m3mwW0bAZvkqsngBuVtZAI4XrDJ2RRHi3jRviQWIe6rpZhBh/exec"; 
 
@@ -755,12 +694,13 @@
 
             views.forEach(v => {
                 v.classList.remove('active');
-                v.style.animation = 'none'; 
+                v.style.animation = 'none'; // reset animation
             });
             
             const targetView = document.getElementById(targetViewId);
             targetView.classList.add('active');
             
+            // Retrigger the smooth slideUpFade animation
             setTimeout(() => {
                 targetView.style.animation = 'slideUpFade 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards';
             }, 10);
@@ -801,7 +741,7 @@
                     </div>
                 </div>
                 <div class="tweet-body">
-                    <strong>General Status:</strong> ${data.incidents || 'No major incidents reported.'} ${data.other || ''}
+                    <strong>General Status:</strong> ${data.incidents || 'No major incidents reported.'} ${data.other}
                 </div>
                 <div class="tweet-footer">
                     <span>Database Sync</span>
@@ -834,7 +774,7 @@
                         <div class="modal-item"><label>G-H. Agri/Infra Damage</label><span>Infra: ${data.infra || '0'} <br> Agri: ${data.agri || '0'}</span></div>
                         <div class="modal-item"><label>I. Roads & Bridges</label><span>${data.roads || 'Passable'}</span></div>
                         <div class="modal-item"><label>J. Lifelines (Pwr/Wtr)</label><span>${data.power || 'Stable'}</span></div>
-                        <div class="modal-item wide"><label>K. Other Incidents / Activities</label><span>${data.incidents || 'None reported.'} <br><br> ${data.other || ''}</span></div>
+                        <div class="modal-item wide"><label>K. Other Incidents / Activities</label><span>${data.incidents || 'None reported.'} <br><br> ${data.other}</span></div>
                     </div>
                 `;
             } else {
@@ -853,14 +793,14 @@
         function closeLguModal() { lguModal.classList.remove('show'); }
 
         // ----------------------------------------------------
-        // Save Modal & Execution Logic
+        // Save Modal & Validation Logic
         // ----------------------------------------------------
         const saveModal = document.getElementById('saveModal');
         let currentSaveType = '';
 
         function openSaveModal(type) {
             const dtText = document.getElementById('dtDisplayText').innerText;
-            if (type !== 'pdrrmo' && dtText === "Select Date & Time") {
+            if (dtText === "Select Date & Time") {
                 alert("Please select an 'As Of' Timestamp before saving.");
                 return; 
             }
@@ -879,18 +819,20 @@
         function closeSaveModal() { saveModal.classList.remove('show'); }
         document.getElementById('btnConfirmModalYes').onclick = function() { executeSave(currentSaveType); };
 
+        // ----------------------------------------------------
+        // Core Execution Logic (Fetch to Google Sheets)
+        // ----------------------------------------------------
         function executeSave(type) {
             const modalBtn = document.getElementById('btnConfirmModalYes');
+            const originalText = modalBtn.innerText;
             modalBtn.innerText = "SAVING..."; modalBtn.disabled = true;
-
-            let payload = {};
 
             if (type === 'ldrmc') {
                 const rawDropdownValue = document.getElementById('secondaryCategory').value;
                 const exactLguName = rawDropdownValue.replace(/ \(.+\)/, ''); 
-                
-                // Matches your EXACT original Google Sheets format
-                payload = {
+                const exactLguId = exactLguName.replace(/\s+/g, ''); 
+
+                const payload = {
                     lgu: exactLguName,
                     reportTime: document.getElementById('dtDisplayText').innerText,
                     weather: document.getElementById('ld_A').value,
@@ -907,49 +849,51 @@
                     other: document.getElementById('ld_Other').value
                 };
 
-            } else if (type === 'pdrrmo') {
-                // Allows saving PDRRMO data to the exact same Google Sheet safely
-                payload = {
-                    lgu: "PDRRMO_ADVISORY",
-                    reportTime: new Date().toLocaleString(),
-                    weather: document.getElementById('inpSyn').value,    // Mapped to Synopsis
-                    population: document.getElementById('inpInc').value, // Mapped to Incidents
-                    evacuation: document.getElementById('inpWork').value,// Mapped to Work Suspension
-                    casualty: document.getElementById('inpClass').value, // Mapped to Class Suspension
-                    suspension: document.getElementById('inpCal').value  // Mapped to Calamity
-                };
-            }
-
-            fetch(GOOGLE_SCRIPT_URL, {
-                method: 'POST', mode: 'no-cors',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(payload)
-            }).then(() => {
-                alert('Saved to Google Sheets successfully!');
-                modalBtn.innerText = "YES"; modalBtn.disabled = false; closeSaveModal();
-                
-                if (type === 'ldrmc') {
-                    const exactLguId = payload.lgu.replace(/\s+/g, '');
+                fetch(GOOGLE_SCRIPT_URL, {
+                    method: 'POST', mode: 'no-cors',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload)
+                }).then(() => {
                     updateMasterTable(exactLguId, payload);
-                    addTweetCard(payload.lgu, payload);
-                } else if (type === 'pdrrmo') {
-                    document.getElementById('outSyn').innerText = payload.weather || 'None';
-                    document.getElementById('outInc').innerText = payload.population || 'None';
-                    document.getElementById('outWork').innerText = payload.evacuation || 'None';
-                    document.getElementById('outClass').innerText = payload.casualty || 'None';
-                    document.getElementById('outCal').innerText = payload.suspension || 'None';
+                    addTweetCard(exactLguName, payload);
                     
-                    document.querySelectorAll('.data-value').forEach(el => el.classList.remove('skeleton-box'));
-                    document.getElementById('generatedTimestamp').innerText = `As of: ${payload.reportTime}`;
-                }
+                    alert('LDRRMC Report saved to Google Sheets successfully!');
+                    modalBtn.innerText = originalText; modalBtn.disabled = false; closeSaveModal();
+                    
+                    document.querySelectorAll('#formLdrmc input[type="text"], #formLdrmc textarea').forEach(el => el.value = '');
+                    resetEncodingView();
+                    switchToView('homeView');
+                }).catch(error => {
+                    alert('Failed to connect to Google Sheets. Check your script URL.');
+                    modalBtn.innerText = originalText; modalBtn.disabled = false; closeSaveModal();
+                });
+
+            } else if (type === 'pdrrmo') {
+                document.getElementById('outSyn').innerText = document.getElementById('inpSyn').value || "Awaiting data...";
+                document.getElementById('outInc').innerText = document.getElementById('inpInc').value || "Awaiting data...";
+                document.getElementById('outWork').innerText = document.getElementById('inpWork').value || "Awaiting data...";
+                document.getElementById('outClass').innerText = document.getElementById('inpClass').value || "Awaiting data...";
+                document.getElementById('outCal').innerText = document.getElementById('inpCal').value || "Awaiting data...";
                 
-                document.querySelectorAll('.form-control').forEach(el => { if(el.id !== 'primaryCategory' && el.id !== 'secondaryCategory') el.value = ''; });
-                resetEncodingView();
+                document.getElementById('outSyn').classList.remove('skeleton-box');
+                document.getElementById('outInc').classList.remove('skeleton-box');
+                document.getElementById('outWork').classList.remove('skeleton-box');
+                document.getElementById('outClass').classList.remove('skeleton-box');
+                document.getElementById('outCal').classList.remove('skeleton-box');
+
+                document.getElementById('generatedTimestamp').innerText = `Generated As Of: ${document.getElementById('dtDisplayText').innerText}`;
+                
+                alert("Success! PDRRMO Advisory attached to Consolidated LDRRMC Report.");
+                
+                modalBtn.innerText = originalText; modalBtn.disabled = false; closeSaveModal();
+                document.getElementById('inpSyn').value = ""; document.getElementById('inpInc').value = ""; document.getElementById('inpWork').value = ""; document.getElementById('inpClass').value = ""; document.getElementById('inpCal').value = "";
                 switchToView('homeView');
-            }).catch(err => {
-                alert('Failed to connect to Google Sheets.');
-                modalBtn.innerText = "YES"; modalBtn.disabled = false; closeSaveModal();
-            });
+
+            } else {
+                alert('Saved successfully!');
+                modalBtn.innerText = originalText; modalBtn.disabled = false; closeSaveModal();
+                resetEncodingView();
+            }
         }
 
         // ----------------------------------------------------
@@ -960,7 +904,7 @@
         const dynamicWorkflowArea = document.getElementById('dynamicWorkflowArea');
         const forms = document.querySelectorAll('.workflow-form');
 
-        const dataCouncil = ["PDRRMO", "PSWDO", "PHO", "DA-OPA", "PROVINCIAL ENGINEERING (PEO)"];
+        const dataCouncil = ["PDRRMO", "PSWDO", "PHO", "DA-OPA", "PROVINCIAL ENGINEREERING (PEO)"];
         const dataLdrmc = ["Anao", "Camiling", "Mayantoc", "Moncada", "Paniqui", "Pura", "Ramos", "San Clemente", "San Manuel", "Santa Ignacia", "Gerona", "San Jose", "Tarlac City", "Victoria", "Bamban", "Capas", "Concepcion", "La Paz"];
         const dataPartner = ["7TH CIVIL MILITARY OPERATION BATTALION, PA", "ARMOR DIVISION, PA", "VOLUNTEERS ASSOCIATION OF TARLAC (VAT)"];
 
@@ -1087,7 +1031,7 @@
         document.addEventListener('click', (e) => { if(!dtPopup.contains(e.target) && !dtTrigger.contains(e.target)) dtPopup.classList.remove('show'); });
 
         // =====================================================================
-        // ORIGINAL LIVE PULL PARSER (Guarantees Google Sheet compatibility)
+        // LIVE PULL WITH SKELETON LOADERS
         // =====================================================================
         function fetchHistoricalData() {
             fetch(GOOGLE_SCRIPT_URL)
@@ -1100,50 +1044,39 @@
                             const row = rows[i];
                             if(!row[1]) continue; 
                             
-                            // Exactly matches your original Google Sheet setup
                             const splitData = row[1].split(" | ");
                             const lguName = splitData[0];
                             const reportTime = splitData[1] || row[0];
-
-                            if (lguName === "PDRRMO_ADVISORY" || row[1] === "PDRRMO_ADVISORY") {
-                                // Maps PDRRMO payload cleanly from your existing Google Sheet layout
-                                document.getElementById('outSyn').innerText = row[2] || 'Awaiting data...';
-                                document.getElementById('outInc').innerText = row[3] || 'Awaiting data...';
-                                document.getElementById('outWork').innerText = row[4] || 'Awaiting data...';
-                                document.getElementById('outClass').innerText = row[5] || 'Awaiting data...';
-                                document.getElementById('outCal').innerText = row[6] || 'Awaiting data...';
-                                document.getElementById('generatedTimestamp').innerText = `As of: ${reportTime}`;
-                            } else {
-                                // Maps standard LDRRMC exactly as before
-                                const exactLguId = lguName.replace(/\s+/g, ''); 
-                                const payload = {
-                                    lgu: lguName,
-                                    reportTime: reportTime,
-                                    weather: row[2],
-                                    population: row[3],
-                                    evacuation: row[4],
-                                    casualty: row[5],
-                                    suspension: row[6],
-                                    flooded: row[7],
-                                    infra: row[8],
-                                    agri: row[9],
-                                    roads: row[10],
-                                    power: row[11],
-                                    incidents: row[12],
-                                    other: row[13]
-                                };
-                                
-                                updateMasterTable(exactLguId, payload);
-                                addTweetCard(lguName, payload);
-                            }
+                            const exactLguId = lguName.replace(/\s+/g, ''); 
+                            
+                            const payload = {
+                                lgu: lguName,
+                                reportTime: reportTime,
+                                weather: row[2],
+                                population: row[3],
+                                evacuation: row[4],
+                                casualty: row[5],
+                                suspension: row[6],
+                                flooded: row[7],
+                                infra: row[8],
+                                agri: row[9],
+                                roads: row[10],
+                                power: row[11],
+                                incidents: row[12],
+                                other: row[13]
+                            };
+                            
+                            updateMasterTable(exactLguId, payload);
+                            addTweetCard(lguName, payload);
                         }
+                        document.getElementById('generatedTimestamp').innerText = `Live Data Synchronized`;
                     } else {
-                        document.getElementById('generatedTimestamp').innerText = "Live Broadcast Active (No Data Yet)";
+                        document.getElementById('generatedTimestamp').innerText = "No historical data found.";
                     }
                 })
                 .catch(error => {
                     console.error("Error fetching data:", error);
-                    document.getElementById('generatedTimestamp').innerText = `Database connection active.`;
+                    document.getElementById('generatedTimestamp').innerText = `Error pulling database records.`;
                 })
                 .finally(() => {
                     // Remove Skeleton from PDRRMO Area
@@ -1165,6 +1098,30 @@
 
                     // Remove fake Skeleton Tweets
                     document.querySelectorAll('.skeleton-card').forEach(t => t.remove());
+
+                    // Default message if empty
+                    const wall = document.getElementById('tweetWallSection');
+                    if (wall.children.length === 0) {
+                        wall.innerHTML = `
+                            <div class="tweet-card">
+                                <div class="tweet-header">
+                                    <div class="tweet-avatar"><i data-lucide="package" style="width:16px;"></i></div>
+                                    <div class="tweet-meta">
+                                        <span class="tweet-name">System Update</span>
+                                        <span class="tweet-handle">Monitoring Active</span>
+                                    </div>
+                                </div>
+                                <div class="tweet-body">
+                                    The Situation Overview board is now listening for dynamic LDRRMC submissions. Form submissions will automatically update the table to the left and appear here.
+                                </div>
+                                <div class="tweet-footer">
+                                    <span>Admin Message</span>
+                                    <span>Just now</span>
+                                </div>
+                            </div>
+                        `;
+                    }
+                    lucide.createIcons({ attrs: { 'stroke-width': 1.5 } });
                 });
         }
 
