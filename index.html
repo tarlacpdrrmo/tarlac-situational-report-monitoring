@@ -249,7 +249,6 @@
 </head>
 <body>
 
-    <!-- GLOBAL SAVE CONFIRMATION MODAL -->
     <div id="saveModal" class="modal-overlay">
         <div class="modal-card">
             <div class="modal-icon"><i data-lucide="cloud-upload" style="width: 24px; height: 24px;"></i></div>
@@ -262,7 +261,6 @@
         </div>
     </div>
 
-    <!-- NEW LGU REPORT DETAILS MODAL -->
     <div id="lguDetailModal" class="modal-overlay">
         <div class="modal-card" style="width: 700px; max-width: 95%; text-align: left;">
             <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom: 20px; border-bottom: 1px solid var(--glass-border); padding-bottom: 15px;">
@@ -273,12 +271,10 @@
                 <button class="btn" style="padding: 6px; border:none;" onclick="closeLguModal()"><i data-lucide="x" style="color:var(--text-muted);"></i></button>
             </div>
             <div id="lguModalContent">
-                <!-- Content injected via JS -->
-            </div>
+                </div>
         </div>
     </div>
 
-    <!-- SIDE PANEL -->
     <aside class="sidebar">
         <div class="profile">
             <div class="profile-img"><i data-lucide="shield-check" style="width: 24px; height: 24px;"></i></div>
@@ -298,7 +294,6 @@
 
     <main class="main-content">
         
-        <!-- 1. SITUATION OVERVIEW -->
         <div id="homeView" class="view-section active">
             <div class="header">
                 <div>
@@ -310,7 +305,7 @@
             <div id="generatedMasterReport" class="glass-card" style="border-color: var(--accent); background: rgba(15, 23, 42, 0.7);">
                 <div class="master-header">
                     <h2><i data-lucide="file-check-2" style="display:inline-block; vertical-align:middle; margin-right:8px;"></i> CONSOLIDATED SITREP & ADVISORY REPORT</h2>
-                    <p id="generatedTimestamp">Generated As Of: Pending PDRRMO Save</p>
+                    <p id="generatedTimestamp">Initializing Database Connection...</p>
                 </div>
 
                 <div class="report-section">
@@ -328,7 +323,6 @@
                     <h3><i data-lucide="map" style="color:var(--accent); width:20px;"></i> LDRRMCs ALL UPDATE CONSOLIDATED REPORT</h3>
                     <p style="font-size: 13px; color: var(--text-muted); margin-bottom: 20px;">Click on any LGU row to view their full situational report details.</p>
                     
-                    <!-- 1ST DISTRICT (COMPACT) -->
                     <table class="district-table">
                         <thead><tr><th>1ST DISTRICT OF TARLAC</th><th>Status</th><th style="text-align: right;">Action</th></tr></thead>
                         <tbody>
@@ -345,7 +339,6 @@
                         </tbody>
                     </table>
 
-                    <!-- 2ND DISTRICT (COMPACT) -->
                     <table class="district-table">
                         <thead><tr><th>2ND DISTRICT OF TARLAC</th><th>Status</th><th style="text-align: right;">Action</th></tr></thead>
                         <tbody>
@@ -356,7 +349,6 @@
                         </tbody>
                     </table>
 
-                    <!-- 3RD DISTRICT (COMPACT) -->
                     <table class="district-table">
                         <thead><tr><th>3RD DISTRICT OF TARLAC</th><th>Status</th><th style="text-align: right;">Action</th></tr></thead>
                         <tbody>
@@ -373,7 +365,6 @@
                 </div>
             </div>
 
-            <!-- TWEET WALL -->
             <div class="advisory-grid" id="tweetWallSection">
                 <div class="tweet-card">
                     <div class="tweet-header">
@@ -394,7 +385,6 @@
             </div>
         </div>
 
-        <!-- 2. ENCODING PAGE -->
         <div id="encodingView" class="view-section">
             <div class="header" style="border-bottom: none; padding-bottom: 0;">
                 <div>
@@ -402,7 +392,6 @@
                     <p>Choose an agency below to begin encoding.</p>
                 </div>
 
-                <!-- Modern Datetime Widget -->
                 <div style="text-align: right; position: relative;">
                     <label style="font-size: 12px; color: var(--text-muted); font-weight: 600; display: block; margin-bottom: 6px; letter-spacing: 0.5px;">"As Of" Timestamp <span style="color: var(--error);">*</span></label>
                     <div class="datetime-wrapper" id="customDtTrigger">
@@ -460,7 +449,6 @@
             </div>
 
             <div id="dynamicWorkflowArea">
-                <!-- WORKFLOW A: PDRRMC COUNCIL -->
                 <div id="formCouncil" class="workflow-form glass-card">
                     <div class="card-title"><i data-lucide="shield"></i> PDRRMC Council Action</div>
                     <div class="input-group">
@@ -476,7 +464,6 @@
                     <iframe class="pdf-viewer" id="viewerCouncil"></iframe>
                 </div>
 
-                <!-- WORKFLOW B: OTHER PARTNER AGENCIES -->
                 <div id="formPartner" class="workflow-form glass-card">
                     <div class="card-title"><i data-lucide="users"></i> Partner Agency Report</div>
                     <div class="scanner-area" onclick="document.getElementById('partnerPdf').click()">
@@ -488,7 +475,6 @@
                     <iframe class="pdf-viewer" id="viewerPartner"></iframe>
                 </div>
 
-                <!-- WORKFLOW C: LDRRMCs -->
                 <div id="formLdrmc" class="workflow-form glass-card">
                     <div class="card-title"><i data-lucide="map-pin"></i> Fill Out The Information</div>
                     <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px;">
@@ -515,7 +501,6 @@
             </div>
         </div>
 
-        <!-- 3. PDRRMO SITREP & ADVISORY REPORT -->
         <div id="pdrrmoView" class="view-section">
             <div class="header">
                 <div>
@@ -534,15 +519,39 @@
             </div>
         </div>
 
+        <div id="recordsView" class="view-section">
+            <div class="header">
+                <div>
+                    <h1>LDRRMCs / Agencies Records</h1>
+                    <p>All records scanned with their council name, separated based on what council/agency is chosen.</p>
+                </div>
+            </div>
+            <div class="glass-card">
+                <div class="input-group">
+                    <label>SELECT A RECORD TO VIEW:</label>
+                    <select class="glass-select">
+                        <optgroup label="LDRRMCs Records">
+                            <option>Tarlac City CDRRMO - Sitrep 1</option>
+                            <option>Bamban MDRRMO - Sitrep 1</option>
+                        </optgroup>
+                        <optgroup label="Council Records">
+                            <option>PSWDO Action Report - PDF</option>
+                        </optgroup>
+                    </select>
+                </div>
+                <button class="btn btn-primary">CLICK VIEW</button>
+            </div>
+        </div>
+
     </main>
 
     <script>
         lucide.createIcons();
 
         // =====================================================================
-        // YOUR GOOGLE APPS SCRIPT WEB APP URL GOES HERE:
+        // YOUR GOOGLE APPS SCRIPT WEB APP URL
         // =====================================================================
-        const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/YOUR_SCRIPT_ID_HERE/exec"; 
+        const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycby6PFajbl68wQPRWRO-m3mwW0bAZvkqsngBuVtZAI4XrDJ2RRHi3jRviQWIe6rpZhBh/exec"; 
 
         // ----------------------------------------------------
         // Navigation Logic
@@ -563,21 +572,17 @@
         });
 
         // ----------------------------------------------------
-        // Storage & UI State Binding for the Session
+        // Storage & UI State Binding
         // ----------------------------------------------------
-        // This temporarily holds the data you just pushed so you can view it immediately.
         let lguDataStore = {};
 
         function updateMasterTable(lguId, data) {
-            // Save it to memory so the modal can read it later
-            lguDataStore[lguId] = data;
-            
-            // Update the status badge on the District Table
+            lguDataStore[lguId] = data; // Save to memory for the modal
             const badge = document.getElementById(`status-${lguId}`);
             if(badge) {
                 badge.className = 'status-badge submitted';
                 badge.innerHTML = '<i data-lucide="check-circle" style="width:14px;"></i> Report Submitted';
-                lucide.createIcons(); // re-render icon
+                lucide.createIcons(); 
             }
         }
 
@@ -602,7 +607,7 @@
                     <strong>General Status:</strong> ${data.incidents || 'No major incidents reported.'} ${data.other}
                 </div>
                 <div class="tweet-footer">
-                    <span><i data-lucide="edit-3" style="width:10px;height:10px;margin-right:4px;vertical-align:middle;"></i> Encoded via Form</span>
+                    <span><i data-lucide="edit-3" style="width:10px;height:10px;margin-right:4px;vertical-align:middle;"></i> Database Sync</span>
                     <span>Just now</span>
                 </div>
             `;
@@ -621,7 +626,6 @@
             const data = lguDataStore[lguId];
 
             if(data) {
-                // If they have submitted a report this session, show it!
                 document.getElementById('modalLguTimestamp').innerText = `As of: ${data.reportTime}`;
                 contentBox.innerHTML = `
                     <div class="lgu-data-grid">
@@ -638,12 +642,11 @@
                     </div>
                 `;
             } else {
-                // No data found in the current session memory
                 document.getElementById('modalLguTimestamp').innerText = `Status: Pending`;
                 contentBox.innerHTML = `<div style="text-align:center; padding: 40px; color: var(--text-muted);">
                     <i data-lucide="clock" style="width: 40px; height: 40px; opacity: 0.5; margin-bottom: 15px;"></i>
                     <p style="font-size: 15px; font-weight: 500;">Awaiting Report Submission</p>
-                    <p style="font-size: 13px; margin-top: 5px;">No active data found for this LGU during the current session. Go to the Encoding Page to submit a report.</p>
+                    <p style="font-size: 13px; margin-top: 5px;">No active data found for this LGU in the database. Go to the Encoding Page to submit a report.</p>
                 </div>`;
                 lucide.createIcons();
             }
@@ -660,7 +663,6 @@
         let currentSaveType = '';
 
         function openSaveModal(type) {
-            // REQUIRED TIMESTAMP VALIDATION
             const dtText = document.getElementById('dtDisplayText').innerText;
             if (dtText === "Select Date & Time") {
                 const dtWrapper = document.getElementById('customDtTrigger');
@@ -669,8 +671,6 @@
                 alert("Please select an 'As Of' Timestamp before saving.");
                 return; 
             }
-
-            // If PDF Workflow, generate viewer first
             if(type === 'council' || type === 'partner') {
                 const fileInput = document.getElementById(`${type}Pdf`);
                 const viewer = document.getElementById(`viewer${capitalize(type)}`);
@@ -679,13 +679,11 @@
                     viewer.style.display = 'block';
                 }
             }
-
             currentSaveType = type;
             saveModal.classList.add('show');
         }
 
         function closeSaveModal() { saveModal.classList.remove('show'); }
-
         document.getElementById('btnConfirmModalYes').onclick = function() { executeSave(currentSaveType); };
 
         // ----------------------------------------------------
@@ -698,8 +696,8 @@
 
             if (type === 'ldrmc') {
                 const rawDropdownValue = document.getElementById('secondaryCategory').value;
-                const exactLguName = rawDropdownValue.replace(/ \(.+\)/, ''); // Removes "(MDRRMO)"
-                const exactLguId = exactLguName.replace(/\s+/g, ''); // Removes spaces (e.g. Tarlac City -> TarlacCity)
+                const exactLguName = rawDropdownValue.replace(/ \(.+\)/, ''); 
+                const exactLguId = exactLguName.replace(/\s+/g, ''); 
 
                 const payload = {
                     lgu: exactLguName,
@@ -723,18 +721,15 @@
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify(payload)
                 }).then(() => {
-                    // Instantly inject live data into the Situation Overview UI for this session!
                     updateMasterTable(exactLguId, payload);
                     addTweetCard(exactLguName, payload);
                     
                     alert('LDRRMC Report saved to Google Sheets successfully!');
                     modalBtn.innerText = originalText; modalBtn.disabled = false; closeSaveModal();
                     
-                    // Clear inputs and send user to see their result
                     document.querySelectorAll('#formLdrmc input[type="text"], #formLdrmc textarea').forEach(el => el.value = '');
                     resetEncodingView();
                     switchToView('homeView');
-
                 }).catch(error => {
                     alert('Failed to connect to Google Sheets. Check your script URL.');
                     modalBtn.innerText = originalText; modalBtn.disabled = false; closeSaveModal();
@@ -899,6 +894,63 @@
         
         dtPopup.addEventListener('click', (e) => { e.stopPropagation(); });
         document.addEventListener('click', (e) => { if(!dtPopup.contains(e.target) && !dtTrigger.contains(e.target)) dtPopup.classList.remove('show'); });
+
+        // =====================================================================
+        // NEW FEATURE: PULL DATA FROM GOOGLE SHEETS ON PAGE LOAD
+        // =====================================================================
+        function fetchHistoricalData() {
+            document.getElementById('generatedTimestamp').innerText = "Fetching live data from database...";
+            
+            fetch(GOOGLE_SCRIPT_URL)
+                .then(response => response.json())
+                .then(result => {
+                    if(result.status === "success" && result.data.length > 0) {
+                        const rows = result.data;
+                        
+                        // We skip row 0 because it contains your headers in Google Sheets
+                        for(let i = 1; i < rows.length; i++) {
+                            const row = rows[i];
+                            if(!row[1]) continue; 
+                            
+                            const splitData = row[1].split(" | ");
+                            const lguName = splitData[0];
+                            const reportTime = splitData[1] || row[0];
+                            const exactLguId = lguName.replace(/\s+/g, ''); 
+                            
+                            const payload = {
+                                lgu: lguName,
+                                reportTime: reportTime,
+                                weather: row[2],
+                                population: row[3],
+                                evacuation: row[4],
+                                casualty: row[5],
+                                suspension: row[6],
+                                flooded: row[7],
+                                infra: row[8],
+                                agri: row[9],
+                                roads: row[10],
+                                power: row[11],
+                                incidents: row[12],
+                                other: row[13]
+                            };
+                            
+                            updateMasterTable(exactLguId, payload);
+                            addTweetCard(lguName, payload);
+                        }
+                        document.getElementById('generatedTimestamp').innerText = `Live Data Synchronized`;
+                    } else {
+                        document.getElementById('generatedTimestamp').innerText = "No historical data found.";
+                    }
+                })
+                .catch(error => {
+                    console.error("Error fetching data:", error);
+                    document.getElementById('generatedTimestamp').innerText = "Error pulling database records.";
+                });
+        }
+
+        window.onload = function() {
+            fetchHistoricalData();
+        };
     </script>
 </body>
 </html>
