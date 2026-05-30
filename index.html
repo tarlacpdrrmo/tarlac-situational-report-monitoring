@@ -164,7 +164,6 @@
         .data-item.full-width { grid-column: span 2; }
         .data-label { font-size: 8px; font-weight: 700; color: var(--text-gray); text-transform: uppercase; letter-spacing: 0.5px; }
         
-        /* UPDATED: Added white-space to allow line breaks for [SOURCES] */
         .data-value { 
             background-color: var(--input-bg); color: var(--text-dark); 
             padding: 8px 12px; border-radius: 8px; font-size: 11px; font-weight: 500; line-height: 1.5;
@@ -226,6 +225,8 @@
         .btn-primary { background-color: var(--btn-dark); color: #ffffff; border: none; padding: 8px 16px;}
         .btn-primary:hover { background-color: var(--btn-dark-hover); box-shadow: 0 4px 12px rgba(15, 23, 42, 0.15);}
         .btn-sm { padding: 5px 10px; font-size: 9px; border-radius: 6px;}
+        .btn-danger { border-color: #ef4444; color: #ef4444; }
+        .btn-danger:hover { background-color: #fef2f2; border-color: #dc2626; color: #dc2626; }
 
         /* --- FORMS --- */
         .form-group { margin-bottom: 12px; }
@@ -240,27 +241,15 @@
         .uppercase-input { text-transform: uppercase; }
         textarea.form-control { resize: none; overflow: hidden; min-height: 40px; line-height: 1.5; }
 
-        /* --- NEW: CLEAN ADVISORY INPUT WRAPPER (Text + Source) --- */
+        /* --- ADVISORY INPUT WRAPPER --- */
         .advisory-wrapper {
-            border: 1px solid var(--card-border);
-            border-radius: 8px;
-            background-color: var(--input-bg);
-            overflow: hidden;
-            transition: var(--transition);
+            border: 1px solid var(--card-border); border-radius: 8px; background-color: var(--input-bg); overflow: hidden; transition: var(--transition);
         }
-        .advisory-wrapper:focus-within {
-            border-color: var(--btn-dark);
-            background-color: #ffffff;
-            box-shadow: 0 0 0 3px rgba(15, 23, 42, 0.05);
-        }
-        .advisory-wrapper .form-control {
-            border: none; border-radius: 0; background: transparent; box-shadow: none; padding-bottom: 8px;
-        }
+        .advisory-wrapper:focus-within { border-color: var(--btn-dark); background-color: #ffffff; box-shadow: 0 0 0 3px rgba(15, 23, 42, 0.05); }
+        .advisory-wrapper .form-control { border: none; border-radius: 0; background: transparent; box-shadow: none; padding-bottom: 8px; }
         .advisory-wrapper .source-input {
-            width: 100%; border: none;
-            background-color: transparent; border-top: 1px dashed #cbd5e1;
-            padding: 8px 12px; font-size: 9px; color: var(--text-gray);
-            outline: none; font-style: italic; transition: var(--transition);
+            width: 100%; border: none; background-color: transparent; border-top: 1px dashed #cbd5e1;
+            padding: 8px 12px; font-size: 9px; color: var(--text-gray); outline: none; font-style: italic; transition: var(--transition);
         }
         .advisory-wrapper .source-input::placeholder { color: #94a3b8; font-weight: 500; }
         .advisory-wrapper .source-input:focus { color: var(--text-dark); }
@@ -273,7 +262,7 @@
         .upload-area i { width: 20px; height: 20px; color: var(--text-dark); transition: var(--transition);}
         .upload-area:hover i { transform: translateY(-3px); }
         .upload-area p { font-size: 10px; font-weight: 600; color: var(--text-gray); margin-top: 6px;}
-        .pdf-viewer { display: none; width: 100%; height: 300px; border-radius: 10px; border: 1px solid var(--card-border); margin-bottom: 16px; }
+        .pdf-viewer { display: none; width: 100%; height: 350px; border-radius: 10px; border: 1px solid var(--card-border); margin-bottom: 16px; background-color: #f8fafc;}
 
         #dynamicWorkflowArea { display: none; margin-top: 16px; }
         .workflow-form { display: none; }
@@ -346,7 +335,6 @@
 </head>
 <body>
 
-    <!-- SAVE MODAL -->
     <div id="saveModal" class="modal-overlay">
         <div class="modal-card" style="text-align: center; width: 320px;">
             <div style="width: 44px; height: 44px; background: var(--input-bg); border-radius: 10px; display: flex; align-items: center; justify-content: center; margin: 0 auto 12px auto; border: 1px solid var(--card-border);">
@@ -361,7 +349,6 @@
         </div>
     </div>
 
-    <!-- DETAILS MODAL -->
     <div id="lguDetailModal" class="modal-overlay">
         <div class="modal-card" style="width: 550px;">
             <div style="display:flex; justify-content:space-between; align-items:flex-start; border-bottom: 1px solid var(--card-border); padding-bottom: 12px; margin-bottom: 12px;">
@@ -375,10 +362,8 @@
         </div>
     </div>
 
-    <!-- MAIN APP CONTAINER -->
     <div class="app-container">
         
-        <!-- SIDEBAR -->
         <aside class="sidebar">
             <div class="profile" onclick="switchToView('homeView')" style="cursor: pointer;" title="Back to Situation Overview">
                 <div class="profile-img"><i data-lucide="shield-check" style="width: 18px; height: 18px;"></i></div>
@@ -404,10 +389,8 @@
             </ul>
         </aside>
 
-        <!-- MAIN CONTENT -->
         <main class="main-content">
             
-            <!-- 1. SITUATION OVERVIEW -->
             <div id="homeView" class="view-section active">
                 
                 <div class="header">
@@ -428,7 +411,6 @@
                         
                         <div class="dashboard-content-grid">
                             
-                            <!-- GRID COLUMN 1: LGU STATUS (LEFT) -->
                             <div class="panel-card" style="margin-bottom: 0;">
                                 <h3 style="font-size: 11px; font-weight: 700; color: var(--text-dark); margin-bottom: 2px; text-transform: uppercase;">
                                     LDRRMCs REPORTING STATUS OVERVIEW
@@ -436,7 +418,6 @@
                                 
                                 <p class="table-subtitle">"Click on any LGU to open and review its full situational report details."</p>
                                 
-                                <!-- 1ST DISTRICT -->
                                 <table class="district-table" style="margin-top: 12px;">
                                     <thead><tr><th>1ST DISTRICT OF TARLAC</th><th>STATUS</th><th>ACTION</th></tr></thead>
                                     <tbody>
@@ -453,7 +434,6 @@
                                     </tbody>
                                 </table>
 
-                                <!-- 2ND DISTRICT -->
                                 <table class="district-table">
                                     <thead><tr><th>2ND DISTRICT OF TARLAC</th><th>STATUS</th><th>ACTION</th></tr></thead>
                                     <tbody>
@@ -464,7 +444,6 @@
                                     </tbody>
                                 </table>
 
-                                <!-- 3RD DISTRICT -->
                                 <table class="district-table" style="margin-bottom: 0;">
                                     <thead><tr><th>3RD DISTRICT OF TARLAC</th><th>STATUS</th><th>ACTION</th></tr></thead>
                                     <tbody>
@@ -476,7 +455,6 @@
                                 </table>
                             </div>
 
-                            <!-- GRID COLUMN 2: SITREP REPORT (RIGHT) -->
                             <div class="panel-card" style="margin-bottom: 0;">
                                 <div class="header" style="margin-bottom: 15px; padding-bottom: 0; border:none;">
                                     <div class="header-title" style="margin-bottom: -5px;">
@@ -514,13 +492,11 @@
                         </div>
                     </div>
 
-                    <!-- FAR RIGHT SIDE: TWEET WALL -->
                     <div class="side-feed">
                         
                         <h3 style="font-size: 11px; font-weight: 700; color: var(--text-dark); margin-bottom: 12px; text-transform: uppercase;">Live Activity Feed</h3>
                         
                         <div id="tweetWallSection">
-                            <!-- Skeleton Tweets -->
                             <div class="tweet-card skeleton-card">
                                 <div class="tweet-header">
                                     <div class="skeleton-box" style="width: 26px; height: 26px; border-radius:6px;"></div>
@@ -538,7 +514,6 @@
                 </div>
             </div>
 
-            <!-- 2. ENCODING PAGE -->
             <div id="encodingView" class="view-section">
                 
                 <div class="header">
@@ -564,12 +539,10 @@
                         <div style="position: relative; margin-left: 20px; display: flex; align-items: center; gap: 8px; padding-bottom: 2px;">
                             <label style="font-size: 11px; font-weight: 700; color: var(--text-dark); margin: 0;">As of:</label>
                             
-                            <!-- ENCODING PAGE CALENDAR TRIGGER -->
                             <div class="dt-wrapper" id="dtTrigger">
                                 <span class="dt-display-text" id="dtDisplayText">Select Date & Time</span>
                             </div>
 
-                            <!-- ENCODING PAGE POPUP CALENDAR -->
                             <div class="dt-popup" id="dtPopup">
                                 <div class="dt-calendar-sec">
                                     <div class="dt-header"><span id="dtMonthYear">May 2026</span><div class="dt-nav"><i data-lucide="chevron-left" id="dtPrev"></i><i data-lucide="chevron-right" id="dtNext"></i></div></div>
@@ -592,7 +565,6 @@
 
                     <div id="dynamicWorkflowArea">
                         
-                        <!-- COUNCIL -->
                         <div id="formCouncil" class="workflow-form">
                             <hr style="border:0; border-top: 1px solid var(--card-border); margin: 20px 0;">
                             <h3 style="font-size: 11px; font-weight: 700; color: var(--text-dark); margin-bottom: 12px;">PDRRMC Council Action</h3>
@@ -602,30 +574,42 @@
                                 <textarea class="form-control uppercase-input" rows="2" placeholder="Enter actual actions taken..."></textarea>
                             </div>
                             
-                            <div class="upload-area" onclick="document.getElementById('councilPdf').click()">
+                            <div id="uploadBoxCouncil" class="upload-area" onclick="document.getElementById('councilPdf').click()">
                                 <i data-lucide="file-up" style="margin-bottom:10px; color:var(--text-gray);"></i>
-                                <p style="font-size:10px; color:var(--text-gray); font-weight: 600;">UPLOAD PDF FILE BASED ON WHAT YOU CHOOSE</p>
-                                <input type="file" id="councilPdf" style="display:none;" onchange="enableGenerate('council')">
+                                <p style="font-size:10px; color:var(--text-gray); font-weight: 600;">CLICK TO UPLOAD OFFICIAL PDF DOCUMENT</p>
+                                <input type="file" id="councilPdf" style="display:none;" accept="application/pdf" onchange="handleFileSelect('council')">
                             </div>
+                            
                             <iframe class="pdf-viewer" id="viewerCouncil"></iframe>
-                            <button class="btn btn-primary" id="btnGenCouncil" style="display:none; width: 100%;" onclick="openSaveModal('council')">CLICK GENERATE</button>
+                            
+                            <button class="btn btn-primary" id="btnPreviewCouncil" style="display:none; width: 100%; margin-bottom: 8px;" onclick="previewDocument('council')">CLICK TO PREVIEW & GENERATE</button>
+                            
+                            <div id="actionBtnsCouncil" style="display:none; gap: 10px; margin-top: 8px;">
+                                <button class="btn btn-primary" style="flex: 1;" onclick="openSaveModal('council')">SAVE TO DATABASE</button>
+                                <button class="btn btn-danger" style="flex: 1;" onclick="removeDocument('council')">REMOVE FILE</button>
+                            </div>
                         </div>
                         
-                        <!-- PARTNER -->
                         <div id="formPartner" class="workflow-form">
                             <hr style="border:0; border-top: 1px solid var(--card-border); margin: 20px 0;">
                             <h3 style="font-size: 11px; font-weight: 700; color: var(--text-dark); margin-bottom: 12px;">Partner Agency Report</h3>
                             
-                            <div class="upload-area" onclick="document.getElementById('partnerPdf').click()">
+                            <div id="uploadBoxPartner" class="upload-area" onclick="document.getElementById('partnerPdf').click()">
                                 <i data-lucide="file-up" style="margin-bottom:10px; color:var(--text-gray);"></i>
-                                <p style="font-size:10px; color:var(--text-gray); font-weight: 600;">UPLOAD PDF FILE BASED ON WHAT YOU CHOOSE</p>
-                                <input type="file" id="partnerPdf" style="display:none;" onchange="enableGenerate('partner')">
+                                <p style="font-size:10px; color:var(--text-gray); font-weight: 600;">CLICK TO UPLOAD OFFICIAL PDF DOCUMENT</p>
+                                <input type="file" id="partnerPdf" style="display:none;" accept="application/pdf" onchange="handleFileSelect('partner')">
                             </div>
+                            
                             <iframe class="pdf-viewer" id="viewerPartner"></iframe>
-                            <button class="btn btn-primary" id="btnGenPartner" style="display:none; width: 100%;" onclick="openSaveModal('partner')">CLICK GENERATE</button>
+                            
+                            <button class="btn btn-primary" id="btnPreviewPartner" style="display:none; width: 100%; margin-bottom: 8px;" onclick="previewDocument('partner')">CLICK TO PREVIEW & GENERATE</button>
+                            
+                            <div id="actionBtnsPartner" style="display:none; gap: 10px; margin-top: 8px;">
+                                <button class="btn btn-primary" style="flex: 1;" onclick="openSaveModal('partner')">SAVE TO DATABASE</button>
+                                <button class="btn btn-danger" style="flex: 1;" onclick="removeDocument('partner')">REMOVE FILE</button>
+                            </div>
                         </div>
 
-                        <!-- LDRRMC -->
                         <div id="formLdrmc" class="workflow-form">
                             <hr style="border:0; border-top: 1px solid var(--card-border); margin: 20px 0;">
                             <h3 style="font-size: 11px; font-weight: 700; color: var(--text-dark); margin-bottom: 12px;">Fill Out The Information</h3>
@@ -658,7 +642,6 @@
                 </div>
             </div>
 
-            <!-- 3. PDRRMO SITREP & ADVISORY REPORT (WITH NEW SOURCE FIELDS) -->
             <div id="pdrrmoView" class="view-section">
                 <div class="header">
                     <div class="header-title">
@@ -671,14 +654,12 @@
                     <div style="display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 20px;">
                         <h3 style="font-size: 11px; font-weight: 700; color: var(--text-dark);">Enter Advisory Details Below:</h3>
                         
-                        <!-- PDRRMO DEDICATED CALENDAR TRIGGER -->
                         <div style="position: relative; display: flex; align-items: center; gap: 8px; padding-bottom: 2px;">
                             <label style="font-size: 11px; font-weight: 700; color: var(--text-dark); margin: 0;">As of:</label>
                             <div class="dt-wrapper" id="pdtTrigger">
                                 <span class="dt-display-text" id="pdtDisplayText">Select Date & Time</span>
                             </div>
 
-                            <!-- PDRRMO DEDICATED POPUP CALENDAR -->
                             <div class="dt-popup" id="pdtPopup">
                                 <div class="dt-calendar-sec">
                                     <div class="dt-header"><span id="pdtMonthYear">May 2026</span><div class="dt-nav"><i data-lucide="chevron-left" id="pdtPrev"></i><i data-lucide="chevron-right" id="pdtNext"></i></div></div>
@@ -695,7 +676,6 @@
 
                     </div>
                 
-                    <!-- NEW CONNECTED SOURCE INPUTS -->
                     <div class="form-group">
                         <label>A. Synopsis</label>
                         <div class="advisory-wrapper">
@@ -740,7 +720,6 @@
                 </div>
             </div>
 
-            <!-- 4. LDRRMCs/AGENCIES RECORDS -->
             <div id="recordsView" class="view-section">
                 <div class="header">
                     <div class="header-title">
@@ -896,6 +875,47 @@
         function closeLguModal() { lguModal.classList.remove('show'); }
 
         // ----------------------------------------------------
+        // PDF Upload & Preview Handlers
+        // ----------------------------------------------------
+        function handleFileSelect(type) {
+            const fileInput = document.getElementById(`${type}Pdf`);
+            if (fileInput.files.length > 0) {
+                document.getElementById(`btnPreview${capitalize(type)}`).style.display = 'block';
+            }
+        }
+
+        function previewDocument(type) {
+            const capType = capitalize(type);
+            const fileInput = document.getElementById(`${type}Pdf`);
+            const viewer = document.getElementById(`viewer${capType}`);
+            
+            if (fileInput.files.length > 0) {
+                viewer.src = URL.createObjectURL(fileInput.files[0]);
+                viewer.style.display = 'block';
+                
+                // Hide upload UI, show action UI
+                document.getElementById(`btnPreview${capType}`).style.display = 'none';
+                document.getElementById(`uploadBox${capType}`).style.display = 'none';
+                document.getElementById(`actionBtns${capType}`).style.display = 'flex';
+            }
+        }
+
+        function removeDocument(type) {
+            const capType = capitalize(type);
+            const fileInput = document.getElementById(`${type}Pdf`);
+            const viewer = document.getElementById(`viewer${capType}`);
+            
+            // Clear everything
+            fileInput.value = "";
+            viewer.src = "";
+            viewer.style.display = 'none';
+            
+            // Revert UI back to upload state
+            document.getElementById(`actionBtns${capType}`).style.display = 'none';
+            document.getElementById(`uploadBox${capType}`).style.display = 'block';
+        }
+
+        // ----------------------------------------------------
         // Save Modal & Validation Logic
         // ----------------------------------------------------
         const saveModal = document.getElementById('saveModal');
@@ -908,14 +928,7 @@
                 alert("Please select an 'As Of' Timestamp before saving.");
                 return; 
             }
-            if(type === 'council' || type === 'partner') {
-                const fileInput = document.getElementById(`${type}Pdf`);
-                const viewer = document.getElementById(`viewer${capitalize(type)}`);
-                if (fileInput.files.length > 0) {
-                    viewer.src = URL.createObjectURL(fileInput.files[0]);
-                    viewer.style.display = 'block';
-                }
-            }
+            
             currentSaveType = type;
             saveModal.classList.add('show');
         }
@@ -923,13 +936,12 @@
         function closeSaveModal() { saveModal.classList.remove('show'); }
         document.getElementById('btnConfirmModalYes').onclick = function() { executeSave(currentSaveType); };
 
-        // Helper to compile the Text + Source string automatically before saving
         function combineWithSource(valId, srcId) {
             let val = document.getElementById(valId).value.trim().toUpperCase();
             let src = document.getElementById(srcId).value.trim().toUpperCase();
             
-            if (!val) return ""; // Ignore if there is no main text
-            if (val && src) return val + "\n[SOURCE: " + src + "]"; // Creates a clean string for Google Sheets
+            if (!val) return ""; 
+            if (val && src) return val + "\n[SOURCE: " + src + "]"; 
             return val;
         }
 
@@ -999,7 +1011,6 @@
             // ---- PDRRMO ADVISORY SUBMISSION ----
             else if (type === 'pdrrmo') {
                 
-                // Using the new compiler helper to grab the Text + Source string
                 const payload = {
                     type: 'advisory',
                     reportTime: document.getElementById('pdtDisplayText').innerText, 
@@ -1022,7 +1033,6 @@
                 .then(result => {
                     if (result.status === "success" || result.status === 200) {
                         
-                        // Update UI immediately upon success
                         document.getElementById('outSyn').innerText = payload.synopsis || 'NONE';
                         document.getElementById('outInc').innerText = payload.incidents || 'NONE';
                         document.getElementById('outWork').innerText = payload.work || 'NONE';
@@ -1038,7 +1048,6 @@
                         alert("Success! PDRRMO Advisory saved to Google Sheets.");
                         modalBtn.innerText = originalText; modalBtn.disabled = false; closeSaveModal();
                         
-                        // Clear the Textareas and the Source Inputs
                         ['inpSyn', 'srcSyn', 'inpInc', 'srcInc', 'inpWork', 'srcWork', 'inpClass', 'srcClass', 'inpCal', 'srcCal'].forEach(id => {
                             const el = document.getElementById(id); 
                             el.value = ""; 
@@ -1098,19 +1107,23 @@
             else if (primaryCat.value === 'partner') document.getElementById('formPartner').classList.add('active');
         });
 
-        function enableGenerate(type) { document.getElementById(`btnGen${capitalize(type)}`).style.display = 'block'; }
-
         function resetEncodingView() {
             primaryCat.value = "";
             document.getElementById('subSelectContainer').style.display = 'none';
             dynamicWorkflowArea.style.display = 'none';
-            forms.forEach(f => {
-                f.classList.remove('active');
-                const viewer = f.querySelector('.pdf-viewer');
-                if(viewer) { viewer.style.display = 'none'; viewer.src = ""; }
-                const btnGen = f.querySelector('[id^="btnGen"]');
-                if(btnGen) btnGen.style.display = 'none';
+            
+            // Hard reset on UI parts
+            ['council', 'partner'].forEach(type => {
+                const capType = capitalize(type);
+                if (document.getElementById(`${type}Pdf`)) document.getElementById(`${type}Pdf`).value = '';
+                if (document.getElementById(`btnPreview${capType}`)) document.getElementById(`btnPreview${capType}`).style.display = 'none';
+                if (document.getElementById(`actionBtns${capType}`)) document.getElementById(`actionBtns${capType}`).style.display = 'none';
+                if (document.getElementById(`uploadBox${capType}`)) document.getElementById(`uploadBox${capType}`).style.display = 'block';
+                const viewer = document.getElementById(`viewer${capType}`);
+                if (viewer) { viewer.style.display = 'none'; viewer.src = ""; }
             });
+
+            forms.forEach(f => f.classList.remove('active'));
         }
         function capitalize(s) { return s.charAt(0).toUpperCase() + s.slice(1); }
 
