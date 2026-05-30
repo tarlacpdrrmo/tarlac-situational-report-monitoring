@@ -979,14 +979,35 @@
                     if(result.status === "success") {
                         
                         // 1. Process LDRRMC Data
-                        if (result.data && result.data.length > 0) {
-                            for(let i = 1; i < result.data.length; i++) {
-                                const row = result.data[i]; if(!row[1]) continue; 
-                                const exactLguId = row[1].replace(/\s+/g, ''); 
-                                const payload = { lgu: row[1], reportTime: row[0], weather: row[2], population: row[3], evacuation: row[4], casualty: row[5], suspension: row[6], flooded: row[7], infra: row[8], agri: row[9], roads: row[10], power: row[11], incidents: row[12], other: row[13] };
-                                updateMasterTable(exactLguId, payload); addTweetCard(row[1], payload);
-                            }
-                        }
+if (result.data && result.data.length > 0) {
+    for(let i = 1; i < result.data.length; i++) {
+        const row = result.data[i]; 
+        if(!row[1]) continue; 
+        
+        // BULLETPROOF FIX: Splits the name at the "|" symbol to isolate the LGU name perfectly
+        const cleanLguName = row[1].toString().split('|')[0].trim(); 
+        const exactLguId = cleanLguName.replace(/\s+/g, ''); 
+        
+        const payload = { 
+            lgu: cleanLguName, 
+            reportTime: row[0], 
+            weather: row[2], 
+            population: row[3], 
+            evacuation: row[4], 
+            casualty: row[5], 
+            suspension: row[6], 
+            flooded: row[7], 
+            infra: row[8], 
+            agri: row[9], 
+            roads: row[10], 
+            power: row[11], 
+            incidents: row[12], 
+            other: row[13] 
+        };
+        updateMasterTable(exactLguId, payload); 
+        addTweetCard(cleanLguName, payload);
+    }
+}
 
                         // 2. Process ADVISORY Data
                         if (result.advisoryData && result.advisoryData.length > 1) {
