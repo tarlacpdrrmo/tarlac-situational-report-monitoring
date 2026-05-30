@@ -86,7 +86,9 @@
         
         .profile {
             display: flex; align-items: center; gap: 12px; margin-bottom: 35px; padding: 0 20px;
+            transition: var(--transition);
         }
+        .profile:hover { opacity: 0.8; }
         .profile-img {
             width: 32px; height: 32px; background: #ffffff; border-radius: 8px;
             display: flex; justify-content: center; align-items: center; color: var(--bg-sidebar);
@@ -141,8 +143,6 @@
             margin-bottom: 20px; padding-bottom: 15px; border-bottom: 1px solid transparent;
         }
         .header-title h1 { font-size: 16px; font-weight: 700; color: var(--text-dark); display: flex; align-items: center; gap: 8px; letter-spacing: -0.3px;}
-        .header-title h1 i { width: 16px; height: 16px; transition: var(--transition); }
-        .header-title h1 i:hover { transform: translateX(-3px); }
         .header-title p { font-size: 10px; color: var(--text-gray); margin-top: 4px; font-weight: 500;}
         
         .header-actions { display: flex; align-items: center; gap: 15px; }
@@ -164,18 +164,12 @@
         .main-report { flex: 1; min-width: 0; }
         .side-feed { width: 260px; flex-shrink: 0; }
         
-        /* NEW: Side-by-Side Grid for LGU and Sitrep */
+        /* Side-by-Side Grid for LGU and Sitrep */
         .dashboard-content-grid {
             display: grid;
             grid-template-columns: 1.2fr 1fr; /* LGU list is slightly wider than SitRep */
             gap: 20px;
-            align-items: start; /* Required for sticky panel to work */
-        }
-        
-        /* Makes the SitRep panel float alongside the LGU list as you scroll */
-        .sticky-panel {
-            position: sticky;
-            top: 0;
+            align-items: start;
         }
 
         /* --- PDRRMO ADVISORY GRID --- */
@@ -189,6 +183,15 @@
             border: 1px solid var(--card-border); transition: var(--transition);
         }
         .data-value:hover { border-color: #cbd5e1; background-color: #ffffff; }
+
+        /* Custom subtle styling for empty data placeholders */
+        .placeholder-text {
+            font-size: 9px;
+            color: var(--text-gray);
+            opacity: 0.5;
+            font-style: italic;
+            font-weight: 400;
+        }
 
         /* --- COMPRESSED & CENTERED LGU TABLES --- */
         .table-subtitle { font-size: 10px; color: var(--text-gray); margin-bottom: 12px; margin-top: -6px; font-weight: 500; }
@@ -208,7 +211,12 @@
         .lgu-name { font-weight: 600; font-size: 11px; color: var(--text-dark); display: flex; align-items: center; gap: 6px;}
         .lgu-name span { font-size: 7.5px; color: var(--text-gray); font-weight: 700; background: var(--input-bg); padding: 3px 6px; border-radius: 4px; text-transform: uppercase; border: 1px solid var(--card-border);}
 
-        .status-badge { display: inline-flex; align-items: center; gap: 4px; padding: 4px 8px; border-radius: 12px; font-size: 8px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px;}
+        /* Shrunk Badges to fit perfectly */
+        .status-badge { 
+            display: inline-flex; align-items: center; justify-content: center; gap: 4px; 
+            padding: 4px 6px; border-radius: 12px; font-size: 7px; font-weight: 800; 
+            text-transform: uppercase; letter-spacing: 0.5px; white-space: nowrap; 
+        }
         .status-badge.pending { background-color: var(--input-bg); color: var(--text-gray); border: 1px solid var(--card-border);}
         .status-badge.submitted { background-color: var(--success-bg); color: var(--success); }
         .status-badge.skeleton-box { margin: 0 auto; /* Keeps skeleton centered */ }
@@ -361,7 +369,7 @@
         
         <!-- SIDEBAR -->
         <aside class="sidebar">
-            <div class="profile">
+            <div class="profile" onclick="switchToView('homeView')" style="cursor: pointer;" title="Back to Situation Overview">
                 <div class="profile-img"><i data-lucide="shield-check" style="width: 18px; height: 18px;"></i></div>
                 <div class="profile-info">
                     <h4>Tarlac PDRRMO</h4>
@@ -393,8 +401,8 @@
                 
                 <div class="header">
                     <div class="header-title">
-                        <h1><i data-lucide="arrow-left" style="cursor: pointer; color: var(--text-gray);"></i> Situation Overview</h1>
-                        <p style="margin-left: 24px;">Live status feed of recently recorded LDRRMC and Agency reports.</p>
+                        <h1>Situation Overview</h1>
+                        <p>Live status feed of recently recorded LDRRMC and Agency reports.</p>
                     </div>
                     <!-- Moved Print Button Here -->
                     <div class="header-actions">
@@ -459,8 +467,8 @@
                                 </table>
                             </div>
 
-                            <!-- GRID COLUMN 2: SITREP REPORT (RIGHT, STICKY) -->
-                            <div class="panel-card sticky-panel" style="margin-bottom: 0;">
+                            <!-- GRID COLUMN 2: SITREP REPORT (RIGHT, NOT STICKY) -->
+                            <div class="panel-card" style="margin-bottom: 0;">
                                 <div class="header" style="margin-bottom: 15px; padding-bottom: 0; border:none;">
                                     <div class="header-title" style="margin-bottom: -5px;">
                                         <h2 style="font-size: 12px; font-weight: 700; color: var(--text-dark); letter-spacing: -0.2px;">SITREP & ADVISORY REPORT</h2>
@@ -526,8 +534,8 @@
                 
                 <div class="header">
                     <div class="header-title">
-                        <h1><i data-lucide="arrow-left" style="cursor: pointer; color: var(--text-gray);"></i> Encoding Page</h1>
-                        <p style="margin-left: 24px;">Choose an agency below to begin encoding.</p>
+                        <h1>Encoding Page</h1>
+                        <p>Choose an agency below to begin encoding.</p>
                     </div>
                 </div>
 
@@ -643,8 +651,8 @@
             <div id="pdrrmoView" class="view-section">
                 <div class="header">
                     <div class="header-title">
-                        <h1><i data-lucide="arrow-left" style="cursor: pointer; color: var(--text-gray);"></i> PDRRMO SitRep and Advisory Report</h1>
-                        <p style="margin-left: 24px;">LDRRMCs All Update Consolidated Report. To be filled out by PDRRMO based on the reporting agencies (Additional).</p>
+                        <h1>PDRRMO SitRep and Advisory Report</h1>
+                        <p>LDRRMCs All Update Consolidated Report. To be filled out by PDRRMO based on the reporting agencies (Additional).</p>
                     </div>
                 </div>
                 
@@ -663,8 +671,8 @@
             <div id="recordsView" class="view-section">
                 <div class="header">
                     <div class="header-title">
-                        <h1><i data-lucide="arrow-left" style="cursor: pointer; color: var(--text-gray);"></i> LDRRMCs / Agencies Records</h1>
-                        <p style="margin-left: 24px;">All records scanned with their council name, separated based on what council/agency is chosen.</p>
+                        <h1>LDRRMCs / Agencies Records</h1>
+                        <p>All records scanned with their council name, separated based on what council/agency is chosen.</p>
                     </div>
                 </div>
                 
@@ -834,6 +842,12 @@
         function closeSaveModal() { saveModal.classList.remove('show'); }
         document.getElementById('btnConfirmModalYes').onclick = function() { executeSave(currentSaveType); };
 
+        // Helper function for PDRRMO custom placeholder formatting
+        function setOutputValue(outId, inId) {
+            const val = document.getElementById(inId).value;
+            document.getElementById(outId).innerHTML = val ? val : '<span class="placeholder-text">Awaiting data...</span>';
+        }
+
         // ----------------------------------------------------
         // Core Execution Logic (Fetch to Google Sheets)
         // ----------------------------------------------------
@@ -896,11 +910,13 @@
                 });
 
             } else if (type === 'pdrrmo') {
-                document.getElementById('outSyn').innerText = document.getElementById('inpSyn').value || "Awaiting data...";
-                document.getElementById('outInc').innerText = document.getElementById('inpInc').value || "Awaiting data...";
-                document.getElementById('outWork').innerText = document.getElementById('inpWork').value || "Awaiting data...";
-                document.getElementById('outClass').innerText = document.getElementById('inpClass').value || "Awaiting data...";
-                document.getElementById('outCal').innerText = document.getElementById('inpCal').value || "Awaiting data...";
+                
+                // Injecting values using the new custom placeholder look
+                setOutputValue('outSyn', 'inpSyn');
+                setOutputValue('outInc', 'inpInc');
+                setOutputValue('outWork', 'inpWork');
+                setOutputValue('outClass', 'inpClass');
+                setOutputValue('outCal', 'inpCal');
                 
                 document.getElementById('outSyn').classList.remove('skeleton-box');
                 document.getElementById('outInc').classList.remove('skeleton-box');
@@ -1106,13 +1122,13 @@
                     document.getElementById('generatedTimestamp').innerText = `Error pulling database records.`;
                 })
                 .finally(() => {
-                    // Remove Skeleton from PDRRMO Area
+                    // Remove Skeleton from PDRRMO Area and inject custom soft placeholder
                     const pdrrmoIds = ['outSyn', 'outInc', 'outWork', 'outClass', 'outCal'];
                     pdrrmoIds.forEach(id => {
                         const el = document.getElementById(id);
                         if(el.classList.contains('skeleton-box')) {
                             el.classList.remove('skeleton-box');
-                            el.innerText = 'Awaiting data...';
+                            el.innerHTML = '<span class="placeholder-text">Awaiting data...</span>';
                         }
                     });
 
