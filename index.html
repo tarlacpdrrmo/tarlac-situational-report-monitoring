@@ -163,10 +163,13 @@
         .data-item { display: flex; flex-direction: column; gap: 4px; }
         .data-item.full-width { grid-column: span 2; }
         .data-label { font-size: 8px; font-weight: 700; color: var(--text-gray); text-transform: uppercase; letter-spacing: 0.5px; }
+        
+        /* UPDATED: Added white-space to allow line breaks for [SOURCES] */
         .data-value { 
             background-color: var(--input-bg); color: var(--text-dark); 
             padding: 8px 12px; border-radius: 8px; font-size: 11px; font-weight: 500; line-height: 1.5;
             border: 1px solid var(--card-border); transition: var(--transition);
+            white-space: pre-wrap; 
         }
         .data-value:hover { border-color: #cbd5e1; background-color: #ffffff; }
 
@@ -227,6 +230,7 @@
         /* --- FORMS --- */
         .form-group { margin-bottom: 12px; }
         .form-group label { display: block; font-size: 8px; font-weight: 700; color: var(--text-gray); margin-bottom: 4px; text-transform: uppercase; letter-spacing: 0.5px;}
+        
         .form-control {
             width: 100%; background-color: var(--input-bg); border: 1px solid var(--card-border); color: var(--text-dark);
             padding: 8px 12px; border-radius: 8px; font-size: 11px; outline: none; transition: var(--transition); font-weight: 500;
@@ -234,12 +238,32 @@
         .form-control:focus { border-color: var(--btn-dark); background-color: #ffffff; box-shadow: 0 0 0 3px rgba(15, 23, 42, 0.05); }
         
         .uppercase-input { text-transform: uppercase; }
-        textarea.form-control { 
-            resize: none; 
-            overflow: hidden; 
-            min-height: 40px; 
-            line-height: 1.5;
+        textarea.form-control { resize: none; overflow: hidden; min-height: 40px; line-height: 1.5; }
+
+        /* --- NEW: CLEAN ADVISORY INPUT WRAPPER (Text + Source) --- */
+        .advisory-wrapper {
+            border: 1px solid var(--card-border);
+            border-radius: 8px;
+            background-color: var(--input-bg);
+            overflow: hidden;
+            transition: var(--transition);
         }
+        .advisory-wrapper:focus-within {
+            border-color: var(--btn-dark);
+            background-color: #ffffff;
+            box-shadow: 0 0 0 3px rgba(15, 23, 42, 0.05);
+        }
+        .advisory-wrapper .form-control {
+            border: none; border-radius: 0; background: transparent; box-shadow: none; padding-bottom: 8px;
+        }
+        .advisory-wrapper .source-input {
+            width: 100%; border: none;
+            background-color: transparent; border-top: 1px dashed #cbd5e1;
+            padding: 8px 12px; font-size: 9px; color: var(--text-gray);
+            outline: none; font-style: italic; transition: var(--transition);
+        }
+        .advisory-wrapper .source-input::placeholder { color: #94a3b8; font-weight: 500; }
+        .advisory-wrapper .source-input:focus { color: var(--text-dark); }
         
         .upload-area {
             border: 2px dashed #cbd5e1; border-radius: 10px; padding: 24px; text-align: center;
@@ -255,7 +279,7 @@
         .workflow-form { display: none; }
         .workflow-form.active { display: block; animation: slideUpFade 0.4s ease forwards; }
 
-        /* --- MODERN DATETIME PICKER (Fixed Glitch) --- */
+        /* --- DATETIME PICKER --- */
         .dt-wrapper { 
             display: inline-flex; align-items: center; gap: 8px; cursor: pointer; 
             background: #ffffff; border: 1px solid var(--card-border); 
@@ -634,7 +658,7 @@
                 </div>
             </div>
 
-            <!-- 3. PDRRMO SITREP & ADVISORY REPORT -->
+            <!-- 3. PDRRMO SITREP & ADVISORY REPORT (WITH NEW SOURCE FIELDS) -->
             <div id="pdrrmoView" class="view-section">
                 <div class="header">
                     <div class="header-title">
@@ -671,11 +695,46 @@
 
                     </div>
                 
-                    <div class="form-group"><label>A. Synopsis</label><textarea id="inpSyn" class="form-control uppercase-input" rows="2"></textarea></div>
-                    <div class="form-group"><label>B. Other Incidents Monitored (PDRRMO Responses)</label><textarea id="inpInc" class="form-control uppercase-input" rows="2"></textarea></div>
-                    <div class="form-group"><label>C. Suspension on Work (by National/ Provincial level):</label><textarea id="inpWork" class="form-control uppercase-input" rows="1"></textarea></div>
-                    <div class="form-group"><label>D. Suspension on Classes (by National/ Provincial level):</label><textarea id="inpClass" class="form-control uppercase-input" rows="1"></textarea></div>
-                    <div class="form-group"><label>E. Declaration of State of Calamity:</label><textarea id="inpCal" class="form-control uppercase-input" rows="1"></textarea></div>
+                    <!-- NEW CONNECTED SOURCE INPUTS -->
+                    <div class="form-group">
+                        <label>A. Synopsis</label>
+                        <div class="advisory-wrapper">
+                            <textarea id="inpSyn" class="form-control uppercase-input" rows="2"></textarea>
+                            <input type="text" id="srcSyn" class="source-input uppercase-input" placeholder="Source of information (Optional)...">
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>B. Other Incidents Monitored (PDRRMO Responses)</label>
+                        <div class="advisory-wrapper">
+                            <textarea id="inpInc" class="form-control uppercase-input" rows="2"></textarea>
+                            <input type="text" id="srcInc" class="source-input uppercase-input" placeholder="Source of information (Optional)...">
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>C. Suspension on Work (by National/ Provincial level):</label>
+                        <div class="advisory-wrapper">
+                            <textarea id="inpWork" class="form-control uppercase-input" rows="1"></textarea>
+                            <input type="text" id="srcWork" class="source-input uppercase-input" placeholder="Source of information (Optional)...">
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>D. Suspension on Classes (by National/ Provincial level):</label>
+                        <div class="advisory-wrapper">
+                            <textarea id="inpClass" class="form-control uppercase-input" rows="1"></textarea>
+                            <input type="text" id="srcClass" class="source-input uppercase-input" placeholder="Source of information (Optional)...">
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>E. Declaration of State of Calamity:</label>
+                        <div class="advisory-wrapper">
+                            <textarea id="inpCal" class="form-control uppercase-input" rows="1"></textarea>
+                            <input type="text" id="srcCal" class="source-input uppercase-input" placeholder="Source of information (Optional)...">
+                        </div>
+                    </div>
                     
                     <button class="btn btn-primary" style="width: 100%; margin-top: 12px;" onclick="openSaveModal('pdrrmo')">SAVE REPORT</button>
                 </div>
@@ -843,7 +902,6 @@
         let currentSaveType = '';
 
         function openSaveModal(type) {
-            // Check the correct calendar based on which page we are saving from
             const dtText = (type === 'pdrrmo') ? document.getElementById('pdtDisplayText').innerText : document.getElementById('dtDisplayText').innerText;
             
             if (dtText === "Select Date & Time") {
@@ -864,6 +922,16 @@
 
         function closeSaveModal() { saveModal.classList.remove('show'); }
         document.getElementById('btnConfirmModalYes').onclick = function() { executeSave(currentSaveType); };
+
+        // Helper to compile the Text + Source string automatically before saving
+        function combineWithSource(valId, srcId) {
+            let val = document.getElementById(valId).value.trim().toUpperCase();
+            let src = document.getElementById(srcId).value.trim().toUpperCase();
+            
+            if (!val) return ""; // Ignore if there is no main text
+            if (val && src) return val + "\n[SOURCE: " + src + "]"; // Creates a clean string for Google Sheets
+            return val;
+        }
 
         // ----------------------------------------------------
         // Core Execution Logic (Fetch to Google Sheets)
@@ -931,14 +999,15 @@
             // ---- PDRRMO ADVISORY SUBMISSION ----
             else if (type === 'pdrrmo') {
                 
+                // Using the new compiler helper to grab the Text + Source string
                 const payload = {
                     type: 'advisory',
-                    reportTime: document.getElementById('pdtDisplayText').innerText, // Pulls from the PDRRMO calendar
-                    synopsis: document.getElementById('inpSyn').value.toUpperCase(),
-                    incidents: document.getElementById('inpInc').value.toUpperCase(),
-                    work: document.getElementById('inpWork').value.toUpperCase(),
-                    classes: document.getElementById('inpClass').value.toUpperCase(),
-                    calamity: document.getElementById('inpCal').value.toUpperCase()
+                    reportTime: document.getElementById('pdtDisplayText').innerText, 
+                    synopsis: combineWithSource('inpSyn', 'srcSyn'),
+                    incidents: combineWithSource('inpInc', 'srcInc'),
+                    work: combineWithSource('inpWork', 'srcWork'),
+                    classes: combineWithSource('inpClass', 'srcClass'),
+                    calamity: combineWithSource('inpCal', 'srcCal')
                 };
 
                 fetch(GOOGLE_SCRIPT_URL, {
@@ -969,8 +1038,11 @@
                         alert("Success! PDRRMO Advisory saved to Google Sheets.");
                         modalBtn.innerText = originalText; modalBtn.disabled = false; closeSaveModal();
                         
-                        ['inpSyn', 'inpInc', 'inpWork', 'inpClass', 'inpCal'].forEach(id => {
-                            const el = document.getElementById(id); el.value = ""; el.style.height = '40px';
+                        // Clear the Textareas and the Source Inputs
+                        ['inpSyn', 'srcSyn', 'inpInc', 'srcInc', 'inpWork', 'srcWork', 'inpClass', 'srcClass', 'inpCal', 'srcCal'].forEach(id => {
+                            const el = document.getElementById(id); 
+                            el.value = ""; 
+                            if(el.tagName.toLowerCase() === 'TEXTAREA') el.style.height = '40px';
                         });
                         
                         switchToView('homeView');
@@ -1116,7 +1188,6 @@
             
             trigger.addEventListener('click', (e) => { 
                 e.stopPropagation(); 
-                // Close any other open popups first
                 document.querySelectorAll('.dt-popup').forEach(p => { if (p !== popup) p.classList.remove('show'); });
                 popup.classList.toggle('show'); renderCalendar(currentDate); 
             });
@@ -1137,7 +1208,6 @@
             document.addEventListener('click', (e) => { if(!popup.contains(e.target) && !trigger.contains(e.target)) popup.classList.remove('show'); });
         }
 
-        // Initialize calendars for both the Encoding Page ('dt') and the PDRRMO Advisory Page ('pdt')
         setupDateTimePicker('dt');
         setupDateTimePicker('pdt');
 
@@ -1183,9 +1253,9 @@
                             }
                         }
 
-                        // 2. Process ADVISORY Data (Pull the most recent entry)
+                        // 2. Process ADVISORY Data
                         if (result.advisoryData && result.advisoryData.length > 1) {
-                            const latestAdvisory = result.advisoryData[result.advisoryData.length - 1]; // Get last row
+                            const latestAdvisory = result.advisoryData[result.advisoryData.length - 1]; 
                             
                             document.getElementById('outSyn').innerText = latestAdvisory[1] || 'NONE';
                             document.getElementById('outInc').innerText = latestAdvisory[2] || 'NONE';
@@ -1193,21 +1263,18 @@
                             document.getElementById('outClass').innerText = latestAdvisory[4] || 'NONE';
                             document.getElementById('outCal').innerText = latestAdvisory[5] || 'NONE';
                             
-                            // Remove Advisory Skeletons
                             ['outSyn', 'outInc', 'outWork', 'outClass', 'outCal'].forEach(id => {
                                 document.getElementById(id).classList.remove('skeleton-box');
                             });
                             
                             document.getElementById('generatedTimestamp').innerText = `Generated As Of: ${latestAdvisory[0]}`;
                         } else {
-                            // No advisory data yet, set custom placeholder
                             ['outSyn', 'outInc', 'outWork', 'outClass', 'outCal'].forEach(id => {
                                 const el = document.getElementById(id);
                                 el.classList.remove('skeleton-box');
                                 el.innerHTML = '<span class="placeholder-text">Awaiting data...</span>';
                             });
                         }
-
                     }
                 })
                 .catch(error => {
@@ -1215,14 +1282,11 @@
                     document.getElementById('generatedTimestamp').innerText = `Error pulling database records.`;
                 })
                 .finally(() => {
-                    // Clean up empty table badges
                     document.querySelectorAll('.status-badge.skeleton-box').forEach(badge => {
                         badge.classList.remove('skeleton-box');
                         badge.classList.add('pending');
                         badge.innerHTML = 'Awaiting Report';
                     });
-
-                    // Remove fake skeleton tweets
                     document.querySelectorAll('.skeleton-card').forEach(t => t.remove());
 
                     const wall = document.getElementById('tweetWallSection');
