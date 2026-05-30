@@ -4,33 +4,23 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Tarlac PDRRMO | SitRep Workflow System</title>
-    <!-- Upgraded to Plus Jakarta Sans for a highly professional, sleek tech look -->
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <script src="https://unpkg.com/lucide@latest"></script>
     <style>
         :root {
-            /* Premium Light Slate Palette (Clean, High-End) */
-            --bg-page: #f1f5f9;         /* Soft slate background */
-            --bg-app: #ffffff;          /* Pure white app container */
-            
-            /* Sleek, deep slate for the sidebar instead of standard navy */
+            var(--bg-page): #f1f5f9;         
+            --bg-app: #ffffff;          
             --bg-sidebar: #0f172a;      
-            
             --card-bg: #ffffff;
-            --card-border: #e2e8f0;     /* Crisp, clean borders */
-            --input-bg: #f8fafc;        /* Ultra-light slate for inputs/badges */
-            
-            --text-dark: #1e293b;       /* Deep slate for headings (softer than black) */
-            --text-gray: #64748b;       /* Professional slate-gray for labels */
-            
+            --card-border: #e2e8f0;     
+            --input-bg: #f8fafc;        
+            --text-dark: #1e293b;       
+            --text-gray: #64748b;       
             --btn-dark: #0f172a;        
             --btn-dark-hover: #1e293b;
-            
             --accent: #f59e0b;          
             --success: #059669;
             --success-bg: #d1fae5;
-            
-            /* Fluid animation curve */
             --transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
         }
 
@@ -45,10 +35,9 @@
             width: 100vw;
             overflow: hidden;
             padding: 15px; 
-            -webkit-font-smoothing: antialiased; /* Makes text rendering crisper */
+            -webkit-font-smoothing: antialiased; 
         }
 
-        /* --- SMOOTH ANIMATIONS --- */
         @keyframes slideUpFade {
             from { opacity: 0; transform: translateY(12px); }
             to { opacity: 1; transform: translateY(0); }
@@ -62,7 +51,6 @@
             border-radius: 6px; color: transparent !important; border: none !important; pointer-events: none;
         }
 
-        /* --- APP CONTAINER --- */
         .app-container {
             display: flex;
             width: 100%;
@@ -74,7 +62,7 @@
             overflow: hidden;
         }
 
-        /* --- SIDEBAR (Refined Fonts) --- */
+        /* --- SIDEBAR --- */
         .sidebar {
             width: 230px;
             background-color: var(--bg-sidebar);
@@ -107,14 +95,13 @@
         .nav-item i { width: 15px; height: 15px; opacity: 0.7; transition: var(--transition); }
         .nav-item:hover i { opacity: 1; }
         
-        /* FIXED SMOOTH CURVE TAB */
         .nav-item.active {
             background-color: var(--bg-app);
             color: var(--text-dark);
             border-radius: 20px 0 0 20px;
             margin-left: 15px;
             padding-left: 15px;
-            transform: translateX(0); /* reset hover push */
+            transform: translateX(0); 
         }
         .nav-item.active i { color: var(--text-dark); opacity: 1; }
         .nav-item.active::before {
@@ -137,7 +124,7 @@
         .view-section { display: none; }
         .view-section.active { display: block; animation: slideUpFade 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
 
-        /* --- HEADERS (Sleeker) --- */
+        /* --- HEADERS --- */
         .header {
             display: flex; justify-content: space-between; align-items: center;
             margin-bottom: 20px; padding-bottom: 15px; border-bottom: 1px solid transparent;
@@ -149,7 +136,7 @@
         .last-updated { font-size: 9px; color: var(--text-gray); font-style: italic; }
         .last-updated span { font-weight: 700; color: var(--text-dark); font-style: normal; }
 
-        /* --- CARDS (Tightened padding) --- */
+        /* --- CARDS --- */
         .panel-card {
             background-color: var(--card-bg);
             border: 1px solid var(--card-border);
@@ -164,10 +151,9 @@
         .main-report { flex: 1; min-width: 0; }
         .side-feed { width: 260px; flex-shrink: 0; }
         
-        /* Side-by-Side Grid for LGU and Sitrep */
         .dashboard-content-grid {
             display: grid;
-            grid-template-columns: 1.2fr 1fr; /* LGU list is slightly wider than SitRep */
+            grid-template-columns: 1.2fr 1fr; 
             gap: 20px;
             align-items: start;
         }
@@ -184,20 +170,12 @@
         }
         .data-value:hover { border-color: #cbd5e1; background-color: #ffffff; }
 
-        /* Custom subtle styling for empty data placeholders */
-        .placeholder-text {
-            font-size: 9px;
-            color: var(--text-gray);
-            opacity: 0.5;
-            font-style: italic;
-            font-weight: 400;
-        }
+        .placeholder-text { font-size: 9px; color: var(--text-gray); opacity: 0.5; font-style: italic; font-weight: 400; }
 
-        /* --- COMPRESSED & CENTERED LGU TABLES --- */
+        /* --- TABLES --- */
         .table-subtitle { font-size: 10px; color: var(--text-gray); margin-bottom: 12px; margin-top: -6px; font-weight: 500; }
         .district-table { width: 100%; border-collapse: collapse; margin-bottom: 16px; }
         
-        /* Compressing the columns and centering the Status */
         .district-table th, .district-table td { padding: 10px; vertical-align: middle; border-bottom: 1px solid var(--card-border); transition: var(--transition); }
         .district-table th { font-size: 8px; color: var(--text-gray); font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; }
         
@@ -211,7 +189,6 @@
         .lgu-name { font-weight: 600; font-size: 11px; color: var(--text-dark); display: flex; align-items: center; gap: 6px;}
         .lgu-name span { font-size: 7.5px; color: var(--text-gray); font-weight: 700; background: var(--input-bg); padding: 3px 6px; border-radius: 4px; text-transform: uppercase; border: 1px solid var(--card-border);}
 
-        /* Shrunk Badges to fit perfectly */
         .status-badge { 
             display: inline-flex; align-items: center; justify-content: center; gap: 4px; 
             padding: 4px 6px; border-radius: 12px; font-size: 7px; font-weight: 800; 
@@ -219,7 +196,7 @@
         }
         .status-badge.pending { background-color: var(--input-bg); color: var(--text-gray); border: 1px solid var(--card-border);}
         .status-badge.submitted { background-color: var(--success-bg); color: var(--success); }
-        .status-badge.skeleton-box { margin: 0 auto; /* Keeps skeleton centered */ }
+        .status-badge.skeleton-box { margin: 0 auto; }
 
         /* --- RIGHT SIDEBAR TWEET WALL --- */
         .tweet-card { 
@@ -255,7 +232,15 @@
             padding: 8px 12px; border-radius: 8px; font-size: 11px; outline: none; transition: var(--transition); font-weight: 500;
         }
         .form-control:focus { border-color: var(--btn-dark); background-color: #ffffff; box-shadow: 0 0 0 3px rgba(15, 23, 42, 0.05); }
-        textarea.form-control { resize: vertical; min-height: 70px; }
+        
+        /* NEW ENCODING STYLES (Auto-Expand & Uppercase) */
+        .uppercase-input { text-transform: uppercase; }
+        textarea.form-control { 
+            resize: none; /* User can't manually resize because it auto-expands */
+            overflow: hidden; /* Hide scrollbars during typing */
+            min-height: 40px; 
+            line-height: 1.5;
+        }
         
         .upload-area {
             border: 2px dashed #cbd5e1; border-radius: 10px; padding: 24px; text-align: center;
@@ -335,7 +320,6 @@
 </head>
 <body>
 
-    <!-- SAVE MODAL -->
     <div id="saveModal" class="modal-overlay">
         <div class="modal-card" style="text-align: center; width: 320px;">
             <div style="width: 44px; height: 44px; background: var(--input-bg); border-radius: 10px; display: flex; align-items: center; justify-content: center; margin: 0 auto 12px auto; border: 1px solid var(--card-border);">
@@ -350,7 +334,6 @@
         </div>
     </div>
 
-    <!-- DETAILS MODAL -->
     <div id="lguDetailModal" class="modal-overlay">
         <div class="modal-card" style="width: 550px;">
             <div style="display:flex; justify-content:space-between; align-items:flex-start; border-bottom: 1px solid var(--card-border); padding-bottom: 12px; margin-bottom: 12px;">
@@ -364,10 +347,8 @@
         </div>
     </div>
 
-    <!-- MAIN APP CONTAINER -->
     <div class="app-container">
         
-        <!-- SIDEBAR -->
         <aside class="sidebar">
             <div class="profile" onclick="switchToView('homeView')" style="cursor: pointer;" title="Back to Situation Overview">
                 <div class="profile-img"><i data-lucide="shield-check" style="width: 18px; height: 18px;"></i></div>
@@ -393,10 +374,8 @@
             </ul>
         </aside>
 
-        <!-- MAIN CONTENT -->
         <main class="main-content">
             
-            <!-- 1. SITUATION OVERVIEW -->
             <div id="homeView" class="view-section active">
                 
                 <div class="header">
@@ -404,7 +383,6 @@
                         <h1>Situation Overview</h1>
                         <p>Live status feed of recently recorded LDRRMC and Agency reports.</p>
                     </div>
-                    <!-- Moved Print Button Here -->
                     <div class="header-actions">
                         <button class="btn btn-primary" onclick="window.print()" style="display: flex; align-items: center; gap: 6px;">
                             <i data-lucide="printer" style="width: 14px; height: 14px;"></i> Print Official Document
@@ -414,12 +392,10 @@
                 
                 <div class="dashboard-container">
                     
-                    <!-- LEFT SIDE: DASHBOARD GRID (LGU List & SitRep Side-by-Side) -->
                     <div class="main-report">
                         
                         <div class="dashboard-content-grid">
                             
-                            <!-- GRID COLUMN 1: LGU STATUS (LEFT) -->
                             <div class="panel-card" style="margin-bottom: 0;">
                                 <h3 style="font-size: 11px; font-weight: 700; color: var(--text-dark); margin-bottom: 2px; text-transform: uppercase;">
                                     LDRRMCs REPORTING STATUS OVERVIEW
@@ -427,7 +403,6 @@
                                 
                                 <p class="table-subtitle">"Click on any LGU to open and review its full situational report details."</p>
                                 
-                                <!-- 1ST DISTRICT -->
                                 <table class="district-table" style="margin-top: 12px;">
                                     <thead><tr><th>1ST DISTRICT OF TARLAC</th><th>STATUS</th><th>ACTION</th></tr></thead>
                                     <tbody>
@@ -444,7 +419,6 @@
                                     </tbody>
                                 </table>
 
-                                <!-- 2ND DISTRICT -->
                                 <table class="district-table">
                                     <thead><tr><th>2ND DISTRICT OF TARLAC</th><th>STATUS</th><th>ACTION</th></tr></thead>
                                     <tbody>
@@ -455,7 +429,6 @@
                                     </tbody>
                                 </table>
 
-                                <!-- 3RD DISTRICT -->
                                 <table class="district-table" style="margin-bottom: 0;">
                                     <thead><tr><th>3RD DISTRICT OF TARLAC</th><th>STATUS</th><th>ACTION</th></tr></thead>
                                     <tbody>
@@ -467,7 +440,6 @@
                                 </table>
                             </div>
 
-                            <!-- GRID COLUMN 2: SITREP REPORT (RIGHT, NOT STICKY) -->
                             <div class="panel-card" style="margin-bottom: 0;">
                                 <div class="header" style="margin-bottom: 15px; padding-bottom: 0; border:none;">
                                     <div class="header-title" style="margin-bottom: -5px;">
@@ -505,13 +477,11 @@
                         </div>
                     </div>
 
-                    <!-- FAR RIGHT SIDE: TWEET WALL -->
                     <div class="side-feed">
                         
                         <h3 style="font-size: 11px; font-weight: 700; color: var(--text-dark); margin-bottom: 12px; text-transform: uppercase;">Live Activity Feed</h3>
                         
                         <div id="tweetWallSection">
-                            <!-- Skeleton Tweets -->
                             <div class="tweet-card skeleton-card">
                                 <div class="tweet-header">
                                     <div class="skeleton-box" style="width: 26px; height: 26px; border-radius:6px;"></div>
@@ -529,7 +499,6 @@
                 </div>
             </div>
 
-            <!-- 2. ENCODING PAGE -->
             <div id="encodingView" class="view-section">
                 
                 <div class="header">
@@ -552,13 +521,12 @@
                             </select>
                         </div>
                         
-                        <div style="position: relative; margin-left: 16px;">
-                            <label style="font-size: 8px; font-weight: 700; color: var(--text-gray); margin-bottom: 4px; display: block;">"AS OF" TIMESTAMP *</label>
+                        <div style="position: relative; margin-left: 20px; display: flex; align-items: center; gap: 8px; padding-bottom: 2px;">
+                            <label style="font-size: 11px; font-weight: 700; color: var(--text-dark); margin: 0;">As of:</label>
                             <div class="dt-wrapper" id="customDtTrigger">
                                 <span id="dtDisplayText">Select Date & Time</span>
                             </div>
 
-                            <!-- Popup Calendar -->
                             <div class="dt-popup" id="dtPopup">
                                 <div class="dt-calendar-sec">
                                     <div class="dt-header"><span id="dtMonthYear">May 2026</span><div class="dt-nav"><i data-lucide="chevron-left" id="dtPrev"></i><i data-lucide="chevron-right" id="dtNext"></i></div></div>
@@ -581,14 +549,13 @@
 
                     <div id="dynamicWorkflowArea">
                         
-                        <!-- COUNCIL -->
                         <div id="formCouncil" class="workflow-form">
                             <hr style="border:0; border-top: 1px solid var(--card-border); margin: 20px 0;">
                             <h3 style="font-size: 11px; font-weight: 700; color: var(--text-dark); margin-bottom: 12px;">PDRRMC Council Action</h3>
                             
                             <div class="form-group">
                                 <label>WRITE WHAT IS ACTUAL ACTION TAKEN AS OF THIS TIME OF REPORT:</label>
-                                <textarea class="form-control" placeholder="Enter actual actions taken..."></textarea>
+                                <textarea class="form-control uppercase-input" rows="2" placeholder="Enter actual actions taken..."></textarea>
                             </div>
                             
                             <div class="upload-area" onclick="document.getElementById('councilPdf').click()">
@@ -600,7 +567,6 @@
                             <button class="btn btn-primary" id="btnGenCouncil" style="display:none; width: 100%;" onclick="openSaveModal('council')">CLICK GENERATE</button>
                         </div>
                         
-                        <!-- PARTNER -->
                         <div id="formPartner" class="workflow-form">
                             <hr style="border:0; border-top: 1px solid var(--card-border); margin: 20px 0;">
                             <h3 style="font-size: 11px; font-weight: 700; color: var(--text-dark); margin-bottom: 12px;">Partner Agency Report</h3>
@@ -614,31 +580,30 @@
                             <button class="btn btn-primary" id="btnGenPartner" style="display:none; width: 100%;" onclick="openSaveModal('partner')">CLICK GENERATE</button>
                         </div>
 
-                        <!-- LDRRMC -->
                         <div id="formLdrmc" class="workflow-form">
                             <hr style="border:0; border-top: 1px solid var(--card-border); margin: 20px 0;">
                             <h3 style="font-size: 11px; font-weight: 700; color: var(--text-dark); margin-bottom: 12px;">Fill Out The Information</h3>
                             
                             <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px;">
                                 <div>
-                                    <div class="form-group"><label>A. Weather Condition</label><input type="text" id="ld_A" class="form-control"></div>
-                                    <div class="form-group"><label>B. Affected Population</label><input type="text" id="ld_B" class="form-control"></div>
-                                    <div class="form-group"><label>C. Pre-Emptive/Forced Evacuation</label><input type="text" id="ld_C" class="form-control"></div>
-                                    <div class="form-group"><label>D. Casualty</label><input type="text" id="ld_D" class="form-control"></div>
-                                    <div class="form-group"><label>E. Suspension of Class/Work</label><input type="text" id="ld_E" class="form-control"></div>
-                                    <div class="form-group"><label>F. Flooded Areas</label><input type="text" id="ld_F" class="form-control"></div>
+                                    <div class="form-group"><label>A. Weather Condition</label><textarea id="ld_A" class="form-control uppercase-input" rows="1"></textarea></div>
+                                    <div class="form-group"><label>B. Affected Population</label><textarea id="ld_B" class="form-control uppercase-input" rows="1"></textarea></div>
+                                    <div class="form-group"><label>C. Pre-Emptive/Forced Evacuation</label><textarea id="ld_C" class="form-control uppercase-input" rows="1"></textarea></div>
+                                    <div class="form-group"><label>D. Casualty</label><textarea id="ld_D" class="form-control uppercase-input" rows="1"></textarea></div>
+                                    <div class="form-group"><label>E. Suspension of Class/Work</label><textarea id="ld_E" class="form-control uppercase-input" rows="1"></textarea></div>
+                                    <div class="form-group"><label>F. Flooded Areas</label><textarea id="ld_F" class="form-control uppercase-input" rows="1"></textarea></div>
                                 </div>
                                 <div>
-                                    <div class="form-group"><label>G. Damages on Infrastructure</label><input type="text" id="ld_G" class="form-control"></div>
-                                    <div class="form-group"><label>H. Damages on Agriculture</label><input type="text" id="ld_H" class="form-control"></div>
-                                    <div class="form-group"><label>I. Status of Roads & Bridges</label><input type="text" id="ld_I" class="form-control"></div>
-                                    <div class="form-group"><label>J. Power and Water Interruptions</label><input type="text" id="ld_J" class="form-control"></div>
-                                    <div class="form-group"><label>K. Other Incidents Monitored</label><input type="text" id="ld_K" class="form-control"></div>
+                                    <div class="form-group"><label>G. Damages on Infrastructure</label><textarea id="ld_G" class="form-control uppercase-input" rows="1"></textarea></div>
+                                    <div class="form-group"><label>H. Damages on Agriculture</label><textarea id="ld_H" class="form-control uppercase-input" rows="1"></textarea></div>
+                                    <div class="form-group"><label>I. Status of Roads & Bridges</label><textarea id="ld_I" class="form-control uppercase-input" rows="1"></textarea></div>
+                                    <div class="form-group"><label>J. Power and Water Interruptions</label><textarea id="ld_J" class="form-control uppercase-input" rows="1"></textarea></div>
+                                    <div class="form-group"><label>K. Other Incidents Monitored</label><textarea id="ld_K" class="form-control uppercase-input" rows="1"></textarea></div>
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label>Other Activities:</label>
-                                <textarea id="ld_Other" class="form-control"></textarea>
+                                <textarea id="ld_Other" class="form-control uppercase-input" rows="2"></textarea>
                             </div>
                             
                             <button class="btn btn-primary" style="width: 100%; margin-top: 8px;" onclick="openSaveModal('ldrmc')">CLICK SUBMIT</button>
@@ -647,7 +612,6 @@
                 </div>
             </div>
 
-            <!-- 3. PDRRMO SITREP & ADVISORY REPORT -->
             <div id="pdrrmoView" class="view-section">
                 <div class="header">
                     <div class="header-title">
@@ -657,17 +621,16 @@
                 </div>
                 
                 <div class="panel-card" style="max-width: 650px; margin: 0 auto;">
-                    <div class="form-group"><label>A. Synopsis</label><textarea id="inpSyn" class="form-control"></textarea></div>
-                    <div class="form-group"><label>B. Other Incidents Monitored (PDRRMO Responses)</label><textarea id="inpInc" class="form-control"></textarea></div>
-                    <div class="form-group"><label>C. Suspension on Work (by National/ Provincial level):</label><input type="text" id="inpWork" class="form-control"></div>
-                    <div class="form-group"><label>D. Suspension on Classes (by National/ Provincial level):</label><input type="text" id="inpClass" class="form-control"></div>
-                    <div class="form-group"><label>E. Declaration of State of Calamity:</label><input type="text" id="inpCal" class="form-control"></div>
+                    <div class="form-group"><label>A. Synopsis</label><textarea id="inpSyn" class="form-control uppercase-input" rows="2"></textarea></div>
+                    <div class="form-group"><label>B. Other Incidents Monitored (PDRRMO Responses)</label><textarea id="inpInc" class="form-control uppercase-input" rows="2"></textarea></div>
+                    <div class="form-group"><label>C. Suspension on Work (by National/ Provincial level):</label><textarea id="inpWork" class="form-control uppercase-input" rows="1"></textarea></div>
+                    <div class="form-group"><label>D. Suspension on Classes (by National/ Provincial level):</label><textarea id="inpClass" class="form-control uppercase-input" rows="1"></textarea></div>
+                    <div class="form-group"><label>E. Declaration of State of Calamity:</label><textarea id="inpCal" class="form-control uppercase-input" rows="1"></textarea></div>
                     
                     <button class="btn btn-primary" style="width: 100%; margin-top: 12px;" onclick="openSaveModal('pdrrmo')">SAVE REPORT</button>
                 </div>
             </div>
 
-            <!-- 4. LDRRMCs/AGENCIES RECORDS -->
             <div id="recordsView" class="view-section">
                 <div class="header">
                     <div class="header-title">
@@ -697,7 +660,6 @@
     </div>
 
     <script>
-        // Use thin elegant stroke width for icons
         lucide.createIcons({ attrs: { 'stroke-width': 1.5 } });
 
         // =====================================================================
@@ -706,7 +668,17 @@
         const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbydLbq6xAW0WOWg9SoInDIiu0ULlGrkYY6dBzMekCafTByssh57XQdWg0D4D_AANCU/exec"; 
 
         // ----------------------------------------------------
-        // Navigation Logic (With Animation Retrigger)
+        // Auto-Expanding Text Areas
+        // ----------------------------------------------------
+        document.addEventListener('input', function (e) {
+            if (e.target.tagName.toLowerCase() === 'textarea' && e.target.classList.contains('form-control')) {
+                e.target.style.height = 'auto'; // Reset the height
+                e.target.style.height = (e.target.scrollHeight) + 'px'; // Set it to the scroll height
+            }
+        });
+
+        // ----------------------------------------------------
+        // Navigation Logic
         // ----------------------------------------------------
         const navItems = document.querySelectorAll('.nav-item');
         const views = document.querySelectorAll('.view-section');
@@ -717,13 +689,12 @@
 
             views.forEach(v => {
                 v.classList.remove('active');
-                v.style.animation = 'none'; // reset animation
+                v.style.animation = 'none'; 
             });
             
             const targetView = document.getElementById(targetViewId);
             targetView.classList.add('active');
             
-            // Retrigger the smooth slideUpFade animation
             setTimeout(() => {
                 targetView.style.animation = 'slideUpFade 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards';
             }, 10);
@@ -842,10 +813,10 @@
         function closeSaveModal() { saveModal.classList.remove('show'); }
         document.getElementById('btnConfirmModalYes').onclick = function() { executeSave(currentSaveType); };
 
-        // Helper function for PDRRMO custom placeholder formatting
         function setOutputValue(outId, inId) {
             const val = document.getElementById(inId).value;
-            document.getElementById(outId).innerHTML = val ? val : '<span class="placeholder-text">Awaiting data...</span>';
+            // Retaining the upper case structure for final display if needed, but the inputs enforce it natively now.
+            document.getElementById(outId).innerHTML = val ? val.toUpperCase() : '<span class="placeholder-text">Awaiting data...</span>';
         }
 
         // ----------------------------------------------------
@@ -861,24 +832,24 @@
                 const exactLguName = rawDropdownValue.replace(/ \(.+\)/, ''); 
                 const exactLguId = exactLguName.replace(/\s+/g, ''); 
 
+                // Forced .toUpperCase() applied to ensure clean database entry
                 const payload = {
                     lgu: exactLguName,
                     reportTime: document.getElementById('dtDisplayText').innerText,
-                    weather: document.getElementById('ld_A').value,
-                    population: document.getElementById('ld_B').value,
-                    evacuation: document.getElementById('ld_C').value,
-                    casualty: document.getElementById('ld_D').value,
-                    suspension: document.getElementById('ld_E').value,
-                    flooded: document.getElementById('ld_F').value,
-                    infra: document.getElementById('ld_G').value,
-                    agri: document.getElementById('ld_H').value,
-                    roads: document.getElementById('ld_I').value,
-                    power: document.getElementById('ld_J').value,
-                    incidents: document.getElementById('ld_K').value,
-                    other: document.getElementById('ld_Other').value
+                    weather: document.getElementById('ld_A').value.toUpperCase(),
+                    population: document.getElementById('ld_B').value.toUpperCase(),
+                    evacuation: document.getElementById('ld_C').value.toUpperCase(),
+                    casualty: document.getElementById('ld_D').value.toUpperCase(),
+                    suspension: document.getElementById('ld_E').value.toUpperCase(),
+                    flooded: document.getElementById('ld_F').value.toUpperCase(),
+                    infra: document.getElementById('ld_G').value.toUpperCase(),
+                    agri: document.getElementById('ld_H').value.toUpperCase(),
+                    roads: document.getElementById('ld_I').value.toUpperCase(),
+                    power: document.getElementById('ld_J').value.toUpperCase(),
+                    incidents: document.getElementById('ld_K').value.toUpperCase(),
+                    other: document.getElementById('ld_Other').value.toUpperCase()
                 };
 
-                // UPDATED FETCH LOGIC TO FIX "SILENT FAILURE"
                 fetch(GOOGLE_SCRIPT_URL, {
                     method: 'POST',
                     headers: { 'Content-Type': 'text/plain;charset=utf-8' },
@@ -896,7 +867,8 @@
                         alert('LDRRMC Report saved to Google Sheets successfully!');
                         modalBtn.innerText = originalText; modalBtn.disabled = false; closeSaveModal();
                         
-                        document.querySelectorAll('#formLdrmc input[type="text"], #formLdrmc textarea').forEach(el => el.value = '');
+                        // Reset forms and shrink textareas back down
+                        document.querySelectorAll('#formLdrmc textarea').forEach(el => { el.value = ''; el.style.height = '40px'; });
                         resetEncodingView();
                         switchToView('homeView');
                     } else {
@@ -911,7 +883,6 @@
 
             } else if (type === 'pdrrmo') {
                 
-                // Injecting values using the new custom placeholder look
                 setOutputValue('outSyn', 'inpSyn');
                 setOutputValue('outInc', 'inpInc');
                 setOutputValue('outWork', 'inpWork');
@@ -929,7 +900,13 @@
                 alert("Success! PDRRMO Advisory attached to Consolidated LDRRMC Report.");
                 
                 modalBtn.innerText = originalText; modalBtn.disabled = false; closeSaveModal();
-                document.getElementById('inpSyn').value = ""; document.getElementById('inpInc').value = ""; document.getElementById('inpWork').value = ""; document.getElementById('inpClass').value = ""; document.getElementById('inpCal').value = "";
+                
+                // Clear and Reset Height
+                ['inpSyn', 'inpInc', 'inpWork', 'inpClass', 'inpCal'].forEach(id => {
+                    const el = document.getElementById(id);
+                    el.value = ""; el.style.height = '40px';
+                });
+                
                 switchToView('homeView');
 
             } else {
@@ -1122,7 +1099,6 @@
                     document.getElementById('generatedTimestamp').innerText = `Error pulling database records.`;
                 })
                 .finally(() => {
-                    // Remove Skeleton from PDRRMO Area and inject custom soft placeholder
                     const pdrrmoIds = ['outSyn', 'outInc', 'outWork', 'outClass', 'outCal'];
                     pdrrmoIds.forEach(id => {
                         const el = document.getElementById(id);
@@ -1132,17 +1108,14 @@
                         }
                     });
 
-                    // Remove Skeleton from empty Table Badges & Revert
                     document.querySelectorAll('.status-badge.skeleton-box').forEach(badge => {
                         badge.classList.remove('skeleton-box');
                         badge.classList.add('pending');
                         badge.innerHTML = 'Awaiting Report';
                     });
 
-                    // Remove fake Skeleton Tweets
                     document.querySelectorAll('.skeleton-card').forEach(t => t.remove());
 
-                    // Default message if empty
                     const wall = document.getElementById('tweetWallSection');
                     if (wall.children.length === 0) {
                         wall.innerHTML = `
