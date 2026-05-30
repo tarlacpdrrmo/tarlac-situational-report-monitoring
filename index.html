@@ -26,12 +26,12 @@
             --btn-dark: #0f172a;        
             --btn-dark-hover: #1e293b;
             
-            --accent: #f59e0b;         
+            --accent: #f59e0b;          
             --success: #059669;
             --success-bg: #d1fae5;
             
             /* Fluid animation curve */
-            --transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+            --transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
         }
 
         * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Plus Jakarta Sans', sans-serif; }
@@ -69,40 +69,40 @@
             height: 100%;
             max-width: 1800px; 
             background-color: var(--bg-app);
-            border-radius: 24px; 
+            border-radius: 20px; 
             box-shadow: 0 10px 40px rgba(15, 23, 42, 0.06);
             overflow: hidden;
         }
 
-        /* --- SIDEBAR --- */
+        /* --- SIDEBAR (Refined Fonts) --- */
         .sidebar {
-            width: 220px;
+            width: 230px;
             background-color: var(--bg-sidebar);
             display: flex;
             flex-direction: column;
-            padding: 30px 0;
+            padding: 24px 0;
             position: relative;
         }
         
         .profile {
-            display: flex; align-items: center; gap: 12px; margin-bottom: 40px; padding: 0 20px;
+            display: flex; align-items: center; gap: 12px; margin-bottom: 35px; padding: 0 20px;
         }
         .profile-img {
-            width: 36px; height: 36px; background: #ffffff; border-radius: 10px; /* Sleeker rounded box */
+            width: 32px; height: 32px; background: #ffffff; border-radius: 8px;
             display: flex; justify-content: center; align-items: center; color: var(--bg-sidebar);
             box-shadow: 0 2px 8px rgba(0,0,0,0.2);
         }
-        .profile-info h4 { font-size: 13px; font-weight: 700; color: #ffffff; margin-bottom: 2px; letter-spacing: -0.2px;}
-        .profile-info p { font-size: 9px; color: #94a3b8; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px;}
+        .profile-info h4 { font-size: 12px; font-weight: 600; color: #ffffff; margin-bottom: 2px; letter-spacing: -0.2px;}
+        .profile-info p { font-size: 8px; color: #94a3b8; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px;}
 
         .nav-menu { list-style: none; display: flex; flex-direction: column; gap: 4px; }
         .nav-item {
-            display: flex; align-items: center; gap: 12px; padding: 12px 20px;
-            color: #94a3b8; cursor: pointer; transition: var(--transition); font-size: 12px; font-weight: 600;
+            display: flex; align-items: center; gap: 12px; padding: 10px 20px;
+            color: #94a3b8; cursor: pointer; transition: var(--transition); font-size: 11px; font-weight: 600;
             position: relative;
         }
         .nav-item:hover { color: #ffffff; transform: translateX(4px); }
-        .nav-item i { width: 16px; height: 16px; opacity: 0.7; transition: var(--transition); }
+        .nav-item i { width: 15px; height: 15px; opacity: 0.7; transition: var(--transition); }
         .nav-item:hover i { opacity: 1; }
         
         /* FIXED SMOOTH CURVE TAB */
@@ -127,7 +127,7 @@
         /* --- MAIN CONTENT AREA --- */
         .main-content {
             flex: 1;
-            padding: 30px 40px;
+            padding: 24px 32px;
             overflow-y: auto;
             scroll-behavior: smooth;
         }
@@ -135,118 +135,113 @@
         .view-section { display: none; }
         .view-section.active { display: block; animation: slideUpFade 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
 
-        /* --- HEADERS --- */
+        /* --- HEADERS (Sleeker) --- */
         .header {
-            display: flex; justify-content: space-between; align-items: flex-end;
-            margin-bottom: 20px; padding-bottom: 15px;
+            display: flex; justify-content: space-between; align-items: center;
+            margin-bottom: 20px; padding-bottom: 15px; border-bottom: 1px solid transparent;
         }
-        .header-title h1 { font-size: 18px; font-weight: 700; color: var(--text-dark); display: flex; align-items: center; gap: 8px; letter-spacing: -0.5px;}
+        .header-title h1 { font-size: 16px; font-weight: 700; color: var(--text-dark); display: flex; align-items: center; gap: 8px; letter-spacing: -0.3px;}
         .header-title h1 i { width: 16px; height: 16px; transition: var(--transition); }
         .header-title h1 i:hover { transform: translateX(-3px); }
-        .header-title p { font-size: 11px; color: var(--text-gray); margin-top: 6px; font-weight: 500;}
+        .header-title p { font-size: 10px; color: var(--text-gray); margin-top: 4px; font-weight: 500;}
         
         .header-actions { display: flex; align-items: center; gap: 15px; }
-        .last-updated { font-size: 10px; color: var(--text-gray); font-style: italic; }
+        .last-updated { font-size: 9px; color: var(--text-gray); font-style: italic; }
         .last-updated span { font-weight: 700; color: var(--text-dark); font-style: normal; }
 
-        /* --- CARDS --- */
+        /* --- CARDS (Tightened padding) --- */
         .panel-card {
             background-color: var(--card-bg);
             border: 1px solid var(--card-border);
-            border-radius: 16px;
-            padding: 24px;
-            margin-bottom: 20px;
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 16px;
             box-shadow: 0 4px 15px rgba(0,0,0,0.01);
             transition: var(--transition);
         }
         .panel-card:hover { box-shadow: 0 8px 25px rgba(15, 23, 42, 0.04); }
-        
-        .card-title {
-            font-size: 13px; font-weight: 800; color: var(--text-dark);
-            margin-bottom: 15px; display: flex; align-items: center; gap: 8px;
-        }
 
         .dashboard-container { display: flex; gap: 20px; align-items: flex-start; }
         .main-report { flex: 1; min-width: 0; }
-        .side-feed { width: 280px; flex-shrink: 0; }
+        .side-feed { width: 260px; flex-shrink: 0; }
 
         /* --- PDRRMO ADVISORY GRID --- */
-        .data-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
-        .data-item { display: flex; flex-direction: column; gap: 6px; }
+        .data-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+        .data-item { display: flex; flex-direction: column; gap: 4px; }
         .data-item.full-width { grid-column: span 2; }
-        .data-label { font-size: 9px; font-weight: 700; color: var(--text-gray); text-transform: uppercase; letter-spacing: 0.5px; }
+        .data-label { font-size: 8px; font-weight: 700; color: var(--text-gray); text-transform: uppercase; letter-spacing: 0.5px; }
         .data-value { 
             background-color: var(--input-bg); color: var(--text-dark); 
-            padding: 10px 14px; border-radius: 10px; font-size: 12px; font-weight: 600; line-height: 1.5;
+            padding: 8px 12px; border-radius: 8px; font-size: 11px; font-weight: 500; line-height: 1.5;
             border: 1px solid var(--card-border); transition: var(--transition);
         }
         .data-value:hover { border-color: #cbd5e1; background-color: #ffffff; }
 
         /* --- LGU TABLES --- */
-        .table-subtitle { font-size: 11px; color: var(--text-gray); margin-bottom: 12px; margin-top: -8px; }
-        .district-table { width: 100%; border-collapse: collapse; margin-bottom: 20px; }
+        .table-subtitle { font-size: 10px; color: var(--text-gray); margin-bottom: 12px; margin-top: -6px; font-weight: 500; }
+        .district-table { width: 100%; border-collapse: collapse; margin-bottom: 16px; }
         .district-table th { 
-            text-align: left; padding: 10px 12px; font-size: 9px; color: var(--text-gray); 
-            font-weight: 800; text-transform: uppercase; border-bottom: 1px solid var(--card-border); letter-spacing: 0.5px;
+            text-align: left; padding: 8px 10px; font-size: 8px; color: var(--text-gray); 
+            font-weight: 700; text-transform: uppercase; border-bottom: 1px solid var(--card-border); letter-spacing: 0.5px;
         }
-        .district-table td { padding: 12px; vertical-align: middle; border-bottom: 1px solid var(--card-border); transition: var(--transition); }
+        .district-table td { padding: 10px; vertical-align: middle; border-bottom: 1px solid var(--card-border); transition: var(--transition); }
         .district-table tr:hover td { background-color: #f8fafc; cursor: pointer; }
         .district-table tr:last-child td { border-bottom: none; }
         
-        .lgu-name { font-weight: 700; font-size: 12px; color: var(--text-dark); display: flex; align-items: center; gap: 6px;}
-        .lgu-name span { font-size: 8px; color: var(--text-gray); font-weight: 700; background: var(--input-bg); padding: 3px 6px; border-radius: 6px; text-transform: uppercase; border: 1px solid var(--card-border);}
+        .lgu-name { font-weight: 600; font-size: 11px; color: var(--text-dark); display: flex; align-items: center; gap: 6px;}
+        .lgu-name span { font-size: 7.5px; color: var(--text-gray); font-weight: 700; background: var(--input-bg); padding: 3px 6px; border-radius: 4px; text-transform: uppercase; border: 1px solid var(--card-border);}
 
-        .status-badge { display: inline-flex; align-items: center; gap: 4px; padding: 5px 10px; border-radius: 16px; font-size: 9px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.5px;}
+        .status-badge { display: inline-flex; align-items: center; gap: 4px; padding: 4px 8px; border-radius: 12px; font-size: 8px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px;}
         .status-badge.pending { background-color: var(--input-bg); color: var(--text-gray); border: 1px solid var(--card-border);}
         .status-badge.submitted { background-color: var(--success-bg); color: var(--success); }
 
         /* --- RIGHT SIDEBAR TWEET WALL --- */
         .tweet-card { 
-            background: #ffffff; border: 1px solid var(--card-border); border-radius: 12px; 
-            padding: 16px; display: flex; flex-direction: column; gap: 10px; margin-bottom: 12px;
+            background: #ffffff; border: 1px solid var(--card-border); border-radius: 10px; 
+            padding: 12px; display: flex; flex-direction: column; gap: 8px; margin-bottom: 10px;
             box-shadow: 0 2px 8px rgba(15, 23, 42, 0.02); transition: var(--transition);
         }
         .tweet-card:hover { transform: translateY(-2px); box-shadow: 0 6px 16px rgba(15, 23, 42, 0.06); border-color: #cbd5e1;}
-        .tweet-header { display: flex; align-items: center; gap: 10px; }
-        .tweet-avatar { width: 30px; height: 30px; border-radius: 8px; display: flex; align-items: center; justify-content: center; color: white; font-weight: 700; font-size: 11px; background: var(--btn-dark); }
+        .tweet-header { display: flex; align-items: center; gap: 8px; }
+        .tweet-avatar { width: 26px; height: 26px; border-radius: 6px; display: flex; align-items: center; justify-content: center; color: white; font-weight: 700; font-size: 10px; background: var(--btn-dark); }
         .tweet-meta { display: flex; flex-direction: column; }
-        .tweet-name { font-size: 12px; font-weight: 800; color: var(--text-dark); letter-spacing: -0.2px;}
-        .tweet-handle { font-size: 9px; color: var(--text-gray); margin-top: 1px; font-weight: 600;}
-        .tweet-body { font-size: 11px; color: #475569; line-height: 1.6; }
-        .tweet-footer { font-size: 9px; color: var(--text-gray); font-weight: 600; display: flex; justify-content: space-between; border-top: 1px solid var(--card-border); padding-top: 8px; margin-top: 2px; text-transform: uppercase;}
+        .tweet-name { font-size: 11px; font-weight: 700; color: var(--text-dark); letter-spacing: -0.2px;}
+        .tweet-handle { font-size: 8px; color: var(--text-gray); margin-top: 1px; font-weight: 500;}
+        .tweet-body { font-size: 10px; color: #475569; line-height: 1.5; font-weight: 500; }
+        .tweet-footer { font-size: 8px; color: var(--text-gray); font-weight: 600; display: flex; justify-content: space-between; border-top: 1px solid var(--card-border); padding-top: 6px; margin-top: 2px; text-transform: uppercase;}
 
         /* --- BUTTONS --- */
         .btn {
             background-color: #ffffff; border: 1px solid var(--card-border); color: var(--text-dark);
-            padding: 8px 16px; border-radius: 10px; font-size: 11px; font-weight: 700; 
+            padding: 6px 12px; border-radius: 8px; font-size: 10px; font-weight: 600; 
             cursor: pointer; transition: var(--transition); display: inline-flex; align-items: center; justify-content: center; gap: 6px;
         }
         .btn:hover { background-color: var(--input-bg); border-color: #cbd5e1; }
-        .btn-primary { background-color: var(--btn-dark); color: #ffffff; border: none; border-radius: 10px; padding: 10px 20px;}
+        .btn-primary { background-color: var(--btn-dark); color: #ffffff; border: none; padding: 8px 16px;}
         .btn-primary:hover { background-color: var(--btn-dark-hover); box-shadow: 0 4px 12px rgba(15, 23, 42, 0.15);}
-        .btn-sm { padding: 5px 12px; font-size: 10px; border-radius: 6px;}
+        .btn-sm { padding: 5px 10px; font-size: 9px; border-radius: 6px;}
 
         /* --- FORMS --- */
-        .form-group { margin-bottom: 14px; }
-        .form-group label { display: block; font-size: 9px; font-weight: 800; color: var(--text-gray); margin-bottom: 6px; text-transform: uppercase; letter-spacing: 0.5px;}
+        .form-group { margin-bottom: 12px; }
+        .form-group label { display: block; font-size: 8px; font-weight: 700; color: var(--text-gray); margin-bottom: 4px; text-transform: uppercase; letter-spacing: 0.5px;}
         .form-control {
             width: 100%; background-color: var(--input-bg); border: 1px solid var(--card-border); color: var(--text-dark);
-            padding: 10px 14px; border-radius: 10px; font-size: 12px; outline: none; transition: var(--transition); font-weight: 600;
+            padding: 8px 12px; border-radius: 8px; font-size: 11px; outline: none; transition: var(--transition); font-weight: 500;
         }
         .form-control:focus { border-color: var(--btn-dark); background-color: #ffffff; box-shadow: 0 0 0 3px rgba(15, 23, 42, 0.05); }
-        textarea.form-control { resize: vertical; min-height: 80px; }
+        textarea.form-control { resize: vertical; min-height: 70px; }
         
         .upload-area {
-            border: 2px dashed #cbd5e1; border-radius: 12px; padding: 30px; text-align: center;
+            border: 2px dashed #cbd5e1; border-radius: 10px; padding: 24px; text-align: center;
             background-color: var(--input-bg); cursor: pointer; transition: var(--transition); margin-bottom: 16px;
         }
         .upload-area:hover { border-color: var(--btn-dark); background-color: #f1f5f9; }
-        .upload-area i { width: 24px; height: 24px; color: var(--text-dark); transition: var(--transition);}
+        .upload-area i { width: 20px; height: 20px; color: var(--text-dark); transition: var(--transition);}
         .upload-area:hover i { transform: translateY(-3px); }
-        .upload-area p { font-size: 11px; font-weight: 700; color: var(--text-gray); margin-top: 8px;}
-        .pdf-viewer { display: none; width: 100%; height: 400px; border-radius: 10px; border: 1px solid var(--card-border); margin-bottom: 16px; }
+        .upload-area p { font-size: 10px; font-weight: 600; color: var(--text-gray); margin-top: 6px;}
+        .pdf-viewer { display: none; width: 100%; height: 300px; border-radius: 10px; border: 1px solid var(--card-border); margin-bottom: 16px; }
 
-        #dynamicWorkflowArea { display: none; margin-top: 20px; }
+        #dynamicWorkflowArea { display: none; margin-top: 16px; }
         .workflow-form { display: none; }
         .workflow-form.active { display: block; animation: slideUpFade 0.4s ease forwards; }
 
@@ -254,39 +249,39 @@
         .dt-wrapper { 
             display: inline-flex; align-items: center; gap: 8px; cursor: pointer; 
             background: #ffffff; border: 1px solid var(--card-border); 
-            border-radius: 10px; padding: 8px 14px; transition: var(--transition); 
+            border-radius: 8px; padding: 6px 12px; transition: var(--transition); 
         }
         .dt-wrapper:hover { border-color: var(--btn-dark); }
-        #dtDisplayText { font-size: 11px; font-weight: 700; color: var(--text-dark);}
+        #dtDisplayText { font-size: 10px; font-weight: 600; color: var(--text-dark);}
         
         .dt-popup { 
-            display: none; position: absolute; top: calc(100% + 8px); right: 0; 
+            display: none; position: absolute; top: calc(100% + 6px); right: 0; 
             background: #ffffff; border: 1px solid var(--card-border); 
-            border-radius: 12px; box-shadow: 0 15px 35px rgba(15, 23, 42, 0.1); 
-            z-index: 100; width: 260px; flex-direction: column; overflow: hidden;
+            border-radius: 10px; box-shadow: 0 15px 35px rgba(15, 23, 42, 0.1); 
+            z-index: 100; width: 240px; flex-direction: column; overflow: hidden;
             animation: slideUpFade 0.2s ease forwards;
         }
         .dt-popup.show { display: flex; }
-        .dt-calendar-sec { padding: 16px; border-bottom: 1px solid var(--card-border); }
-        .dt-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; font-size: 12px; font-weight: 800; color: var(--text-dark);}
-        .dt-nav { display: flex; gap: 8px; }
-        .dt-nav i { cursor: pointer; color: var(--text-gray); width: 16px; transition: var(--transition);}
+        .dt-calendar-sec { padding: 12px; border-bottom: 1px solid var(--card-border); }
+        .dt-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; font-size: 11px; font-weight: 700; color: var(--text-dark);}
+        .dt-nav { display: flex; gap: 6px; }
+        .dt-nav i { cursor: pointer; color: var(--text-gray); width: 14px; transition: var(--transition);}
         .dt-nav i:hover { color: var(--text-dark); }
-        .dt-weekdays { display: grid; grid-template-columns: repeat(7, 1fr); text-align: center; font-size: 9px; color: var(--text-gray); margin-bottom: 8px; font-weight: 800; text-transform: uppercase;}
-        .dt-days { display: grid; grid-template-columns: repeat(7, 1fr); gap: 2px; text-align: center; font-size: 11px; font-weight: 700;}
-        .dt-day { padding: 6px 0; cursor: pointer; border-radius: 6px; transition: var(--transition); color: var(--text-dark); }
+        .dt-weekdays { display: grid; grid-template-columns: repeat(7, 1fr); text-align: center; font-size: 8px; color: var(--text-gray); margin-bottom: 6px; font-weight: 700; text-transform: uppercase;}
+        .dt-days { display: grid; grid-template-columns: repeat(7, 1fr); gap: 2px; text-align: center; font-size: 10px; font-weight: 600;}
+        .dt-day { padding: 5px 0; cursor: pointer; border-radius: 4px; transition: var(--transition); color: var(--text-dark); }
         .dt-day:hover { background: var(--input-bg); }
         .dt-day.active { background: var(--btn-dark); color: #ffffff;}
         .dt-day.other-month { color: #cbd5e1; }
         
-        .dt-time-sec { padding: 12px 16px; background: var(--input-bg); display: flex; align-items: center; justify-content: space-between;}
-        .time-inputs { display: flex; align-items: center; background: #ffffff; border-radius: 6px; border: 1px solid var(--card-border); padding: 4px 8px;}
-        .time-input { background: transparent; border: none; color: var(--text-dark); font-size: 13px; font-weight: 800; width: 24px; text-align: center; outline: none; }
+        .dt-time-sec { padding: 10px 12px; background: var(--input-bg); display: flex; align-items: center; justify-content: space-between;}
+        .time-inputs { display: flex; align-items: center; background: #ffffff; border-radius: 4px; border: 1px solid var(--card-border); padding: 2px 6px;}
+        .time-input { background: transparent; border: none; color: var(--text-dark); font-size: 11px; font-weight: 700; width: 20px; text-align: center; outline: none; }
         
-        .ampm-toggle { display: flex; background: #ffffff; border-radius: 6px; border: 1px solid var(--card-border); overflow: hidden; }
-        .ampm-btn { background: transparent; border: none; color: var(--text-gray); padding: 4px 8px; font-size: 10px; font-weight: 800; cursor: pointer; transition: var(--transition);}
+        .ampm-toggle { display: flex; background: #ffffff; border-radius: 4px; border: 1px solid var(--card-border); overflow: hidden; }
+        .ampm-btn { background: transparent; border: none; color: var(--text-gray); padding: 2px 6px; font-size: 9px; font-weight: 700; cursor: pointer; transition: var(--transition);}
         .ampm-btn.active { background: var(--btn-dark); color: #ffffff; }
-        .dt-actions { display: flex; justify-content: space-between; padding: 12px 16px; font-size: 10px; font-weight: 800; text-transform: uppercase;}
+        .dt-actions { display: flex; justify-content: space-between; padding: 10px 12px; font-size: 9px; font-weight: 700; text-transform: uppercase;}
         .dt-actions span { cursor: pointer; color: var(--text-gray); transition: var(--transition);}
         .dt-actions span:hover { color: var(--text-dark); }
 
@@ -299,16 +294,16 @@
         }
         .modal-overlay.show { opacity: 1; pointer-events: auto; }
         .modal-card {
-            background: #ffffff; border-radius: 20px; padding: 24px; width: 400px; max-width: 90%;
-            transform: translateY(20px) scale(0.95); transition: var(--transition); box-shadow: 0 25px 50px rgba(0,0,0,0.15);
+            background: #ffffff; border-radius: 16px; padding: 20px; width: 380px; max-width: 90%;
+            transform: translateY(20px) scale(0.95); transition: var(--transition); box-shadow: 0 20px 40px rgba(0,0,0,0.15);
         }
         .modal-overlay.show .modal-card { transform: translateY(0) scale(1); }
         
-        .modal-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 15px;}
-        .modal-item { display: flex; flex-direction: column; gap: 4px; }
-        .modal-item.wide { grid-column: span 2; border-top: 1px solid var(--card-border); padding-top: 12px; margin-top: 5px;}
-        .modal-item label { font-size: 9px; color: var(--text-gray); font-weight: 800; text-transform: uppercase; letter-spacing: 0.5px;}
-        .modal-item span { font-size: 12px; color: var(--text-dark); font-weight: 700;}
+        .modal-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 12px;}
+        .modal-item { display: flex; flex-direction: column; gap: 2px; }
+        .modal-item.wide { grid-column: span 2; border-top: 1px solid var(--card-border); padding-top: 10px; margin-top: 4px;}
+        .modal-item label { font-size: 8px; color: var(--text-gray); font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px;}
+        .modal-item span { font-size: 11px; color: var(--text-dark); font-weight: 600;}
 
     </style>
 </head>
@@ -316,28 +311,28 @@
 
     <!-- SAVE MODAL -->
     <div id="saveModal" class="modal-overlay">
-        <div class="modal-card" style="text-align: center; width: 360px;">
-            <div style="width: 50px; height: 50px; background: var(--input-bg); border-radius: 12px; display: flex; align-items: center; justify-content: center; margin: 0 auto 15px auto; border: 1px solid var(--card-border);">
-                <i data-lucide="save" style="color: var(--text-dark); width: 24px; height: 24px;"></i>
+        <div class="modal-card" style="text-align: center; width: 320px;">
+            <div style="width: 44px; height: 44px; background: var(--input-bg); border-radius: 10px; display: flex; align-items: center; justify-content: center; margin: 0 auto 12px auto; border: 1px solid var(--card-border);">
+                <i data-lucide="save" style="color: var(--text-dark); width: 20px; height: 20px;"></i>
             </div>
-            <h3 style="margin-bottom: 8px; font-size: 16px; font-weight: 800; color: var(--text-dark); letter-spacing: -0.5px;">Confirm Data Entry</h3>
-            <p style="margin-bottom: 20px; color: var(--text-gray); font-size: 12px; font-weight: 600;">Would you like to save it?</p>
-            <div style="display: flex; justify-content: center; gap: 12px;">
-                <button class="btn btn-primary" id="btnConfirmModalYes" style="width: 100px;">YES</button>
-                <button class="btn" onclick="closeSaveModal()" style="width: 100px;">NO</button>
+            <h3 style="margin-bottom: 6px; font-size: 14px; font-weight: 700; color: var(--text-dark); letter-spacing: -0.3px;">Confirm Data Entry</h3>
+            <p style="margin-bottom: 16px; color: var(--text-gray); font-size: 11px; font-weight: 500;">Would you like to save it?</p>
+            <div style="display: flex; justify-content: center; gap: 10px;">
+                <button class="btn btn-primary" id="btnConfirmModalYes" style="width: 90px;">YES</button>
+                <button class="btn" onclick="closeSaveModal()" style="width: 90px;">NO</button>
             </div>
         </div>
     </div>
 
     <!-- DETAILS MODAL -->
     <div id="lguDetailModal" class="modal-overlay">
-        <div class="modal-card" style="width: 600px;">
-            <div style="display:flex; justify-content:space-between; align-items:flex-start; border-bottom: 1px solid var(--card-border); padding-bottom: 15px; margin-bottom: 15px;">
+        <div class="modal-card" style="width: 550px;">
+            <div style="display:flex; justify-content:space-between; align-items:flex-start; border-bottom: 1px solid var(--card-border); padding-bottom: 12px; margin-bottom: 12px;">
                 <div>
-                    <h3 id="modalLguName" style="font-size: 18px; font-weight: 800; color: var(--text-dark); letter-spacing: -0.5px;">LGU Name</h3>
-                    <p id="modalLguTimestamp" style="font-size: 11px; color: var(--text-gray); font-weight: 700; margin-top: 4px;">As of: --</p>
+                    <h3 id="modalLguName" style="font-size: 16px; font-weight: 700; color: var(--text-dark); letter-spacing: -0.3px;">LGU Name</h3>
+                    <p id="modalLguTimestamp" style="font-size: 10px; color: var(--text-gray); font-weight: 600; margin-top: 2px;">As of: --</p>
                 </div>
-                <button class="btn" style="border:none; padding:6px; background:transparent;" onclick="closeLguModal()"><i data-lucide="x" style="width:16px; height:16px; color:var(--text-gray);"></i></button>
+                <button class="btn" style="border:none; padding:4px; background:transparent;" onclick="closeLguModal()"><i data-lucide="x" style="width:16px; height:16px; color:var(--text-gray);"></i></button>
             </div>
             <div id="lguModalContent"></div>
         </div>
@@ -349,7 +344,7 @@
         <!-- SIDEBAR -->
         <aside class="sidebar">
             <div class="profile">
-                <div class="profile-img"><i data-lucide="shield-check" style="width: 20px; height: 20px;"></i></div>
+                <div class="profile-img"><i data-lucide="shield-check" style="width: 18px; height: 18px;"></i></div>
                 <div class="profile-info">
                     <h4>Tarlac PDRRMO</h4>
                     <p>Monitoring Center</p>
@@ -383,6 +378,12 @@
                         <h1><i data-lucide="arrow-left" style="cursor: pointer; color: var(--text-gray);"></i> Situation Overview</h1>
                         <p style="margin-left: 24px;">Live status feed of recently recorded LDRRMC and Agency reports.</p>
                     </div>
+                    <!-- Moved Print Button Here -->
+                    <div class="header-actions">
+                        <button class="btn btn-primary" onclick="window.print()" style="display: flex; align-items: center; gap: 6px;">
+                            <i data-lucide="printer" style="width: 14px; height: 14px;"></i> Print Official Document
+                        </button>
+                    </div>
                 </div>
                 
                 <div class="dashboard-container">
@@ -390,61 +391,28 @@
                     <!-- LEFT SIDE: MASTER REPORT -->
                     <div class="main-report">
                         
+                        <!-- SWAPPED: LDRRMCS NOW ON TOP -->
                         <div class="panel-card">
-                            <div class="header" style="margin-bottom: 20px; padding-bottom: 0; border:none;">
-                                <div class="header-title" style="margin-bottom: -5px;">
-                                    <h2 style="font-size: 14px; font-weight: 800; color: var(--text-dark); letter-spacing: -0.2px;">SITREP & ADVISORY REPORT</h2>
-                                </div>
-                                <div class="header-actions">
-                                    <div class="last-updated">Status: <span id="generatedTimestamp">Initializing Database...</span></div>
-                                </div>
-                            </div>
-                                                       
-                            <div class="data-grid">
-                                <div class="data-item full-width">
-                                    <label class="data-label">OUTLINE</label>
-                                    <div class="data-value skeleton-box" id="outSyn" style="min-height: 18px;"></div>
-                                </div>
-                                <div class="data-item full-width">
-                                    <label class="data-label">OTHER INCIDENTS MONITORED (RESPONSES)</label>
-                                    <div class="data-value skeleton-box" id="outInc" style="min-height: 18px;"></div>
-                                </div>
-                                <div class="data-item">
-                                    <label class="data-label">SUSPENSION ON WORK (NATIONAL/PROVINCIAL)</label>
-                                    <div class="data-value skeleton-box" id="outWork" style="min-height: 18px;"></div>
-                                </div>
-                                <div class="data-item">
-                                    <label class="data-label">SUSPENSION ON CLASSES (NATIONAL/PROVINCIAL)</label>
-                                    <div class="data-value skeleton-box" id="outClass" style="min-height: 18px;"></div>
-                                </div>
-                                <div class="data-item full-width">
-                                    <label class="data-label">DECLARATION OF STATE OF CALAMITY</label>
-                                    <div class="data-value skeleton-box" id="outCal" style="min-height: 18px;"></div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="panel-card">
-                            <h3 style="font-size: 12px; font-weight: 800; color: var(--text-dark); margin-bottom: 4px; text-transform: uppercase;">
+                            <h3 style="font-size: 11px; font-weight: 700; color: var(--text-dark); margin-bottom: 2px; text-transform: uppercase;">
                                 LDRRMCs REPORTING STATUS OVERVIEW
                             </h3>
                             
-                            <p class="table-subtitle">"Click on any LGU to open and review its full situational report details.".</p>
+                            <p class="table-subtitle">"Click on any LGU to open and review its full situational report details."</p>
                             
                             <!-- 1ST DISTRICT -->
-                            <table class="district-table" style="margin-top: 16px;">
+                            <table class="district-table" style="margin-top: 12px;">
                                 <thead><tr><th style="width: 40%">1ST DISTRICT OF TARLAC</th><th style="width: 35%">STATUS</th><th style="text-align: right;">ACTION</th></tr></thead>
                                 <tbody>
-                                    <tr onclick="viewLguDetails('Anao', 'Anao MDRRMO')"><td><div class="lgu-name">Anao<span>MDRRMO</span></div></td><td><div class="status-badge pending skeleton-box" id="status-Anao" style="width: 80px; height: 20px;"></div></td><td style="text-align: right;"><button class="btn btn-sm">View Details</button></td></tr>
-                                    <tr onclick="viewLguDetails('Camiling', 'Camiling MDRRMO')"><td><div class="lgu-name">Camiling<span>MDRRMO</span></div></td><td><div class="status-badge pending skeleton-box" id="status-Camiling" style="width: 80px; height: 20px;"></div></td><td style="text-align: right;"><button class="btn btn-sm">View Details</button></td></tr>
-                                    <tr onclick="viewLguDetails('Mayantoc', 'Mayantoc MDRRMO')"><td><div class="lgu-name">Mayantoc<span>MDRRMO</span></div></td><td><div class="status-badge pending skeleton-box" id="status-Mayantoc" style="width: 80px; height: 20px;"></div></td><td style="text-align: right;"><button class="btn btn-sm">View Details</button></td></tr>
-                                    <tr onclick="viewLguDetails('Moncada', 'Moncada MDRRMO')"><td><div class="lgu-name">Moncada<span>MDRRMO</span></div></td><td><div class="status-badge pending skeleton-box" id="status-Moncada" style="width: 80px; height: 20px;"></div></td><td style="text-align: right;"><button class="btn btn-sm">View Details</button></td></tr>
-                                    <tr onclick="viewLguDetails('Paniqui', 'Paniqui MDRRMO')"><td><div class="lgu-name">Paniqui<span>MDRRMO</span></div></td><td><div class="status-badge pending skeleton-box" id="status-Paniqui" style="width: 80px; height: 20px;"></div></td><td style="text-align: right;"><button class="btn btn-sm">View Details</button></td></tr>
-                                    <tr onclick="viewLguDetails('Pura', 'Pura MDRRMO')"><td><div class="lgu-name">Pura<span>MDRRMO</span></div></td><td><div class="status-badge pending skeleton-box" id="status-Pura" style="width: 80px; height: 20px;"></div></td><td style="text-align: right;"><button class="btn btn-sm">View Details</button></td></tr>
-                                    <tr onclick="viewLguDetails('Ramos', 'Ramos MDRRMO')"><td><div class="lgu-name">Ramos<span>MDRRMO</span></div></td><td><div class="status-badge pending skeleton-box" id="status-Ramos" style="width: 80px; height: 20px;"></div></td><td style="text-align: right;"><button class="btn btn-sm">View Details</button></td></tr>
-                                    <tr onclick="viewLguDetails('SanClemente', 'San Clemente MDRRMO')"><td><div class="lgu-name">San Clemente<span>MDRRMO</span></div></td><td><div class="status-badge pending skeleton-box" id="status-SanClemente" style="width: 80px; height: 20px;"></div></td><td style="text-align: right;"><button class="btn btn-sm">View Details</button></td></tr>
-                                    <tr onclick="viewLguDetails('SanManuel', 'San Manuel MDRRMO')"><td><div class="lgu-name">San Manuel<span>MDRRMO</span></div></td><td><div class="status-badge pending skeleton-box" id="status-SanManuel" style="width: 80px; height: 20px;"></div></td><td style="text-align: right;"><button class="btn btn-sm">View Details</button></td></tr>
-                                    <tr onclick="viewLguDetails('SantaIgnacia', 'Santa Ignacia MDRRMO')"><td><div class="lgu-name">Santa Ignacia<span>MDRRMO</span></div></td><td><div class="status-badge pending skeleton-box" id="status-SantaIgnacia" style="width: 80px; height: 20px;"></div></td><td style="text-align: right;"><button class="btn btn-sm">View Details</button></td></tr>
+                                    <tr onclick="viewLguDetails('Anao', 'Anao MDRRMO')"><td><div class="lgu-name">Anao<span>MDRRMO</span></div></td><td><div class="status-badge pending skeleton-box" id="status-Anao" style="width: 80px; height: 18px;"></div></td><td style="text-align: right;"><button class="btn btn-sm">View Details</button></td></tr>
+                                    <tr onclick="viewLguDetails('Camiling', 'Camiling MDRRMO')"><td><div class="lgu-name">Camiling<span>MDRRMO</span></div></td><td><div class="status-badge pending skeleton-box" id="status-Camiling" style="width: 80px; height: 18px;"></div></td><td style="text-align: right;"><button class="btn btn-sm">View Details</button></td></tr>
+                                    <tr onclick="viewLguDetails('Mayantoc', 'Mayantoc MDRRMO')"><td><div class="lgu-name">Mayantoc<span>MDRRMO</span></div></td><td><div class="status-badge pending skeleton-box" id="status-Mayantoc" style="width: 80px; height: 18px;"></div></td><td style="text-align: right;"><button class="btn btn-sm">View Details</button></td></tr>
+                                    <tr onclick="viewLguDetails('Moncada', 'Moncada MDRRMO')"><td><div class="lgu-name">Moncada<span>MDRRMO</span></div></td><td><div class="status-badge pending skeleton-box" id="status-Moncada" style="width: 80px; height: 18px;"></div></td><td style="text-align: right;"><button class="btn btn-sm">View Details</button></td></tr>
+                                    <tr onclick="viewLguDetails('Paniqui', 'Paniqui MDRRMO')"><td><div class="lgu-name">Paniqui<span>MDRRMO</span></div></td><td><div class="status-badge pending skeleton-box" id="status-Paniqui" style="width: 80px; height: 18px;"></div></td><td style="text-align: right;"><button class="btn btn-sm">View Details</button></td></tr>
+                                    <tr onclick="viewLguDetails('Pura', 'Pura MDRRMO')"><td><div class="lgu-name">Pura<span>MDRRMO</span></div></td><td><div class="status-badge pending skeleton-box" id="status-Pura" style="width: 80px; height: 18px;"></div></td><td style="text-align: right;"><button class="btn btn-sm">View Details</button></td></tr>
+                                    <tr onclick="viewLguDetails('Ramos', 'Ramos MDRRMO')"><td><div class="lgu-name">Ramos<span>MDRRMO</span></div></td><td><div class="status-badge pending skeleton-box" id="status-Ramos" style="width: 80px; height: 18px;"></div></td><td style="text-align: right;"><button class="btn btn-sm">View Details</button></td></tr>
+                                    <tr onclick="viewLguDetails('SanClemente', 'San Clemente MDRRMO')"><td><div class="lgu-name">San Clemente<span>MDRRMO</span></div></td><td><div class="status-badge pending skeleton-box" id="status-SanClemente" style="width: 80px; height: 18px;"></div></td><td style="text-align: right;"><button class="btn btn-sm">View Details</button></td></tr>
+                                    <tr onclick="viewLguDetails('SanManuel', 'San Manuel MDRRMO')"><td><div class="lgu-name">San Manuel<span>MDRRMO</span></div></td><td><div class="status-badge pending skeleton-box" id="status-SanManuel" style="width: 80px; height: 18px;"></div></td><td style="text-align: right;"><button class="btn btn-sm">View Details</button></td></tr>
+                                    <tr onclick="viewLguDetails('SantaIgnacia', 'Santa Ignacia MDRRMO')"><td><div class="lgu-name">Santa Ignacia<span>MDRRMO</span></div></td><td><div class="status-badge pending skeleton-box" id="status-SantaIgnacia" style="width: 80px; height: 18px;"></div></td><td style="text-align: right;"><button class="btn btn-sm">View Details</button></td></tr>
                                 </tbody>
                             </table>
 
@@ -452,10 +420,10 @@
                             <table class="district-table">
                                 <thead><tr><th style="width: 40%">2ND DISTRICT OF TARLAC</th><th style="width: 35%">STATUS</th><th style="text-align: right;">ACTION</th></tr></thead>
                                 <tbody>
-                                    <tr onclick="viewLguDetails('Gerona', 'Gerona MDRRMO')"><td><div class="lgu-name">Gerona<span>MDRRMO</span></div></td><td><div class="status-badge pending skeleton-box" id="status-Gerona" style="width: 80px; height: 20px;"></div></td><td style="text-align: right;"><button class="btn btn-sm">View Details</button></td></tr>
-                                    <tr onclick="viewLguDetails('SanJose', 'San Jose MDRRMO')"><td><div class="lgu-name">San Jose<span>MDRRMO</span></div></td><td><div class="status-badge pending skeleton-box" id="status-SanJose" style="width: 80px; height: 20px;"></div></td><td style="text-align: right;"><button class="btn btn-sm">View Details</button></td></tr>
-                                    <tr onclick="viewLguDetails('TarlacCity', 'Tarlac City CDRRMO')"><td><div class="lgu-name">Tarlac City<span>CDRRMO</span></div></td><td><div class="status-badge pending skeleton-box" id="status-TarlacCity" style="width: 80px; height: 20px;"></div></td><td style="text-align: right;"><button class="btn btn-sm">View Details</button></td></tr>
-                                    <tr onclick="viewLguDetails('Victoria', 'Victoria MDRRMO')"><td><div class="lgu-name">Victoria<span>MDRRMO</span></div></td><td><div class="status-badge pending skeleton-box" id="status-Victoria" style="width: 80px; height: 20px;"></div></td><td style="text-align: right;"><button class="btn btn-sm">View Details</button></td></tr>
+                                    <tr onclick="viewLguDetails('Gerona', 'Gerona MDRRMO')"><td><div class="lgu-name">Gerona<span>MDRRMO</span></div></td><td><div class="status-badge pending skeleton-box" id="status-Gerona" style="width: 80px; height: 18px;"></div></td><td style="text-align: right;"><button class="btn btn-sm">View Details</button></td></tr>
+                                    <tr onclick="viewLguDetails('SanJose', 'San Jose MDRRMO')"><td><div class="lgu-name">San Jose<span>MDRRMO</span></div></td><td><div class="status-badge pending skeleton-box" id="status-SanJose" style="width: 80px; height: 18px;"></div></td><td style="text-align: right;"><button class="btn btn-sm">View Details</button></td></tr>
+                                    <tr onclick="viewLguDetails('TarlacCity', 'Tarlac City CDRRMO')"><td><div class="lgu-name">Tarlac City<span>CDRRMO</span></div></td><td><div class="status-badge pending skeleton-box" id="status-TarlacCity" style="width: 80px; height: 18px;"></div></td><td style="text-align: right;"><button class="btn btn-sm">View Details</button></td></tr>
+                                    <tr onclick="viewLguDetails('Victoria', 'Victoria MDRRMO')"><td><div class="lgu-name">Victoria<span>MDRRMO</span></div></td><td><div class="status-badge pending skeleton-box" id="status-Victoria" style="width: 80px; height: 18px;"></div></td><td style="text-align: right;"><button class="btn btn-sm">View Details</button></td></tr>
                                 </tbody>
                             </table>
 
@@ -463,36 +431,69 @@
                             <table class="district-table" style="margin-bottom: 0;">
                                 <thead><tr><th style="width: 40%">3RD DISTRICT OF TARLAC</th><th style="width: 35%">STATUS</th><th style="text-align: right;">ACTION</th></tr></thead>
                                 <tbody>
-                                    <tr onclick="viewLguDetails('Bamban', 'Bamban MDRRMO')"><td><div class="lgu-name">Bamban<span>MDRRMO</span></div></td><td><div class="status-badge pending skeleton-box" id="status-Bamban" style="width: 80px; height: 20px;"></div></td><td style="text-align: right;"><button class="btn btn-sm">View Details</button></td></tr>
-                                    <tr onclick="viewLguDetails('Capas', 'Capas MDRRMO')"><td><div class="lgu-name">Capas<span>MDRRMO</span></div></td><td><div class="status-badge pending skeleton-box" id="status-Capas" style="width: 80px; height: 20px;"></div></td><td style="text-align: right;"><button class="btn btn-sm">View Details</button></td></tr>
-                                    <tr onclick="viewLguDetails('Concepcion', 'Concepcion MDRRMO')"><td><div class="lgu-name">Concepcion<span>MDRRMO</span></div></td><td><div class="status-badge pending skeleton-box" id="status-Concepcion" style="width: 80px; height: 20px;"></div></td><td style="text-align: right;"><button class="btn btn-sm">View Details</button></td></tr>
-                                    <tr onclick="viewLguDetails('LaPaz', 'La Paz MDRRMO')"><td><div class="lgu-name">La Paz<span>MDRRMO</span></div></td><td><div class="status-badge pending skeleton-box" id="status-LaPaz" style="width: 80px; height: 20px;"></div></td><td style="text-align: right;"><button class="btn btn-sm">View Details</button></td></tr>
+                                    <tr onclick="viewLguDetails('Bamban', 'Bamban MDRRMO')"><td><div class="lgu-name">Bamban<span>MDRRMO</span></div></td><td><div class="status-badge pending skeleton-box" id="status-Bamban" style="width: 80px; height: 18px;"></div></td><td style="text-align: right;"><button class="btn btn-sm">View Details</button></td></tr>
+                                    <tr onclick="viewLguDetails('Capas', 'Capas MDRRMO')"><td><div class="lgu-name">Capas<span>MDRRMO</span></div></td><td><div class="status-badge pending skeleton-box" id="status-Capas" style="width: 80px; height: 18px;"></div></td><td style="text-align: right;"><button class="btn btn-sm">View Details</button></td></tr>
+                                    <tr onclick="viewLguDetails('Concepcion', 'Concepcion MDRRMO')"><td><div class="lgu-name">Concepcion<span>MDRRMO</span></div></td><td><div class="status-badge pending skeleton-box" id="status-Concepcion" style="width: 80px; height: 18px;"></div></td><td style="text-align: right;"><button class="btn btn-sm">View Details</button></td></tr>
+                                    <tr onclick="viewLguDetails('LaPaz', 'La Paz MDRRMO')"><td><div class="lgu-name">La Paz<span>MDRRMO</span></div></td><td><div class="status-badge pending skeleton-box" id="status-LaPaz" style="width: 80px; height: 18px;"></div></td><td style="text-align: right;"><button class="btn btn-sm">View Details</button></td></tr>
                                 </tbody>
                             </table>
                         </div>
+
+                        <!-- SWAPPED: SITREP NOW ON BOTTOM -->
+                        <div class="panel-card">
+                            <div class="header" style="margin-bottom: 15px; padding-bottom: 0; border:none;">
+                                <div class="header-title" style="margin-bottom: -5px;">
+                                    <h2 style="font-size: 12px; font-weight: 700; color: var(--text-dark); letter-spacing: -0.2px;">SITREP & ADVISORY REPORT</h2>
+                                </div>
+                                <div class="header-actions">
+                                    <div class="last-updated">Status: <span id="generatedTimestamp">Initializing Database...</span></div>
+                                </div>
+                            </div>
+                                                                               
+                            <div class="data-grid">
+                                <div class="data-item full-width">
+                                    <label class="data-label">OUTLINE</label>
+                                    <div class="data-value skeleton-box" id="outSyn" style="min-height: 16px;"></div>
+                                </div>
+                                <div class="data-item full-width">
+                                    <label class="data-label">OTHER INCIDENTS MONITORED (RESPONSES)</label>
+                                    <div class="data-value skeleton-box" id="outInc" style="min-height: 16px;"></div>
+                                </div>
+                                <div class="data-item">
+                                    <label class="data-label">SUSPENSION ON WORK (NATIONAL/PROVINCIAL)</label>
+                                    <div class="data-value skeleton-box" id="outWork" style="min-height: 16px;"></div>
+                                </div>
+                                <div class="data-item">
+                                    <label class="data-label">SUSPENSION ON CLASSES (NATIONAL/PROVINCIAL)</label>
+                                    <div class="data-value skeleton-box" id="outClass" style="min-height: 16px;"></div>
+                                </div>
+                                <div class="data-item full-width">
+                                    <label class="data-label">DECLARATION OF STATE OF CALAMITY</label>
+                                    <div class="data-value skeleton-box" id="outCal" style="min-height: 16px;"></div>
+                                </div>
+                            </div>
+                        </div>
+
                     </div>
 
                     <!-- RIGHT SIDE: TWEET WALL -->
                     <div class="side-feed">
-                        <div style="display: flex; justify-content: flex-end; margin-bottom: 20px; margin-top: -10px;">
-                            <button class="btn btn-primary" onclick="window.print()">Print Official Document</button>
-                        </div>
                         
-                        <h3 style="font-size: 13px; font-weight: 800; color: var(--text-dark); margin-bottom: 16px; text-transform: uppercase;">Live Activity Feed</h3>
+                        <h3 style="font-size: 11px; font-weight: 700; color: var(--text-dark); margin-bottom: 12px; text-transform: uppercase;">Live Activity Feed</h3>
                         
                         <div id="tweetWallSection">
                             <!-- Skeleton Tweets -->
                             <div class="tweet-card skeleton-card">
                                 <div class="tweet-header">
-                                    <div class="skeleton-box" style="width: 30px; height: 30px; border-radius:10px;"></div>
+                                    <div class="skeleton-box" style="width: 26px; height: 26px; border-radius:6px;"></div>
                                     <div style="flex:1;">
-                                        <div class="skeleton-box" style="width: 100px; height: 12px; margin-bottom: 4px;"></div>
-                                        <div class="skeleton-box" style="width: 70px; height: 8px;"></div>
+                                        <div class="skeleton-box" style="width: 90px; height: 10px; margin-bottom: 4px;"></div>
+                                        <div class="skeleton-box" style="width: 60px; height: 6px;"></div>
                                     </div>
                                 </div>
-                                <div class="skeleton-box" style="width: 100%; height: 12px;"></div>
-                                <div class="skeleton-box" style="width: 85%; height: 12px;"></div>
-                                <div class="skeleton-box" style="width: 100%; height: 24px; border-radius: 6px; margin-top: 8px;"></div>
+                                <div class="skeleton-box" style="width: 100%; height: 10px;"></div>
+                                <div class="skeleton-box" style="width: 85%; height: 10px;"></div>
+                                <div class="skeleton-box" style="width: 100%; height: 20px; border-radius: 4px; margin-top: 6px;"></div>
                             </div>
                         </div>
                     </div>
@@ -509,9 +510,9 @@
                     </div>
                 </div>
 
-                <div class="panel-card" style="max-width: 750px; margin: 0 auto;">
+                <div class="panel-card" style="max-width: 650px; margin: 0 auto;">
                     
-                    <div style="display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 24px;">
+                    <div style="display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 20px;">
                         <div class="form-group" style="flex:1; margin-bottom: 0;">
                             <label>CHOOSE BELOW:</label>
                             <select id="primaryCategory" class="form-control">
@@ -522,8 +523,8 @@
                             </select>
                         </div>
                         
-                        <div style="position: relative; margin-left: 20px;">
-                            <label style="font-size: 9px; font-weight: 800; color: var(--text-gray); margin-bottom: 6px; display: block;">"AS OF" TIMESTAMP *</label>
+                        <div style="position: relative; margin-left: 16px;">
+                            <label style="font-size: 8px; font-weight: 700; color: var(--text-gray); margin-bottom: 4px; display: block;">"AS OF" TIMESTAMP *</label>
                             <div class="dt-wrapper" id="customDtTrigger">
                                 <span id="dtDisplayText">Select Date & Time</span>
                             </div>
@@ -553,8 +554,8 @@
                         
                         <!-- COUNCIL -->
                         <div id="formCouncil" class="workflow-form">
-                            <hr style="border:0; border-top: 1px solid var(--card-border); margin: 24px 0;">
-                            <h3 style="font-size: 13px; font-weight: 800; color: var(--text-dark); margin-bottom: 16px;">PDRRMC Council Action</h3>
+                            <hr style="border:0; border-top: 1px solid var(--card-border); margin: 20px 0;">
+                            <h3 style="font-size: 11px; font-weight: 700; color: var(--text-dark); margin-bottom: 12px;">PDRRMC Council Action</h3>
                             
                             <div class="form-group">
                                 <label>WRITE WHAT IS ACTUAL ACTION TAKEN AS OF THIS TIME OF REPORT:</label>
@@ -562,8 +563,8 @@
                             </div>
                             
                             <div class="upload-area" onclick="document.getElementById('councilPdf').click()">
-                                <i data-lucide="file-up" style="margin-bottom:12px; color:var(--text-gray);"></i>
-                                <p style="font-size:11px; color:var(--text-gray); font-weight: 700;">UPLOAD PDF FILE BASED ON WHAT YOU CHOOSE</p>
+                                <i data-lucide="file-up" style="margin-bottom:10px; color:var(--text-gray);"></i>
+                                <p style="font-size:10px; color:var(--text-gray); font-weight: 600;">UPLOAD PDF FILE BASED ON WHAT YOU CHOOSE</p>
                                 <input type="file" id="councilPdf" style="display:none;" onchange="enableGenerate('council')">
                             </div>
                             <iframe class="pdf-viewer" id="viewerCouncil"></iframe>
@@ -572,12 +573,12 @@
                         
                         <!-- PARTNER -->
                         <div id="formPartner" class="workflow-form">
-                            <hr style="border:0; border-top: 1px solid var(--card-border); margin: 24px 0;">
-                            <h3 style="font-size: 13px; font-weight: 800; color: var(--text-dark); margin-bottom: 16px;">Partner Agency Report</h3>
+                            <hr style="border:0; border-top: 1px solid var(--card-border); margin: 20px 0;">
+                            <h3 style="font-size: 11px; font-weight: 700; color: var(--text-dark); margin-bottom: 12px;">Partner Agency Report</h3>
                             
                             <div class="upload-area" onclick="document.getElementById('partnerPdf').click()">
-                                <i data-lucide="file-up" style="margin-bottom:12px; color:var(--text-gray);"></i>
-                                <p style="font-size:11px; color:var(--text-gray); font-weight: 700;">UPLOAD PDF FILE BASED ON WHAT YOU CHOOSE</p>
+                                <i data-lucide="file-up" style="margin-bottom:10px; color:var(--text-gray);"></i>
+                                <p style="font-size:10px; color:var(--text-gray); font-weight: 600;">UPLOAD PDF FILE BASED ON WHAT YOU CHOOSE</p>
                                 <input type="file" id="partnerPdf" style="display:none;" onchange="enableGenerate('partner')">
                             </div>
                             <iframe class="pdf-viewer" id="viewerPartner"></iframe>
@@ -586,10 +587,10 @@
 
                         <!-- LDRRMC -->
                         <div id="formLdrmc" class="workflow-form">
-                            <hr style="border:0; border-top: 1px solid var(--card-border); margin: 24px 0;">
-                            <h3 style="font-size: 13px; font-weight: 800; color: var(--text-dark); margin-bottom: 16px;">Fill Out The Information</h3>
+                            <hr style="border:0; border-top: 1px solid var(--card-border); margin: 20px 0;">
+                            <h3 style="font-size: 11px; font-weight: 700; color: var(--text-dark); margin-bottom: 12px;">Fill Out The Information</h3>
                             
-                            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px;">
+                            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px;">
                                 <div>
                                     <div class="form-group"><label>A. Weather Condition</label><input type="text" id="ld_A" class="form-control"></div>
                                     <div class="form-group"><label>B. Affected Population</label><input type="text" id="ld_B" class="form-control"></div>
@@ -626,14 +627,14 @@
                     </div>
                 </div>
                 
-                <div class="panel-card" style="max-width: 750px; margin: 0 auto;">
+                <div class="panel-card" style="max-width: 650px; margin: 0 auto;">
                     <div class="form-group"><label>A. Synopsis</label><textarea id="inpSyn" class="form-control"></textarea></div>
                     <div class="form-group"><label>B. Other Incidents Monitored (PDRRMO Responses)</label><textarea id="inpInc" class="form-control"></textarea></div>
                     <div class="form-group"><label>C. Suspension on Work (by National/ Provincial level):</label><input type="text" id="inpWork" class="form-control"></div>
                     <div class="form-group"><label>D. Suspension on Classes (by National/ Provincial level):</label><input type="text" id="inpClass" class="form-control"></div>
                     <div class="form-group"><label>E. Declaration of State of Calamity:</label><input type="text" id="inpCal" class="form-control"></div>
                     
-                    <button class="btn btn-primary" style="width: 100%; margin-top: 16px;" onclick="openSaveModal('pdrrmo')">SAVE REPORT</button>
+                    <button class="btn btn-primary" style="width: 100%; margin-top: 12px;" onclick="openSaveModal('pdrrmo')">SAVE REPORT</button>
                 </div>
             </div>
 
@@ -646,7 +647,7 @@
                     </div>
                 </div>
                 
-                <div class="panel-card" style="max-width: 550px; margin: 0 auto; text-align: center;">
+                <div class="panel-card" style="max-width: 500px; margin: 0 auto; text-align: center;">
                     <div class="form-group" style="text-align: left;">
                         <label>SELECT A RECORD TO VIEW:</label>
                         <select class="form-control">
@@ -659,7 +660,7 @@
                             </optgroup>
                         </select>
                     </div>
-                    <button class="btn btn-primary" style="margin-top: 16px;">CLICK VIEW</button>
+                    <button class="btn btn-primary" style="margin-top: 12px;">CLICK VIEW</button>
                 </div>
             </div>
 
@@ -668,14 +669,10 @@
 
     <script>
         // Use thin elegant stroke width for icons
-        lucide.createIcons({
-            attrs: {
-                'stroke-width': 1.5
-            }
-        });
+        lucide.createIcons({ attrs: { 'stroke-width': 1.5 } });
 
         // =====================================================================
-        // YOUR GOOGLE APPS SCRIPT WEB APP URL
+        // YOUR ACTIVE GOOGLE APPS SCRIPT WEB APP URL (Memory injected)
         // =====================================================================
         const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbydLbq6xAW0WOWg9SoInDIiu0ULlGrkYY6dBzMekCafTByssh57XQdWg0D4D_AANCU/exec"; 
 
@@ -776,10 +773,10 @@
                 `;
             } else {
                 document.getElementById('modalLguTimestamp').innerText = `Status: Pending`;
-                contentBox.innerHTML = `<div style="text-align:center; padding: 40px; color: var(--text-gray);">
-                    <i data-lucide="clock" style="width: 32px; height: 32px; opacity: 0.3; margin-bottom: 12px;"></i>
-                    <p style="font-size: 13px; font-weight: 800; color: var(--text-dark);">Awaiting Report Submission</p>
-                    <p style="font-size: 11px; margin-top: 4px;">No active data found for this LGU in the database.</p>
+                contentBox.innerHTML = `<div style="text-align:center; padding: 30px; color: var(--text-gray);">
+                    <i data-lucide="clock" style="width: 28px; height: 28px; opacity: 0.3; margin-bottom: 10px;"></i>
+                    <p style="font-size: 12px; font-weight: 700; color: var(--text-dark);">Awaiting Report Submission</p>
+                    <p style="font-size: 10px; margin-top: 4px;">No active data found for this LGU in the database.</p>
                 </div>`;
                 lucide.createIcons({ attrs: { 'stroke-width': 1.5 } });
             }
@@ -846,22 +843,34 @@
                     other: document.getElementById('ld_Other').value
                 };
 
+                // UPDATED FETCH LOGIC TO FIX "SILENT FAILURE"
                 fetch(GOOGLE_SCRIPT_URL, {
-                    method: 'POST', mode: 'no-cors',
-                    headers: { 'Content-Type': 'application/json' },
+                    method: 'POST',
+                    headers: { 'Content-Type': 'text/plain;charset=utf-8' },
                     body: JSON.stringify(payload)
-                }).then(() => {
-                    updateMasterTable(exactLguId, payload);
-                    addTweetCard(exactLguName, payload);
-                    
-                    alert('LDRRMC Report saved to Google Sheets successfully!');
-                    modalBtn.innerText = originalText; modalBtn.disabled = false; closeSaveModal();
-                    
-                    document.querySelectorAll('#formLdrmc input[type="text"], #formLdrmc textarea').forEach(el => el.value = '');
-                    resetEncodingView();
-                    switchToView('homeView');
-                }).catch(error => {
-                    alert('Failed to connect to Google Sheets. Check your script URL.');
+                })
+                .then(response => {
+                    if (!response.ok) throw new Error("Network response was not ok");
+                    return response.json(); 
+                })
+                .then(result => {
+                    if (result.status === "success" || result.status === 200) {
+                        updateMasterTable(exactLguId, payload);
+                        addTweetCard(exactLguName, payload);
+                        
+                        alert('LDRRMC Report saved to Google Sheets successfully!');
+                        modalBtn.innerText = originalText; modalBtn.disabled = false; closeSaveModal();
+                        
+                        document.querySelectorAll('#formLdrmc input[type="text"], #formLdrmc textarea').forEach(el => el.value = '');
+                        resetEncodingView();
+                        switchToView('homeView');
+                    } else {
+                        alert("Google Script Error: " + result.message);
+                        modalBtn.innerText = originalText; modalBtn.disabled = false; closeSaveModal();
+                    }
+                })
+                .catch(error => {
+                    alert('Failed to connect to Google Sheets: ' + error.message);
                     modalBtn.innerText = originalText; modalBtn.disabled = false; closeSaveModal();
                 });
 
@@ -1102,7 +1111,7 @@
                         wall.innerHTML = `
                             <div class="tweet-card">
                                 <div class="tweet-header">
-                                    <div class="tweet-avatar"><i data-lucide="package" style="width:16px;"></i></div>
+                                    <div class="tweet-avatar"><i data-lucide="package" style="width:14px;"></i></div>
                                     <div class="tweet-meta">
                                         <span class="tweet-name">System Update</span>
                                         <span class="tweet-handle">Monitoring Active</span>
