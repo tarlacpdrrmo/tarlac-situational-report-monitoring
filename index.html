@@ -8,7 +8,7 @@
     <script src="https://unpkg.com/lucide@latest"></script>
     <style>
         :root {
-            --bg-page: #f1f5f9;         
+            var(--bg-page): #f1f5f9;         
             --bg-app: #ffffff;          
             --bg-sidebar: #0f172a;      
             --card-bg: #ffffff;
@@ -132,7 +132,8 @@
         textarea.form-control { resize: none; overflow: hidden; min-height: 40px; line-height: 1.5; }
 
         /* --- ADVISORY INPUT WRAPPER --- */
-        .advisory-wrapper { border: 1px solid var(--card-border); border-radius: 8px; background-color: var(--input-bg); overflow: hidden; transition: var(--transition); margin-bottom: 4px;}
+        .advisory-wrapper { border: 1px solid var(--card-border); border-radius: 8px; background-color: var(--input-bg); overflow: hidden; transition: var(--transition); }
+        .advisory-wrapper:focus-within { border-color: var(--btn-dark); background-color: #ffffff; box-shadow: 0 0 0 3px rgba(15, 23, 42, 0.05); }
         .advisory-wrapper .form-control { border: none; border-radius: 0; background: transparent; box-shadow: none; padding-bottom: 8px; }
         .advisory-wrapper .source-input { width: 100%; border: none; background-color: transparent; border-top: 1px dashed #cbd5e1; padding: 8px 12px; font-size: 9px; color: var(--text-gray); outline: none; font-style: italic; transition: var(--transition);}
         
@@ -439,107 +440,18 @@
                             <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px;">
                                 <div>
                                     <div class="form-group"><label>A. Weather Condition</label><textarea id="ld_A" class="form-control uppercase-input" rows="1"></textarea></div>
-                                    
-                                    <!-- TOGGLE: POPULATION -->
-                                    <div class="form-group">
-                                        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:4px;">
-                                            <label style="margin:0;">B. Affected Population</label>
-                                            <button type="button" class="btn btn-sm" style="padding: 2px 6px; font-size: 8px;" onclick="toggleLgInputMode('B')"><i data-lucide="arrow-left-right" style="width:10px; height:10px;"></i> TABLE</button>
-                                        </div>
-                                        <div id="wrapTextLgB"><textarea id="ld_B" class="form-control uppercase-input" rows="1"></textarea></div>
-                                        <div id="wrapTableLgB" style="display:none;" class="table-input-wrapper"><table style="width:100%; border-collapse: collapse;" id="tblLgB"><thead style="background: var(--input-bg);"><tr><th style="padding:4px; border:1px solid var(--card-border);">BRGY/LOCATION</th><th style="padding:4px; border:1px solid var(--card-border);">FAMILIES</th><th style="padding:4px; border:1px solid var(--card-border);">INDIVIDUALS</th><th style="width:30px;"></th></tr></thead><tbody><tr><td style="border:1px solid var(--card-border);"><input type="text" class="tbl-input uppercase-input"></td><td style="border:1px solid var(--card-border);"><input type="text" class="tbl-input uppercase-input"></td><td style="border:1px solid var(--card-border);"><input type="text" class="tbl-input uppercase-input"></td><td><button class="btn btn-danger" style="padding:2px;" onclick="this.closest('tr').remove()"><i data-lucide="trash-2" style="width:10px; height:10px;"></i></button></td></tr></tbody></table><button type="button" class="btn btn-sm" style="margin-top:4px;" onclick="addLgTableRow('tblLgB')">+ Row</button></div>
-                                    </div>
-
-                                    <!-- TOGGLE: EVACUATION -->
-                                    <div class="form-group">
-                                        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:4px;">
-                                            <label style="margin:0;">C. Pre-Emptive/Forced Evacuation</label>
-                                            <button type="button" class="btn btn-sm" style="padding: 2px 6px; font-size: 8px;" onclick="toggleLgInputMode('C')"><i data-lucide="arrow-left-right" style="width:10px; height:10px;"></i> TABLE</button>
-                                        </div>
-                                        <div id="wrapTextLgC"><textarea id="ld_C" class="form-control uppercase-input" rows="1"></textarea></div>
-                                        <div id="wrapTableLgC" style="display:none;" class="table-input-wrapper"><table style="width:100%; border-collapse: collapse;" id="tblLgC"><thead style="background: var(--input-bg);"><tr><th style="padding:4px; border:1px solid var(--card-border);">EVAC CENTER NAME</th><th style="padding:4px; border:1px solid var(--card-border);">BRGY ORIGIN</th><th style="padding:4px; border:1px solid var(--card-border);">STAT (FAM/IND)</th><th style="width:30px;"></th></tr></thead><tbody><tr><td style="border:1px solid var(--card-border);"><input type="text" class="tbl-input uppercase-input"></td><td style="border:1px solid var(--card-border);"><input type="text" class="tbl-input uppercase-input"></td><td style="border:1px solid var(--card-border);"><input type="text" class="tbl-input uppercase-input"></td><td><button class="btn btn-danger" style="padding:2px;" onclick="this.closest('tr').remove()"><i data-lucide="trash-2" style="width:10px; height:10px;"></i></button></td></tr></tbody></table><button type="button" class="btn btn-sm" style="margin-top:4px;" onclick="addLgTableRow('tblLgC')">+ Row</button></div>
-                                    </div>
-
-                                    <!-- TOGGLE: CASUALTY -->
-                                    <div class="form-group">
-                                        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:4px;">
-                                            <label style="margin:0;">D. Casualty</label>
-                                            <button type="button" class="btn btn-sm" style="padding: 2px 6px; font-size: 8px;" onclick="toggleLgInputMode('D')"><i data-lucide="arrow-left-right" style="width:10px; height:10px;"></i> TABLE</button>
-                                        </div>
-                                        <div id="wrapTextLgD"><textarea id="ld_D" class="form-control uppercase-input" rows="1"></textarea></div>
-                                        <div id="wrapTableLgD" style="display:none;" class="table-input-wrapper"><table style="width:100%; border-collapse: collapse;" id="tblLgD"><thead style="background: var(--input-bg);"><tr><th style="padding:4px; border:1px solid var(--card-border);">NAME/AGE/SEX</th><th style="padding:4px; border:1px solid var(--card-border);">CONDITION/CAUSE</th><th style="padding:4px; border:1px solid var(--card-border);">LOCATION</th><th style="width:30px;"></th></tr></thead><tbody><tr><td style="border:1px solid var(--card-border);"><input type="text" class="tbl-input uppercase-input"></td><td style="border:1px solid var(--card-border);"><input type="text" class="tbl-input uppercase-input"></td><td style="border:1px solid var(--card-border);"><input type="text" class="tbl-input uppercase-input"></td><td><button class="btn btn-danger" style="padding:2px;" onclick="this.closest('tr').remove()"><i data-lucide="trash-2" style="width:10px; height:10px;"></i></button></td></tr></tbody></table><button type="button" class="btn btn-sm" style="margin-top:4px;" onclick="addLgTableRow('tblLgD')">+ Row</button></div>
-                                    </div>
-
-                                    <!-- TOGGLE: SUSPENSION -->
-                                    <div class="form-group">
-                                        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:4px;">
-                                            <label style="margin:0;">E. Suspension of Class/Work</label>
-                                            <button type="button" class="btn btn-sm" style="padding: 2px 6px; font-size: 8px;" onclick="toggleLgInputMode('E')"><i data-lucide="arrow-left-right" style="width:10px; height:10px;"></i> TABLE</button>
-                                        </div>
-                                        <div id="wrapTextLgE"><textarea id="ld_E" class="form-control uppercase-input" rows="1"></textarea></div>
-                                        <div id="wrapTableLgE" style="display:none;" class="table-input-wrapper"><table style="width:100%; border-collapse: collapse;" id="tblLgE"><thead style="background: var(--input-bg);"><tr><th style="padding:4px; border:1px solid var(--card-border);">LEVEL/SECTOR</th><th style="padding:4px; border:1px solid var(--card-border);">STATUS</th><th style="padding:4px; border:1px solid var(--card-border);">REMARKS</th><th style="width:30px;"></th></tr></thead><tbody><tr><td style="border:1px solid var(--card-border);"><input type="text" class="tbl-input uppercase-input"></td><td style="border:1px solid var(--card-border);"><input type="text" class="tbl-input uppercase-input"></td><td style="border:1px solid var(--card-border);"><input type="text" class="tbl-input uppercase-input"></td><td><button class="btn btn-danger" style="padding:2px;" onclick="this.closest('tr').remove()"><i data-lucide="trash-2" style="width:10px; height:10px;"></i></button></td></tr></tbody></table><button type="button" class="btn btn-sm" style="margin-top:4px;" onclick="addLgTableRow('tblLgE')">+ Row</button></div>
-                                    </div>
-
-                                    <!-- TOGGLE: FLOODED -->
-                                    <div class="form-group">
-                                        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:4px;">
-                                            <label style="margin:0;">F. Flooded Areas</label>
-                                            <button type="button" class="btn btn-sm" style="padding: 2px 6px; font-size: 8px;" onclick="toggleLgInputMode('F')"><i data-lucide="arrow-left-right" style="width:10px; height:10px;"></i> TABLE</button>
-                                        </div>
-                                        <div id="wrapTextLgF"><textarea id="ld_F" class="form-control uppercase-input" rows="1"></textarea></div>
-                                        <div id="wrapTableLgF" style="display:none;" class="table-input-wrapper"><table style="width:100%; border-collapse: collapse;" id="tblLgF"><thead style="background: var(--input-bg);"><tr><th style="padding:4px; border:1px solid var(--card-border);">BARANGAY</th><th style="padding:4px; border:1px solid var(--card-border);">FLOOD DEPTH</th><th style="padding:4px; border:1px solid var(--card-border);">STATUS</th><th style="width:30px;"></th></tr></thead><tbody><tr><td style="border:1px solid var(--card-border);"><input type="text" class="tbl-input uppercase-input"></td><td style="border:1px solid var(--card-border);"><input type="text" class="tbl-input uppercase-input"></td><td style="border:1px solid var(--card-border);"><input type="text" class="tbl-input uppercase-input"></td><td><button class="btn btn-danger" style="padding:2px;" onclick="this.closest('tr').remove()"><i data-lucide="trash-2" style="width:10px; height:10px;"></i></button></td></tr></tbody></table><button type="button" class="btn btn-sm" style="margin-top:4px;" onclick="addLgTableRow('tblLgF')">+ Row</button></div>
-                                    </div>
+                                    <div class="form-group"><label>B. Affected Population</label><textarea id="ld_B" class="form-control uppercase-input" rows="1"></textarea></div>
+                                    <div class="form-group"><label>C. Pre-Emptive/Forced Evacuation</label><textarea id="ld_C" class="form-control uppercase-input" rows="1"></textarea></div>
+                                    <div class="form-group"><label>D. Casualty</label><textarea id="ld_D" class="form-control uppercase-input" rows="1"></textarea></div>
+                                    <div class="form-group"><label>E. Suspension of Class/Work</label><textarea id="ld_E" class="form-control uppercase-input" rows="1"></textarea></div>
+                                    <div class="form-group"><label>F. Flooded Areas</label><textarea id="ld_F" class="form-control uppercase-input" rows="1"></textarea></div>
                                 </div>
                                 <div>
-                                    <!-- TOGGLE: INFRA -->
-                                    <div class="form-group">
-                                        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:4px;">
-                                            <label style="margin:0;">G. Damages on Infrastructure</label>
-                                            <button type="button" class="btn btn-sm" style="padding: 2px 6px; font-size: 8px;" onclick="toggleLgInputMode('G')"><i data-lucide="arrow-left-right" style="width:10px; height:10px;"></i> TABLE</button>
-                                        </div>
-                                        <div id="wrapTextLgG"><textarea id="ld_G" class="form-control uppercase-input" rows="1"></textarea></div>
-                                        <div id="wrapTableLgG" style="display:none;" class="table-input-wrapper"><table style="width:100%; border-collapse: collapse;" id="tblLgG"><thead style="background: var(--input-bg);"><tr><th style="padding:4px; border:1px solid var(--card-border);">STRUCTURE</th><th style="padding:4px; border:1px solid var(--card-border);">DAMAGE COST</th><th style="padding:4px; border:1px solid var(--card-border);">STATUS</th><th style="width:30px;"></th></tr></thead><tbody><tr><td style="border:1px solid var(--card-border);"><input type="text" class="tbl-input uppercase-input"></td><td style="border:1px solid var(--card-border);"><input type="text" class="tbl-input uppercase-input"></td><td style="border:1px solid var(--card-border);"><input type="text" class="tbl-input uppercase-input"></td><td><button class="btn btn-danger" style="padding:2px;" onclick="this.closest('tr').remove()"><i data-lucide="trash-2" style="width:10px; height:10px;"></i></button></td></tr></tbody></table><button type="button" class="btn btn-sm" style="margin-top:4px;" onclick="addLgTableRow('tblLgG')">+ Row</button></div>
-                                    </div>
-
-                                    <!-- TOGGLE: AGRI -->
-                                    <div class="form-group">
-                                        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:4px;">
-                                            <label style="margin:0;">H. Damages on Agriculture</label>
-                                            <button type="button" class="btn btn-sm" style="padding: 2px 6px; font-size: 8px;" onclick="toggleLgInputMode('H')"><i data-lucide="arrow-left-right" style="width:10px; height:10px;"></i> TABLE</button>
-                                        </div>
-                                        <div id="wrapTextLgH"><textarea id="ld_H" class="form-control uppercase-input" rows="1"></textarea></div>
-                                        <div id="wrapTableLgH" style="display:none;" class="table-input-wrapper"><table style="width:100%; border-collapse: collapse;" id="tblLgH"><thead style="background: var(--input-bg);"><tr><th style="padding:4px; border:1px solid var(--card-border);">CROP/SECTOR</th><th style="padding:4px; border:1px solid var(--card-border);">AREA/HECTARES</th><th style="padding:4px; border:1px solid var(--card-border);">EST. LOSS</th><th style="width:30px;"></th></tr></thead><tbody><tr><td style="border:1px solid var(--card-border);"><input type="text" class="tbl-input uppercase-input"></td><td style="border:1px solid var(--card-border);"><input type="text" class="tbl-input uppercase-input"></td><td style="border:1px solid var(--card-border);"><input type="text" class="tbl-input uppercase-input"></td><td><button class="btn btn-danger" style="padding:2px;" onclick="this.closest('tr').remove()"><i data-lucide="trash-2" style="width:10px; height:10px;"></i></button></td></tr></tbody></table><button type="button" class="btn btn-sm" style="margin-top:4px;" onclick="addLgTableRow('tblLgH')">+ Row</button></div>
-                                    </div>
-
-                                    <!-- TOGGLE: ROADS -->
-                                    <div class="form-group">
-                                        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:4px;">
-                                            <label style="margin:0;">I. Status of Roads & Bridges</label>
-                                            <button type="button" class="btn btn-sm" style="padding: 2px 6px; font-size: 8px;" onclick="toggleLgInputMode('I')"><i data-lucide="arrow-left-right" style="width:10px; height:10px;"></i> TABLE</button>
-                                        </div>
-                                        <div id="wrapTextLgI"><textarea id="ld_I" class="form-control uppercase-input" rows="1"></textarea></div>
-                                        <div id="wrapTableLgI" style="display:none;" class="table-input-wrapper"><table style="width:100%; border-collapse: collapse;" id="tblLgI"><thead style="background: var(--input-bg);"><tr><th style="padding:4px; border:1px solid var(--card-border);">ROAD/BRIDGE NAME</th><th style="padding:4px; border:1px solid var(--card-border);">STATUS</th><th style="padding:4px; border:1px solid var(--card-border);">REMARKS</th><th style="width:30px;"></th></tr></thead><tbody><tr><td style="border:1px solid var(--card-border);"><input type="text" class="tbl-input uppercase-input"></td><td style="border:1px solid var(--card-border);"><input type="text" class="tbl-input uppercase-input"></td><td style="border:1px solid var(--card-border);"><input type="text" class="tbl-input uppercase-input"></td><td><button class="btn btn-danger" style="padding:2px;" onclick="this.closest('tr').remove()"><i data-lucide="trash-2" style="width:10px; height:10px;"></i></button></td></tr></tbody></table><button type="button" class="btn btn-sm" style="margin-top:4px;" onclick="addLgTableRow('tblLgI')">+ Row</button></div>
-                                    </div>
-
-                                    <!-- TOGGLE: POWER -->
-                                    <div class="form-group">
-                                        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:4px;">
-                                            <label style="margin:0;">J. Power and Water Interruptions</label>
-                                            <button type="button" class="btn btn-sm" style="padding: 2px 6px; font-size: 8px;" onclick="toggleLgInputMode('J')"><i data-lucide="arrow-left-right" style="width:10px; height:10px;"></i> TABLE</button>
-                                        </div>
-                                        <div id="wrapTextLgJ"><textarea id="ld_J" class="form-control uppercase-input" rows="1"></textarea></div>
-                                        <div id="wrapTableLgJ" style="display:none;" class="table-input-wrapper"><table style="width:100%; border-collapse: collapse;" id="tblLgJ"><thead style="background: var(--input-bg);"><tr><th style="padding:4px; border:1px solid var(--card-border);">LIFELINE SECTOR</th><th style="padding:4px; border:1px solid var(--card-border);">STATUS</th><th style="padding:4px; border:1px solid var(--card-border);">AFFECTED AREAS</th><th style="width:30px;"></th></tr></thead><tbody><tr><td style="border:1px solid var(--card-border);"><input type="text" class="tbl-input uppercase-input"></td><td style="border:1px solid var(--card-border);"><input type="text" class="tbl-input uppercase-input"></td><td style="border:1px solid var(--card-border);"><input type="text" class="tbl-input uppercase-input"></td><td><button class="btn btn-danger" style="padding:2px;" onclick="this.closest('tr').remove()"><i data-lucide="trash-2" style="width:10px; height:10px;"></i></button></td></tr></tbody></table><button type="button" class="btn btn-sm" style="margin-top:4px;" onclick="addLgTableRow('tblLgJ')">+ Row</button></div>
-                                    </div>
-
-                                    <!-- TOGGLE: LGRRMC INCIDENTS -->
-                                    <div class="form-group">
-                                        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:4px;">
-                                            <label style="margin:0;">K. Other Incidents Monitored</label>
-                                            <button type="button" class="btn btn-sm" style="padding: 2px 6px; font-size: 8px;" onclick="toggleLgInputMode('K')"><i data-lucide="arrow-left-right" style="width:10px; height:10px;"></i> TABLE</button>
-                                        </div>
-                                        <div id="wrapTextLgK"><textarea id="ld_K" class="form-control uppercase-input" rows="1"></textarea></div>
-                                        <div id="wrapTableLgK" style="display:none;" class="table-input-wrapper"><table style="width:100%; border-collapse: collapse;" id="tblLgK"><thead style="background: var(--input-bg);"><tr><th style="padding:4px; border:1px solid var(--card-border);">TYPE OF INCIDENT</th><th style="padding:4px; border:1px solid var(--card-border);">CRITICAL DETS</th><th style="padding:4px; border:1px solid var(--card-border);">REMARKS / ACTION</th><th style="width:30px;"></th></tr></thead><tbody><tr><td style="border:1px solid var(--card-border);"><input type="text" class="tbl-input uppercase-input"></td><td style="border:1px solid var(--card-border);"><input type="text" class="tbl-input uppercase-input"></td><td style="border:1px solid var(--card-border);"><input type="text" class="tbl-input uppercase-input"></td><td><button class="btn btn-danger" style="padding:2px;" onclick="this.closest('tr').remove()"><i data-lucide="trash-2" style="width:10px; height:10px;"></i></button></td></tr></tbody></table><button type="button" class="btn btn-sm" style="margin-top:4px;" onclick="addLgTableRow('tblLgK')">+ Row</button></div>
-                                    </div>
+                                    <div class="form-group"><label>G. Damages on Infrastructure</label><textarea id="ld_G" class="form-control uppercase-input" rows="1"></textarea></div>
+                                    <div class="form-group"><label>H. Damages on Agriculture</label><textarea id="ld_H" class="form-control uppercase-input" rows="1"></textarea></div>
+                                    <div class="form-group"><label>I. Status of Roads & Bridges</label><textarea id="ld_I" class="form-control uppercase-input" rows="1"></textarea></div>
+                                    <div class="form-group"><label>J. Power and Water Interruptions</label><textarea id="ld_J" class="form-control uppercase-input" rows="1"></textarea></div>
+                                    <div class="form-group"><label>K. Other Incidents Monitored</label><textarea id="ld_K" class="form-control uppercase-input" rows="1"></textarea></div>
                                 </div>
                             </div>
                             <div class="form-group"><label>Other Activities:</label><textarea id="ld_Other" class="form-control uppercase-input" rows="2"></textarea></div>
@@ -577,6 +489,7 @@
                 
                     <div class="form-group"><label>A. Synopsis</label><div class="advisory-wrapper"><textarea id="inpSyn" class="form-control uppercase-input" rows="2"></textarea><input type="text" id="srcSyn" class="source-input uppercase-input" placeholder="Source of information (Optional)..."></div></div>
                     
+                    <!-- DYNAMIC TOGGLE 1: INCIDENTS -->
                     <div class="form-group">
                         <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:4px;">
                             <label style="margin:0;">B. Other Incidents Monitored (PDRRMO Responses)</label>
@@ -612,6 +525,7 @@
                         </div>
                     </div>
                     
+                    <!-- DYNAMIC TOGGLE 2: WORK SUSPENSION -->
                     <div class="form-group">
                         <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:4px;">
                             <label style="margin:0;">C. Suspension on Work (by National/ Provincial level):</label>
@@ -675,99 +589,36 @@
     <script>
         lucide.createIcons({ attrs: { 'stroke-width': 1.5 } });
 
+        // =====================================================================
+        // YOUR ACTIVE GOOGLE APPS SCRIPT WEB APP URL
+        // =====================================================================
         const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxtTYvN3Pnrsjp2X1aejEJgBA1pkHsE8Y0CLauBqfsycR6mYkvUfZ1Ro_eJXDjAqBV4/exec"; 
 
         // ----------------------------------------------------
-        // LDRRMCs Form Formats (Table Toggles)
+        // Auto-Expanding Text Areas & Navigation
         // ----------------------------------------------------
-        function toggleLgInputMode(sec) {
-            const txt = document.getElementById(`wrapTextLg${sec}`);
-            const tbl = document.getElementById(`wrapTableLg${sec}`);
-            const isTextVisible = txt.style.display !== 'none';
-            txt.style.display = isTextVisible ? 'none' : 'block';
-            tbl.style.display = isTextVisible ? 'block' : 'none';
-        }
-
-        function addLgTableRow(tblId) {
-            const tbody = document.querySelector(`#${tblId} tbody`);
-            const tr = document.createElement('tr');
-            tr.innerHTML = `
-                <td style="border:1px solid var(--card-border);"><input type="text" class="tbl-input uppercase-input"></td>
-                <td style="border:1px solid var(--card-border);"><input type="text" class="tbl-input uppercase-input"></td>
-                <td style="border:1px solid var(--card-border);"><input type="text" class="tbl-input uppercase-input"></td>
-                <td><button class="btn btn-danger" style="padding:2px;" onclick="this.closest('tr').remove()"><i data-lucide="trash-2" style="width:10px; height:10px;"></i></button></td>
-            `;
-            tbody.appendChild(tr);
-            lucide.createIcons({ attrs: { 'stroke-width': 1.5 } });
-        }
-
-        function extractLgTbl(tblId, label1, label2, label3) {
-            const tbl = document.getElementById(tblId);
-            if(tbl.parentElement.style.display === 'none') return null; // Means it's in standard text box mode
-            const rows = tbl.querySelectorAll('tbody tr');
-            let res = [];
-            rows.forEach(row => {
-                const inputs = row.querySelectorAll('input');
-                let c1 = inputs[0].value.trim().toUpperCase();
-                let c2 = inputs[1].value.trim().toUpperCase();
-                let c3 = inputs[2].value.trim().toUpperCase();
-                if(c1 || c2 || c3) {
-                    res.push(`• ${label1}: ${c1 || '-'} | ${label2}: ${c2 || '-'} | ${label3}: ${c3 || '-'}`);
-                }
-            });
-            return res.length > 0 ? res.join('\n') : "";
-        }
-
-        function toggleInputMode(section) {
-            const wrapText = document.getElementById(`wrapText${section}`);
-            const wrapTable = document.getElementById(`wrapTable${section}`);
-            const btn = event.currentTarget;
-            if (wrapText.style.display !== 'none') {
-                wrapText.style.display = 'none'; wrapTable.style.display = 'block';
-                btn.innerHTML = '<i data-lucide="align-left" style="width:12px; height:12px;"></i> SWITCH TO TEXT';
-            } else {
-                wrapText.style.display = 'block'; wrapTable.style.display = 'none';
-                btn.innerHTML = '<i data-lucide="arrow-left-right" style="width:12px; height:12px;"></i> SWITCH TO TABLE';
+        document.addEventListener('input', function (e) {
+            if (e.target.tagName.toLowerCase() === 'textarea' && e.target.classList.contains('form-control')) {
+                e.target.style.height = 'auto'; e.target.style.height = (e.target.scrollHeight) + 'px'; 
             }
-            lucide.createIcons({ attrs: { 'stroke-width': 1.5 } });
+        });
+
+        const navItems = document.querySelectorAll('.nav-item');
+        const views = document.querySelectorAll('.view-section');
+
+        function switchToView(targetViewId) {
+            navItems.forEach(n => n.classList.remove('active'));
+            document.querySelector(`[data-target="${targetViewId}"]`).classList.add('active');
+            views.forEach(v => { v.classList.remove('active'); v.style.animation = 'none'; });
+            const targetView = document.getElementById(targetViewId);
+            targetView.classList.add('active');
+            setTimeout(() => { targetView.style.animation = 'slideUpFade 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards'; }, 10);
         }
 
-        function addTableRow(tableId) {
-            const tbody = document.querySelector(`#${tableId} tbody`);
-            const tr = document.createElement('tr');
-            tr.innerHTML = `
-                <td style="padding: 0; border-bottom: 1px solid var(--card-border); border-right: 1px solid var(--card-border);"><input type="text" class="tbl-input uppercase-input"></td>
-                <td style="padding: 0; border-bottom: 1px solid var(--card-border); border-right: 1px solid var(--card-border);"><input type="text" class="tbl-input uppercase-input"></td>
-                <td style="padding: 0; border-bottom: 1px solid var(--card-border);"><input type="text" class="tbl-input uppercase-input"></td>
-                <td style="padding: 4px; text-align: center; border-bottom: 1px solid var(--card-border);"><button class="btn btn-danger" style="padding: 2px 4px; border-radius:4px;" onclick="this.closest('tr').remove()"><i data-lucide="trash-2" style="width:10px; height:10px;"></i></button></td>
-            `;
-            tbody.appendChild(tr);
-            lucide.createIcons({ attrs: { 'stroke-width': 1.5 } });
-        }
-
-        function getTableData(tblId, srcId, timestamp) {
-            const tbody = document.querySelector(`#${tblId} tbody`);
-            const rows = tbody.querySelectorAll('tr');
-            let hasData = false;
-            let tableStr = `[UPDATE AS OF: ${timestamp}]\n`;
-            rows.forEach(row => {
-                const inputs = row.querySelectorAll('input');
-                const col1 = inputs[0].value.trim().toUpperCase();
-                const col2 = inputs[1].value.trim().toUpperCase();
-                const col3 = inputs[2].value.trim().toUpperCase();
-                if (col1 || col2 || col3) {
-                    hasData = true;
-                    tableStr += `• LOC/INFO: ${col1 || '-'} | DETS: ${col2 || '-'} | REMARKS: ${col3 || '-'}\n`;
-                }
-            });
-            if (!hasData) return "";
-            let src = document.getElementById(srcId).value.trim().toUpperCase();
-            if (src) tableStr += `\n[SOURCE: ${src}]`;
-            return tableStr.trim();
-        }
+        navItems.forEach(item => { item.addEventListener('click', () => switchToView(item.getAttribute('data-target'))); });
 
         // ----------------------------------------------------
-        // Base 64 Conversion & Structural Control
+        // Storage & UI State Binding
         // ----------------------------------------------------
         let lguDataStore = {};
 
@@ -780,8 +631,10 @@
         function addTweetCard(title, data, isPdf = false) {
             const wall = document.getElementById('tweetWallSection');
             const avatarInitials = title.includes("City") ? "TC" : title.charAt(0);
+            
             let generalStatus = isPdf ? `PDF Document Uploaded. Action: ${data.action || 'None'}` : `<strong>General Status:</strong> ${data.incidents || 'No major incidents reported.'} ${data.other}`;
             let handleText = isPdf ? `Update` : `Weather: ${data.weather || '-'} | Casualties: ${data.casualty || '0'}`;
+
             const newCard = document.createElement('div');
             newCard.className = 'tweet-card';
             newCard.innerHTML = `
@@ -826,9 +679,76 @@
         }
         function closeLguModal() { lguModal.classList.remove('show'); }
 
+        // ----------------------------------------------------
+        // Dynamic Table Input Logics
+        // ----------------------------------------------------
+        function toggleInputMode(section) {
+            const wrapText = document.getElementById(`wrapText${section}`);
+            const wrapTable = document.getElementById(`wrapTable${section}`);
+            const btn = event.currentTarget;
+            
+            if (wrapText.style.display !== 'none') {
+                wrapText.style.display = 'none';
+                wrapTable.style.display = 'block';
+                btn.innerHTML = '<i data-lucide="align-left" style="width:12px; height:12px;"></i> SWITCH TO TEXT';
+            } else {
+                wrapText.style.display = 'block';
+                wrapTable.style.display = 'none';
+                btn.innerHTML = '<i data-lucide="arrow-left-right" style="width:12px; height:12px;"></i> SWITCH TO TABLE';
+            }
+            lucide.createIcons({ attrs: { 'stroke-width': 1.5 } });
+        }
+
+        function addTableRow(tableId) {
+            const tbody = document.querySelector(`#${tableId} tbody`);
+            const tr = document.createElement('tr');
+            tr.innerHTML = `
+                <td style="padding: 0; border-bottom: 1px solid var(--card-border); border-right: 1px solid var(--card-border);"><input type="text" class="tbl-input uppercase-input"></td>
+                <td style="padding: 0; border-bottom: 1px solid var(--card-border); border-right: 1px solid var(--card-border);"><input type="text" class="tbl-input uppercase-input"></td>
+                <td style="padding: 0; border-bottom: 1px solid var(--card-border);"><input type="text" class="tbl-input uppercase-input"></td>
+                <td style="padding: 4px; text-align: center; border-bottom: 1px solid var(--card-border);"><button class="btn btn-danger" style="padding: 2px 4px; border-radius:4px;" onclick="this.closest('tr').remove()"><i data-lucide="trash-2" style="width:10px; height:10px;"></i></button></td>
+            `;
+            tbody.appendChild(tr);
+            lucide.createIcons({ attrs: { 'stroke-width': 1.5 } });
+        }
+
+        function getTableData(tblId, srcId, timestamp) {
+            const tbody = document.querySelector(`#${tblId} tbody`);
+            const rows = tbody.querySelectorAll('tr');
+            let hasData = false;
+            let tableStr = `[UPDATE AS OF: ${timestamp}]\n`;
+            
+            rows.forEach(row => {
+                const inputs = row.querySelectorAll('input');
+                const col1 = inputs[0].value.trim().toUpperCase();
+                const col2 = inputs[1].value.trim().toUpperCase();
+                const col3 = inputs[2].value.trim().toUpperCase();
+                
+                if (col1 || col2 || col3) {
+                    hasData = true;
+                    let line = [];
+                    if (col1) line.push(`AREA: ${col1}`);
+                    if (col2) line.push(`DETAILS: ${col2}`);
+                    if (col3) line.push(`REMARKS: ${col3}`);
+                    tableStr += "• " + line.join(" | ") + "\n";
+                }
+            });
+            
+            if (!hasData) return "";
+            
+            let src = document.getElementById(srcId).value.trim().toUpperCase();
+            if (src) tableStr += `\n[SOURCE: ${src}]`;
+            
+            return tableStr.trim();
+        }
+
+        // ----------------------------------------------------
+        // Base 64 Conversion & PDF
+        // ----------------------------------------------------
         function getBase64(file) {
             return new Promise((resolve, reject) => {
-                const reader = new FileReader(); reader.readAsDataURL(file);
+                const reader = new FileReader();
+                reader.readAsDataURL(file);
                 reader.onload = () => {
                     let encoded = reader.result.toString().replace(/^data:(.*,)?/, '');
                     if ((encoded.length % 4) > 0) { encoded += '='.repeat(4 - (encoded.length % 4)); }
@@ -844,10 +764,12 @@
         }
 
         function previewDocument(type) {
-            const capType = capitalize(type); const fileInput = document.getElementById(`${type}Pdf`);
+            const capType = capitalize(type);
+            const fileInput = document.getElementById(`${type}Pdf`);
             const viewer = document.getElementById(`viewer${capType}`);
             if (fileInput.files.length > 0) {
-                viewer.src = URL.createObjectURL(fileInput.files[0]); viewer.style.display = 'block';
+                viewer.src = URL.createObjectURL(fileInput.files[0]);
+                viewer.style.display = 'block';
                 document.getElementById(`btnPreview${capType}`).style.display = 'none';
                 document.getElementById(`uploadBox${capType}`).style.display = 'none';
                 document.getElementById(`actionBtns${capType}`).style.display = 'flex';
@@ -855,14 +777,16 @@
         }
 
         function removeDocument(type) {
-            const capType = capitalize(type); const fileInput = document.getElementById(`${type}Pdf`);
+            const capType = capitalize(type);
+            const fileInput = document.getElementById(`${type}Pdf`);
             const viewer = document.getElementById(`viewer${capType}`);
             fileInput.value = ""; viewer.src = ""; viewer.style.display = 'none';
             document.getElementById(`actionBtns${capType}`).style.display = 'none';
             document.getElementById(`uploadBox${capType}`).style.display = 'block';
         }
 
-        const saveModal = document.getElementById('saveModal'); let currentSaveType = '';
+        const saveModal = document.getElementById('saveModal');
+        let currentSaveType = '';
         function openSaveModal(type) {
             const dtText = (type === 'pdrrmo') ? document.getElementById('pdtDisplayText').innerText : document.getElementById('dtDisplayText').innerText;
             if (dtText === "Select Date & Time") { alert("Please select an 'As Of' Timestamp before saving."); return; }
@@ -875,8 +799,11 @@
             let val = document.getElementById(valId).value.trim().toUpperCase();
             let src = document.getElementById(srcId).value.trim().toUpperCase();
             if (!val) return ""; 
+            
+            // Add the Timestamp separation formatting directly into the string
             let finalStr = `[UPDATE AS OF: ${timestamp}]\n${val}`;
             if (src) finalStr += `\n[SOURCE: ${src}]`; 
+            
             return finalStr;
         }
 
@@ -884,7 +811,8 @@
         // Core Execution Logic (Fetch to Google Sheets)
         // ----------------------------------------------------
         async function executeSave(type) {
-            const modalBtn = document.getElementById('btnConfirmModalYes'); const originalText = modalBtn.innerText;
+            const modalBtn = document.getElementById('btnConfirmModalYes');
+            const originalText = modalBtn.innerText;
             modalBtn.innerText = "SAVING..."; modalBtn.disabled = true;
 
             try {
@@ -893,36 +821,25 @@
                     const rawDropdownValue = document.getElementById('secondaryCategory').value;
                     const exactLguName = rawDropdownValue.replace(/ \(.+\)/, ''); 
                     const exactLguId = exactLguName.replace(/\s+/g, ''); 
-                    const lgTimestamp = document.getElementById('dtDisplayText').innerText;
-
-                    // Table strings extractor if tables are open, else fallback to textual format
-                    const valB = extractLgTbl('tblLgB', 'LOC', 'FAMS', 'INDS') || document.getElementById('ld_B').value.toUpperCase();
-                    const valC = extractLgTbl('tblLgC', 'EVAC', 'ORIGIN', 'STATS') || document.getElementById('ld_C').value.toUpperCase();
-                    const valD = extractLgTbl('tblLgD', 'NAME', 'CAUSE', 'LOC') || document.getElementById('ld_D').value.toUpperCase();
-                    const valE = extractLgTbl('tblLgE', 'SECTOR', 'STATUS', 'REMARKS') || document.getElementById('ld_E').value.toUpperCase();
-                    const valF = extractLgTbl('tblLgF', 'BRGY', 'DEPTH', 'STATUS') || document.getElementById('ld_F').value.toUpperCase();
-                    const valG = extractLgTbl('tblLgG', 'INFRA', 'COST', 'STATUS') || document.getElementById('ld_G').value.toUpperCase();
-                    const valH = extractLgTbl('tblLgH', 'CROP', 'HECTARES', 'LOSS') || document.getElementById('ld_H').value.toUpperCase();
-                    const valI = extractLgTbl('tblLgI', 'ROAD', 'STATUS', 'REMARKS') || document.getElementById('ld_I').value.toUpperCase();
-                    const valJ = extractLgTbl('tblLgJ', 'LIFELINE', 'STATUS', 'AREAS') || document.getElementById('ld_J').value.toUpperCase();
-                    const valK = extractLgTbl('tblLgK', 'INCIDENT', 'DETS', 'ACTION') || document.getElementById('ld_K').value.toUpperCase();
 
                     const payload = {
-                        type: 'ldrmc', lgu: exactLguName, reportTime: lgTimestamp,
-                        weather: document.getElementById('ld_A').value.toUpperCase(), population: valB,
-                        evacuation: valC, casualty: valD, suspension: valE, flooded: valF,
-                        infra: valG, agri: valH, roads: valI, power: valJ, incidents: valK, 
-                        other: document.getElementById('ld_Other').value.toUpperCase()
+                        type: 'ldrmc', lgu: exactLguName, reportTime: document.getElementById('dtDisplayText').innerText,
+                        weather: document.getElementById('ld_A').value.toUpperCase(), population: document.getElementById('ld_B').value.toUpperCase(),
+                        evacuation: document.getElementById('ld_C').value.toUpperCase(), casualty: document.getElementById('ld_D').value.toUpperCase(),
+                        suspension: document.getElementById('ld_E').value.toUpperCase(), flooded: document.getElementById('ld_F').value.toUpperCase(),
+                        infra: document.getElementById('ld_G').value.toUpperCase(), agri: document.getElementById('ld_H').value.toUpperCase(),
+                        roads: document.getElementById('ld_I').value.toUpperCase(), power: document.getElementById('ld_J').value.toUpperCase(),
+                        incidents: document.getElementById('ld_K').value.toUpperCase(), other: document.getElementById('ld_Other').value.toUpperCase()
                     };
 
                     let response = await fetch(GOOGLE_SCRIPT_URL, { method: 'POST', body: JSON.stringify(payload) });
                     let result = await response.json();
                     
                     if (result.status === "success" || result.status === 200) {
-                        updateMasterTable(exactLguId, payload); addTweetCard(exactLguName, payload);
+                        updateMasterTable(exactLguId, payload);
+                        addTweetCard(exactLguName, payload);
                         alert('LDRRMC Report saved successfully!');
                         document.querySelectorAll('#formLdrmc textarea').forEach(el => { el.value = ''; el.style.height = '40px'; });
-                        document.querySelectorAll('.tbl-input').forEach(el => el.value = '');
                         resetEncodingView(); switchToView('homeView');
                     } else throw new Error(result.message);
                 } 
@@ -930,22 +847,32 @@
                 // ---- PDRRMO ADVISORY SUBMISSION ----
                 else if (type === 'pdrrmo') {
                     const timestamp = document.getElementById('pdtDisplayText').innerText;
+                    
+                    // Determine if using TEXT mode or TABLE mode for Incidents and Work
                     const incMode = document.getElementById('wrapTableInc').style.display !== 'none' ? 'table' : 'text';
                     const incData = incMode === 'table' ? getTableData('tblInc', 'srcTblInc', timestamp) : combineWithSource('inpInc', 'srcInc', timestamp);
+
                     const workMode = document.getElementById('wrapTableWork').style.display !== 'none' ? 'table' : 'text';
                     const workData = workMode === 'table' ? getTableData('tblWork', 'srcTblWork', timestamp) : combineWithSource('inpWork', 'srcWork', timestamp);
 
                     const payload = {
-                        type: 'advisory', reportTime: timestamp, synopsis: combineWithSource('inpSyn', 'srcSyn', timestamp), 
-                        incidents: incData, work: workData, classes: combineWithSource('inpClass', 'srcClass', timestamp), calamity: combineWithSource('inpCal', 'srcCal', timestamp)
+                        type: 'advisory', reportTime: timestamp, 
+                        synopsis: combineWithSource('inpSyn', 'srcSyn', timestamp), 
+                        incidents: incData,
+                        work: workData, 
+                        classes: combineWithSource('inpClass', 'srcClass', timestamp), 
+                        calamity: combineWithSource('inpCal', 'srcCal', timestamp)
                     };
 
                     let response = await fetch(GOOGLE_SCRIPT_URL, { method: 'POST', body: JSON.stringify(payload) });
                     let result = await response.json();
                     
                     if (result.status === "success" || result.status === 200) {
-                        fetchHistoricalData(); alert("PDRRMO Advisory saved successfully.");
+                        // Immediately reload data to capture the correct merged history
+                        fetchHistoricalData();
+                        alert("PDRRMO Advisory saved successfully.");
                         ['inpSyn', 'srcSyn', 'inpInc', 'srcInc', 'inpWork', 'srcWork', 'inpClass', 'srcClass', 'inpCal', 'srcCal'].forEach(id => { const el = document.getElementById(id); el.value = ""; if(el.tagName.toLowerCase() === 'TEXTAREA') el.style.height = '40px'; });
+                        // Clear tables too
                         document.querySelectorAll('.tbl-input').forEach(el => el.value = '');
                         switchToView('homeView');
                     } else throw new Error(result.message);
@@ -956,17 +883,31 @@
                     const fileInput = document.getElementById(`${type}Pdf`);
                     const actionInput = type === 'council' ? document.getElementById('councilActionText').value : document.getElementById('partnerActionText').value;
                     const entityName = document.getElementById('secondaryCategory').value;
+                    
                     if (fileInput.files.length === 0) { alert("Please ensure a PDF is uploaded and previewed."); throw new Error("No File."); }
+                    
                     modalBtn.innerText = "UPLOADING FILE...";
-                    const file = fileInput.files[0]; const base64Data = await getBase64(file);
-                    const payload = { type: 'pdf', reportTime: document.getElementById('dtDisplayText').innerText, entity: entityName, action: actionInput.toUpperCase(), filename: file.name, mimeType: file.type, fileData: base64Data };
+                    const file = fileInput.files[0];
+                    const base64Data = await getBase64(file);
+                    
+                    const payload = {
+                        type: 'pdf', reportTime: document.getElementById('dtDisplayText').innerText,
+                        entity: entityName, action: actionInput.toUpperCase(), filename: file.name,
+                        mimeType: file.type, fileData: base64Data
+                    };
+
                     let response = await fetch(GOOGLE_SCRIPT_URL, { method: 'POST', body: JSON.stringify(payload) });
                     let result = await response.json();
+
                     if (result.status === "success") {
-                        alert("PDF Document saved successfully!"); addTweetCard(entityName, {action: payload.action}, true);
-                        fetchHistoricalData(); resetEncodingView(); switchToView('homeView');
+                        alert("PDF Document saved successfully to Google Drive & Sheets!");
+                        addTweetCard(entityName, {action: payload.action}, true);
+                        fetchHistoricalData();
+                        resetEncodingView();
+                        switchToView('homeView');
                     } else { throw new Error("Failed to process file on server."); }
                 }
+
             } catch(error) {
                 if(error.message !== "No File.") alert('System Action Failed: ' + error.message);
             } finally {
@@ -1084,12 +1025,19 @@
         setupDateTimePicker('dt'); setupDateTimePicker('pdt');
 
         function populatePdfRecords(pdfData) {
-            const select = document.getElementById('recordSelect'); select.innerHTML = '<option value="" disabled selected>Select a record...</option>';
-            let councilGroup = document.createElement('optgroup'); councilGroup.label = "Available Council & Partner Reports";
+            const select = document.getElementById('recordSelect');
+            select.innerHTML = '<option value="" disabled selected>Select a record...</option>';
+            
+            let councilGroup = document.createElement('optgroup');
+            councilGroup.label = "Available Council & Partner Reports";
+
             let count = 0;
             for (const council in pdfData) {
-                count++; let opt = document.createElement('option'); opt.value = pdfData[council].url;
-                opt.innerText = `${council} (As of: ${pdfData[council].timestamp})`; councilGroup.appendChild(opt);
+                count++;
+                let opt = document.createElement('option');
+                opt.value = pdfData[council].url; // URL of the PDF in Google Drive
+                opt.innerText = `${council} (As of: ${pdfData[council].timestamp})`;
+                councilGroup.appendChild(opt);
             }
             if (count > 0) { select.appendChild(councilGroup); } 
             else { select.innerHTML = '<option value="" disabled selected>No records found in database.</option>'; }
@@ -1102,53 +1050,86 @@
         }
 
         // =====================================================================
-        // LIVE FETCH SCRIPT
+        // LIVE PULL WITH SMART DATA RETENTION (SKELETON LOADERS)
         // =====================================================================
         function fetchHistoricalData() {
             fetch(GOOGLE_SCRIPT_URL)
-                .then(response => { if (!response.ok) throw new Error("Connection Blocked"); return response.json(); })
+                .then(response => {
+                    if (!response.ok) throw new Error("Connection Blocked (Check Google Script Permissions)");
+                    return response.json();
+                })
                 .then(result => {
-                    if (result.status === "error") { alert("Error: " + result.message); throw new Error(result.message); }
+                    if (result.status === "error") {
+                        alert("Database Connection Error: " + result.message);
+                        document.getElementById('generatedTimestamp').innerText = `Error: ${result.message}`;
+                        throw new Error(result.message);
+                    }
+
                     if(result.status === "success") {
+                        
+                        // 1. Process LDRRMC Data
                         if (result.data && result.data.length > 0) {
                             for(let i = 1; i < result.data.length; i++) {
-                                const row = result.data[i]; if(!row[1]) continue; 
+                                const row = result.data[i]; 
+                                if(!row[1]) continue; 
+                                
+                                // Clean up the name format in case old data has pipes (|)
                                 const cleanLguName = row[1].toString().split('|')[0].trim(); 
                                 const exactLguId = cleanLguName.replace(/\s+/g, ''); 
+                                
                                 const payload = { lgu: cleanLguName, reportTime: row[0], weather: row[2], population: row[3], evacuation: row[4], casualty: row[5], suspension: row[6], flooded: row[7], infra: row[8], agri: row[9], roads: row[10], power: row[11], incidents: row[12], other: row[13] };
                                 updateMasterTable(exactLguId, payload); addTweetCard(cleanLguName, payload);
                             }
                         }
+
+                        // 2. Process ADVISORY Data (SMART RETENTION FIX)
                         if (result.advisoryData && result.advisoryData.length > 1) {
                             let persistentData = { syn: 'NONE', inc: 'NONE', work: 'NONE', cls: 'NONE', cal: 'NONE', timestamp: '--' };
+                            
+                            // Loop through all history from top to bottom. Newer non-blank entries will continuously overwrite older ones, keeping the latest visible!
                             for(let i = 1; i < result.advisoryData.length; i++) {
                                 const row = result.advisoryData[i];
-                                if (row[1]) persistentData.syn = row[1]; if (row[2]) persistentData.inc = row[2];
-                                if (row[3]) persistentData.work = row[3]; if (row[4]) persistentData.cls = row[4];
-                                if (row[5]) persistentData.cal = row[5]; persistentData.timestamp = row[0];
+                                if (row[1]) persistentData.syn = row[1];
+                                if (row[2]) persistentData.inc = row[2];
+                                if (row[3]) persistentData.work = row[3];
+                                if (row[4]) persistentData.cls = row[4];
+                                if (row[5]) persistentData.cal = row[5];
+                                persistentData.timestamp = row[0]; // Capture the absolute newest submission time
                             }
+                            
                             document.getElementById('outSyn').innerText = persistentData.syn;
                             document.getElementById('outInc').innerText = persistentData.inc; 
                             document.getElementById('outWork').innerText = persistentData.work; 
                             document.getElementById('outClass').innerText = persistentData.cls; 
                             document.getElementById('outCal').innerText = persistentData.cal;
+                            
                             ['outSyn', 'outInc', 'outWork', 'outClass', 'outCal'].forEach(id => { document.getElementById(id).classList.remove('skeleton-box'); });
                             document.getElementById('generatedTimestamp').innerText = `Generated As Of: ${persistentData.timestamp}`;
                         } else {
                             ['outSyn', 'outInc', 'outWork', 'outClass', 'outCal'].forEach(id => { const el = document.getElementById(id); el.classList.remove('skeleton-box'); el.innerHTML = '<span class="placeholder-text">Awaiting data...</span>'; });
                         }
-                        if (result.pdfData) populatePdfRecords(result.pdfData);
+
+                        // 3. Process PDF Data (Dynamically populate dropdown)
+                        if (result.pdfData) {
+                            populatePdfRecords(result.pdfData);
+                        }
                     }
                 })
-                .catch(error => { console.error("Error:", error); })
+                .catch(error => {
+                    console.error("Error fetching data:", error);
+                    document.getElementById('generatedTimestamp').innerText = `Connection failed. Check permissions.`;
+                    document.getElementById('recordSelect').innerHTML = '<option value="" disabled selected>Error connecting to Database.</option>';
+                    alert("Dashboard failed to load data. The Google Script is blocking the connection. Please follow the 3 deployment rules.");
+                })
                 .finally(() => {
                     document.querySelectorAll('.status-badge.skeleton-box').forEach(badge => { badge.classList.remove('skeleton-box'); badge.classList.add('pending'); badge.innerHTML = 'Awaiting Report'; });
                     document.querySelectorAll('.skeleton-card').forEach(t => t.remove());
                     const wall = document.getElementById('tweetWallSection');
-                    if (wall.children.length === 0) { wall.innerHTML = `<div class="tweet-card"><div class="tweet-header"><div class="tweet-avatar"><i data-lucide="package" style="width:14px;"></i></div><div class="tweet-meta"><span class="tweet-name">System Update</span></div></div><div class="tweet-body">Monitoring Active.</div></div>`; }
+                    if (wall.children.length === 0) { wall.innerHTML = `<div class="tweet-card"><div class="tweet-header"><div class="tweet-avatar"><i data-lucide="package" style="width:14px;"></i></div><div class="tweet-meta"><span class="tweet-name">System Update</span><span class="tweet-handle">Monitoring Active</span></div></div><div class="tweet-body">The Situation Overview board is now listening for dynamic LDRRMC submissions.</div><div class="tweet-footer"><span>Admin Message</span><span>Just now</span></div></div>`; }
                     lucide.createIcons({ attrs: { 'stroke-width': 1.5 } });
                 });
         }
+
         window.onload = function() { fetchHistoricalData(); };
     </script>
 </body>
