@@ -26,45 +26,18 @@
 
         * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Plus Jakarta Sans', sans-serif; }
 
-        body {
-            background-color: var(--bg-page);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            height: 100vh;
-            width: 100vw;
-            overflow: hidden;
-            padding: 15px; 
-            -webkit-font-smoothing: antialiased; 
-        }
+        body { background-color: var(--bg-page); display: flex; align-items: center; justify-content: center; height: 100vh; width: 100vw; overflow: hidden; padding: 15px; -webkit-font-smoothing: antialiased; }
 
-        @keyframes slideUpFade {
-            from { opacity: 0; transform: translateY(12px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
+        @keyframes slideUpFade { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: translateY(0); } }
         @keyframes skeleton-loading { 0% { background-position: 200% 0; } 100% { background-position: -200% 0; } }
         
-        .skeleton-box {
-            background: linear-gradient(90deg, #f1f5f9 25%, #f8fafc 50%, #f1f5f9 75%);
-            background-size: 200% 100%; animation: skeleton-loading 1.5s infinite linear;
-            border-radius: 6px; color: transparent !important; border: none !important; pointer-events: none;
-        }
+        .skeleton-box { background: linear-gradient(90deg, #f1f5f9 25%, #f8fafc 50%, #f1f5f9 75%); background-size: 200% 100%; animation: skeleton-loading 1.5s infinite linear; border-radius: 6px; color: transparent !important; border: none !important; pointer-events: none; }
 
-        .app-container {
-            display: flex;
-            width: 100%;
-            height: 100%;
-            max-width: 1800px; 
-            background-color: var(--bg-app);
-            border-radius: 20px; 
-            box-shadow: 0 10px 40px rgba(15, 23, 42, 0.06);
-            overflow: hidden;
-        }
+        .app-container { display: flex; width: 100%; height: 100%; max-width: 1800px; background-color: var(--bg-app); border-radius: 20px; box-shadow: 0 10px 40px rgba(15, 23, 42, 0.06); overflow: hidden; }
 
         /* --- SIDEBAR --- */
         .sidebar { width: 230px; background-color: var(--bg-sidebar); display: flex; flex-direction: column; padding: 24px 0; position: relative; }
-        .profile { display: flex; align-items: center; gap: 12px; margin-bottom: 35px; padding: 0 20px; transition: var(--transition); }
+        .profile { display: flex; align-items: center; gap: 12px; margin-bottom: 35px; padding: 0 20px; transition: var(--transition); cursor: pointer;}
         .profile:hover { opacity: 0.8; }
         .profile-img { width: 32px; height: 32px; background: #ffffff; border-radius: 8px; display: flex; justify-content: center; align-items: center; color: var(--bg-sidebar); box-shadow: 0 2px 8px rgba(0,0,0,0.2); }
         .profile-info h4 { font-size: 12px; font-weight: 600; color: #ffffff; margin-bottom: 2px; letter-spacing: -0.2px;}
@@ -85,7 +58,6 @@
         .view-section { display: none; }
         .view-section.active { display: block; animation: slideUpFade 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
 
-        /* --- HEADERS --- */
         .header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; padding-bottom: 15px; border-bottom: 1px solid transparent; }
         .header-title h1 { font-size: 16px; font-weight: 700; color: var(--text-dark); display: flex; align-items: center; gap: 8px; letter-spacing: -0.3px;}
         .header-title p { font-size: 10px; color: var(--text-gray); margin-top: 4px; font-weight: 500;}
@@ -100,31 +72,16 @@
         .main-report { flex: 1; min-width: 0; }
         .side-feed { width: 260px; flex-shrink: 0; }
         
-        /* ALIGNS BOTH SIDES EQUALLY TO FIX EMPTY SPACE */
         .dashboard-content-grid { display: grid; grid-template-columns: 1.1fr 1fr; gap: 20px; align-items: stretch; }
 
         /* --- RE-DESIGNED SITREP ADVISORY PANEL --- */
-        .sitrep-panel {
-            display: flex; flex-direction: column; height: 100%;
-            background: linear-gradient(180deg, #ffffff 0%, #f8fafc 100%);
-            border-top: 4px solid var(--bg-sidebar); 
-        }
+        .sitrep-panel { display: flex; flex-direction: column; height: 100%; background: linear-gradient(180deg, #ffffff 0%, #f8fafc 100%); border-top: 4px solid var(--bg-sidebar); }
         .data-grid { display: flex; flex-direction: column; gap: 16px; flex: 1; }
         .data-item { display: flex; flex-direction: column; gap: 4px; }
         .data-item.full-width { flex: 1; } 
         
-        .data-label { 
-            font-size: 8px; font-weight: 800; color: var(--accent); 
-            text-transform: uppercase; letter-spacing: 0.5px; border-bottom: 1px solid #e2e8f0; padding-bottom: 4px;
-        }
-        
-        /* Fixed "Type Writer" issue */
-        .data-value { 
-            background-color: transparent; color: var(--text-dark); 
-            padding: 4px 0 0 0; font-size: 11px; font-weight: 500; line-height: 1.7;
-            border: none; white-space: pre-wrap; 
-        }
-
+        .data-label { font-size: 8px; font-weight: 800; color: var(--accent); text-transform: uppercase; letter-spacing: 0.5px; border-bottom: 1px solid #e2e8f0; padding-bottom: 4px;}
+        .data-value { background-color: transparent; color: var(--text-dark); padding: 4px 0 0 0; font-size: 11px; font-weight: 500; line-height: 1.7; border: none; white-space: pre-wrap; }
         .placeholder-text { font-size: 9px; color: var(--text-gray); opacity: 0.5; font-style: italic; font-weight: 400; }
 
         /* --- TABLES --- */
@@ -163,10 +120,10 @@
         .btn-primary { background-color: var(--btn-dark); color: #ffffff; border: none; padding: 8px 16px;}
         .btn-primary:hover { background-color: var(--btn-dark-hover); box-shadow: 0 4px 12px rgba(15, 23, 42, 0.15);}
         .btn-sm { padding: 5px 10px; font-size: 9px; border-radius: 6px;}
-        .btn-danger { border-color: #ef4444; color: #ef4444; }
+        .btn-danger { background-color: #ffffff; border: 1px solid #ef4444; color: #ef4444; }
         .btn-danger:hover { background-color: #fef2f2; border-color: #dc2626; color: #dc2626; }
 
-        /* --- FORMS --- */
+        /* --- FORMS & TABLES --- */
         .form-group { margin-bottom: 12px; }
         .form-group label { display: block; font-size: 8px; font-weight: 700; color: var(--text-gray); margin-bottom: 4px; text-transform: uppercase; letter-spacing: 0.5px;}
         .form-control { width: 100%; background-color: var(--input-bg); border: 1px solid var(--card-border); color: var(--text-dark); padding: 8px 12px; border-radius: 8px; font-size: 11px; outline: none; transition: var(--transition); font-weight: 500;}
@@ -180,6 +137,11 @@
         .advisory-wrapper .form-control { border: none; border-radius: 0; background: transparent; box-shadow: none; padding-bottom: 8px; }
         .advisory-wrapper .source-input { width: 100%; border: none; background-color: transparent; border-top: 1px dashed #cbd5e1; padding: 8px 12px; font-size: 9px; color: var(--text-gray); outline: none; font-style: italic; transition: var(--transition);}
         
+        /* Table Dynamic Input Styles */
+        .tbl-input { width: 100%; border: none; outline: none; padding: 6px 8px; font-size: 10px; background: transparent; color: var(--text-dark); font-weight: 600;}
+        .tbl-input:focus { background: #f8fafc; }
+        .table-input-wrapper th { font-size: 8px; font-weight: 700; color: var(--text-gray); text-transform: uppercase;}
+
         .upload-area { border: 2px dashed #cbd5e1; border-radius: 10px; padding: 24px; text-align: center; background-color: var(--input-bg); cursor: pointer; transition: var(--transition); margin-bottom: 16px;}
         .upload-area:hover { border-color: var(--btn-dark); background-color: #f1f5f9; }
         .upload-area i { width: 20px; height: 20px; color: var(--text-dark); transition: var(--transition);}
@@ -230,7 +192,6 @@
         .modal-item.wide { grid-column: span 2; border-top: 1px solid var(--card-border); padding-top: 10px; margin-top: 4px;}
         .modal-item label { font-size: 8px; color: var(--text-gray); font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px;}
         .modal-item span { font-size: 11px; color: var(--text-dark); font-weight: 600;}
-
     </style>
 </head>
 <body>
@@ -265,7 +226,7 @@
     <div class="app-container">
         
         <aside class="sidebar">
-            <div class="profile" onclick="switchToView('homeView')" style="cursor: pointer;">
+            <div class="profile" onclick="switchToView('homeView')">
                 <div class="profile-img"><i data-lucide="shield-check" style="width: 18px; height: 18px;"></i></div>
                 <div class="profile-info"><h4>Tarlac PDRRMO</h4><p>Monitoring Center</p></div>
             </div>
@@ -505,7 +466,7 @@
                     <div class="header-title"><h1>PDRRMO SitRep and Advisory Report</h1><p>LDRRMCs All Update Consolidated Report.</p></div>
                 </div>
                 
-                <div class="panel-card" style="max-width: 650px; margin: 0 auto;">
+                <div class="panel-card" style="max-width: 750px; margin: 0 auto;">
                     <div style="display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 20px;">
                         <h3 style="font-size: 11px; font-weight: 700; color: var(--text-dark);">Enter Advisory Details Below:</h3>
                         <div style="position: relative; display: flex; align-items: center; gap: 8px; padding-bottom: 2px;">
@@ -527,8 +488,79 @@
                     </div>
                 
                     <div class="form-group"><label>A. Synopsis</label><div class="advisory-wrapper"><textarea id="inpSyn" class="form-control uppercase-input" rows="2"></textarea><input type="text" id="srcSyn" class="source-input uppercase-input" placeholder="Source of information (Optional)..."></div></div>
-                    <div class="form-group"><label>B. Other Incidents Monitored (PDRRMO Responses)</label><div class="advisory-wrapper"><textarea id="inpInc" class="form-control uppercase-input" rows="2"></textarea><input type="text" id="srcInc" class="source-input uppercase-input" placeholder="Source of information (Optional)..."></div></div>
-                    <div class="form-group"><label>C. Suspension on Work (by National/ Provincial level):</label><div class="advisory-wrapper"><textarea id="inpWork" class="form-control uppercase-input" rows="1"></textarea><input type="text" id="srcWork" class="source-input uppercase-input" placeholder="Source of information (Optional)..."></div></div>
+                    
+                    <!-- DYNAMIC TOGGLE 1: INCIDENTS -->
+                    <div class="form-group">
+                        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:4px;">
+                            <label style="margin:0;">B. Other Incidents Monitored (PDRRMO Responses)</label>
+                            <button type="button" class="btn btn-sm" style="padding: 4px 8px; font-size: 8px;" onclick="toggleInputMode('Inc')"><i data-lucide="arrow-left-right" style="width:12px; height:12px;"></i> SWITCH TO TABLE</button>
+                        </div>
+                        <div class="advisory-wrapper" id="wrapTextInc">
+                            <textarea id="inpInc" class="form-control uppercase-input" rows="2"></textarea>
+                            <input type="text" id="srcInc" class="source-input uppercase-input" placeholder="Source of information (Optional)...">
+                        </div>
+                        <div class="table-input-wrapper" id="wrapTableInc" style="display:none; border: 1px solid var(--card-border); border-radius: 8px; overflow: hidden; background: #fff;">
+                            <table style="width:100%; border-collapse: collapse;" id="tblInc">
+                                <thead style="background: var(--input-bg);">
+                                    <tr>
+                                        <th style="padding: 6px; border-bottom: 1px solid var(--card-border); border-right: 1px solid var(--card-border); width: 25%;">AREA/LGU</th>
+                                        <th style="padding: 6px; border-bottom: 1px solid var(--card-border); border-right: 1px solid var(--card-border); width: 45%;">INCIDENT DETAILS</th>
+                                        <th style="padding: 6px; border-bottom: 1px solid var(--card-border);">REMARKS / ACTION</th>
+                                        <th style="padding: 6px; border-bottom: 1px solid var(--card-border); width: 30px;"></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td style="padding: 0; border-bottom: 1px solid var(--card-border); border-right: 1px solid var(--card-border);"><input type="text" class="tbl-input uppercase-input"></td>
+                                        <td style="padding: 0; border-bottom: 1px solid var(--card-border); border-right: 1px solid var(--card-border);"><input type="text" class="tbl-input uppercase-input"></td>
+                                        <td style="padding: 0; border-bottom: 1px solid var(--card-border);"><input type="text" class="tbl-input uppercase-input"></td>
+                                        <td style="padding: 4px; text-align: center; border-bottom: 1px solid var(--card-border);"><button class="btn btn-danger" style="padding: 2px 4px; border-radius:4px;" onclick="this.closest('tr').remove()"><i data-lucide="trash-2" style="width:10px; height:10px;"></i></button></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <div style="padding: 6px; background: var(--input-bg); border-top: 1px solid var(--card-border);">
+                                <button type="button" class="btn btn-sm" onclick="addTableRow('tblInc')">+ Add Row</button>
+                                <input type="text" id="srcTblInc" class="source-input uppercase-input" placeholder="Source of information (Optional)..." style="margin-top: 6px; width: 100%; background: transparent; border: none; border-top: 1px dashed #cbd5e1; padding-top: 6px; font-size: 9px; outline: none;">
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- DYNAMIC TOGGLE 2: WORK SUSPENSION -->
+                    <div class="form-group">
+                        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:4px;">
+                            <label style="margin:0;">C. Suspension on Work (by National/ Provincial level):</label>
+                            <button type="button" class="btn btn-sm" style="padding: 4px 8px; font-size: 8px;" onclick="toggleInputMode('Work')"><i data-lucide="arrow-left-right" style="width:12px; height:12px;"></i> SWITCH TO TABLE</button>
+                        </div>
+                        <div class="advisory-wrapper" id="wrapTextWork">
+                            <textarea id="inpWork" class="form-control uppercase-input" rows="1"></textarea>
+                            <input type="text" id="srcWork" class="source-input uppercase-input" placeholder="Source of information (Optional)...">
+                        </div>
+                        <div class="table-input-wrapper" id="wrapTableWork" style="display:none; border: 1px solid var(--card-border); border-radius: 8px; overflow: hidden; background: #fff;">
+                            <table style="width:100%; border-collapse: collapse;" id="tblWork">
+                                <thead style="background: var(--input-bg);">
+                                    <tr>
+                                        <th style="padding: 6px; border-bottom: 1px solid var(--card-border); border-right: 1px solid var(--card-border); width: 25%;">AREA/LGU</th>
+                                        <th style="padding: 6px; border-bottom: 1px solid var(--card-border); border-right: 1px solid var(--card-border); width: 45%;">LEVEL / AGENCY</th>
+                                        <th style="padding: 6px; border-bottom: 1px solid var(--card-border);">STATUS</th>
+                                        <th style="padding: 6px; border-bottom: 1px solid var(--card-border); width: 30px;"></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td style="padding: 0; border-bottom: 1px solid var(--card-border); border-right: 1px solid var(--card-border);"><input type="text" class="tbl-input uppercase-input"></td>
+                                        <td style="padding: 0; border-bottom: 1px solid var(--card-border); border-right: 1px solid var(--card-border);"><input type="text" class="tbl-input uppercase-input"></td>
+                                        <td style="padding: 0; border-bottom: 1px solid var(--card-border);"><input type="text" class="tbl-input uppercase-input"></td>
+                                        <td style="padding: 4px; text-align: center; border-bottom: 1px solid var(--card-border);"><button class="btn btn-danger" style="padding: 2px 4px; border-radius:4px;" onclick="this.closest('tr').remove()"><i data-lucide="trash-2" style="width:10px; height:10px;"></i></button></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <div style="padding: 6px; background: var(--input-bg); border-top: 1px solid var(--card-border);">
+                                <button type="button" class="btn btn-sm" onclick="addTableRow('tblWork')">+ Add Row</button>
+                                <input type="text" id="srcTblWork" class="source-input uppercase-input" placeholder="Source of information (Optional)..." style="margin-top: 6px; width: 100%; background: transparent; border: none; border-top: 1px dashed #cbd5e1; padding-top: 6px; font-size: 9px; outline: none;">
+                            </div>
+                        </div>
+                    </div>
+
                     <div class="form-group"><label>D. Suspension on Classes (by National/ Provincial level):</label><div class="advisory-wrapper"><textarea id="inpClass" class="form-control uppercase-input" rows="1"></textarea><input type="text" id="srcClass" class="source-input uppercase-input" placeholder="Source of information (Optional)..."></div></div>
                     <div class="form-group"><label>E. Declaration of State of Calamity:</label><div class="advisory-wrapper"><textarea id="inpCal" class="form-control uppercase-input" rows="1"></textarea><input type="text" id="srcCal" class="source-input uppercase-input" placeholder="Source of information (Optional)..."></div></div>
                     <button class="btn btn-primary" style="width: 100%; margin-top: 12px;" onclick="openSaveModal('pdrrmo')">SAVE REPORT</button>
@@ -560,7 +592,7 @@
         // =====================================================================
         // YOUR ACTIVE GOOGLE APPS SCRIPT WEB APP URL
         // =====================================================================
-        const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxtTYvN3Pnrsjp2X1aejEJgBA1pkHsE8Y0CLauBqfsycR6mYkvUfZ1Ro_eJXDjAqBV4/exec"; 
+        const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbybeYduotR3tQAQO4XsPOAyMwvX2R3XUHmpMnv3AKpASzFyxjwwbokjA49ACDTQjBGZ/exec"; 
 
         // ----------------------------------------------------
         // Auto-Expanding Text Areas & Navigation
@@ -648,14 +680,76 @@
         function closeLguModal() { lguModal.classList.remove('show'); }
 
         // ----------------------------------------------------
-        // Base 64 Conversion
+        // Dynamic Table Input Logics
+        // ----------------------------------------------------
+        function toggleInputMode(section) {
+            const wrapText = document.getElementById(`wrapText${section}`);
+            const wrapTable = document.getElementById(`wrapTable${section}`);
+            const btn = event.currentTarget;
+            
+            if (wrapText.style.display !== 'none') {
+                wrapText.style.display = 'none';
+                wrapTable.style.display = 'block';
+                btn.innerHTML = '<i data-lucide="align-left" style="width:12px; height:12px;"></i> SWITCH TO TEXT';
+            } else {
+                wrapText.style.display = 'block';
+                wrapTable.style.display = 'none';
+                btn.innerHTML = '<i data-lucide="arrow-left-right" style="width:12px; height:12px;"></i> SWITCH TO TABLE';
+            }
+            lucide.createIcons({ attrs: { 'stroke-width': 1.5 } });
+        }
+
+        function addTableRow(tableId) {
+            const tbody = document.querySelector(`#${tableId} tbody`);
+            const tr = document.createElement('tr');
+            tr.innerHTML = `
+                <td style="padding: 0; border-bottom: 1px solid var(--card-border); border-right: 1px solid var(--card-border);"><input type="text" class="tbl-input uppercase-input"></td>
+                <td style="padding: 0; border-bottom: 1px solid var(--card-border); border-right: 1px solid var(--card-border);"><input type="text" class="tbl-input uppercase-input"></td>
+                <td style="padding: 0; border-bottom: 1px solid var(--card-border);"><input type="text" class="tbl-input uppercase-input"></td>
+                <td style="padding: 4px; text-align: center; border-bottom: 1px solid var(--card-border);"><button class="btn btn-danger" style="padding: 2px 4px; border-radius:4px;" onclick="this.closest('tr').remove()"><i data-lucide="trash-2" style="width:10px; height:10px;"></i></button></td>
+            `;
+            tbody.appendChild(tr);
+            lucide.createIcons({ attrs: { 'stroke-width': 1.5 } });
+        }
+
+        function getTableData(tblId, srcId, timestamp) {
+            const tbody = document.querySelector(`#${tblId} tbody`);
+            const rows = tbody.querySelectorAll('tr');
+            let hasData = false;
+            let tableStr = `[UPDATE AS OF: ${timestamp}]\n`;
+            
+            rows.forEach(row => {
+                const inputs = row.querySelectorAll('input');
+                const col1 = inputs[0].value.trim().toUpperCase();
+                const col2 = inputs[1].value.trim().toUpperCase();
+                const col3 = inputs[2].value.trim().toUpperCase();
+                
+                if (col1 || col2 || col3) {
+                    hasData = true;
+                    let line = [];
+                    if (col1) line.push(`AREA: ${col1}`);
+                    if (col2) line.push(`DETAILS: ${col2}`);
+                    if (col3) line.push(`REMARKS: ${col3}`);
+                    tableStr += "• " + line.join(" | ") + "\n";
+                }
+            });
+            
+            if (!hasData) return "";
+            
+            let src = document.getElementById(srcId).value.trim().toUpperCase();
+            if (src) tableStr += `\n[SOURCE: ${src}]`;
+            
+            return tableStr.trim();
+        }
+
+        // ----------------------------------------------------
+        // Base 64 Conversion & PDF
         // ----------------------------------------------------
         function getBase64(file) {
             return new Promise((resolve, reject) => {
                 const reader = new FileReader();
                 reader.readAsDataURL(file);
                 reader.onload = () => {
-                    // Extract Base64 string from data URL
                     let encoded = reader.result.toString().replace(/^data:(.*,)?/, '');
                     if ((encoded.length % 4) > 0) { encoded += '='.repeat(4 - (encoded.length % 4)); }
                     resolve(encoded);
@@ -664,9 +758,6 @@
             });
         }
 
-        // ----------------------------------------------------
-        // PDF Upload & Preview Handlers
-        // ----------------------------------------------------
         function handleFileSelect(type) {
             const fileInput = document.getElementById(`${type}Pdf`);
             if (fileInput.files.length > 0) document.getElementById(`btnPreview${capitalize(type)}`).style.display = 'block';
@@ -704,12 +795,16 @@
         function closeSaveModal() { saveModal.classList.remove('show'); }
         document.getElementById('btnConfirmModalYes').onclick = function() { executeSave(currentSaveType); };
 
-        function combineWithSource(valId, srcId) {
+        function combineWithSource(valId, srcId, timestamp) {
             let val = document.getElementById(valId).value.trim().toUpperCase();
             let src = document.getElementById(srcId).value.trim().toUpperCase();
             if (!val) return ""; 
-            if (val && src) return val + "\n[SOURCE: " + src + "]"; 
-            return val;
+            
+            // Add the Timestamp separation formatting directly into the string
+            let finalStr = `[UPDATE AS OF: ${timestamp}]\n${val}`;
+            if (src) finalStr += `\n[SOURCE: ${src}]`; 
+            
+            return finalStr;
         }
 
         // ----------------------------------------------------
@@ -751,25 +846,34 @@
                 
                 // ---- PDRRMO ADVISORY SUBMISSION ----
                 else if (type === 'pdrrmo') {
+                    const timestamp = document.getElementById('pdtDisplayText').innerText;
+                    
+                    // Determine if using TEXT mode or TABLE mode for Incidents and Work
+                    const incMode = document.getElementById('wrapTableInc').style.display !== 'none' ? 'table' : 'text';
+                    const incData = incMode === 'table' ? getTableData('tblInc', 'srcTblInc', timestamp) : combineWithSource('inpInc', 'srcInc', timestamp);
+
+                    const workMode = document.getElementById('wrapTableWork').style.display !== 'none' ? 'table' : 'text';
+                    const workData = workMode === 'table' ? getTableData('tblWork', 'srcTblWork', timestamp) : combineWithSource('inpWork', 'srcWork', timestamp);
+
                     const payload = {
-                        type: 'advisory', reportTime: document.getElementById('pdtDisplayText').innerText, 
-                        synopsis: combineWithSource('inpSyn', 'srcSyn'), incidents: combineWithSource('inpInc', 'srcInc'),
-                        work: combineWithSource('inpWork', 'srcWork'), classes: combineWithSource('inpClass', 'srcClass'), calamity: combineWithSource('inpCal', 'srcCal')
+                        type: 'advisory', reportTime: timestamp, 
+                        synopsis: combineWithSource('inpSyn', 'srcSyn', timestamp), 
+                        incidents: incData,
+                        work: workData, 
+                        classes: combineWithSource('inpClass', 'srcClass', timestamp), 
+                        calamity: combineWithSource('inpCal', 'srcCal', timestamp)
                     };
 
                     let response = await fetch(GOOGLE_SCRIPT_URL, { method: 'POST', body: JSON.stringify(payload) });
                     let result = await response.json();
                     
                     if (result.status === "success" || result.status === 200) {
-                        document.getElementById('outSyn').innerText = payload.synopsis || 'NONE';
-                        document.getElementById('outInc').innerText = payload.incidents || 'NONE';
-                        document.getElementById('outWork').innerText = payload.work || 'NONE';
-                        document.getElementById('outClass').innerText = payload.classes || 'NONE';
-                        document.getElementById('outCal').innerText = payload.calamity || 'NONE';
-                        ['outSyn', 'outInc', 'outWork', 'outClass', 'outCal'].forEach(id => { document.getElementById(id).classList.remove('skeleton-box'); });
-                        document.getElementById('generatedTimestamp').innerText = `Generated As Of: ${payload.reportTime}`;
+                        // Immediately reload data to capture the correct merged history
+                        fetchHistoricalData();
                         alert("PDRRMO Advisory saved successfully.");
                         ['inpSyn', 'srcSyn', 'inpInc', 'srcInc', 'inpWork', 'srcWork', 'inpClass', 'srcClass', 'inpCal', 'srcCal'].forEach(id => { const el = document.getElementById(id); el.value = ""; if(el.tagName.toLowerCase() === 'TEXTAREA') el.style.height = '40px'; });
+                        // Clear tables too
+                        document.querySelectorAll('.tbl-input').forEach(el => el.value = '');
                         switchToView('homeView');
                     } else throw new Error(result.message);
                 } 
@@ -787,13 +891,9 @@
                     const base64Data = await getBase64(file);
                     
                     const payload = {
-                        type: 'pdf',
-                        reportTime: document.getElementById('dtDisplayText').innerText,
-                        entity: entityName,
-                        action: actionInput.toUpperCase(),
-                        filename: file.name,
-                        mimeType: file.type,
-                        fileData: base64Data
+                        type: 'pdf', reportTime: document.getElementById('dtDisplayText').innerText,
+                        entity: entityName, action: actionInput.toUpperCase(), filename: file.name,
+                        mimeType: file.type, fileData: base64Data
                     };
 
                     let response = await fetch(GOOGLE_SCRIPT_URL, { method: 'POST', body: JSON.stringify(payload) });
@@ -802,7 +902,7 @@
                     if (result.status === "success") {
                         alert("PDF Document saved successfully to Google Drive & Sheets!");
                         addTweetCard(entityName, {action: payload.action}, true);
-                        fetchHistoricalData(); // Refresh the dropdown dynamically
+                        fetchHistoricalData();
                         resetEncodingView();
                         switchToView('homeView');
                     } else { throw new Error("Failed to process file on server."); }
@@ -924,9 +1024,6 @@
         }
         setupDateTimePicker('dt'); setupDateTimePicker('pdt');
 
-        // ----------------------------------------------------
-        // Populate PDF Select Logic
-        // ----------------------------------------------------
         function populatePdfRecords(pdfData) {
             const select = document.getElementById('recordSelect');
             select.innerHTML = '<option value="" disabled selected>Select a record...</option>';
@@ -942,26 +1039,18 @@
                 opt.innerText = `${council} (As of: ${pdfData[council].timestamp})`;
                 councilGroup.appendChild(opt);
             }
-
-            if (count > 0) {
-                select.appendChild(councilGroup);
-            } else {
-                select.innerHTML = '<option value="" disabled selected>No records found in database.</option>';
-            }
+            if (count > 0) { select.appendChild(councilGroup); } 
+            else { select.innerHTML = '<option value="" disabled selected>No records found in database.</option>'; }
         }
 
         function viewSelectedRecord() {
             const url = document.getElementById('recordSelect').value;
-            if(url) {
-                // Open PDF URL in new tab directly (avoids iframe blocking issues)
-                window.open(url, '_blank'); 
-            } else {
-                alert("Please select a record from the dropdown first.");
-            }
+            if(url) { window.open(url, '_blank');  } 
+            else { alert("Please select a record from the dropdown first."); }
         }
 
         // =====================================================================
-        // LIVE PULL WITH SKELETON LOADERS
+        // LIVE PULL WITH SMART DATA RETENTION (SKELETON LOADERS)
         // =====================================================================
         function fetchHistoricalData() {
             fetch(GOOGLE_SCRIPT_URL)
@@ -979,42 +1068,43 @@
                     if(result.status === "success") {
                         
                         // 1. Process LDRRMC Data
-if (result.data && result.data.length > 0) {
-    for(let i = 1; i < result.data.length; i++) {
-        const row = result.data[i]; 
-        if(!row[1]) continue; 
-        
-        // BULLETPROOF FIX: Splits the name at the "|" symbol to isolate the LGU name perfectly
-        const cleanLguName = row[1].toString().split('|')[0].trim(); 
-        const exactLguId = cleanLguName.replace(/\s+/g, ''); 
-        
-        const payload = { 
-            lgu: cleanLguName, 
-            reportTime: row[0], 
-            weather: row[2], 
-            population: row[3], 
-            evacuation: row[4], 
-            casualty: row[5], 
-            suspension: row[6], 
-            flooded: row[7], 
-            infra: row[8], 
-            agri: row[9], 
-            roads: row[10], 
-            power: row[11], 
-            incidents: row[12], 
-            other: row[13] 
-        };
-        updateMasterTable(exactLguId, payload); 
-        addTweetCard(cleanLguName, payload);
-    }
-}
+                        if (result.data && result.data.length > 0) {
+                            for(let i = 1; i < result.data.length; i++) {
+                                const row = result.data[i]; 
+                                if(!row[1]) continue; 
+                                
+                                // Clean up the name format in case old data has pipes (|)
+                                const cleanLguName = row[1].toString().split('|')[0].trim(); 
+                                const exactLguId = cleanLguName.replace(/\s+/g, ''); 
+                                
+                                const payload = { lgu: cleanLguName, reportTime: row[0], weather: row[2], population: row[3], evacuation: row[4], casualty: row[5], suspension: row[6], flooded: row[7], infra: row[8], agri: row[9], roads: row[10], power: row[11], incidents: row[12], other: row[13] };
+                                updateMasterTable(exactLguId, payload); addTweetCard(cleanLguName, payload);
+                            }
+                        }
 
-                        // 2. Process ADVISORY Data
+                        // 2. Process ADVISORY Data (SMART RETENTION FIX)
                         if (result.advisoryData && result.advisoryData.length > 1) {
-                            const latestAdvisory = result.advisoryData[result.advisoryData.length - 1]; 
-                            document.getElementById('outSyn').innerText = latestAdvisory[1] || 'NONE'; document.getElementById('outInc').innerText = latestAdvisory[2] || 'NONE'; document.getElementById('outWork').innerText = latestAdvisory[3] || 'NONE'; document.getElementById('outClass').innerText = latestAdvisory[4] || 'NONE'; document.getElementById('outCal').innerText = latestAdvisory[5] || 'NONE';
+                            let persistentData = { syn: 'NONE', inc: 'NONE', work: 'NONE', cls: 'NONE', cal: 'NONE', timestamp: '--' };
+                            
+                            // Loop through all history from top to bottom. Newer non-blank entries will continuously overwrite older ones, keeping the latest visible!
+                            for(let i = 1; i < result.advisoryData.length; i++) {
+                                const row = result.advisoryData[i];
+                                if (row[1]) persistentData.syn = row[1];
+                                if (row[2]) persistentData.inc = row[2];
+                                if (row[3]) persistentData.work = row[3];
+                                if (row[4]) persistentData.cls = row[4];
+                                if (row[5]) persistentData.cal = row[5];
+                                persistentData.timestamp = row[0]; // Capture the absolute newest submission time
+                            }
+                            
+                            document.getElementById('outSyn').innerText = persistentData.syn;
+                            document.getElementById('outInc').innerText = persistentData.inc; 
+                            document.getElementById('outWork').innerText = persistentData.work; 
+                            document.getElementById('outClass').innerText = persistentData.cls; 
+                            document.getElementById('outCal').innerText = persistentData.cal;
+                            
                             ['outSyn', 'outInc', 'outWork', 'outClass', 'outCal'].forEach(id => { document.getElementById(id).classList.remove('skeleton-box'); });
-                            document.getElementById('generatedTimestamp').innerText = `Generated As Of: ${latestAdvisory[0]}`;
+                            document.getElementById('generatedTimestamp').innerText = `Generated As Of: ${persistentData.timestamp}`;
                         } else {
                             ['outSyn', 'outInc', 'outWork', 'outClass', 'outCal'].forEach(id => { const el = document.getElementById(id); el.classList.remove('skeleton-box'); el.innerHTML = '<span class="placeholder-text">Awaiting data...</span>'; });
                         }
