@@ -262,7 +262,9 @@
         .upload-area i { width: 20px; height: 20px; color: var(--text-dark); transition: var(--transition);}
         .upload-area:hover i { transform: translateY(-3px); }
         .upload-area p { font-size: 10px; font-weight: 600; color: var(--text-gray); margin-top: 6px;}
-        .pdf-viewer { display: none; width: 100%; height: 350px; border-radius: 10px; border: 1px solid var(--card-border); margin-bottom: 16px; background-color: #f8fafc;}
+        
+        /* UPDATED: PDF VIEWER INCREASED HEIGHT */
+        .pdf-viewer { display: none; width: 100%; height: 600px; border-radius: 10px; border: 1px solid var(--card-border); margin-bottom: 16px; background-color: #f8fafc;}
 
         #dynamicWorkflowArea { display: none; margin-top: 16px; }
         .workflow-form { display: none; }
@@ -335,6 +337,7 @@
 </head>
 <body>
 
+    <!-- SAVE MODAL -->
     <div id="saveModal" class="modal-overlay">
         <div class="modal-card" style="text-align: center; width: 320px;">
             <div style="width: 44px; height: 44px; background: var(--input-bg); border-radius: 10px; display: flex; align-items: center; justify-content: center; margin: 0 auto 12px auto; border: 1px solid var(--card-border);">
@@ -349,6 +352,7 @@
         </div>
     </div>
 
+    <!-- DETAILS MODAL -->
     <div id="lguDetailModal" class="modal-overlay">
         <div class="modal-card" style="width: 550px;">
             <div style="display:flex; justify-content:space-between; align-items:flex-start; border-bottom: 1px solid var(--card-border); padding-bottom: 12px; margin-bottom: 12px;">
@@ -362,8 +366,10 @@
         </div>
     </div>
 
+    <!-- MAIN APP CONTAINER -->
     <div class="app-container">
         
+        <!-- SIDEBAR -->
         <aside class="sidebar">
             <div class="profile" onclick="switchToView('homeView')" style="cursor: pointer;" title="Back to Situation Overview">
                 <div class="profile-img"><i data-lucide="shield-check" style="width: 18px; height: 18px;"></i></div>
@@ -389,8 +395,10 @@
             </ul>
         </aside>
 
+        <!-- MAIN CONTENT -->
         <main class="main-content">
             
+            <!-- 1. SITUATION OVERVIEW -->
             <div id="homeView" class="view-section active">
                 
                 <div class="header">
@@ -411,6 +419,7 @@
                         
                         <div class="dashboard-content-grid">
                             
+                            <!-- GRID COLUMN 1: LGU STATUS (LEFT) -->
                             <div class="panel-card" style="margin-bottom: 0;">
                                 <h3 style="font-size: 11px; font-weight: 700; color: var(--text-dark); margin-bottom: 2px; text-transform: uppercase;">
                                     LDRRMCs REPORTING STATUS OVERVIEW
@@ -418,6 +427,7 @@
                                 
                                 <p class="table-subtitle">"Click on any LGU to open and review its full situational report details."</p>
                                 
+                                <!-- 1ST DISTRICT -->
                                 <table class="district-table" style="margin-top: 12px;">
                                     <thead><tr><th>1ST DISTRICT OF TARLAC</th><th>STATUS</th><th>ACTION</th></tr></thead>
                                     <tbody>
@@ -434,6 +444,7 @@
                                     </tbody>
                                 </table>
 
+                                <!-- 2ND DISTRICT -->
                                 <table class="district-table">
                                     <thead><tr><th>2ND DISTRICT OF TARLAC</th><th>STATUS</th><th>ACTION</th></tr></thead>
                                     <tbody>
@@ -444,6 +455,7 @@
                                     </tbody>
                                 </table>
 
+                                <!-- 3RD DISTRICT -->
                                 <table class="district-table" style="margin-bottom: 0;">
                                     <thead><tr><th>3RD DISTRICT OF TARLAC</th><th>STATUS</th><th>ACTION</th></tr></thead>
                                     <tbody>
@@ -455,6 +467,7 @@
                                 </table>
                             </div>
 
+                            <!-- GRID COLUMN 2: SITREP REPORT (RIGHT) -->
                             <div class="panel-card" style="margin-bottom: 0;">
                                 <div class="header" style="margin-bottom: 15px; padding-bottom: 0; border:none;">
                                     <div class="header-title" style="margin-bottom: -5px;">
@@ -492,11 +505,13 @@
                         </div>
                     </div>
 
+                    <!-- FAR RIGHT SIDE: TWEET WALL -->
                     <div class="side-feed">
                         
                         <h3 style="font-size: 11px; font-weight: 700; color: var(--text-dark); margin-bottom: 12px; text-transform: uppercase;">Live Activity Feed</h3>
                         
                         <div id="tweetWallSection">
+                            <!-- Skeleton Tweets -->
                             <div class="tweet-card skeleton-card">
                                 <div class="tweet-header">
                                     <div class="skeleton-box" style="width: 26px; height: 26px; border-radius:6px;"></div>
@@ -514,6 +529,7 @@
                 </div>
             </div>
 
+            <!-- 2. ENCODING PAGE (UPDATED WIDTH) -->
             <div id="encodingView" class="view-section">
                 
                 <div class="header">
@@ -523,7 +539,8 @@
                     </div>
                 </div>
 
-                <div class="panel-card" style="max-width: 650px; margin: 0 auto;">
+                <!-- UPDATED MAX-WIDTH TO 1100px FOR WIDER WORKSPACE -->
+                <div class="panel-card" style="max-width: 1100px; margin: 0 auto;">
                     
                     <div style="display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 20px;">
                         <div class="form-group" style="flex:1; margin-bottom: 0;">
@@ -539,10 +556,12 @@
                         <div style="position: relative; margin-left: 20px; display: flex; align-items: center; gap: 8px; padding-bottom: 2px;">
                             <label style="font-size: 11px; font-weight: 700; color: var(--text-dark); margin: 0;">As of:</label>
                             
+                            <!-- ENCODING PAGE CALENDAR TRIGGER -->
                             <div class="dt-wrapper" id="dtTrigger">
                                 <span class="dt-display-text" id="dtDisplayText">Select Date & Time</span>
                             </div>
 
+                            <!-- ENCODING PAGE POPUP CALENDAR -->
                             <div class="dt-popup" id="dtPopup">
                                 <div class="dt-calendar-sec">
                                     <div class="dt-header"><span id="dtMonthYear">May 2026</span><div class="dt-nav"><i data-lucide="chevron-left" id="dtPrev"></i><i data-lucide="chevron-right" id="dtNext"></i></div></div>
@@ -565,6 +584,7 @@
 
                     <div id="dynamicWorkflowArea">
                         
+                        <!-- COUNCIL -->
                         <div id="formCouncil" class="workflow-form">
                             <hr style="border:0; border-top: 1px solid var(--card-border); margin: 20px 0;">
                             <h3 style="font-size: 11px; font-weight: 700; color: var(--text-dark); margin-bottom: 12px;">PDRRMC Council Action</h3>
@@ -580,8 +600,10 @@
                                 <input type="file" id="councilPdf" style="display:none;" accept="application/pdf" onchange="handleFileSelect('council')">
                             </div>
                             
+                            <!-- Viewer -->
                             <iframe class="pdf-viewer" id="viewerCouncil"></iframe>
                             
+                            <!-- State Buttons -->
                             <button class="btn btn-primary" id="btnPreviewCouncil" style="display:none; width: 100%; margin-bottom: 8px;" onclick="previewDocument('council')">CLICK TO PREVIEW & GENERATE</button>
                             
                             <div id="actionBtnsCouncil" style="display:none; gap: 10px; margin-top: 8px;">
@@ -590,6 +612,7 @@
                             </div>
                         </div>
                         
+                        <!-- PARTNER -->
                         <div id="formPartner" class="workflow-form">
                             <hr style="border:0; border-top: 1px solid var(--card-border); margin: 20px 0;">
                             <h3 style="font-size: 11px; font-weight: 700; color: var(--text-dark); margin-bottom: 12px;">Partner Agency Report</h3>
@@ -600,8 +623,10 @@
                                 <input type="file" id="partnerPdf" style="display:none;" accept="application/pdf" onchange="handleFileSelect('partner')">
                             </div>
                             
+                            <!-- Viewer -->
                             <iframe class="pdf-viewer" id="viewerPartner"></iframe>
                             
+                            <!-- State Buttons -->
                             <button class="btn btn-primary" id="btnPreviewPartner" style="display:none; width: 100%; margin-bottom: 8px;" onclick="previewDocument('partner')">CLICK TO PREVIEW & GENERATE</button>
                             
                             <div id="actionBtnsPartner" style="display:none; gap: 10px; margin-top: 8px;">
@@ -610,6 +635,7 @@
                             </div>
                         </div>
 
+                        <!-- LDRRMC -->
                         <div id="formLdrmc" class="workflow-form">
                             <hr style="border:0; border-top: 1px solid var(--card-border); margin: 20px 0;">
                             <h3 style="font-size: 11px; font-weight: 700; color: var(--text-dark); margin-bottom: 12px;">Fill Out The Information</h3>
@@ -642,6 +668,7 @@
                 </div>
             </div>
 
+            <!-- 3. PDRRMO SITREP & ADVISORY REPORT -->
             <div id="pdrrmoView" class="view-section">
                 <div class="header">
                     <div class="header-title">
@@ -654,12 +681,14 @@
                     <div style="display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 20px;">
                         <h3 style="font-size: 11px; font-weight: 700; color: var(--text-dark);">Enter Advisory Details Below:</h3>
                         
+                        <!-- PDRRMO DEDICATED CALENDAR TRIGGER -->
                         <div style="position: relative; display: flex; align-items: center; gap: 8px; padding-bottom: 2px;">
                             <label style="font-size: 11px; font-weight: 700; color: var(--text-dark); margin: 0;">As of:</label>
                             <div class="dt-wrapper" id="pdtTrigger">
                                 <span class="dt-display-text" id="pdtDisplayText">Select Date & Time</span>
                             </div>
 
+                            <!-- PDRRMO DEDICATED POPUP CALENDAR -->
                             <div class="dt-popup" id="pdtPopup">
                                 <div class="dt-calendar-sec">
                                     <div class="dt-header"><span id="pdtMonthYear">May 2026</span><div class="dt-nav"><i data-lucide="chevron-left" id="pdtPrev"></i><i data-lucide="chevron-right" id="pdtNext"></i></div></div>
@@ -720,6 +749,7 @@
                 </div>
             </div>
 
+            <!-- 4. LDRRMCs/AGENCIES RECORDS -->
             <div id="recordsView" class="view-section">
                 <div class="header">
                     <div class="header-title">
