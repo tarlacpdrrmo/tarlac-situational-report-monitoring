@@ -18,7 +18,7 @@
             --text-gray: #64748b;       
             --btn-dark: #0f172a;        
             --btn-dark-hover: #1e293b;
-            --accent: #f59e0b;          
+            --accent: #2563eb;          
             --success: #059669;
             --success-bg: #d1fae5;
             --transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
@@ -63,149 +63,91 @@
         }
 
         /* --- SIDEBAR --- */
-        .sidebar {
-            width: 230px;
-            background-color: var(--bg-sidebar);
-            display: flex;
-            flex-direction: column;
-            padding: 24px 0;
-            position: relative;
-        }
-        
-        .profile {
-            display: flex; align-items: center; gap: 12px; margin-bottom: 35px; padding: 0 20px;
-            transition: var(--transition);
-        }
+        .sidebar { width: 230px; background-color: var(--bg-sidebar); display: flex; flex-direction: column; padding: 24px 0; position: relative; }
+        .profile { display: flex; align-items: center; gap: 12px; margin-bottom: 35px; padding: 0 20px; transition: var(--transition); }
         .profile:hover { opacity: 0.8; }
-        .profile-img {
-            width: 32px; height: 32px; background: #ffffff; border-radius: 8px;
-            display: flex; justify-content: center; align-items: center; color: var(--bg-sidebar);
-            box-shadow: 0 2px 8px rgba(0,0,0,0.2);
-        }
+        .profile-img { width: 32px; height: 32px; background: #ffffff; border-radius: 8px; display: flex; justify-content: center; align-items: center; color: var(--bg-sidebar); box-shadow: 0 2px 8px rgba(0,0,0,0.2); }
         .profile-info h4 { font-size: 12px; font-weight: 600; color: #ffffff; margin-bottom: 2px; letter-spacing: -0.2px;}
         .profile-info p { font-size: 8px; color: #94a3b8; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px;}
 
         .nav-menu { list-style: none; display: flex; flex-direction: column; gap: 4px; }
-        .nav-item {
-            display: flex; align-items: center; gap: 12px; padding: 10px 20px;
-            color: #94a3b8; cursor: pointer; transition: var(--transition); font-size: 11px; font-weight: 600;
-            position: relative;
-        }
+        .nav-item { display: flex; align-items: center; gap: 12px; padding: 10px 20px; color: #94a3b8; cursor: pointer; transition: var(--transition); font-size: 11px; font-weight: 600; position: relative; }
         .nav-item:hover { color: #ffffff; transform: translateX(4px); }
         .nav-item i { width: 15px; height: 15px; opacity: 0.7; transition: var(--transition); }
         .nav-item:hover i { opacity: 1; }
-        
-        .nav-item.active {
-            background-color: var(--bg-app);
-            color: var(--text-dark);
-            border-radius: 20px 0 0 20px;
-            margin-left: 15px;
-            padding-left: 15px;
-            transform: translateX(0); 
-        }
+        .nav-item.active { background-color: var(--bg-app); color: var(--text-dark); border-radius: 20px 0 0 20px; margin-left: 15px; padding-left: 15px; transform: translateX(0); }
         .nav-item.active i { color: var(--text-dark); opacity: 1; }
-        .nav-item.active::before {
-            content: ''; position: absolute; right: 0; top: -16px; width: 16px; height: 16px;
-            background: radial-gradient(circle at top left, transparent 16px, var(--bg-app) 16.5px);
-        }
-        .nav-item.active::after {
-            content: ''; position: absolute; right: 0; bottom: -16px; width: 16px; height: 16px;
-            background: radial-gradient(circle at bottom left, transparent 16px, var(--bg-app) 16.5px);
-        }
+        .nav-item.active::before { content: ''; position: absolute; right: 0; top: -16px; width: 16px; height: 16px; background: radial-gradient(circle at top left, transparent 16px, var(--bg-app) 16.5px); }
+        .nav-item.active::after { content: ''; position: absolute; right: 0; bottom: -16px; width: 16px; height: 16px; background: radial-gradient(circle at bottom left, transparent 16px, var(--bg-app) 16.5px); }
 
         /* --- MAIN CONTENT AREA --- */
-        .main-content {
-            flex: 1;
-            padding: 24px 32px;
-            overflow-y: auto;
-            scroll-behavior: smooth;
-        }
-        
+        .main-content { flex: 1; padding: 24px 32px; overflow-y: auto; scroll-behavior: smooth; }
         .view-section { display: none; }
         .view-section.active { display: block; animation: slideUpFade 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
 
         /* --- HEADERS --- */
-        .header {
-            display: flex; justify-content: space-between; align-items: center;
-            margin-bottom: 20px; padding-bottom: 15px; border-bottom: 1px solid transparent;
-        }
+        .header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; padding-bottom: 15px; border-bottom: 1px solid transparent; }
         .header-title h1 { font-size: 16px; font-weight: 700; color: var(--text-dark); display: flex; align-items: center; gap: 8px; letter-spacing: -0.3px;}
         .header-title p { font-size: 10px; color: var(--text-gray); margin-top: 4px; font-weight: 500;}
-        
         .header-actions { display: flex; align-items: center; gap: 15px; }
         .last-updated { font-size: 9px; color: var(--text-gray); font-style: italic; }
         .last-updated span { font-weight: 700; color: var(--text-dark); font-style: normal; }
 
-        /* --- CARDS --- */
-        .panel-card {
-            background-color: var(--card-bg);
-            border: 1px solid var(--card-border);
-            border-radius: 12px;
-            padding: 20px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.01);
-            transition: var(--transition);
-        }
+        /* --- CARDS & GRIDS --- */
+        .panel-card { background-color: var(--card-bg); border: 1px solid var(--card-border); border-radius: 12px; padding: 20px; box-shadow: 0 4px 15px rgba(0,0,0,0.01); transition: var(--transition); }
         .panel-card:hover { box-shadow: 0 8px 25px rgba(15, 23, 42, 0.04); }
-
         .dashboard-container { display: flex; gap: 20px; align-items: flex-start; }
         .main-report { flex: 1; min-width: 0; }
         .side-feed { width: 260px; flex-shrink: 0; }
         
-        .dashboard-content-grid {
-            display: grid;
-            grid-template-columns: 1.2fr 1fr; 
-            gap: 20px;
-            align-items: start;
-        }
+        /* ALIGNS BOTH SIDES EQUALLY TO FIX EMPTY SPACE */
+        .dashboard-content-grid { display: grid; grid-template-columns: 1.1fr 1fr; gap: 20px; align-items: stretch; }
 
-        /* --- PDRRMO ADVISORY GRID --- */
-        .data-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
-        .data-item { display: flex; flex-direction: column; gap: 4px; }
-        .data-item.full-width { grid-column: span 2; }
-        .data-label { font-size: 8px; font-weight: 700; color: var(--text-gray); text-transform: uppercase; letter-spacing: 0.5px; }
-        
-        .data-value { 
-            background-color: var(--input-bg); color: var(--text-dark); 
-            padding: 8px 12px; border-radius: 8px; font-size: 11px; font-weight: 500; line-height: 1.5;
-            border: 1px solid var(--card-border); transition: var(--transition);
-            white-space: pre-wrap; 
+        /* --- RE-DESIGNED SITREP ADVISORY PANEL --- */
+        .sitrep-panel {
+            display: flex; flex-direction: column; height: 100%;
+            background: linear-gradient(180deg, #ffffff 0%, #f8fafc 100%);
+            border-top: 4px solid var(--bg-sidebar); 
         }
-        .data-value:hover { border-color: #cbd5e1; background-color: #ffffff; }
+        .data-grid { display: flex; flex-direction: column; gap: 16px; flex: 1; }
+        .data-item { display: flex; flex-direction: column; gap: 4px; }
+        .data-item.full-width { flex: 1; } 
+        
+        .data-label { 
+            font-size: 8px; font-weight: 800; color: var(--accent); 
+            text-transform: uppercase; letter-spacing: 0.5px; border-bottom: 1px solid #e2e8f0; padding-bottom: 4px;
+        }
+        
+        /* Fixed "Type Writer" issue */
+        .data-value { 
+            background-color: transparent; color: var(--text-dark); 
+            padding: 4px 0 0 0; font-size: 11px; font-weight: 500; line-height: 1.7;
+            border: none; white-space: pre-wrap; 
+        }
 
         .placeholder-text { font-size: 9px; color: var(--text-gray); opacity: 0.5; font-style: italic; font-weight: 400; }
 
         /* --- TABLES --- */
         .table-subtitle { font-size: 10px; color: var(--text-gray); margin-bottom: 12px; margin-top: -6px; font-weight: 500; }
         .district-table { width: 100%; border-collapse: collapse; margin-bottom: 16px; }
-        
         .district-table th, .district-table td { padding: 10px; vertical-align: middle; border-bottom: 1px solid var(--card-border); transition: var(--transition); }
         .district-table th { font-size: 8px; color: var(--text-gray); font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; }
-        
         .district-table th:nth-child(1), .district-table td:nth-child(1) { width: 45%; text-align: left; }
         .district-table th:nth-child(2), .district-table td:nth-child(2) { width: 30%; text-align: center; }
         .district-table th:nth-child(3), .district-table td:nth-child(3) { width: 25%; text-align: right; }
-        
         .district-table tr:hover td { background-color: #f8fafc; cursor: pointer; }
         .district-table tr:last-child td { border-bottom: none; }
         
         .lgu-name { font-weight: 600; font-size: 11px; color: var(--text-dark); display: flex; align-items: center; gap: 6px;}
         .lgu-name span { font-size: 7.5px; color: var(--text-gray); font-weight: 700; background: var(--input-bg); padding: 3px 6px; border-radius: 4px; text-transform: uppercase; border: 1px solid var(--card-border);}
 
-        .status-badge { 
-            display: inline-flex; align-items: center; justify-content: center; gap: 4px; 
-            padding: 4px 6px; border-radius: 12px; font-size: 7px; font-weight: 800; 
-            text-transform: uppercase; letter-spacing: 0.5px; white-space: nowrap; 
-        }
+        .status-badge { display: inline-flex; align-items: center; justify-content: center; gap: 4px; padding: 4px 6px; border-radius: 12px; font-size: 7px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.5px; white-space: nowrap; }
         .status-badge.pending { background-color: var(--input-bg); color: var(--text-gray); border: 1px solid var(--card-border);}
         .status-badge.submitted { background-color: var(--success-bg); color: var(--success); }
         .status-badge.skeleton-box { margin: 0 auto; }
 
         /* --- RIGHT SIDEBAR TWEET WALL --- */
-        .tweet-card { 
-            background: #ffffff; border: 1px solid var(--card-border); border-radius: 10px; 
-            padding: 12px; display: flex; flex-direction: column; gap: 8px; margin-bottom: 10px;
-            box-shadow: 0 2px 8px rgba(15, 23, 42, 0.02); transition: var(--transition);
-        }
+        .tweet-card { background: #ffffff; border: 1px solid var(--card-border); border-radius: 10px; padding: 12px; display: flex; flex-direction: column; gap: 8px; margin-bottom: 10px; box-shadow: 0 2px 8px rgba(15, 23, 42, 0.02); transition: var(--transition);}
         .tweet-card:hover { transform: translateY(-2px); box-shadow: 0 6px 16px rgba(15, 23, 42, 0.06); border-color: #cbd5e1;}
         .tweet-header { display: flex; align-items: center; gap: 8px; }
         .tweet-avatar { width: 26px; height: 26px; border-radius: 6px; display: flex; align-items: center; justify-content: center; color: white; font-weight: 700; font-size: 10px; background: var(--btn-dark); }
@@ -216,11 +158,7 @@
         .tweet-footer { font-size: 8px; color: var(--text-gray); font-weight: 600; display: flex; justify-content: space-between; border-top: 1px solid var(--card-border); padding-top: 6px; margin-top: 2px; text-transform: uppercase;}
 
         /* --- BUTTONS --- */
-        .btn {
-            background-color: #ffffff; border: 1px solid var(--card-border); color: var(--text-dark);
-            padding: 6px 12px; border-radius: 8px; font-size: 10px; font-weight: 600; 
-            cursor: pointer; transition: var(--transition); display: inline-flex; align-items: center; justify-content: center; gap: 6px;
-        }
+        .btn { background-color: #ffffff; border: 1px solid var(--card-border); color: var(--text-dark); padding: 6px 12px; border-radius: 8px; font-size: 10px; font-weight: 600; cursor: pointer; transition: var(--transition); display: inline-flex; align-items: center; justify-content: center; gap: 6px;}
         .btn:hover { background-color: var(--input-bg); border-color: #cbd5e1; }
         .btn-primary { background-color: var(--btn-dark); color: #ffffff; border: none; padding: 8px 16px;}
         .btn-primary:hover { background-color: var(--btn-dark-hover); box-shadow: 0 4px 12px rgba(15, 23, 42, 0.15);}
@@ -231,39 +169,21 @@
         /* --- FORMS --- */
         .form-group { margin-bottom: 12px; }
         .form-group label { display: block; font-size: 8px; font-weight: 700; color: var(--text-gray); margin-bottom: 4px; text-transform: uppercase; letter-spacing: 0.5px;}
-        
-        .form-control {
-            width: 100%; background-color: var(--input-bg); border: 1px solid var(--card-border); color: var(--text-dark);
-            padding: 8px 12px; border-radius: 8px; font-size: 11px; outline: none; transition: var(--transition); font-weight: 500;
-        }
+        .form-control { width: 100%; background-color: var(--input-bg); border: 1px solid var(--card-border); color: var(--text-dark); padding: 8px 12px; border-radius: 8px; font-size: 11px; outline: none; transition: var(--transition); font-weight: 500;}
         .form-control:focus { border-color: var(--btn-dark); background-color: #ffffff; box-shadow: 0 0 0 3px rgba(15, 23, 42, 0.05); }
-        
         .uppercase-input { text-transform: uppercase; }
         textarea.form-control { resize: none; overflow: hidden; min-height: 40px; line-height: 1.5; }
 
         /* --- ADVISORY INPUT WRAPPER --- */
-        .advisory-wrapper {
-            border: 1px solid var(--card-border); border-radius: 8px; background-color: var(--input-bg); overflow: hidden; transition: var(--transition);
-        }
+        .advisory-wrapper { border: 1px solid var(--card-border); border-radius: 8px; background-color: var(--input-bg); overflow: hidden; transition: var(--transition); }
         .advisory-wrapper:focus-within { border-color: var(--btn-dark); background-color: #ffffff; box-shadow: 0 0 0 3px rgba(15, 23, 42, 0.05); }
         .advisory-wrapper .form-control { border: none; border-radius: 0; background: transparent; box-shadow: none; padding-bottom: 8px; }
-        .advisory-wrapper .source-input {
-            width: 100%; border: none; background-color: transparent; border-top: 1px dashed #cbd5e1;
-            padding: 8px 12px; font-size: 9px; color: var(--text-gray); outline: none; font-style: italic; transition: var(--transition);
-        }
-        .advisory-wrapper .source-input::placeholder { color: #94a3b8; font-weight: 500; }
-        .advisory-wrapper .source-input:focus { color: var(--text-dark); }
+        .advisory-wrapper .source-input { width: 100%; border: none; background-color: transparent; border-top: 1px dashed #cbd5e1; padding: 8px 12px; font-size: 9px; color: var(--text-gray); outline: none; font-style: italic; transition: var(--transition);}
         
-        .upload-area {
-            border: 2px dashed #cbd5e1; border-radius: 10px; padding: 24px; text-align: center;
-            background-color: var(--input-bg); cursor: pointer; transition: var(--transition); margin-bottom: 16px;
-        }
+        .upload-area { border: 2px dashed #cbd5e1; border-radius: 10px; padding: 24px; text-align: center; background-color: var(--input-bg); cursor: pointer; transition: var(--transition); margin-bottom: 16px;}
         .upload-area:hover { border-color: var(--btn-dark); background-color: #f1f5f9; }
         .upload-area i { width: 20px; height: 20px; color: var(--text-dark); transition: var(--transition);}
-        .upload-area:hover i { transform: translateY(-3px); }
         .upload-area p { font-size: 10px; font-weight: 600; color: var(--text-gray); margin-top: 6px;}
-        
-        /* UPDATED: PDF VIEWER INCREASED HEIGHT */
         .pdf-viewer { display: none; width: 100%; height: 600px; border-radius: 10px; border: 1px solid var(--card-border); margin-bottom: 16px; background-color: #f8fafc;}
 
         #dynamicWorkflowArea { display: none; margin-top: 16px; }
@@ -271,21 +191,11 @@
         .workflow-form.active { display: block; animation: slideUpFade 0.4s ease forwards; }
 
         /* --- DATETIME PICKER --- */
-        .dt-wrapper { 
-            display: inline-flex; align-items: center; gap: 8px; cursor: pointer; 
-            background: #ffffff; border: 1px solid var(--card-border); 
-            border-radius: 8px; padding: 6px 12px; transition: var(--transition); 
-        }
+        .dt-wrapper { display: inline-flex; align-items: center; gap: 8px; cursor: pointer; background: #ffffff; border: 1px solid var(--card-border); border-radius: 8px; padding: 6px 12px; transition: var(--transition); }
         .dt-wrapper:hover { border-color: var(--btn-dark); }
         .dt-display-text { font-size: 10px; font-weight: 600; color: var(--text-dark);}
         
-        .dt-popup { 
-            display: none; position: absolute; top: calc(100% + 6px); right: 0; 
-            background: #ffffff; border: 1px solid var(--card-border); 
-            border-radius: 10px; box-shadow: 0 15px 35px rgba(15, 23, 42, 0.1); 
-            z-index: 100; width: 240px; flex-direction: column; overflow: hidden;
-            animation: slideUpFade 0.2s ease forwards;
-        }
+        .dt-popup { display: none; position: absolute; top: calc(100% + 6px); right: 0; background: #ffffff; border: 1px solid var(--card-border); border-radius: 10px; box-shadow: 0 15px 35px rgba(15, 23, 42, 0.1); z-index: 100; width: 240px; flex-direction: column; overflow: hidden; animation: slideUpFade 0.2s ease forwards;}
         .dt-popup.show { display: flex; }
         .dt-calendar-sec { padding: 12px; border-bottom: 1px solid var(--card-border); }
         .dt-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; font-size: 11px; font-weight: 700; color: var(--text-dark);}
@@ -301,32 +211,20 @@
         
         .dt-time-sec { padding: 10px 12px; background: var(--input-bg); display: flex; align-items: center; justify-content: space-between;}
         .time-inputs { display: flex; align-items: center; background: #ffffff; border-radius: 4px; border: 1px solid var(--card-border); padding: 2px 6px;}
-        
         .time-input { background: transparent; border: none; color: var(--text-dark); font-size: 11px; font-weight: 700; width: 24px; text-align: center; outline: none; }
         .time-input::-webkit-outer-spin-button, .time-input::-webkit-inner-spin-button { -webkit-appearance: none; margin: 0; }
         .time-input[type=number] { -moz-appearance: textfield; }
-        
         .ampm-toggle { display: flex; background: #ffffff; border-radius: 4px; border: 1px solid var(--card-border); overflow: hidden; }
         .ampm-btn { background: transparent; border: none; color: var(--text-gray); padding: 2px 6px; font-size: 9px; font-weight: 700; cursor: pointer; transition: var(--transition);}
         .ampm-btn.active { background: var(--btn-dark); color: #ffffff; }
         .dt-actions { display: flex; justify-content: space-between; padding: 10px 12px; font-size: 9px; font-weight: 700; text-transform: uppercase;}
         .dt-actions span { cursor: pointer; color: var(--text-gray); transition: var(--transition);}
-        .dt-actions span:hover { color: var(--text-dark); }
 
         /* --- MODALS --- */
-        .modal-overlay {
-            position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
-            background: rgba(15, 23, 42, 0.6); backdrop-filter: blur(4px);
-            display: flex; align-items: center; justify-content: center; z-index: 1000;
-            opacity: 0; pointer-events: none; transition: var(--transition);
-        }
+        .modal-overlay { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: rgba(15, 23, 42, 0.6); backdrop-filter: blur(4px); display: flex; align-items: center; justify-content: center; z-index: 1000; opacity: 0; pointer-events: none; transition: var(--transition);}
         .modal-overlay.show { opacity: 1; pointer-events: auto; }
-        .modal-card {
-            background: #ffffff; border-radius: 16px; padding: 20px; width: 380px; max-width: 90%;
-            transform: translateY(20px) scale(0.95); transition: var(--transition); box-shadow: 0 20px 40px rgba(0,0,0,0.15);
-        }
+        .modal-card { background: #ffffff; border-radius: 16px; padding: 20px; width: 380px; max-width: 90%; transform: translateY(20px) scale(0.95); transition: var(--transition); box-shadow: 0 20px 40px rgba(0,0,0,0.15);}
         .modal-overlay.show .modal-card { transform: translateY(0) scale(1); }
-        
         .modal-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 12px;}
         .modal-item { display: flex; flex-direction: column; gap: 2px; }
         .modal-item.wide { grid-column: span 2; border-top: 1px solid var(--card-border); padding-top: 10px; margin-top: 4px;}
@@ -337,7 +235,6 @@
 </head>
 <body>
 
-    <!-- SAVE MODAL -->
     <div id="saveModal" class="modal-overlay">
         <div class="modal-card" style="text-align: center; width: 320px;">
             <div style="width: 44px; height: 44px; background: var(--input-bg); border-radius: 10px; display: flex; align-items: center; justify-content: center; margin: 0 auto 12px auto; border: 1px solid var(--card-border);">
@@ -352,7 +249,6 @@
         </div>
     </div>
 
-    <!-- DETAILS MODAL -->
     <div id="lguDetailModal" class="modal-overlay">
         <div class="modal-card" style="width: 550px;">
             <div style="display:flex; justify-content:space-between; align-items:flex-start; border-bottom: 1px solid var(--card-border); padding-bottom: 12px; margin-bottom: 12px;">
@@ -366,68 +262,37 @@
         </div>
     </div>
 
-    <!-- MAIN APP CONTAINER -->
     <div class="app-container">
         
-        <!-- SIDEBAR -->
         <aside class="sidebar">
-            <div class="profile" onclick="switchToView('homeView')" style="cursor: pointer;" title="Back to Situation Overview">
+            <div class="profile" onclick="switchToView('homeView')" style="cursor: pointer;">
                 <div class="profile-img"><i data-lucide="shield-check" style="width: 18px; height: 18px;"></i></div>
-                <div class="profile-info">
-                    <h4>Tarlac PDRRMO</h4>
-                    <p>Monitoring Center</p>
-                </div>
+                <div class="profile-info"><h4>Tarlac PDRRMO</h4><p>Monitoring Center</p></div>
             </div>
-            
             <ul class="nav-menu">
-                <li class="nav-item active" data-target="homeView">
-                    <i data-lucide="layout-dashboard"></i> Situation Overview
-                </li>
-                <li class="nav-item" data-target="encodingView">
-                    <i data-lucide="edit"></i> Encoding Page
-                </li>
-                <li class="nav-item" data-target="recordsView">
-                    <i data-lucide="folder-open"></i> LDRRMCs/Agencies Records
-                </li>
-                <li class="nav-item" data-target="pdrrmoView">
-                    <i data-lucide="file-check-2"></i> PDRRMO SitRep & Advisory
-                </li>
+                <li class="nav-item active" data-target="homeView"><i data-lucide="layout-dashboard"></i> Situation Overview</li>
+                <li class="nav-item" data-target="encodingView"><i data-lucide="edit"></i> Encoding Page</li>
+                <li class="nav-item" data-target="recordsView"><i data-lucide="folder-open"></i> LDRRMCs/Agencies Records</li>
+                <li class="nav-item" data-target="pdrrmoView"><i data-lucide="file-check-2"></i> PDRRMO SitRep & Advisory</li>
             </ul>
         </aside>
 
-        <!-- MAIN CONTENT -->
         <main class="main-content">
             
-            <!-- 1. SITUATION OVERVIEW -->
             <div id="homeView" class="view-section active">
-                
                 <div class="header">
-                    <div class="header-title">
-                        <h1>Situation Overview</h1>
-                        <p>Live status feed of recently recorded LDRRMC and Agency reports.</p>
-                    </div>
-                    <div class="header-actions">
-                        <button class="btn btn-primary" onclick="window.print()" style="display: flex; align-items: center; gap: 6px;">
-                            <i data-lucide="printer" style="width: 14px; height: 14px;"></i> Print Official Document
-                        </button>
-                    </div>
+                    <div class="header-title"><h1>Situation Overview</h1><p>Live status feed of recently recorded LDRRMC and Agency reports.</p></div>
+                    <div class="header-actions"><button class="btn btn-primary" onclick="window.print()" style="display: flex; align-items: center; gap: 6px;"><i data-lucide="printer" style="width: 14px; height: 14px;"></i> Print Official Document</button></div>
                 </div>
                 
                 <div class="dashboard-container">
-                    
                     <div class="main-report">
-                        
                         <div class="dashboard-content-grid">
                             
-                            <!-- GRID COLUMN 1: LGU STATUS (LEFT) -->
                             <div class="panel-card" style="margin-bottom: 0;">
-                                <h3 style="font-size: 11px; font-weight: 700; color: var(--text-dark); margin-bottom: 2px; text-transform: uppercase;">
-                                    LDRRMCs REPORTING STATUS OVERVIEW
-                                </h3>
-                                
+                                <h3 style="font-size: 11px; font-weight: 700; color: var(--text-dark); margin-bottom: 2px; text-transform: uppercase;">LDRRMCs REPORTING STATUS OVERVIEW</h3>
                                 <p class="table-subtitle">"Click on any LGU to open and review its full situational report details."</p>
                                 
-                                <!-- 1ST DISTRICT -->
                                 <table class="district-table" style="margin-top: 12px;">
                                     <thead><tr><th>1ST DISTRICT OF TARLAC</th><th>STATUS</th><th>ACTION</th></tr></thead>
                                     <tbody>
@@ -444,7 +309,6 @@
                                     </tbody>
                                 </table>
 
-                                <!-- 2ND DISTRICT -->
                                 <table class="district-table">
                                     <thead><tr><th>2ND DISTRICT OF TARLAC</th><th>STATUS</th><th>ACTION</th></tr></thead>
                                     <tbody>
@@ -455,7 +319,6 @@
                                     </tbody>
                                 </table>
 
-                                <!-- 3RD DISTRICT -->
                                 <table class="district-table" style="margin-bottom: 0;">
                                     <thead><tr><th>3RD DISTRICT OF TARLAC</th><th>STATUS</th><th>ACTION</th></tr></thead>
                                     <tbody>
@@ -467,11 +330,10 @@
                                 </table>
                             </div>
 
-                            <!-- GRID COLUMN 2: SITREP REPORT (RIGHT) -->
-                            <div class="panel-card" style="margin-bottom: 0;">
-                                <div class="header" style="margin-bottom: 15px; padding-bottom: 0; border:none;">
+                            <div class="panel-card sitrep-panel" style="margin-bottom: 0;">
+                                <div class="header" style="margin-bottom: 15px; padding-bottom: 12px; border-bottom: 1px solid var(--card-border);">
                                     <div class="header-title" style="margin-bottom: -5px;">
-                                        <h2 style="font-size: 12px; font-weight: 700; color: var(--text-dark); letter-spacing: -0.2px;">SITREP & ADVISORY REPORT</h2>
+                                        <h2 style="font-size: 13px; font-weight: 800; color: var(--text-dark); letter-spacing: -0.2px;">SITREP & ADVISORY REPORT</h2>
                                     </div>
                                     <div class="header-actions">
                                         <div class="last-updated">Status: <span id="generatedTimestamp">Initializing Database...</span></div>
@@ -481,23 +343,25 @@
                                 <div class="data-grid">
                                     <div class="data-item full-width">
                                         <label class="data-label">OUTLINE (SYNOPSIS)</label>
-                                        <div class="data-value skeleton-box" id="outSyn" style="min-height: 16px;"></div>
+                                        <div class="data-value skeleton-box" id="outSyn" style="min-height: 20px;"></div>
                                     </div>
                                     <div class="data-item full-width">
                                         <label class="data-label">OTHER INCIDENTS MONITORED (RESPONSES)</label>
-                                        <div class="data-value skeleton-box" id="outInc" style="min-height: 16px;"></div>
+                                        <div class="data-value skeleton-box" id="outInc" style="min-height: 20px;"></div>
                                     </div>
-                                    <div class="data-item">
-                                        <label class="data-label">SUSPENSION ON WORK</label>
-                                        <div class="data-value skeleton-box" id="outWork" style="min-height: 16px;"></div>
-                                    </div>
-                                    <div class="data-item">
-                                        <label class="data-label">SUSPENSION ON CLASSES</label>
-                                        <div class="data-value skeleton-box" id="outClass" style="min-height: 16px;"></div>
+                                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px;">
+                                        <div class="data-item">
+                                            <label class="data-label">SUSPENSION ON WORK</label>
+                                            <div class="data-value skeleton-box" id="outWork" style="min-height: 20px;"></div>
+                                        </div>
+                                        <div class="data-item">
+                                            <label class="data-label">SUSPENSION ON CLASSES</label>
+                                            <div class="data-value skeleton-box" id="outClass" style="min-height: 20px;"></div>
+                                        </div>
                                     </div>
                                     <div class="data-item full-width">
                                         <label class="data-label">DECLARATION OF STATE OF CALAMITY</label>
-                                        <div class="data-value skeleton-box" id="outCal" style="min-height: 16px;"></div>
+                                        <div class="data-value skeleton-box" id="outCal" style="min-height: 20px;"></div>
                                     </div>
                                 </div>
                             </div>
@@ -505,20 +369,13 @@
                         </div>
                     </div>
 
-                    <!-- FAR RIGHT SIDE: TWEET WALL -->
                     <div class="side-feed">
-                        
                         <h3 style="font-size: 11px; font-weight: 700; color: var(--text-dark); margin-bottom: 12px; text-transform: uppercase;">Live Activity Feed</h3>
-                        
                         <div id="tweetWallSection">
-                            <!-- Skeleton Tweets -->
                             <div class="tweet-card skeleton-card">
                                 <div class="tweet-header">
                                     <div class="skeleton-box" style="width: 26px; height: 26px; border-radius:6px;"></div>
-                                    <div style="flex:1;">
-                                        <div class="skeleton-box" style="width: 90px; height: 10px; margin-bottom: 4px;"></div>
-                                        <div class="skeleton-box" style="width: 60px; height: 6px;"></div>
-                                    </div>
+                                    <div style="flex:1;"><div class="skeleton-box" style="width: 90px; height: 10px; margin-bottom: 4px;"></div><div class="skeleton-box" style="width: 60px; height: 6px;"></div></div>
                                 </div>
                                 <div class="skeleton-box" style="width: 100%; height: 10px;"></div>
                                 <div class="skeleton-box" style="width: 85%; height: 10px;"></div>
@@ -529,17 +386,11 @@
                 </div>
             </div>
 
-            <!-- 2. ENCODING PAGE (UPDATED WIDTH) -->
             <div id="encodingView" class="view-section">
-                
                 <div class="header">
-                    <div class="header-title">
-                        <h1>Encoding Page</h1>
-                        <p>Choose an agency below to begin encoding.</p>
-                    </div>
+                    <div class="header-title"><h1>Encoding Page</h1><p>Choose an agency below to begin encoding.</p></div>
                 </div>
 
-                <!-- UPDATED MAX-WIDTH TO 1100px FOR WIDER WORKSPACE -->
                 <div class="panel-card" style="max-width: 1100px; margin: 0 auto;">
                     
                     <div style="display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 20px;">
@@ -552,16 +403,9 @@
                                 <option value="partner">OTHER PARTNER AGENCIES/GROUP</option>
                             </select>
                         </div>
-                        
                         <div style="position: relative; margin-left: 20px; display: flex; align-items: center; gap: 8px; padding-bottom: 2px;">
                             <label style="font-size: 11px; font-weight: 700; color: var(--text-dark); margin: 0;">As of:</label>
-                            
-                            <!-- ENCODING PAGE CALENDAR TRIGGER -->
-                            <div class="dt-wrapper" id="dtTrigger">
-                                <span class="dt-display-text" id="dtDisplayText">Select Date & Time</span>
-                            </div>
-
-                            <!-- ENCODING PAGE POPUP CALENDAR -->
+                            <div class="dt-wrapper" id="dtTrigger"><span class="dt-display-text" id="dtDisplayText">Select Date & Time</span></div>
                             <div class="dt-popup" id="dtPopup">
                                 <div class="dt-calendar-sec">
                                     <div class="dt-header"><span id="dtMonthYear">May 2026</span><div class="dt-nav"><i data-lucide="chevron-left" id="dtPrev"></i><i data-lucide="chevron-right" id="dtNext"></i></div></div>
@@ -584,14 +428,13 @@
 
                     <div id="dynamicWorkflowArea">
                         
-                        <!-- COUNCIL -->
                         <div id="formCouncil" class="workflow-form">
                             <hr style="border:0; border-top: 1px solid var(--card-border); margin: 20px 0;">
                             <h3 style="font-size: 11px; font-weight: 700; color: var(--text-dark); margin-bottom: 12px;">PDRRMC Council Action</h3>
                             
                             <div class="form-group">
                                 <label>WRITE WHAT IS ACTUAL ACTION TAKEN AS OF THIS TIME OF REPORT:</label>
-                                <textarea class="form-control uppercase-input" rows="2" placeholder="Enter actual actions taken..."></textarea>
+                                <textarea id="councilActionText" class="form-control uppercase-input" rows="2" placeholder="Enter actual actions taken..."></textarea>
                             </div>
                             
                             <div id="uploadBoxCouncil" class="upload-area" onclick="document.getElementById('councilPdf').click()">
@@ -599,43 +442,36 @@
                                 <p style="font-size:10px; color:var(--text-gray); font-weight: 600;">CLICK TO UPLOAD OFFICIAL PDF DOCUMENT</p>
                                 <input type="file" id="councilPdf" style="display:none;" accept="application/pdf" onchange="handleFileSelect('council')">
                             </div>
-                            
-                            <!-- Viewer -->
                             <iframe class="pdf-viewer" id="viewerCouncil"></iframe>
-                            
-                            <!-- State Buttons -->
                             <button class="btn btn-primary" id="btnPreviewCouncil" style="display:none; width: 100%; margin-bottom: 8px;" onclick="previewDocument('council')">CLICK TO PREVIEW & GENERATE</button>
-                            
                             <div id="actionBtnsCouncil" style="display:none; gap: 10px; margin-top: 8px;">
                                 <button class="btn btn-primary" style="flex: 1;" onclick="openSaveModal('council')">SAVE TO DATABASE</button>
                                 <button class="btn btn-danger" style="flex: 1;" onclick="removeDocument('council')">REMOVE FILE</button>
                             </div>
                         </div>
                         
-                        <!-- PARTNER -->
                         <div id="formPartner" class="workflow-form">
                             <hr style="border:0; border-top: 1px solid var(--card-border); margin: 20px 0;">
                             <h3 style="font-size: 11px; font-weight: 700; color: var(--text-dark); margin-bottom: 12px;">Partner Agency Report</h3>
                             
+                            <div class="form-group">
+                                <label>NOTES / ACTIONS TAKEN (OPTIONAL):</label>
+                                <textarea id="partnerActionText" class="form-control uppercase-input" rows="2" placeholder="Enter notes..."></textarea>
+                            </div>
+
                             <div id="uploadBoxPartner" class="upload-area" onclick="document.getElementById('partnerPdf').click()">
                                 <i data-lucide="file-up" style="margin-bottom:10px; color:var(--text-gray);"></i>
                                 <p style="font-size:10px; color:var(--text-gray); font-weight: 600;">CLICK TO UPLOAD OFFICIAL PDF DOCUMENT</p>
                                 <input type="file" id="partnerPdf" style="display:none;" accept="application/pdf" onchange="handleFileSelect('partner')">
                             </div>
-                            
-                            <!-- Viewer -->
                             <iframe class="pdf-viewer" id="viewerPartner"></iframe>
-                            
-                            <!-- State Buttons -->
                             <button class="btn btn-primary" id="btnPreviewPartner" style="display:none; width: 100%; margin-bottom: 8px;" onclick="previewDocument('partner')">CLICK TO PREVIEW & GENERATE</button>
-                            
                             <div id="actionBtnsPartner" style="display:none; gap: 10px; margin-top: 8px;">
                                 <button class="btn btn-primary" style="flex: 1;" onclick="openSaveModal('partner')">SAVE TO DATABASE</button>
                                 <button class="btn btn-danger" style="flex: 1;" onclick="removeDocument('partner')">REMOVE FILE</button>
                             </div>
                         </div>
 
-                        <!-- LDRRMC -->
                         <div id="formLdrmc" class="workflow-form">
                             <hr style="border:0; border-top: 1px solid var(--card-border); margin: 20px 0;">
                             <h3 style="font-size: 11px; font-weight: 700; color: var(--text-dark); margin-bottom: 12px;">Fill Out The Information</h3>
@@ -657,38 +493,24 @@
                                     <div class="form-group"><label>K. Other Incidents Monitored</label><textarea id="ld_K" class="form-control uppercase-input" rows="1"></textarea></div>
                                 </div>
                             </div>
-                            <div class="form-group">
-                                <label>Other Activities:</label>
-                                <textarea id="ld_Other" class="form-control uppercase-input" rows="2"></textarea>
-                            </div>
-                            
+                            <div class="form-group"><label>Other Activities:</label><textarea id="ld_Other" class="form-control uppercase-input" rows="2"></textarea></div>
                             <button class="btn btn-primary" style="width: 100%; margin-top: 8px;" onclick="openSaveModal('ldrmc')">CLICK SUBMIT</button>
                         </div>
                     </div>
                 </div>
             </div>
 
-            <!-- 3. PDRRMO SITREP & ADVISORY REPORT -->
             <div id="pdrrmoView" class="view-section">
                 <div class="header">
-                    <div class="header-title">
-                        <h1>PDRRMO SitRep and Advisory Report</h1>
-                        <p>LDRRMCs All Update Consolidated Report. To be filled out by PDRRMO based on the reporting agencies (Additional).</p>
-                    </div>
+                    <div class="header-title"><h1>PDRRMO SitRep and Advisory Report</h1><p>LDRRMCs All Update Consolidated Report.</p></div>
                 </div>
                 
                 <div class="panel-card" style="max-width: 650px; margin: 0 auto;">
                     <div style="display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 20px;">
                         <h3 style="font-size: 11px; font-weight: 700; color: var(--text-dark);">Enter Advisory Details Below:</h3>
-                        
-                        <!-- PDRRMO DEDICATED CALENDAR TRIGGER -->
                         <div style="position: relative; display: flex; align-items: center; gap: 8px; padding-bottom: 2px;">
                             <label style="font-size: 11px; font-weight: 700; color: var(--text-dark); margin: 0;">As of:</label>
-                            <div class="dt-wrapper" id="pdtTrigger">
-                                <span class="dt-display-text" id="pdtDisplayText">Select Date & Time</span>
-                            </div>
-
-                            <!-- PDRRMO DEDICATED POPUP CALENDAR -->
+                            <div class="dt-wrapper" id="pdtTrigger"><span class="dt-display-text" id="pdtDisplayText">Select Date & Time</span></div>
                             <div class="dt-popup" id="pdtPopup">
                                 <div class="dt-calendar-sec">
                                     <div class="dt-header"><span id="pdtMonthYear">May 2026</span><div class="dt-nav"><i data-lucide="chevron-left" id="pdtPrev"></i><i data-lucide="chevron-right" id="pdtNext"></i></div></div>
@@ -702,76 +524,30 @@
                                 <div class="dt-actions"><span id="pdtClear">Clear</span><span id="pdtToday" style="color:var(--text-dark);">Now</span></div>
                             </div>
                         </div>
-
                     </div>
                 
-                    <div class="form-group">
-                        <label>A. Synopsis</label>
-                        <div class="advisory-wrapper">
-                            <textarea id="inpSyn" class="form-control uppercase-input" rows="2"></textarea>
-                            <input type="text" id="srcSyn" class="source-input uppercase-input" placeholder="Source of information (Optional)...">
-                        </div>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label>B. Other Incidents Monitored (PDRRMO Responses)</label>
-                        <div class="advisory-wrapper">
-                            <textarea id="inpInc" class="form-control uppercase-input" rows="2"></textarea>
-                            <input type="text" id="srcInc" class="source-input uppercase-input" placeholder="Source of information (Optional)...">
-                        </div>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label>C. Suspension on Work (by National/ Provincial level):</label>
-                        <div class="advisory-wrapper">
-                            <textarea id="inpWork" class="form-control uppercase-input" rows="1"></textarea>
-                            <input type="text" id="srcWork" class="source-input uppercase-input" placeholder="Source of information (Optional)...">
-                        </div>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label>D. Suspension on Classes (by National/ Provincial level):</label>
-                        <div class="advisory-wrapper">
-                            <textarea id="inpClass" class="form-control uppercase-input" rows="1"></textarea>
-                            <input type="text" id="srcClass" class="source-input uppercase-input" placeholder="Source of information (Optional)...">
-                        </div>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label>E. Declaration of State of Calamity:</label>
-                        <div class="advisory-wrapper">
-                            <textarea id="inpCal" class="form-control uppercase-input" rows="1"></textarea>
-                            <input type="text" id="srcCal" class="source-input uppercase-input" placeholder="Source of information (Optional)...">
-                        </div>
-                    </div>
-                    
+                    <div class="form-group"><label>A. Synopsis</label><div class="advisory-wrapper"><textarea id="inpSyn" class="form-control uppercase-input" rows="2"></textarea><input type="text" id="srcSyn" class="source-input uppercase-input" placeholder="Source of information (Optional)..."></div></div>
+                    <div class="form-group"><label>B. Other Incidents Monitored (PDRRMO Responses)</label><div class="advisory-wrapper"><textarea id="inpInc" class="form-control uppercase-input" rows="2"></textarea><input type="text" id="srcInc" class="source-input uppercase-input" placeholder="Source of information (Optional)..."></div></div>
+                    <div class="form-group"><label>C. Suspension on Work (by National/ Provincial level):</label><div class="advisory-wrapper"><textarea id="inpWork" class="form-control uppercase-input" rows="1"></textarea><input type="text" id="srcWork" class="source-input uppercase-input" placeholder="Source of information (Optional)..."></div></div>
+                    <div class="form-group"><label>D. Suspension on Classes (by National/ Provincial level):</label><div class="advisory-wrapper"><textarea id="inpClass" class="form-control uppercase-input" rows="1"></textarea><input type="text" id="srcClass" class="source-input uppercase-input" placeholder="Source of information (Optional)..."></div></div>
+                    <div class="form-group"><label>E. Declaration of State of Calamity:</label><div class="advisory-wrapper"><textarea id="inpCal" class="form-control uppercase-input" rows="1"></textarea><input type="text" id="srcCal" class="source-input uppercase-input" placeholder="Source of information (Optional)..."></div></div>
                     <button class="btn btn-primary" style="width: 100%; margin-top: 12px;" onclick="openSaveModal('pdrrmo')">SAVE REPORT</button>
                 </div>
             </div>
 
-            <!-- 4. LDRRMCs/AGENCIES RECORDS -->
             <div id="recordsView" class="view-section">
                 <div class="header">
-                    <div class="header-title">
-                        <h1>LDRRMCs / Agencies Records</h1>
-                        <p>All records scanned with their council name, separated based on what council/agency is chosen.</p>
-                    </div>
+                    <div class="header-title"><h1>LDRRMCs / Agencies Records</h1><p>View the latest recorded PDF files uploaded by Councils and Partners.</p></div>
                 </div>
                 
                 <div class="panel-card" style="max-width: 500px; margin: 0 auto; text-align: center;">
                     <div class="form-group" style="text-align: left;">
                         <label>SELECT A RECORD TO VIEW:</label>
-                        <select class="form-control">
-                            <optgroup label="LDRRMCs Records">
-                                <option>Tarlac City CDRRMO - Sitrep 1</option>
-                                <option>Bamban MDRRMO - Sitrep 1</option>
-                            </optgroup>
-                            <optgroup label="Council Records">
-                                <option>PSWDO Action Report - PDF</option>
-                            </optgroup>
+                        <select id="recordSelect" class="form-control">
+                            <option value="" disabled selected>Loading latest records...</option>
                         </select>
                     </div>
-                    <button class="btn btn-primary" style="margin-top: 12px;">CLICK VIEW</button>
+                    <button class="btn btn-primary" style="margin-top: 12px;" onclick="viewSelectedRecord()">CLICK VIEW</button>
                 </div>
             </div>
 
@@ -784,44 +560,30 @@
         // =====================================================================
         // YOUR ACTIVE GOOGLE APPS SCRIPT WEB APP URL
         // =====================================================================
-        const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbydLbq6xAW0WOWg9SoInDIiu0ULlGrkYY6dBzMekCafTByssh57XQdWg0D4D_AANCU/exec"; 
+        const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyVYCTiUYXRsnwX7JxUj93QEr52lNObcXJcOElpbuHeFoxIfqCenDmtJ2iNUILk-x_b/exec"; 
 
         // ----------------------------------------------------
-        // Auto-Expanding Text Areas
+        // Auto-Expanding Text Areas & Navigation
         // ----------------------------------------------------
         document.addEventListener('input', function (e) {
             if (e.target.tagName.toLowerCase() === 'textarea' && e.target.classList.contains('form-control')) {
-                e.target.style.height = 'auto'; 
-                e.target.style.height = (e.target.scrollHeight) + 'px'; 
+                e.target.style.height = 'auto'; e.target.style.height = (e.target.scrollHeight) + 'px'; 
             }
         });
 
-        // ----------------------------------------------------
-        // Navigation Logic
-        // ----------------------------------------------------
         const navItems = document.querySelectorAll('.nav-item');
         const views = document.querySelectorAll('.view-section');
 
         function switchToView(targetViewId) {
             navItems.forEach(n => n.classList.remove('active'));
             document.querySelector(`[data-target="${targetViewId}"]`).classList.add('active');
-
-            views.forEach(v => {
-                v.classList.remove('active');
-                v.style.animation = 'none'; 
-            });
-            
+            views.forEach(v => { v.classList.remove('active'); v.style.animation = 'none'; });
             const targetView = document.getElementById(targetViewId);
             targetView.classList.add('active');
-            
-            setTimeout(() => {
-                targetView.style.animation = 'slideUpFade 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards';
-            }, 10);
+            setTimeout(() => { targetView.style.animation = 'slideUpFade 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards'; }, 10);
         }
 
-        navItems.forEach(item => {
-            item.addEventListener('click', () => switchToView(item.getAttribute('data-target')));
-        });
+        navItems.forEach(item => { item.addEventListener('click', () => switchToView(item.getAttribute('data-target'))); });
 
         // ----------------------------------------------------
         // Storage & UI State Binding
@@ -831,44 +593,30 @@
         function updateMasterTable(lguId, data) {
             lguDataStore[lguId] = data; 
             const badge = document.getElementById(`status-${lguId}`);
-            if(badge) {
-                badge.className = 'status-badge submitted';
-                badge.innerHTML = 'Report Submitted';
-            }
+            if(badge) { badge.className = 'status-badge submitted'; badge.innerHTML = 'Report Submitted'; }
         }
 
-        function addTweetCard(lguRaw, data) {
+        function addTweetCard(title, data, isPdf = false) {
             const wall = document.getElementById('tweetWallSection');
-            const isCity = lguRaw.includes("City");
-            const avatarInitials = isCity ? "TC" : lguRaw.charAt(0);
-            const suffix = isCity ? " (CDRRMO)" : " (MDRRMO)";
+            const avatarInitials = title.includes("City") ? "TC" : title.charAt(0);
+            
+            let generalStatus = isPdf ? `PDF Document Uploaded. Action: ${data.action || 'None'}` : `<strong>General Status:</strong> ${data.incidents || 'No major incidents reported.'} ${data.other}`;
+            let handleText = isPdf ? `Update` : `Weather: ${data.weather || '-'} | Casualties: ${data.casualty || '0'}`;
 
             const newCard = document.createElement('div');
             newCard.className = 'tweet-card';
             newCard.innerHTML = `
                 <div class="tweet-header">
                     <div class="tweet-avatar">${avatarInitials}</div>
-                    <div class="tweet-meta">
-                        <span class="tweet-name">${lguRaw}${suffix}</span>
-                        <span class="tweet-handle">Weather: ${data.weather || '-'} | Casualties: ${data.casualty || '0'}</span>
-                    </div>
+                    <div class="tweet-meta"><span class="tweet-name">${title}</span><span class="tweet-handle">${handleText}</span></div>
                 </div>
-                <div class="tweet-body">
-                    <strong>General Status:</strong> ${data.incidents || 'No major incidents reported.'} ${data.other}
-                </div>
-                <div class="tweet-footer">
-                    <span>Database Sync</span>
-                    <span>Just now</span>
-                </div>
+                <div class="tweet-body">${generalStatus}</div>
+                <div class="tweet-footer"><span>Database Sync</span><span>Just now</span></div>
             `;
             wall.prepend(newCard);
         }
 
-        // ----------------------------------------------------
-        // LGU Detail Modal Handler
-        // ----------------------------------------------------
         const lguModal = document.getElementById('lguDetailModal');
-        
         function viewLguDetails(lguId, displayName) {
             document.getElementById('modalLguName').innerText = displayName;
             const contentBox = document.getElementById('lguModalContent');
@@ -892,38 +640,45 @@
                 `;
             } else {
                 document.getElementById('modalLguTimestamp').innerText = `Status: Pending`;
-                contentBox.innerHTML = `<div style="text-align:center; padding: 30px; color: var(--text-gray);">
-                    <i data-lucide="clock" style="width: 28px; height: 28px; opacity: 0.3; margin-bottom: 10px;"></i>
-                    <p style="font-size: 12px; font-weight: 700; color: var(--text-dark);">Awaiting Report Submission</p>
-                    <p style="font-size: 10px; margin-top: 4px;">No active data found for this LGU in the database.</p>
-                </div>`;
+                contentBox.innerHTML = `<div style="text-align:center; padding: 30px; color: var(--text-gray);"><i data-lucide="clock" style="width: 28px; height: 28px; opacity: 0.3; margin-bottom: 10px;"></i><p style="font-size: 12px; font-weight: 700; color: var(--text-dark);">Awaiting Report Submission</p><p style="font-size: 10px; margin-top: 4px;">No active data found for this LGU in the database.</p></div>`;
                 lucide.createIcons({ attrs: { 'stroke-width': 1.5 } });
             }
             lguModal.classList.add('show');
         }
-
         function closeLguModal() { lguModal.classList.remove('show'); }
+
+        // ----------------------------------------------------
+        // Base 64 Conversion
+        // ----------------------------------------------------
+        function getBase64(file) {
+            return new Promise((resolve, reject) => {
+                const reader = new FileReader();
+                reader.readAsDataURL(file);
+                reader.onload = () => {
+                    // Extract Base64 string from data URL
+                    let encoded = reader.result.toString().replace(/^data:(.*,)?/, '');
+                    if ((encoded.length % 4) > 0) { encoded += '='.repeat(4 - (encoded.length % 4)); }
+                    resolve(encoded);
+                };
+                reader.onerror = error => reject(error);
+            });
+        }
 
         // ----------------------------------------------------
         // PDF Upload & Preview Handlers
         // ----------------------------------------------------
         function handleFileSelect(type) {
             const fileInput = document.getElementById(`${type}Pdf`);
-            if (fileInput.files.length > 0) {
-                document.getElementById(`btnPreview${capitalize(type)}`).style.display = 'block';
-            }
+            if (fileInput.files.length > 0) document.getElementById(`btnPreview${capitalize(type)}`).style.display = 'block';
         }
 
         function previewDocument(type) {
             const capType = capitalize(type);
             const fileInput = document.getElementById(`${type}Pdf`);
             const viewer = document.getElementById(`viewer${capType}`);
-            
             if (fileInput.files.length > 0) {
                 viewer.src = URL.createObjectURL(fileInput.files[0]);
                 viewer.style.display = 'block';
-                
-                // Hide upload UI, show action UI
                 document.getElementById(`btnPreview${capType}`).style.display = 'none';
                 document.getElementById(`uploadBox${capType}`).style.display = 'none';
                 document.getElementById(`actionBtns${capType}`).style.display = 'flex';
@@ -934,42 +689,24 @@
             const capType = capitalize(type);
             const fileInput = document.getElementById(`${type}Pdf`);
             const viewer = document.getElementById(`viewer${capType}`);
-            
-            // Clear everything
-            fileInput.value = "";
-            viewer.src = "";
-            viewer.style.display = 'none';
-            
-            // Revert UI back to upload state
+            fileInput.value = ""; viewer.src = ""; viewer.style.display = 'none';
             document.getElementById(`actionBtns${capType}`).style.display = 'none';
             document.getElementById(`uploadBox${capType}`).style.display = 'block';
         }
 
-        // ----------------------------------------------------
-        // Save Modal & Validation Logic
-        // ----------------------------------------------------
         const saveModal = document.getElementById('saveModal');
         let currentSaveType = '';
-
         function openSaveModal(type) {
             const dtText = (type === 'pdrrmo') ? document.getElementById('pdtDisplayText').innerText : document.getElementById('dtDisplayText').innerText;
-            
-            if (dtText === "Select Date & Time") {
-                alert("Please select an 'As Of' Timestamp before saving.");
-                return; 
-            }
-            
-            currentSaveType = type;
-            saveModal.classList.add('show');
+            if (dtText === "Select Date & Time") { alert("Please select an 'As Of' Timestamp before saving."); return; }
+            currentSaveType = type; saveModal.classList.add('show');
         }
-
         function closeSaveModal() { saveModal.classList.remove('show'); }
         document.getElementById('btnConfirmModalYes').onclick = function() { executeSave(currentSaveType); };
 
         function combineWithSource(valId, srcId) {
             let val = document.getElementById(valId).value.trim().toUpperCase();
             let src = document.getElementById(srcId).value.trim().toUpperCase();
-            
             if (!val) return ""; 
             if (val && src) return val + "\n[SOURCE: " + src + "]"; 
             return val;
@@ -978,127 +715,103 @@
         // ----------------------------------------------------
         // Core Execution Logic (Fetch to Google Sheets)
         // ----------------------------------------------------
-        function executeSave(type) {
+        async function executeSave(type) {
             const modalBtn = document.getElementById('btnConfirmModalYes');
             const originalText = modalBtn.innerText;
             modalBtn.innerText = "SAVING..."; modalBtn.disabled = true;
 
-            // ---- LDRRMC SUBMISSION ----
-            if (type === 'ldrmc') {
-                const rawDropdownValue = document.getElementById('secondaryCategory').value;
-                const exactLguName = rawDropdownValue.replace(/ \(.+\)/, ''); 
-                const exactLguId = exactLguName.replace(/\s+/g, ''); 
+            try {
+                // ---- LDRRMC SUBMISSION ----
+                if (type === 'ldrmc') {
+                    const rawDropdownValue = document.getElementById('secondaryCategory').value;
+                    const exactLguName = rawDropdownValue.replace(/ \(.+\)/, ''); 
+                    const exactLguId = exactLguName.replace(/\s+/g, ''); 
 
-                const payload = {
-                    type: 'ldrmc',
-                    lgu: exactLguName,
-                    reportTime: document.getElementById('dtDisplayText').innerText,
-                    weather: document.getElementById('ld_A').value.toUpperCase(),
-                    population: document.getElementById('ld_B').value.toUpperCase(),
-                    evacuation: document.getElementById('ld_C').value.toUpperCase(),
-                    casualty: document.getElementById('ld_D').value.toUpperCase(),
-                    suspension: document.getElementById('ld_E').value.toUpperCase(),
-                    flooded: document.getElementById('ld_F').value.toUpperCase(),
-                    infra: document.getElementById('ld_G').value.toUpperCase(),
-                    agri: document.getElementById('ld_H').value.toUpperCase(),
-                    roads: document.getElementById('ld_I').value.toUpperCase(),
-                    power: document.getElementById('ld_J').value.toUpperCase(),
-                    incidents: document.getElementById('ld_K').value.toUpperCase(),
-                    other: document.getElementById('ld_Other').value.toUpperCase()
-                };
+                    const payload = {
+                        type: 'ldrmc', lgu: exactLguName, reportTime: document.getElementById('dtDisplayText').innerText,
+                        weather: document.getElementById('ld_A').value.toUpperCase(), population: document.getElementById('ld_B').value.toUpperCase(),
+                        evacuation: document.getElementById('ld_C').value.toUpperCase(), casualty: document.getElementById('ld_D').value.toUpperCase(),
+                        suspension: document.getElementById('ld_E').value.toUpperCase(), flooded: document.getElementById('ld_F').value.toUpperCase(),
+                        infra: document.getElementById('ld_G').value.toUpperCase(), agri: document.getElementById('ld_H').value.toUpperCase(),
+                        roads: document.getElementById('ld_I').value.toUpperCase(), power: document.getElementById('ld_J').value.toUpperCase(),
+                        incidents: document.getElementById('ld_K').value.toUpperCase(), other: document.getElementById('ld_Other').value.toUpperCase()
+                    };
 
-                fetch(GOOGLE_SCRIPT_URL, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'text/plain;charset=utf-8' },
-                    body: JSON.stringify(payload)
-                })
-                .then(response => {
-                    if (!response.ok) throw new Error("Network response was not ok");
-                    return response.json(); 
-                })
-                .then(result => {
+                    let response = await fetch(GOOGLE_SCRIPT_URL, { method: 'POST', body: JSON.stringify(payload) });
+                    let result = await response.json();
+                    
                     if (result.status === "success" || result.status === 200) {
                         updateMasterTable(exactLguId, payload);
                         addTweetCard(exactLguName, payload);
-                        
-                        alert('LDRRMC Report saved to Google Sheets successfully!');
-                        modalBtn.innerText = originalText; modalBtn.disabled = false; closeSaveModal();
-                        
+                        alert('LDRRMC Report saved successfully!');
                         document.querySelectorAll('#formLdrmc textarea').forEach(el => { el.value = ''; el.style.height = '40px'; });
-                        resetEncodingView();
-                        switchToView('homeView');
-                    } else {
-                        alert("Google Script Error: " + result.message);
-                        modalBtn.innerText = originalText; modalBtn.disabled = false; closeSaveModal();
-                    }
-                })
-                .catch(error => {
-                    alert('Failed to connect to Google Sheets: ' + error.message);
-                    modalBtn.innerText = originalText; modalBtn.disabled = false; closeSaveModal();
-                });
-
-            } 
-            // ---- PDRRMO ADVISORY SUBMISSION ----
-            else if (type === 'pdrrmo') {
+                        resetEncodingView(); switchToView('homeView');
+                    } else throw new Error(result.message);
+                } 
                 
-                const payload = {
-                    type: 'advisory',
-                    reportTime: document.getElementById('pdtDisplayText').innerText, 
-                    synopsis: combineWithSource('inpSyn', 'srcSyn'),
-                    incidents: combineWithSource('inpInc', 'srcInc'),
-                    work: combineWithSource('inpWork', 'srcWork'),
-                    classes: combineWithSource('inpClass', 'srcClass'),
-                    calamity: combineWithSource('inpCal', 'srcCal')
-                };
+                // ---- PDRRMO ADVISORY SUBMISSION ----
+                else if (type === 'pdrrmo') {
+                    const payload = {
+                        type: 'advisory', reportTime: document.getElementById('pdtDisplayText').innerText, 
+                        synopsis: combineWithSource('inpSyn', 'srcSyn'), incidents: combineWithSource('inpInc', 'srcInc'),
+                        work: combineWithSource('inpWork', 'srcWork'), classes: combineWithSource('inpClass', 'srcClass'), calamity: combineWithSource('inpCal', 'srcCal')
+                    };
 
-                fetch(GOOGLE_SCRIPT_URL, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'text/plain;charset=utf-8' },
-                    body: JSON.stringify(payload)
-                })
-                .then(response => {
-                    if (!response.ok) throw new Error("Network response was not ok");
-                    return response.json(); 
-                })
-                .then(result => {
+                    let response = await fetch(GOOGLE_SCRIPT_URL, { method: 'POST', body: JSON.stringify(payload) });
+                    let result = await response.json();
+                    
                     if (result.status === "success" || result.status === 200) {
-                        
                         document.getElementById('outSyn').innerText = payload.synopsis || 'NONE';
                         document.getElementById('outInc').innerText = payload.incidents || 'NONE';
                         document.getElementById('outWork').innerText = payload.work || 'NONE';
                         document.getElementById('outClass').innerText = payload.classes || 'NONE';
                         document.getElementById('outCal').innerText = payload.calamity || 'NONE';
-                        
-                        ['outSyn', 'outInc', 'outWork', 'outClass', 'outCal'].forEach(id => {
-                            document.getElementById(id).classList.remove('skeleton-box');
-                        });
-
+                        ['outSyn', 'outInc', 'outWork', 'outClass', 'outCal'].forEach(id => { document.getElementById(id).classList.remove('skeleton-box'); });
                         document.getElementById('generatedTimestamp').innerText = `Generated As Of: ${payload.reportTime}`;
-                        
-                        alert("Success! PDRRMO Advisory saved to Google Sheets.");
-                        modalBtn.innerText = originalText; modalBtn.disabled = false; closeSaveModal();
-                        
-                        ['inpSyn', 'srcSyn', 'inpInc', 'srcInc', 'inpWork', 'srcWork', 'inpClass', 'srcClass', 'inpCal', 'srcCal'].forEach(id => {
-                            const el = document.getElementById(id); 
-                            el.value = ""; 
-                            if(el.tagName.toLowerCase() === 'TEXTAREA') el.style.height = '40px';
-                        });
-                        
+                        alert("PDRRMO Advisory saved successfully.");
+                        ['inpSyn', 'srcSyn', 'inpInc', 'srcInc', 'inpWork', 'srcWork', 'inpClass', 'srcClass', 'inpCal', 'srcCal'].forEach(id => { const el = document.getElementById(id); el.value = ""; if(el.tagName.toLowerCase() === 'TEXTAREA') el.style.height = '40px'; });
                         switchToView('homeView');
-                    } else {
-                        alert("Google Script Error: " + result.message);
-                        modalBtn.innerText = originalText; modalBtn.disabled = false; closeSaveModal();
-                    }
-                })
-                .catch(error => {
-                    alert('Failed to connect to Google Sheets: ' + error.message);
-                    modalBtn.innerText = originalText; modalBtn.disabled = false; closeSaveModal();
-                });
+                    } else throw new Error(result.message);
+                } 
+                
+                // ---- PDF SUBMISSION (COUNCIL / PARTNERS) ----
+                else if (type === 'council' || type === 'partner') {
+                    const fileInput = document.getElementById(`${type}Pdf`);
+                    const actionInput = type === 'council' ? document.getElementById('councilActionText').value : document.getElementById('partnerActionText').value;
+                    const entityName = document.getElementById('secondaryCategory').value;
+                    
+                    if (fileInput.files.length === 0) { alert("Please ensure a PDF is uploaded and previewed."); throw new Error("No File."); }
+                    
+                    modalBtn.innerText = "UPLOADING FILE...";
+                    const file = fileInput.files[0];
+                    const base64Data = await getBase64(file);
+                    
+                    const payload = {
+                        type: 'pdf',
+                        reportTime: document.getElementById('dtDisplayText').innerText,
+                        entity: entityName,
+                        action: actionInput.toUpperCase(),
+                        filename: file.name,
+                        mimeType: file.type,
+                        fileData: base64Data
+                    };
 
-            } else {
-                alert('Saved successfully!');
+                    let response = await fetch(GOOGLE_SCRIPT_URL, { method: 'POST', body: JSON.stringify(payload) });
+                    let result = await response.json();
+
+                    if (result.status === "success") {
+                        alert("PDF Document saved successfully to Google Drive & Sheets!");
+                        addTweetCard(entityName, {action: payload.action}, true);
+                        fetchHistoricalData(); // Refresh the dropdown dynamically
+                        resetEncodingView();
+                        switchToView('homeView');
+                    } else { throw new Error("Failed to process file on server."); }
+                }
+
+            } catch(error) {
+                if(error.message !== "No File.") alert('System Action Failed: ' + error.message);
+            } finally {
                 modalBtn.innerText = originalText; modalBtn.disabled = false; closeSaveModal();
-                resetEncodingView();
             }
         }
 
@@ -1117,82 +830,56 @@
         primaryCat.addEventListener('change', (e) => {
             const val = e.target.value;
             secondaryCat.innerHTML = '<option value="" disabled selected>Select Specific Entity...</option>';
-            document.getElementById('subSelectContainer').style.display = 'block';
-            dynamicWorkflowArea.style.display = 'none'; 
-
+            document.getElementById('subSelectContainer').style.display = 'block'; dynamicWorkflowArea.style.display = 'none'; 
             let targetData = val === 'council' ? dataCouncil : val === 'ldrmc' ? dataLdrmc : dataPartner;
-            targetData.forEach(item => {
-                const opt = document.createElement('option');
-                opt.value = item;
-                opt.innerText = item + (val === 'ldrmc' ? (item === "Tarlac City" ? " (CDRRMO)" : " (MDRRMO)") : "");
-                secondaryCat.appendChild(opt);
-            });
+            targetData.forEach(item => { const opt = document.createElement('option'); opt.value = item; opt.innerText = item + (val === 'ldrmc' ? (item === "Tarlac City" ? " (CDRRMO)" : " (MDRRMO)") : ""); secondaryCat.appendChild(opt); });
         });
 
         secondaryCat.addEventListener('change', () => {
-            dynamicWorkflowArea.style.display = 'block';
-            forms.forEach(f => f.classList.remove('active'));
+            dynamicWorkflowArea.style.display = 'block'; forms.forEach(f => f.classList.remove('active'));
             if(primaryCat.value === 'council') document.getElementById('formCouncil').classList.add('active');
             else if (primaryCat.value === 'ldrmc') document.getElementById('formLdrmc').classList.add('active');
             else if (primaryCat.value === 'partner') document.getElementById('formPartner').classList.add('active');
         });
 
         function resetEncodingView() {
-            primaryCat.value = "";
-            document.getElementById('subSelectContainer').style.display = 'none';
-            dynamicWorkflowArea.style.display = 'none';
-            
-            // Hard reset on UI parts
+            primaryCat.value = ""; document.getElementById('subSelectContainer').style.display = 'none'; dynamicWorkflowArea.style.display = 'none';
             ['council', 'partner'].forEach(type => {
                 const capType = capitalize(type);
                 if (document.getElementById(`${type}Pdf`)) document.getElementById(`${type}Pdf`).value = '';
+                if (type === 'council') document.getElementById('councilActionText').value = '';
+                if (type === 'partner') document.getElementById('partnerActionText').value = '';
                 if (document.getElementById(`btnPreview${capType}`)) document.getElementById(`btnPreview${capType}`).style.display = 'none';
                 if (document.getElementById(`actionBtns${capType}`)) document.getElementById(`actionBtns${capType}`).style.display = 'none';
                 if (document.getElementById(`uploadBox${capType}`)) document.getElementById(`uploadBox${capType}`).style.display = 'block';
-                const viewer = document.getElementById(`viewer${capType}`);
-                if (viewer) { viewer.style.display = 'none'; viewer.src = ""; }
+                const viewer = document.getElementById(`viewer${capType}`); if (viewer) { viewer.style.display = 'none'; viewer.src = ""; }
             });
-
             forms.forEach(f => f.classList.remove('active'));
         }
         function capitalize(s) { return s.charAt(0).toUpperCase() + s.slice(1); }
 
-        // ----------------------------------------------------
-        // Datetime Picker Factory (Handles Multiple Calendars)
-        // ----------------------------------------------------
         function setupDateTimePicker(prefix) {
-            const trigger = document.getElementById(prefix + 'Trigger');
-            const popup = document.getElementById(prefix + 'Popup');
-            const displayText = document.getElementById(prefix + 'DisplayText');
-            const daysContainer = document.getElementById(prefix + 'Days');
-            const monthYearText = document.getElementById(prefix + 'MonthYear');
-            const hrInput = document.getElementById(prefix + 'Hour');
-            const minInput = document.getElementById(prefix + 'Min');
-            const btnAm = document.getElementById(prefix + 'Am');
-            const btnPm = document.getElementById(prefix + 'Pm');
-            const btnPrev = document.getElementById(prefix + 'Prev');
-            const btnNext = document.getElementById(prefix + 'Next');
-            const btnToday = document.getElementById(prefix + 'Today');
+            const trigger = document.getElementById(prefix + 'Trigger'); const popup = document.getElementById(prefix + 'Popup');
+            const displayText = document.getElementById(prefix + 'DisplayText'); const daysContainer = document.getElementById(prefix + 'Days');
+            const monthYearText = document.getElementById(prefix + 'MonthYear'); const hrInput = document.getElementById(prefix + 'Hour');
+            const minInput = document.getElementById(prefix + 'Min'); const btnAm = document.getElementById(prefix + 'Am');
+            const btnPm = document.getElementById(prefix + 'Pm'); const btnPrev = document.getElementById(prefix + 'Prev');
+            const btnNext = document.getElementById(prefix + 'Next'); const btnToday = document.getElementById(prefix + 'Today');
             const btnClear = document.getElementById(prefix + 'Clear');
-            
             let currentDate = new Date(); let selectedDate = new Date(); let isDateSelected = false;
             const formatDate = (date) => `${date.getDate()} ${date.toLocaleString('default', { month: 'short' })} ${date.getFullYear()}`;
 
             function formatTimeDisplay() {
-                let h = parseInt(hrInput.value); let m = parseInt(minInput.value);
-                let ampm = btnAm.classList.contains('active') ? 'AM' : 'PM';
-                if (isNaN(h) || h < 1) h = 1; if (h > 12) h = 12;
-                if (isNaN(m) || m < 0) m = 0; if (m > 59) m = 59;
+                let h = parseInt(hrInput.value); let m = parseInt(minInput.value); let ampm = btnAm.classList.contains('active') ? 'AM' : 'PM';
+                if (isNaN(h) || h < 1) h = 1; if (h > 12) h = 12; if (isNaN(m) || m < 0) m = 0; if (m > 59) m = 59;
                 hrInput.value = h.toString().padStart(2, '0'); minInput.value = m.toString().padStart(2, '0');
                 if (isDateSelected) displayText.innerText = `${formatDate(selectedDate)} - ${hrInput.value}:${minInput.value} ${ampm}`;
             }
 
             function setInitialTime() {
                 let now = new Date(); let h = now.getHours(); let m = now.getMinutes(); let ampm = h >= 12 ? 'PM' : 'AM';
-                h = h % 12; h = h ? h : 12;
-                hrInput.value = h.toString().padStart(2, '0'); minInput.value = m.toString().padStart(2, '0');
-                if(ampm === 'PM') { btnPm.classList.add('active'); btnAm.classList.remove('active'); } 
-                else { btnAm.classList.add('active'); btnPm.classList.remove('active'); }
+                h = h % 12; h = h ? h : 12; hrInput.value = h.toString().padStart(2, '0'); minInput.value = m.toString().padStart(2, '0');
+                if(ampm === 'PM') { btnPm.classList.add('active'); btnAm.classList.remove('active'); } else { btnAm.classList.add('active'); btnPm.classList.remove('active'); }
             }
             
             hrInput.addEventListener('blur', formatTimeDisplay); minInput.addEventListener('blur', formatTimeDisplay);
@@ -1205,10 +892,7 @@
                 const firstDay = new Date(year, month, 1).getDay(); const daysInMonth = new Date(year, month + 1, 0).getDate();
                 const prevMonthDays = new Date(year, month, 0).getDate();
                 
-                for(let i = firstDay; i > 0; i--) {
-                    const dayEl = document.createElement('div'); dayEl.className = 'dt-day other-month'; dayEl.innerText = prevMonthDays - i + 1; daysContainer.appendChild(dayEl);
-                }
-                
+                for(let i = firstDay; i > 0; i--) { const dayEl = document.createElement('div'); dayEl.className = 'dt-day other-month'; dayEl.innerText = prevMonthDays - i + 1; daysContainer.appendChild(dayEl); }
                 for(let i = 1; i <= daysInMonth; i++) {
                     const dayEl = document.createElement('div'); dayEl.className = 'dt-day';
                     if(isDateSelected && i === selectedDate.getDate() && month === selectedDate.getMonth() && year === selectedDate.getFullYear()) dayEl.classList.add('active');
@@ -1222,40 +906,62 @@
                     daysContainer.appendChild(dayEl);
                 }
                 const totalCells = daysContainer.children.length;
-                for(let i = 1; i <= 42 - totalCells; i++) {
-                    const dayEl = document.createElement('div'); dayEl.className = 'dt-day other-month'; dayEl.innerText = i; daysContainer.appendChild(dayEl);
-                }
+                for(let i = 1; i <= 42 - totalCells; i++) { const dayEl = document.createElement('div'); dayEl.className = 'dt-day other-month'; dayEl.innerText = i; daysContainer.appendChild(dayEl); }
             }
 
             setInitialTime();
-            
-            trigger.addEventListener('click', (e) => { 
-                e.stopPropagation(); 
-                document.querySelectorAll('.dt-popup').forEach(p => { if (p !== popup) p.classList.remove('show'); });
-                popup.classList.toggle('show'); renderCalendar(currentDate); 
-            });
+            trigger.addEventListener('click', (e) => { e.stopPropagation(); document.querySelectorAll('.dt-popup').forEach(p => { if (p !== popup) p.classList.remove('show'); }); popup.classList.toggle('show'); renderCalendar(currentDate); });
             btnPrev.addEventListener('click', (e) => { e.stopPropagation(); currentDate.setMonth(currentDate.getMonth() - 1); renderCalendar(currentDate); });
             btnNext.addEventListener('click', (e) => { e.stopPropagation(); currentDate.setMonth(currentDate.getMonth() + 1); renderCalendar(currentDate); });
-            
             btnToday.addEventListener('click', (e) => {
                 e.stopPropagation(); currentDate = new Date(); selectedDate = new Date(); isDateSelected = true; setInitialTime();
-                let ampm = btnAm.classList.contains('active') ? 'AM' : 'PM';
-                displayText.innerText = `${formatDate(selectedDate)} - ${hrInput.value}:${minInput.value} ${ampm}`;
+                let ampm = btnAm.classList.contains('active') ? 'AM' : 'PM'; displayText.innerText = `${formatDate(selectedDate)} - ${hrInput.value}:${minInput.value} ${ampm}`;
                 renderCalendar(currentDate); popup.classList.remove('show');
             });
-            btnClear.addEventListener('click', (e) => {
-                e.stopPropagation(); isDateSelected = false; displayText.innerText = 'Select Date & Time'; setInitialTime(); renderCalendar(currentDate);
-            });
-            
+            btnClear.addEventListener('click', (e) => { e.stopPropagation(); isDateSelected = false; displayText.innerText = 'Select Date & Time'; setInitialTime(); renderCalendar(currentDate); });
             popup.addEventListener('click', (e) => { e.stopPropagation(); });
             document.addEventListener('click', (e) => { if(!popup.contains(e.target) && !trigger.contains(e.target)) popup.classList.remove('show'); });
         }
+        setupDateTimePicker('dt'); setupDateTimePicker('pdt');
 
-        setupDateTimePicker('dt');
-        setupDateTimePicker('pdt');
+        // ----------------------------------------------------
+        // Populate PDF Select Logic
+        // ----------------------------------------------------
+        function populatePdfRecords(pdfData) {
+            const select = document.getElementById('recordSelect');
+            select.innerHTML = '<option value="" disabled selected>Select a record...</option>';
+            
+            let councilGroup = document.createElement('optgroup');
+            councilGroup.label = "Available Council & Partner Reports";
+
+            let count = 0;
+            for (const council in pdfData) {
+                count++;
+                let opt = document.createElement('option');
+                opt.value = pdfData[council].url; // URL of the PDF in Google Drive
+                opt.innerText = `${council} (As of: ${pdfData[council].timestamp})`;
+                councilGroup.appendChild(opt);
+            }
+
+            if (count > 0) {
+                select.appendChild(councilGroup);
+            } else {
+                select.innerHTML = '<option value="" disabled selected>No records found in database.</option>';
+            }
+        }
+
+        function viewSelectedRecord() {
+            const url = document.getElementById('recordSelect').value;
+            if(url) {
+                // Open PDF URL in new tab directly (avoids iframe blocking issues)
+                window.open(url, '_blank'); 
+            } else {
+                alert("Please select a record from the dropdown first.");
+            }
+        }
 
         // =====================================================================
-        // LIVE PULL WITH SKELETON LOADERS (PULLS BOTH TABS)
+        // LIVE PULL WITH SKELETON LOADERS
         // =====================================================================
         function fetchHistoricalData() {
             fetch(GOOGLE_SCRIPT_URL)
@@ -1265,101 +971,45 @@
                         
                         // 1. Process LDRRMC Data
                         if (result.data && result.data.length > 0) {
-                            const rows = result.data;
-                            for(let i = 1; i < rows.length; i++) {
-                                const row = rows[i];
-                                if(!row[1]) continue; 
-                                
-                                const splitData = row[1].split(" | ");
-                                const lguName = splitData[0];
-                                const reportTime = splitData[1] || row[0];
-                                const exactLguId = lguName.replace(/\s+/g, ''); 
-                                
-                                const payload = {
-                                    lgu: lguName,
-                                    reportTime: reportTime,
-                                    weather: row[2],
-                                    population: row[3],
-                                    evacuation: row[4],
-                                    casualty: row[5],
-                                    suspension: row[6],
-                                    flooded: row[7],
-                                    infra: row[8],
-                                    agri: row[9],
-                                    roads: row[10],
-                                    power: row[11],
-                                    incidents: row[12],
-                                    other: row[13]
-                                };
-                                updateMasterTable(exactLguId, payload);
-                                addTweetCard(lguName, payload);
+                            for(let i = 1; i < result.data.length; i++) {
+                                const row = result.data[i]; if(!row[1]) continue; 
+                                const exactLguId = row[1].replace(/\s+/g, ''); 
+                                const payload = { lgu: row[1], reportTime: row[0], weather: row[2], population: row[3], evacuation: row[4], casualty: row[5], suspension: row[6], flooded: row[7], infra: row[8], agri: row[9], roads: row[10], power: row[11], incidents: row[12], other: row[13] };
+                                updateMasterTable(exactLguId, payload); addTweetCard(row[1], payload);
                             }
                         }
 
                         // 2. Process ADVISORY Data
                         if (result.advisoryData && result.advisoryData.length > 1) {
                             const latestAdvisory = result.advisoryData[result.advisoryData.length - 1]; 
-                            
-                            document.getElementById('outSyn').innerText = latestAdvisory[1] || 'NONE';
-                            document.getElementById('outInc').innerText = latestAdvisory[2] || 'NONE';
-                            document.getElementById('outWork').innerText = latestAdvisory[3] || 'NONE';
-                            document.getElementById('outClass').innerText = latestAdvisory[4] || 'NONE';
-                            document.getElementById('outCal').innerText = latestAdvisory[5] || 'NONE';
-                            
-                            ['outSyn', 'outInc', 'outWork', 'outClass', 'outCal'].forEach(id => {
-                                document.getElementById(id).classList.remove('skeleton-box');
-                            });
-                            
+                            document.getElementById('outSyn').innerText = latestAdvisory[1] || 'NONE'; document.getElementById('outInc').innerText = latestAdvisory[2] || 'NONE'; document.getElementById('outWork').innerText = latestAdvisory[3] || 'NONE'; document.getElementById('outClass').innerText = latestAdvisory[4] || 'NONE'; document.getElementById('outCal').innerText = latestAdvisory[5] || 'NONE';
+                            ['outSyn', 'outInc', 'outWork', 'outClass', 'outCal'].forEach(id => { document.getElementById(id).classList.remove('skeleton-box'); });
                             document.getElementById('generatedTimestamp').innerText = `Generated As Of: ${latestAdvisory[0]}`;
                         } else {
-                            ['outSyn', 'outInc', 'outWork', 'outClass', 'outCal'].forEach(id => {
-                                const el = document.getElementById(id);
-                                el.classList.remove('skeleton-box');
-                                el.innerHTML = '<span class="placeholder-text">Awaiting data...</span>';
-                            });
+                            ['outSyn', 'outInc', 'outWork', 'outClass', 'outCal'].forEach(id => { const el = document.getElementById(id); el.classList.remove('skeleton-box'); el.innerHTML = '<span class="placeholder-text">Awaiting data...</span>'; });
+                        }
+
+                        // 3. Process PDF Data (Dynamically populate dropdown)
+                        if (result.pdfData) {
+                            populatePdfRecords(result.pdfData);
                         }
                     }
                 })
                 .catch(error => {
                     console.error("Error fetching data:", error);
                     document.getElementById('generatedTimestamp').innerText = `Error pulling database records.`;
+                    document.getElementById('recordSelect').innerHTML = '<option value="" disabled selected>Error connecting to Database.</option>';
                 })
                 .finally(() => {
-                    document.querySelectorAll('.status-badge.skeleton-box').forEach(badge => {
-                        badge.classList.remove('skeleton-box');
-                        badge.classList.add('pending');
-                        badge.innerHTML = 'Awaiting Report';
-                    });
+                    document.querySelectorAll('.status-badge.skeleton-box').forEach(badge => { badge.classList.remove('skeleton-box'); badge.classList.add('pending'); badge.innerHTML = 'Awaiting Report'; });
                     document.querySelectorAll('.skeleton-card').forEach(t => t.remove());
-
                     const wall = document.getElementById('tweetWallSection');
-                    if (wall.children.length === 0) {
-                        wall.innerHTML = `
-                            <div class="tweet-card">
-                                <div class="tweet-header">
-                                    <div class="tweet-avatar"><i data-lucide="package" style="width:14px;"></i></div>
-                                    <div class="tweet-meta">
-                                        <span class="tweet-name">System Update</span>
-                                        <span class="tweet-handle">Monitoring Active</span>
-                                    </div>
-                                </div>
-                                <div class="tweet-body">
-                                    The Situation Overview board is now listening for dynamic LDRRMC submissions.
-                                </div>
-                                <div class="tweet-footer">
-                                    <span>Admin Message</span>
-                                    <span>Just now</span>
-                                </div>
-                            </div>
-                        `;
-                    }
+                    if (wall.children.length === 0) { wall.innerHTML = `<div class="tweet-card"><div class="tweet-header"><div class="tweet-avatar"><i data-lucide="package" style="width:14px;"></i></div><div class="tweet-meta"><span class="tweet-name">System Update</span><span class="tweet-handle">Monitoring Active</span></div></div><div class="tweet-body">The Situation Overview board is now listening for dynamic LDRRMC submissions.</div><div class="tweet-footer"><span>Admin Message</span><span>Just now</span></div></div>`; }
                     lucide.createIcons({ attrs: { 'stroke-width': 1.5 } });
                 });
         }
 
-        window.onload = function() {
-            fetchHistoricalData();
-        };
+        window.onload = function() { fetchHistoricalData(); };
     </script>
 </body>
 </html>
