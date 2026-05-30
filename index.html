@@ -965,8 +965,17 @@
         // =====================================================================
         function fetchHistoricalData() {
             fetch(GOOGLE_SCRIPT_URL)
-                .then(response => response.json())
+                .then(response => {
+                    if (!response.ok) throw new Error("Connection Blocked (Check Google Script Permissions)");
+                    return response.json();
+                })
                 .then(result => {
+                    if (result.status === "error") {
+                        alert("Database Connection Error: " + result.message);
+                        document.getElementById('generatedTimestamp').innerText = `Error: ${result.message}`;
+                        throw new Error(result.message);
+                    }
+
                     if(result.status === "success") {
                         
                         // 1. Process LDRRMC Data
@@ -997,8 +1006,9 @@
                 })
                 .catch(error => {
                     console.error("Error fetching data:", error);
-                    document.getElementById('generatedTimestamp').innerText = `Error pulling database records.`;
+                    document.getElementById('generatedTimestamp').innerText = `Connection failed. Check permissions.`;
                     document.getElementById('recordSelect').innerHTML = '<option value="" disabled selected>Error connecting to Database.</option>';
+                    alert("Dashboard failed to load data. The Google Script is blocking the connection. Please follow the 3 deployment rules.");
                 })
                 .finally(() => {
                     document.querySelectorAll('.status-badge.skeleton-box').forEach(badge => { badge.classList.remove('skeleton-box'); badge.classList.add('pending'); badge.innerHTML = 'Awaiting Report'; });
