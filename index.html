@@ -233,11 +233,10 @@
         }
         .form-control:focus { border-color: var(--btn-dark); background-color: #ffffff; box-shadow: 0 0 0 3px rgba(15, 23, 42, 0.05); }
         
-        /* NEW ENCODING STYLES (Auto-Expand & Uppercase) */
         .uppercase-input { text-transform: uppercase; }
         textarea.form-control { 
-            resize: none; /* User can't manually resize because it auto-expands */
-            overflow: hidden; /* Hide scrollbars during typing */
+            resize: none; 
+            overflow: hidden; 
             min-height: 40px; 
             line-height: 1.5;
         }
@@ -256,7 +255,7 @@
         .workflow-form { display: none; }
         .workflow-form.active { display: block; animation: slideUpFade 0.4s ease forwards; }
 
-        /* --- MODERN DATETIME PICKER --- */
+        /* --- MODERN DATETIME PICKER (Fixed Glitch) --- */
         .dt-wrapper { 
             display: inline-flex; align-items: center; gap: 8px; cursor: pointer; 
             background: #ffffff; border: 1px solid var(--card-border); 
@@ -287,7 +286,11 @@
         
         .dt-time-sec { padding: 10px 12px; background: var(--input-bg); display: flex; align-items: center; justify-content: space-between;}
         .time-inputs { display: flex; align-items: center; background: #ffffff; border-radius: 4px; border: 1px solid var(--card-border); padding: 2px 6px;}
-        .time-input { background: transparent; border: none; color: var(--text-dark); font-size: 11px; font-weight: 700; width: 20px; text-align: center; outline: none; }
+        
+        /* Fixed Input Box Glitch */
+        .time-input { background: transparent; border: none; color: var(--text-dark); font-size: 11px; font-weight: 700; width: 24px; text-align: center; outline: none; }
+        .time-input::-webkit-outer-spin-button, .time-input::-webkit-inner-spin-button { -webkit-appearance: none; margin: 0; }
+        .time-input[type=number] { -moz-appearance: textfield; }
         
         .ampm-toggle { display: flex; background: #ffffff; border-radius: 4px; border: 1px solid var(--card-border); overflow: hidden; }
         .ampm-btn { background: transparent; border: none; color: var(--text-gray); padding: 2px 6px; font-size: 9px; font-weight: 700; cursor: pointer; transition: var(--transition);}
@@ -452,7 +455,7 @@
                                                                                    
                                 <div class="data-grid">
                                     <div class="data-item full-width">
-                                        <label class="data-label">OUTLINE</label>
+                                        <label class="data-label">OUTLINE (SYNOPSIS)</label>
                                         <div class="data-value skeleton-box" id="outSyn" style="min-height: 16px;"></div>
                                     </div>
                                     <div class="data-item full-width">
@@ -621,6 +624,13 @@
                 </div>
                 
                 <div class="panel-card" style="max-width: 650px; margin: 0 auto;">
+                    <div style="display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 20px;">
+                        <h3 style="font-size: 11px; font-weight: 700; color: var(--text-dark);">Enter Advisory Details Below:</h3>
+                        <div style="font-size: 9px; color: var(--text-gray); font-style: italic;">
+                            "As of" timestamp will be drawn from the top selector.
+                        </div>
+                    </div>
+                
                     <div class="form-group"><label>A. Synopsis</label><textarea id="inpSyn" class="form-control uppercase-input" rows="2"></textarea></div>
                     <div class="form-group"><label>B. Other Incidents Monitored (PDRRMO Responses)</label><textarea id="inpInc" class="form-control uppercase-input" rows="2"></textarea></div>
                     <div class="form-group"><label>C. Suspension on Work (by National/ Provincial level):</label><textarea id="inpWork" class="form-control uppercase-input" rows="1"></textarea></div>
@@ -663,7 +673,7 @@
         lucide.createIcons({ attrs: { 'stroke-width': 1.5 } });
 
         // =====================================================================
-        // YOUR ACTIVE GOOGLE APPS SCRIPT WEB APP URL (Memory injected)
+        // YOUR ACTIVE GOOGLE APPS SCRIPT WEB APP URL
         // =====================================================================
         const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbydLbq6xAW0WOWg9SoInDIiu0ULlGrkYY6dBzMekCafTByssh57XQdWg0D4D_AANCU/exec"; 
 
@@ -672,8 +682,8 @@
         // ----------------------------------------------------
         document.addEventListener('input', function (e) {
             if (e.target.tagName.toLowerCase() === 'textarea' && e.target.classList.contains('form-control')) {
-                e.target.style.height = 'auto'; // Reset the height
-                e.target.style.height = (e.target.scrollHeight) + 'px'; // Set it to the scroll height
+                e.target.style.height = 'auto'; 
+                e.target.style.height = (e.target.scrollHeight) + 'px'; 
             }
         });
 
@@ -780,7 +790,6 @@
                 </div>`;
                 lucide.createIcons({ attrs: { 'stroke-width': 1.5 } });
             }
-            
             lguModal.classList.add('show');
         }
 
@@ -813,12 +822,6 @@
         function closeSaveModal() { saveModal.classList.remove('show'); }
         document.getElementById('btnConfirmModalYes').onclick = function() { executeSave(currentSaveType); };
 
-        function setOutputValue(outId, inId) {
-            const val = document.getElementById(inId).value;
-            // Retaining the upper case structure for final display if needed, but the inputs enforce it natively now.
-            document.getElementById(outId).innerHTML = val ? val.toUpperCase() : '<span class="placeholder-text">Awaiting data...</span>';
-        }
-
         // ----------------------------------------------------
         // Core Execution Logic (Fetch to Google Sheets)
         // ----------------------------------------------------
@@ -827,13 +830,14 @@
             const originalText = modalBtn.innerText;
             modalBtn.innerText = "SAVING..."; modalBtn.disabled = true;
 
+            // ---- LDRRMC SUBMISSION ----
             if (type === 'ldrmc') {
                 const rawDropdownValue = document.getElementById('secondaryCategory').value;
                 const exactLguName = rawDropdownValue.replace(/ \(.+\)/, ''); 
                 const exactLguId = exactLguName.replace(/\s+/g, ''); 
 
-                // Forced .toUpperCase() applied to ensure clean database entry
                 const payload = {
+                    type: 'ldrmc',
                     lgu: exactLguName,
                     reportTime: document.getElementById('dtDisplayText').innerText,
                     weather: document.getElementById('ld_A').value.toUpperCase(),
@@ -867,7 +871,6 @@
                         alert('LDRRMC Report saved to Google Sheets successfully!');
                         modalBtn.innerText = originalText; modalBtn.disabled = false; closeSaveModal();
                         
-                        // Reset forms and shrink textareas back down
                         document.querySelectorAll('#formLdrmc textarea').forEach(el => { el.value = ''; el.style.height = '40px'; });
                         resetEncodingView();
                         switchToView('homeView');
@@ -881,33 +884,62 @@
                     modalBtn.innerText = originalText; modalBtn.disabled = false; closeSaveModal();
                 });
 
-            } else if (type === 'pdrrmo') {
+            } 
+            // ---- PDRRMO ADVISORY SUBMISSION ----
+            else if (type === 'pdrrmo') {
                 
-                setOutputValue('outSyn', 'inpSyn');
-                setOutputValue('outInc', 'inpInc');
-                setOutputValue('outWork', 'inpWork');
-                setOutputValue('outClass', 'inpClass');
-                setOutputValue('outCal', 'inpCal');
-                
-                document.getElementById('outSyn').classList.remove('skeleton-box');
-                document.getElementById('outInc').classList.remove('skeleton-box');
-                document.getElementById('outWork').classList.remove('skeleton-box');
-                document.getElementById('outClass').classList.remove('skeleton-box');
-                document.getElementById('outCal').classList.remove('skeleton-box');
+                const payload = {
+                    type: 'advisory',
+                    reportTime: document.getElementById('dtDisplayText').innerText,
+                    synopsis: document.getElementById('inpSyn').value.toUpperCase(),
+                    incidents: document.getElementById('inpInc').value.toUpperCase(),
+                    work: document.getElementById('inpWork').value.toUpperCase(),
+                    classes: document.getElementById('inpClass').value.toUpperCase(),
+                    calamity: document.getElementById('inpCal').value.toUpperCase()
+                };
 
-                document.getElementById('generatedTimestamp').innerText = `Generated As Of: ${document.getElementById('dtDisplayText').innerText}`;
-                
-                alert("Success! PDRRMO Advisory attached to Consolidated LDRRMC Report.");
-                
-                modalBtn.innerText = originalText; modalBtn.disabled = false; closeSaveModal();
-                
-                // Clear and Reset Height
-                ['inpSyn', 'inpInc', 'inpWork', 'inpClass', 'inpCal'].forEach(id => {
-                    const el = document.getElementById(id);
-                    el.value = ""; el.style.height = '40px';
+                fetch(GOOGLE_SCRIPT_URL, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+                    body: JSON.stringify(payload)
+                })
+                .then(response => {
+                    if (!response.ok) throw new Error("Network response was not ok");
+                    return response.json(); 
+                })
+                .then(result => {
+                    if (result.status === "success" || result.status === 200) {
+                        
+                        // Update UI immediately upon success
+                        document.getElementById('outSyn').innerText = payload.synopsis || 'NONE';
+                        document.getElementById('outInc').innerText = payload.incidents || 'NONE';
+                        document.getElementById('outWork').innerText = payload.work || 'NONE';
+                        document.getElementById('outClass').innerText = payload.classes || 'NONE';
+                        document.getElementById('outCal').innerText = payload.calamity || 'NONE';
+                        
+                        ['outSyn', 'outInc', 'outWork', 'outClass', 'outCal'].forEach(id => {
+                            document.getElementById(id).classList.remove('skeleton-box');
+                        });
+
+                        document.getElementById('generatedTimestamp').innerText = `Generated As Of: ${payload.reportTime}`;
+                        
+                        alert("Success! PDRRMO Advisory saved to Google Sheets.");
+                        modalBtn.innerText = originalText; modalBtn.disabled = false; closeSaveModal();
+                        
+                        ['inpSyn', 'inpInc', 'inpWork', 'inpClass', 'inpCal'].forEach(id => {
+                            const el = document.getElementById(id); el.value = ""; el.style.height = '40px';
+                        });
+                        
+                        switchToView('homeView');
+                    } else {
+                        alert("Google Script Error: " + result.message);
+                        modalBtn.innerText = originalText; modalBtn.disabled = false; closeSaveModal();
+                    }
+                })
+                .catch(error => {
+                    alert('Failed to connect to Google Sheets: ' + error.message);
+                    modalBtn.innerText = originalText; modalBtn.disabled = false; closeSaveModal();
                 });
-                
-                switchToView('homeView');
 
             } else {
                 alert('Saved successfully!');
@@ -1051,47 +1083,72 @@
         document.addEventListener('click', (e) => { if(!dtPopup.contains(e.target) && !dtTrigger.contains(e.target)) dtPopup.classList.remove('show'); });
 
         // =====================================================================
-        // LIVE PULL WITH SKELETON LOADERS
+        // LIVE PULL WITH SKELETON LOADERS (PULLS BOTH TABS)
         // =====================================================================
         function fetchHistoricalData() {
             fetch(GOOGLE_SCRIPT_URL)
                 .then(response => response.json())
                 .then(result => {
-                    if(result.status === "success" && result.data.length > 0) {
-                        const rows = result.data;
+                    if(result.status === "success") {
                         
-                        for(let i = 1; i < rows.length; i++) {
-                            const row = rows[i];
-                            if(!row[1]) continue; 
-                            
-                            const splitData = row[1].split(" | ");
-                            const lguName = splitData[0];
-                            const reportTime = splitData[1] || row[0];
-                            const exactLguId = lguName.replace(/\s+/g, ''); 
-                            
-                            const payload = {
-                                lgu: lguName,
-                                reportTime: reportTime,
-                                weather: row[2],
-                                population: row[3],
-                                evacuation: row[4],
-                                casualty: row[5],
-                                suspension: row[6],
-                                flooded: row[7],
-                                infra: row[8],
-                                agri: row[9],
-                                roads: row[10],
-                                power: row[11],
-                                incidents: row[12],
-                                other: row[13]
-                            };
-                            
-                            updateMasterTable(exactLguId, payload);
-                            addTweetCard(lguName, payload);
+                        // 1. Process LDRRMC Data
+                        if (result.data && result.data.length > 0) {
+                            const rows = result.data;
+                            for(let i = 1; i < rows.length; i++) {
+                                const row = rows[i];
+                                if(!row[1]) continue; 
+                                
+                                const splitData = row[1].split(" | ");
+                                const lguName = splitData[0];
+                                const reportTime = splitData[1] || row[0];
+                                const exactLguId = lguName.replace(/\s+/g, ''); 
+                                
+                                const payload = {
+                                    lgu: lguName,
+                                    reportTime: reportTime,
+                                    weather: row[2],
+                                    population: row[3],
+                                    evacuation: row[4],
+                                    casualty: row[5],
+                                    suspension: row[6],
+                                    flooded: row[7],
+                                    infra: row[8],
+                                    agri: row[9],
+                                    roads: row[10],
+                                    power: row[11],
+                                    incidents: row[12],
+                                    other: row[13]
+                                };
+                                updateMasterTable(exactLguId, payload);
+                                addTweetCard(lguName, payload);
+                            }
                         }
-                        document.getElementById('generatedTimestamp').innerText = `Live Data Synchronized`;
-                    } else {
-                        document.getElementById('generatedTimestamp').innerText = "No historical data found.";
+
+                        // 2. Process ADVISORY Data (Pull the most recent entry)
+                        if (result.advisoryData && result.advisoryData.length > 1) {
+                            const latestAdvisory = result.advisoryData[result.advisoryData.length - 1]; // Get last row
+                            
+                            document.getElementById('outSyn').innerText = latestAdvisory[1] || 'NONE';
+                            document.getElementById('outInc').innerText = latestAdvisory[2] || 'NONE';
+                            document.getElementById('outWork').innerText = latestAdvisory[3] || 'NONE';
+                            document.getElementById('outClass').innerText = latestAdvisory[4] || 'NONE';
+                            document.getElementById('outCal').innerText = latestAdvisory[5] || 'NONE';
+                            
+                            // Remove Advisory Skeletons
+                            ['outSyn', 'outInc', 'outWork', 'outClass', 'outCal'].forEach(id => {
+                                document.getElementById(id).classList.remove('skeleton-box');
+                            });
+                            
+                            document.getElementById('generatedTimestamp').innerText = `Generated As Of: ${latestAdvisory[0]}`;
+                        } else {
+                            // No advisory data yet, set custom placeholder
+                            ['outSyn', 'outInc', 'outWork', 'outClass', 'outCal'].forEach(id => {
+                                const el = document.getElementById(id);
+                                el.classList.remove('skeleton-box');
+                                el.innerHTML = '<span class="placeholder-text">Awaiting data...</span>';
+                            });
+                        }
+
                     }
                 })
                 .catch(error => {
@@ -1099,21 +1156,14 @@
                     document.getElementById('generatedTimestamp').innerText = `Error pulling database records.`;
                 })
                 .finally(() => {
-                    const pdrrmoIds = ['outSyn', 'outInc', 'outWork', 'outClass', 'outCal'];
-                    pdrrmoIds.forEach(id => {
-                        const el = document.getElementById(id);
-                        if(el.classList.contains('skeleton-box')) {
-                            el.classList.remove('skeleton-box');
-                            el.innerHTML = '<span class="placeholder-text">Awaiting data...</span>';
-                        }
-                    });
-
+                    // Clean up empty table badges
                     document.querySelectorAll('.status-badge.skeleton-box').forEach(badge => {
                         badge.classList.remove('skeleton-box');
                         badge.classList.add('pending');
                         badge.innerHTML = 'Awaiting Report';
                     });
 
+                    // Remove fake skeleton tweets
                     document.querySelectorAll('.skeleton-card').forEach(t => t.remove());
 
                     const wall = document.getElementById('tweetWallSection');
@@ -1128,7 +1178,7 @@
                                     </div>
                                 </div>
                                 <div class="tweet-body">
-                                    The Situation Overview board is now listening for dynamic LDRRMC submissions. Form submissions will automatically update the table to the left and appear here.
+                                    The Situation Overview board is now listening for dynamic LDRRMC submissions.
                                 </div>
                                 <div class="tweet-footer">
                                     <span>Admin Message</span>
