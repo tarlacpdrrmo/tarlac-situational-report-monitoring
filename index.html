@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Tarlac PDRRMO | SitRep Workflow System</title>
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <script src="https://unpkg.com/lucide@latest"></script>
     <style>
         :root {
@@ -28,7 +28,6 @@
 
         * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Plus Jakarta Sans', sans-serif; }
 
-        /* EDGE-TO-EDGE LAYOUT FIX */
         body { background-color: var(--bg-page); display: flex; align-items: center; justify-content: center; height: 100vh; width: 100vw; overflow: hidden; padding: 0; -webkit-font-smoothing: antialiased; }
 
         @keyframes slideUpFade { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: translateY(0); } }
@@ -37,7 +36,6 @@
         
         .skeleton-box { background: linear-gradient(90deg, #f1f5f9 25%, #f8fafc 50%, #f1f5f9 75%); background-size: 200% 100%; animation: skeleton-loading 1.5s infinite linear; border-radius: 6px; color: transparent !important; border: none !important; pointer-events: none; }
 
-        /* REMOVED MAX-WIDTH AND BORDER RADIUS FOR FULL SCREEN */
         .app-container { display: flex; width: 100vw; height: 100vh; max-width: 100%; background-color: var(--bg-app); border-radius: 0; box-shadow: none; overflow: hidden; }
 
         /* --- SIDEBAR --- */
@@ -89,20 +87,18 @@
         .data-label i { color: var(--accent); width: 12px; height: 12px; }
         
         .data-value { padding: 4px 0; color: var(--text-dark); border: none; }
-        .placeholder-text { font-size: 11px; color: var(--text-gray); opacity: 0.6; font-style: italic; font-weight: 500; }
+        .placeholder-text { font-family: 'Inter', sans-serif; font-size: 12px; color: var(--text-gray); opacity: 0.8; font-style: italic; font-weight: 500; }
 
-        /* --- ENHANCED DYNAMIC PARSED TABLES & BADGES (Fixed Readability) --- */
-        .meta-badge { display: inline-flex; align-items: center; background-color: var(--input-bg); border: 1px solid var(--card-border); color: var(--text-dark); font-size: 9px; font-weight: 700; padding: 4px 8px; border-radius: 6px; margin-bottom: 10px; box-shadow: 0 2px 4px rgba(0,0,0,0.01); }
-        .meta-source { display: flex; align-items: center; font-size: 9px; color: var(--text-gray); font-style: italic; font-weight: 600; margin-top: 10px; border-top: 1px dashed #cbd5e1; padding-top: 8px; }
+        /* --- NEW MODERN INTER FONT STYLES FOR ADVISORY REPORTS --- */
+        .meta-badge { font-family: 'Inter', sans-serif; display: inline-flex; align-items: center; background-color: var(--input-bg); border: 1px solid var(--card-border); color: var(--text-dark); font-size: 10px; font-weight: 600; padding: 4px 10px; border-radius: 6px; margin-bottom: 10px; box-shadow: 0 2px 4px rgba(0,0,0,0.01); }
+        .meta-source { font-family: 'Inter', sans-serif; display: flex; align-items: center; font-size: 10px; color: var(--text-gray); font-style: italic; font-weight: 500; margin-top: 10px; border-top: 1px dashed #cbd5e1; padding-top: 8px; }
         
-        /* Fixed: Much cleaner standard text font */
-        .standard-text { font-size: 12px; color: var(--text-dark); line-height: 1.6; margin-bottom: 8px; font-weight: 500; text-transform: none; letter-spacing: 0.2px; }
+        .standard-text { font-family: 'Inter', sans-serif; font-size: 13px; color: #334155; line-height: 1.6; margin-bottom: 10px; font-weight: 500; text-transform: none; letter-spacing: -0.1px; }
         
-        /* Fixed: Cleaner Table Presentation */
-        .parsed-table-wrapper { width: 100%; overflow-x: auto; margin: 12px 0; border-radius: 8px; border: 1px solid var(--card-border); box-shadow: 0 2px 8px rgba(15, 23, 42, 0.02); }
+        .parsed-table-wrapper { width: 100%; overflow-x: auto; margin: 12px 0; border-radius: 10px; border: 1px solid #e2e8f0; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05); }
         .parsed-table { width: 100%; border-collapse: collapse; text-align: left; background: #ffffff; }
-        .parsed-table th { background-color: #f8fafc; font-size: 9px; font-weight: 800; color: var(--text-gray); padding: 10px 14px; border-bottom: 2px solid var(--card-border); text-transform: uppercase; letter-spacing: 0.5px; }
-        .parsed-table td { padding: 10px 14px; font-size: 11px; font-weight: 500; color: var(--text-dark); border-bottom: 1px solid var(--card-border); text-transform: none; line-height: 1.5; vertical-align: top;}
+        .parsed-table th { font-family: 'Plus Jakarta Sans', sans-serif; background-color: #f8fafc; font-size: 10px; font-weight: 800; color: #64748b; padding: 12px 16px; border-bottom: 2px solid #e2e8f0; text-transform: uppercase; letter-spacing: 0.5px; }
+        .parsed-table td { font-family: 'Inter', sans-serif; padding: 14px 16px; font-size: 12px; font-weight: 500; color: #334155; border-bottom: 1px solid #f1f5f9; text-transform: none; line-height: 1.5; vertical-align: top;}
         .parsed-table tr:last-child td { border-bottom: none; }
         .parsed-table tbody tr:hover td { background-color: #f8fafc; }
 
@@ -149,9 +145,7 @@
         .btn:hover { background-color: var(--input-bg); border-color: #cbd5e1; }
         .btn-primary { background-color: var(--btn-dark); color: #ffffff; border: none; padding: 8px 16px;}
         .btn-primary:hover { background-color: var(--btn-dark-hover); box-shadow: 0 4px 12px rgba(15, 23, 42, 0.15); transform: translateY(-1px);}
-        /* Fixed Button Padding for the action column */
         .btn-sm { padding: 8px 14px; font-size: 9px; border-radius: 6px;} 
-        
         .btn-danger { background-color: #ffffff; border: 1px solid #ef4444; color: #ef4444; }
         .btn-danger:hover { background-color: #fef2f2; border-color: #dc2626; color: #dc2626; }
 
@@ -170,7 +164,6 @@
         .advisory-wrapper .source-input { width: 100%; border: none; background-color: transparent; border-top: 1px dashed #cbd5e1; padding: 8px 12px; font-size: 10px; color: var(--text-gray); outline: none; font-style: italic; font-weight: 500; transition: var(--transition);}
         
         /* Table Dynamic Input Styles */
-        /* Removed uppercase from tbl-input to allow proper sentence casing */
         .tbl-input { width: 100%; border: none; outline: none; padding: 8px; font-size: 11px; background: transparent; color: var(--text-dark); font-weight: 500;} 
         .tbl-input:focus { background: #f1f5f9; }
         .table-input-wrapper th { font-size: 8px; font-weight: 800; color: var(--text-gray); text-transform: uppercase;}
@@ -390,7 +383,6 @@
                 </div>
             </div>
 
-            <!-- ENCODING PAGE -->
             <div id="encodingView" class="view-section">
                 <div class="header">
                     <div class="header-title"><h1>Encoding Page</h1><p>Choose an agency below to begin encoding.</p></div>
@@ -482,7 +474,6 @@
                             <h3 style="font-size: 13px; font-weight: 800; color: var(--text-dark); margin-bottom: 16px;">Fill Out The Information</h3>
                             
                             <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px;">
-                                <!-- Left Column (A to F) -->
                                 <div>
                                     <div class="form-group"><label>A. Weather Condition</label><textarea id="ld_A" class="form-control uppercase-input" rows="1"></textarea></div>
                                     
@@ -582,7 +573,6 @@
                                     </div>
                                 </div>
 
-                                <!-- Right Column (G to K) -->
                                 <div>
                                     <div class="form-group">
                                         <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:6px;">
@@ -687,8 +677,6 @@
                 </div>
             </div>
 
-            <!-- ENCODING PAGE FOR PDRRMO -->
-            <!-- Note: Removed the "uppercase-input" class from textareas so you can type normally in Sentence Case -->
             <div id="pdrrmoView" class="view-section">
                 <div class="header">
                     <div class="header-title"><h1>PDRRMO SitRep and Advisory Report</h1><p>LDRRMCs All Update Consolidated Report.</p></div>
@@ -717,7 +705,6 @@
                 
                     <div class="form-group"><label>A. Synopsis</label><div class="advisory-wrapper"><textarea id="inpSyn" class="form-control" rows="3"></textarea><input type="text" id="srcSyn" class="source-input" placeholder="Source of information (Optional)..."></div></div>
                     
-                    <!-- DYNAMIC TOGGLE 1: INCIDENTS -->
                     <div class="form-group">
                         <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:6px;">
                             <label style="margin:0;">B. Other Incidents Monitored (PDRRMO Responses)</label>
@@ -753,7 +740,6 @@
                         </div>
                     </div>
                     
-                    <!-- DYNAMIC TOGGLE 2: WORK SUSPENSION -->
                     <div class="form-group">
                         <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:6px;">
                             <label style="margin:0;">C. Suspension on Work (by National/ Provincial level):</label>
@@ -789,7 +775,6 @@
                         </div>
                     </div>
 
-                    <!-- DYNAMIC TOGGLE 3: CLASSES SUSPENSION -->
                     <div class="form-group">
                         <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:6px;">
                             <label style="margin:0;">D. Suspension on Classes (by National/ Provincial level):</label>
@@ -825,7 +810,6 @@
                         </div>
                     </div>
 
-                    <!-- DYNAMIC TOGGLE 4: STATE OF CALAMITY -->
                     <div class="form-group">
                         <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:6px;">
                             <label style="margin:0;">E. Declaration of State of Calamity:</label>
@@ -926,12 +910,60 @@
             if(badge) { badge.className = 'status-badge submitted'; badge.innerHTML = 'Report Submitted'; }
         }
 
+        // ----------------------------------------------------
+        // Helper: Extracts ONLY the newest update for the feed
+        // ----------------------------------------------------
+        function extractLatestUpdateText(rawText) {
+            if (!rawText || rawText.toUpperCase() === 'NONE') return '';
+            
+            // 1. Split by the timestamp bracket to separate historical updates
+            let parts = rawText.split(/\[UPDATE AS OF:[^\]]+\]/gi);
+            
+            // 2. Grab the very last block of text (the most recent one)
+            let latestPart = '';
+            for (let i = parts.length - 1; i >= 0; i--) {
+                if (parts[i].trim() !== '') {
+                    latestPart = parts[i].trim();
+                    break;
+                }
+            }
+            
+            if (!latestPart) latestPart = rawText.trim();
+
+            // 3. Clean up the text for a public-facing feed (remove tags, bullets, newlines)
+            latestPart = latestPart.replace(/\[SOURCE:[^\]]+\]/gi, ''); // Remove source tags
+            latestPart = latestPart.replace(/•/g, ''); // Remove bullet points
+            latestPart = latestPart.replace(/AREA:|DETAILS:|REMARKS:/gi, ''); // Remove table labels
+            latestPart = latestPart.replace(/\|/g, '-'); // Replace pipes with hyphens
+            latestPart = latestPart.replace(/\n/g, ' ').replace(/\s+/g, ' ').trim(); // Flatten to single line
+
+            // 4. Truncate if it's too long so the card doesn't stretch infinitely
+            if (latestPart.length > 140) {
+                latestPart = latestPart.substring(0, 140) + '...';
+            }
+
+            return latestPart;
+        }
+
+        // ----------------------------------------------------
+        // Updated Live Feed Card Generator
+        // ----------------------------------------------------
         function addTweetCard(title, data, isPdf = false) {
             const wall = document.getElementById('tweetWallSection');
             const avatarInitials = title.includes("City") ? "TC" : title.charAt(0);
             
-            let generalStatus = isPdf ? `PDF Document Uploaded. Action: ${data.action || 'None'}` : `<strong>General Status:</strong> ${data.incidents || 'No major incidents reported.'} ${data.other}`;
-            let handleText = isPdf ? `Update` : `Weather: ${data.weather || '-'} | Casualties: ${data.casualty || '0'}`;
+            // INTELLIGENT EXTRACTION: Only gets the most recent update!
+            let inc = extractLatestUpdateText(data.incidents);
+            let oth = extractLatestUpdateText(data.other);
+            
+            let statusArr = [];
+            if (inc) statusArr.push(inc);
+            if (oth) statusArr.push(oth);
+            
+            let finalStatusText = statusArr.length > 0 ? statusArr.join(' | ') : 'No major incidents reported.';
+            
+            let generalStatus = isPdf ? `<strong>PDF Document Uploaded.</strong> Action: ${data.action || 'None'}` : `<strong>General Status:</strong> ${finalStatusText}`;
+            let handleText = isPdf ? `System Update` : `Weather: ${data.weather || '-'} | Casualties: ${data.casualty || '0'}`;
 
             const newCard = document.createElement('div');
             newCard.className = 'tweet-card';
@@ -1059,7 +1091,7 @@
         }
 
         // =====================================================================
-        // NEW FEATURE: INTELLIGENT TEXT-TO-HTML TABLE PARSER
+        // INTELLIGENT TEXT-TO-HTML TABLE PARSER
         // =====================================================================
         function formatTextToTable(rawText) {
             if (!rawText || rawText === 'NONE') return '<span class="placeholder-text">No reports logged at this time.</span>';
@@ -1230,8 +1262,8 @@
                     let result = await response.json();
                     
                     if (result.status === "success" || result.status === 200) {
-                        updateMasterTable(exactLguId, payload);
-                        addTweetCard(exactLguName, payload);
+                        // After success, just pull everything fresh so the feed dynamically handles it
+                        fetchHistoricalData(); 
                         alert('LDRRMC Report saved successfully!');
                         document.querySelectorAll('#formLdrmc textarea').forEach(el => { el.value = ''; el.style.height = '42px'; });
                         document.querySelectorAll('#formLdrmc .tbl-input').forEach(el => el.value = ''); 
@@ -1295,7 +1327,6 @@
 
                     if (result.status === "success") {
                         alert("PDF Document saved successfully to Google Drive & Sheets!");
-                        addTweetCard(entityName, {action: payload.action}, true);
                         fetchHistoricalData();
                         resetEncodingView();
                         switchToView('homeView');
@@ -1461,7 +1492,8 @@
 
                     if(result.status === "success") {
                         
-                        // 1. Process LDRRMC Data
+                        // 1. Process LDRRMC Data - DEDUPLICATION FIX APPLIED
+                        let latestLguData = {};
                         if (result.data && result.data.length > 0) {
                             for(let i = 1; i < result.data.length; i++) {
                                 const row = result.data[i]; 
@@ -1471,7 +1503,18 @@
                                 const exactLguId = cleanLguName.replace(/\s+/g, ''); 
                                 
                                 const payload = { lgu: cleanLguName, reportTime: row[0], weather: row[2], population: row[3], evacuation: row[4], casualty: row[5], suspension: row[6], flooded: row[7], infra: row[8], agri: row[9], roads: row[10], power: row[11], incidents: row[12], other: row[13] };
-                                updateMasterTable(exactLguId, payload); addTweetCard(cleanLguName, payload);
+                                
+                                // This saves ONLY the most recent entry for each specific LGU, preventing duplicates
+                                latestLguData[exactLguId] = payload;
+                            }
+                            
+                            // Render uniquely parsed tables and feeds
+                            const wall = document.getElementById('tweetWallSection');
+                            wall.innerHTML = ''; // Clear loaders before inserting
+                            
+                            for (const key in latestLguData) {
+                                updateMasterTable(key, latestLguData[key]); 
+                                addTweetCard(latestLguData[key].lgu, latestLguData[key]);
                             }
                         }
 
