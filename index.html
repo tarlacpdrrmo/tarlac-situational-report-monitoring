@@ -130,15 +130,19 @@
         .live-feed-header h3 { font-size: 11px; font-weight: 800; color: var(--text-dark); text-transform: uppercase; letter-spacing: 0.5px; }
         .pulse-indicator { width: 8px; height: 8px; background-color: var(--accent); border-radius: 50%; animation: pulse-ring 2s infinite; }
 
-        .tweet-card { background: #ffffff; border: 1px solid var(--card-border); border-radius: 12px; padding: 14px; display: flex; flex-direction: column; gap: 10px; margin-bottom: 12px; box-shadow: 0 2px 8px rgba(15, 23, 42, 0.02); transition: var(--transition);}
+        .tweet-card { background: #ffffff; border: 1px solid var(--card-border); border-radius: 12px; padding: 14px; display: flex; flex-direction: column; margin-bottom: 12px; box-shadow: 0 2px 8px rgba(15, 23, 42, 0.02); transition: var(--transition);}
         .tweet-card:hover { transform: translateY(-2px); box-shadow: 0 8px 20px rgba(15, 23, 42, 0.06); border-color: #cbd5e1;}
-        .tweet-header { display: flex; align-items: center; gap: 10px; }
-        .tweet-avatar { width: 30px; height: 30px; border-radius: 8px; display: flex; align-items: center; justify-content: center; color: white; font-weight: 800; font-size: 11px; background: var(--btn-dark); box-shadow: 0 2px 6px rgba(15, 23, 42, 0.2); }
+        .tweet-header { display: flex; align-items: center; gap: 10px; margin-bottom: 10px; }
+        .tweet-avatar { width: 34px; height: 34px; border-radius: 10px; display: flex; align-items: center; justify-content: center; color: white; font-weight: 800; font-size: 13px; }
         .tweet-meta { display: flex; flex-direction: column; }
-        .tweet-name { font-size: 11px; font-weight: 800; color: var(--text-dark); letter-spacing: -0.2px;}
-        .tweet-handle { font-size: 8px; color: var(--text-gray); margin-top: 2px; font-weight: 600; text-transform: uppercase;}
-        .tweet-body { font-size: 10.5px; color: #334155; line-height: 1.5; font-weight: 500; background: var(--input-bg); padding: 8px 10px; border-radius: 8px; border: 1px solid var(--card-border); }
-        .tweet-footer { font-size: 8px; color: var(--text-gray); font-weight: 700; display: flex; justify-content: space-between; margin-top: 2px; text-transform: uppercase;}
+        .tweet-name { font-size: 11.5px; font-weight: 800; color: var(--text-dark); letter-spacing: -0.2px;}
+        .tweet-handle { font-size: 8px; color: var(--text-gray); margin-top: 2px; font-weight: 700; text-transform: uppercase;}
+        
+        .tweet-body { margin-top: 2px; margin-bottom: 8px; }
+        .status-title { font-size: 8.5px; font-weight: 800; color: var(--text-gray); text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 4px; display: block; }
+        .status-text { font-size: 11.5px; color: var(--text-dark); line-height: 1.5; font-weight: 700; }
+        
+        .tweet-footer { display: flex; justify-content: flex-end; align-items: center; padding-top: 8px; border-top: 1px dashed var(--card-border); margin-top: 4px;}
 
         /* --- BUTTONS --- */
         .btn { background-color: #ffffff; border: 1px solid var(--card-border); color: var(--text-dark); padding: 6px 12px; border-radius: 8px; font-size: 10px; font-weight: 700; cursor: pointer; transition: var(--transition); display: inline-flex; align-items: center; justify-content: center; gap: 6px;}
@@ -373,7 +377,7 @@
                         <div id="tweetWallSection">
                             <div class="tweet-card skeleton-card">
                                 <div class="tweet-header">
-                                    <div class="skeleton-box" style="width: 30px; height: 30px; border-radius:8px;"></div>
+                                    <div class="skeleton-box" style="width: 34px; height: 34px; border-radius:10px;"></div>
                                     <div style="flex:1;"><div class="skeleton-box" style="width: 90px; height: 10px; margin-bottom: 6px;"></div><div class="skeleton-box" style="width: 60px; height: 6px;"></div></div>
                                 </div>
                                 <div class="skeleton-box" style="width: 100%; height: 30px; border-radius: 6px; margin-top: 4px;"></div>
@@ -952,6 +956,19 @@
             const wall = document.getElementById('tweetWallSection');
             const avatarInitials = title.includes("City") ? "TC" : title.charAt(0);
             
+            // Professional vibrant color array for the avatars
+            const colors = [
+                'linear-gradient(135deg, #3b82f6, #2563eb)', // Blue
+                'linear-gradient(135deg, #10b981, #059669)', // Emerald
+                'linear-gradient(135deg, #f59e0b, #d97706)', // Amber
+                'linear-gradient(135deg, #ef4444, #dc2626)', // Red
+                'linear-gradient(135deg, #8b5cf6, #7c3aed)', // Violet
+                'linear-gradient(135deg, #ec4899, #db2777)', // Pink
+                'linear-gradient(135deg, #06b6d4, #0891b2)'  // Cyan
+            ];
+            const charCode = title.charCodeAt(0) || 0;
+            const avatarColor = colors[charCode % colors.length];
+            
             // INTELLIGENT EXTRACTION: Only gets the most recent update!
             let inc = extractLatestUpdateText(data.incidents);
             let oth = extractLatestUpdateText(data.other);
@@ -960,20 +977,29 @@
             if (inc) statusArr.push(inc);
             if (oth) statusArr.push(oth);
             
-            let finalStatusText = statusArr.length > 0 ? statusArr.join(' | ') : 'No major incidents reported.';
+            let finalStatusText = statusArr.length > 0 ? statusArr.join('<br>') : 'No major incidents reported.';
             
-            let generalStatus = isPdf ? `<strong>PDF Document Uploaded.</strong> Action: ${data.action || 'None'}` : `<strong>General Status:</strong> ${finalStatusText}`;
+            let generalStatus = isPdf ? `PDF Document Uploaded. Action: ${data.action || 'None'}` : finalStatusText;
             let handleText = isPdf ? `System Update` : `Weather: ${data.weather || '-'} | Casualties: ${data.casualty || '0'}`;
+            let timeString = data.reportTime || "Just now"; // Get exact database timestamp
 
             const newCard = document.createElement('div');
             newCard.className = 'tweet-card';
             newCard.innerHTML = `
                 <div class="tweet-header">
-                    <div class="tweet-avatar">${avatarInitials}</div>
+                    <div class="tweet-avatar" style="background: ${avatarColor}; box-shadow: 0 4px 10px rgba(15, 23, 42, 0.15);">${avatarInitials}</div>
                     <div class="tweet-meta"><span class="tweet-name">${title}</span><span class="tweet-handle">${handleText}</span></div>
                 </div>
-                <div class="tweet-body">${generalStatus}</div>
-                <div class="tweet-footer"><span>Database Sync</span><span>Just now</span></div>
+                <div class="tweet-body">
+                    <span class="status-title">General Status:</span>
+                    <div class="status-text">${generalStatus}</div>
+                </div>
+                <div class="tweet-footer">
+                    <span style="color: #dc2626; display: flex; align-items: center; gap: 4px; font-weight: 800;">
+                        <span style="width: 6px; height: 6px; background: #dc2626; border-radius: 50%; display: inline-block; box-shadow: 0 0 0 2px rgba(220, 38, 38, 0.2);"></span>
+                        ${timeString}
+                    </span>
+                </div>
             `;
             wall.prepend(newCard);
         }
