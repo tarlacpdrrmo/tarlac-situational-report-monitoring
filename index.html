@@ -300,7 +300,7 @@
                                         <div class="last-updated">Status: <span id="generatedTimestamp">Initializing Database...</span></div>
                                     </div>
                                 </div>
-                                                                                   
+                                                                                                                               
                                 <div class="data-grid">
                                     <div class="data-item full-width">
                                         <label class="data-label">OUTLINE (SYNOPSIS)</label>
@@ -489,7 +489,6 @@
                 
                     <div class="form-group"><label>A. Synopsis</label><div class="advisory-wrapper"><textarea id="inpSyn" class="form-control uppercase-input" rows="2"></textarea><input type="text" id="srcSyn" class="source-input uppercase-input" placeholder="Source of information (Optional)..."></div></div>
                     
-                    <!-- DYNAMIC TOGGLE 1: INCIDENTS -->
                     <div class="form-group">
                         <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:4px;">
                             <label style="margin:0;">B. Other Incidents Monitored (PDRRMO Responses)</label>
@@ -525,7 +524,6 @@
                         </div>
                     </div>
                     
-                    <!-- DYNAMIC TOGGLE 2: WORK SUSPENSION -->
                     <div class="form-group">
                         <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:4px;">
                             <label style="margin:0;">C. Suspension on Work (by National/ Provincial level):</label>
@@ -561,8 +559,76 @@
                         </div>
                     </div>
 
-                    <div class="form-group"><label>D. Suspension on Classes (by National/ Provincial level):</label><div class="advisory-wrapper"><textarea id="inpClass" class="form-control uppercase-input" rows="1"></textarea><input type="text" id="srcClass" class="source-input uppercase-input" placeholder="Source of information (Optional)..."></div></div>
-                    <div class="form-group"><label>E. Declaration of State of Calamity:</label><div class="advisory-wrapper"><textarea id="inpCal" class="form-control uppercase-input" rows="1"></textarea><input type="text" id="srcCal" class="source-input uppercase-input" placeholder="Source of information (Optional)..."></div></div>
+                    <div class="form-group">
+                        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:4px;">
+                            <label style="margin:0;">D. Suspension on Classes (by National/ Provincial level):</label>
+                            <button type="button" class="btn btn-sm" style="padding: 4px 8px; font-size: 8px;" onclick="toggleInputMode('Class')"><i data-lucide="arrow-left-right" style="width:12px; height:12px;"></i> SWITCH TO TABLE</button>
+                        </div>
+                        <div class="advisory-wrapper" id="wrapTextClass">
+                            <textarea id="inpClass" class="form-control uppercase-input" rows="1"></textarea>
+                            <input type="text" id="srcClass" class="source-input uppercase-input" placeholder="Source of information (Optional)...">
+                        </div>
+                        <div class="table-input-wrapper" id="wrapTableClass" style="display:none; border: 1px solid var(--card-border); border-radius: 8px; overflow: hidden; background: #fff;">
+                            <table style="width:100%; border-collapse: collapse;" id="tblClass">
+                                <thead style="background: var(--input-bg);">
+                                    <tr>
+                                        <th style="padding: 6px; border-bottom: 1px solid var(--card-border); border-right: 1px solid var(--card-border); width: 25%;">AREA/LGU</th>
+                                        <th style="padding: 6px; border-bottom: 1px solid var(--card-border); border-right: 1px solid var(--card-border); width: 45%;">LEVEL / AGENCY</th>
+                                        <th style="padding: 6px; border-bottom: 1px solid var(--card-border);">STATUS</th>
+                                        <th style="padding: 6px; border-bottom: 1px solid var(--card-border); width: 30px;"></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td style="padding: 0; border-bottom: 1px solid var(--card-border); border-right: 1px solid var(--card-border);"><input type="text" class="tbl-input uppercase-input"></td>
+                                        <td style="padding: 0; border-bottom: 1px solid var(--card-border); border-right: 1px solid var(--card-border);"><input type="text" class="tbl-input uppercase-input"></td>
+                                        <td style="padding: 0; border-bottom: 1px solid var(--card-border);"><input type="text" class="tbl-input uppercase-input"></td>
+                                        <td style="padding: 4px; text-align: center; border-bottom: 1px solid var(--card-border);"><button class="btn btn-danger" style="padding: 2px 4px; border-radius:4px;" onclick="this.closest('tr').remove()"><i data-lucide="trash-2" style="width:10px; height:10px;"></i></button></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <div style="padding: 6px; background: var(--input-bg); border-top: 1px solid var(--card-border);">
+                                <button type="button" class="btn btn-sm" onclick="addTableRow('tblClass')">+ Add Row</button>
+                                <input type="text" id="srcTblClass" class="source-input uppercase-input" placeholder="Source of information (Optional)..." style="margin-top: 6px; width: 100%; background: transparent; border: none; border-top: 1px dashed #cbd5e1; padding-top: 6px; font-size: 9px; outline: none;">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:4px;">
+                            <label style="margin:0;">E. Declaration of State of Calamity:</label>
+                            <button type="button" class="btn btn-sm" style="padding: 4px 8px; font-size: 8px;" onclick="toggleInputMode('Cal')"><i data-lucide="arrow-left-right" style="width:12px; height:12px;"></i> SWITCH TO TABLE</button>
+                        </div>
+                        <div class="advisory-wrapper" id="wrapTextCal">
+                            <textarea id="inpCal" class="form-control uppercase-input" rows="1"></textarea>
+                            <input type="text" id="srcCal" class="source-input uppercase-input" placeholder="Source of information (Optional)...">
+                        </div>
+                        <div class="table-input-wrapper" id="wrapTableCal" style="display:none; border: 1px solid var(--card-border); border-radius: 8px; overflow: hidden; background: #fff;">
+                            <table style="width:100%; border-collapse: collapse;" id="tblCal">
+                                <thead style="background: var(--input-bg);">
+                                    <tr>
+                                        <th style="padding: 6px; border-bottom: 1px solid var(--card-border); border-right: 1px solid var(--card-border); width: 25%;">AREA/LGU</th>
+                                        <th style="padding: 6px; border-bottom: 1px solid var(--card-border); border-right: 1px solid var(--card-border); width: 45%;">RESOLUTION NO. / DETAILS</th>
+                                        <th style="padding: 6px; border-bottom: 1px solid var(--card-border);">STATUS / REMARKS</th>
+                                        <th style="padding: 6px; border-bottom: 1px solid var(--card-border); width: 30px;"></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td style="padding: 0; border-bottom: 1px solid var(--card-border); border-right: 1px solid var(--card-border);"><input type="text" class="tbl-input uppercase-input"></td>
+                                        <td style="padding: 0; border-bottom: 1px solid var(--card-border); border-right: 1px solid var(--card-border);"><input type="text" class="tbl-input uppercase-input"></td>
+                                        <td style="padding: 0; border-bottom: 1px solid var(--card-border);"><input type="text" class="tbl-input uppercase-input"></td>
+                                        <td style="padding: 4px; text-align: center; border-bottom: 1px solid var(--card-border);"><button class="btn btn-danger" style="padding: 2px 4px; border-radius:4px;" onclick="this.closest('tr').remove()"><i data-lucide="trash-2" style="width:10px; height:10px;"></i></button></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <div style="padding: 6px; background: var(--input-bg); border-top: 1px solid var(--card-border);">
+                                <button type="button" class="btn btn-sm" onclick="addTableRow('tblCal')">+ Add Row</button>
+                                <input type="text" id="srcTblCal" class="source-input uppercase-input" placeholder="Source of information (Optional)..." style="margin-top: 6px; width: 100%; background: transparent; border: none; border-top: 1px dashed #cbd5e1; padding-top: 6px; font-size: 9px; outline: none;">
+                            </div>
+                        </div>
+                    </div>
+
                     <button class="btn btn-primary" style="width: 100%; margin-top: 12px;" onclick="openSaveModal('pdrrmo')">SAVE REPORT</button>
                 </div>
             </div>
@@ -848,20 +914,27 @@
                 else if (type === 'pdrrmo') {
                     const timestamp = document.getElementById('pdtDisplayText').innerText;
                     
-                    // Determine if using TEXT mode or TABLE mode for Incidents and Work
+                    // Determine if using TEXT mode or TABLE mode for each toggle section
                     const incMode = document.getElementById('wrapTableInc').style.display !== 'none' ? 'table' : 'text';
                     const incData = incMode === 'table' ? getTableData('tblInc', 'srcTblInc', timestamp) : combineWithSource('inpInc', 'srcInc', timestamp);
 
                     const workMode = document.getElementById('wrapTableWork').style.display !== 'none' ? 'table' : 'text';
                     const workData = workMode === 'table' ? getTableData('tblWork', 'srcTblWork', timestamp) : combineWithSource('inpWork', 'srcWork', timestamp);
+                    
+                    const classMode = document.getElementById('wrapTableClass').style.display !== 'none' ? 'table' : 'text';
+                    const classData = classMode === 'table' ? getTableData('tblClass', 'srcTblClass', timestamp) : combineWithSource('inpClass', 'srcClass', timestamp);
+
+                    const calMode = document.getElementById('wrapTableCal').style.display !== 'none' ? 'table' : 'text';
+                    const calData = calMode === 'table' ? getTableData('tblCal', 'srcTblCal', timestamp) : combineWithSource('inpCal', 'srcCal', timestamp);
+
 
                     const payload = {
                         type: 'advisory', reportTime: timestamp, 
                         synopsis: combineWithSource('inpSyn', 'srcSyn', timestamp), 
                         incidents: incData,
                         work: workData, 
-                        classes: combineWithSource('inpClass', 'srcClass', timestamp), 
-                        calamity: combineWithSource('inpCal', 'srcCal', timestamp)
+                        classes: classData, 
+                        calamity: calData
                     };
 
                     let response = await fetch(GOOGLE_SCRIPT_URL, { method: 'POST', body: JSON.stringify(payload) });
