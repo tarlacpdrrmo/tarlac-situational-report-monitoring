@@ -28,18 +28,15 @@
 
         * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Plus Jakarta Sans', sans-serif; }
 
-        /* ADDED ZOOM: 0.8 TO MIMIC 80% BROWSER SCALE GLOBALLY */
+        /* FIXED SCALING: Viewport remains full width/height */
         body { 
             background-color: var(--bg-page); 
-            display: flex; 
-            align-items: center; 
-            justify-content: center; 
-            height: 100vh; 
-            width: 100vw; 
-            overflow: hidden; 
+            margin: 0; 
             padding: 0; 
+            width: 100vw; 
+            height: 100vh; 
+            overflow: hidden; 
             -webkit-font-smoothing: antialiased; 
-            zoom: 0.8; 
         }
 
         @keyframes slideUpFade { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: translateY(0); } }
@@ -48,7 +45,21 @@
         
         .skeleton-box { background: linear-gradient(90deg, #f1f5f9 25%, #f8fafc 50%, #f1f5f9 75%); background-size: 200% 100%; animation: skeleton-loading 1.5s infinite linear; border-radius: 6px; color: transparent !important; border: none !important; pointer-events: none; }
 
-        .app-container { display: flex; width: 100vw; height: 100vh; max-width: 100%; background-color: var(--bg-app); border-radius: 0; box-shadow: none; overflow: hidden; }
+        /* THE MAGIC TRICK: 125% width/height scaled down to 80% to fit perfectly without white borders */
+        .app-container { 
+            display: flex; 
+            width: 125%; 
+            height: 125%; 
+            transform: scale(0.8); 
+            transform-origin: top left; 
+            position: absolute; 
+            top: 0; 
+            left: 0;
+            background-color: var(--bg-app); 
+            border-radius: 0; 
+            box-shadow: none; 
+            overflow: hidden; 
+        }
 
         /* --- SIDEBAR --- */
         .sidebar { width: 230px; background-color: var(--bg-sidebar); display: flex; flex-direction: column; padding: 24px 0; position: relative; flex-shrink: 0; }
@@ -101,20 +112,21 @@
         .data-value { padding: 4px 0; color: var(--text-dark); border: none; }
         .placeholder-text { font-family: 'Inter', sans-serif; font-size: 12px; color: var(--text-gray); opacity: 0.8; font-style: italic; font-weight: 500; }
 
-        /* --- NEW MODERN INTER FONT STYLES FOR ADVISORY REPORTS & DATES --- */
+        /* --- MODERN RED-EDGED DATE BADGES --- */
         .meta-badge { 
             font-family: 'Plus Jakarta Sans', sans-serif; 
             display: inline-flex; 
             align-items: center; 
-            background-color: #f8fafc; 
-            border: 1px solid #e2e8f0; 
-            color: #475569; 
+            background-color: #fef2f2; /* Faint red background */
+            border: 1px solid #fecaca; /* Slight red overall border */
+            border-left: 4px solid #ef4444; /* Sharp, modern red edge */
+            color: #b91c1c; /* Deep red text */
             font-size: 9.5px; 
             font-weight: 700; 
             padding: 6px 14px; 
             border-radius: 20px; 
             margin-bottom: 12px; 
-            box-shadow: 0 2px 4px rgba(15, 23, 42, 0.02); 
+            box-shadow: 0 2px 4px rgba(220, 38, 38, 0.05); 
             letter-spacing: 0.5px;
             text-transform: uppercase;
         }
@@ -1051,8 +1063,8 @@
                     <div class="status-text">${generalStatus}</div>
                 </div>
                 <div class="tweet-footer" style="padding-top: 10px; margin-top: 10px; border-top: 1px solid var(--card-border); display: flex; justify-content: flex-end; align-items: center;">
-                    <div style="display: inline-flex; align-items: center; gap: 6px; font-size: 9px; font-weight: 700; color: #64748b; background: #f8fafc; padding: 5px 12px; border-radius: 20px; border: 1px solid #e2e8f0;">
-                        <i data-lucide="clock" style="width: 11px; height: 11px; color: #3b82f6;"></i>
+                    <div style="display: inline-flex; align-items: center; gap: 6px; font-size: 9px; font-weight: 700; color: #b91c1c; background: #fef2f2; padding: 5px 12px; border-radius: 20px; border: 1px solid #fecaca; border-left: 4px solid #ef4444; box-shadow: 0 2px 4px rgba(220, 38, 38, 0.05);">
+                        <i data-lucide="clock" style="width: 11px; height: 11px; color: #ef4444;"></i>
                         ${timeString}
                     </div>
                 </div>
