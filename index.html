@@ -91,15 +91,18 @@
         .last-updated { font-size: 9px; color: var(--text-gray); font-style: italic; }
         .last-updated span { font-weight: 700; color: var(--text-dark); font-style: normal; }
 
-        /* --- CARDS & GRIDS --- */
-        .panel-card { background-color: var(--card-bg); border: 1px solid var(--card-border); border-radius: 12px; padding: 20px; box-shadow: 0 4px 15px rgba(0,0,0,0.01); transition: var(--transition); }
+        /* --- DYNAMIC CARDS & GRIDS (ADDED POP EFFECTS) --- */
+        .panel-card { background-color: var(--card-bg); border: 1px solid var(--card-border); border-radius: 12px; padding: 20px; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.02); transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1); cursor: default; }
+        .panel-card:hover { transform: translateY(-3px); box-shadow: 0 15px 30px -5px rgba(15, 23, 42, 0.08); border-color: #cbd5e1; }
+        
         .dashboard-container { display: flex; gap: 20px; align-items: flex-start; }
         .main-report { flex: 1; min-width: 0; }
         .side-feed { width: 280px; flex-shrink: 0; }
         .dashboard-content-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; align-items: stretch; }
 
         /* --- RE-DESIGNED SITREP ADVISORY PANEL --- */
-        .sitrep-panel { display: flex; flex-direction: column; height: 100%; background: #ffffff; border-top: 4px solid var(--bg-sidebar); border-radius: 12px; box-shadow: 0 10px 30px rgba(15, 23, 42, 0.04); position: relative; overflow: hidden; }
+        .sitrep-panel { display: flex; flex-direction: column; height: 100%; background: #ffffff; border-top: 4px solid var(--bg-sidebar); border-radius: 12px; box-shadow: 0 10px 30px rgba(15, 23, 42, 0.04); position: relative; overflow: hidden; transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1); cursor: default; }
+        .sitrep-panel:hover { transform: translateY(-4px); box-shadow: 0 20px 40px rgba(15, 23, 42, 0.08); }
         .sitrep-panel::before { content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: radial-gradient(circle at top right, rgba(37, 99, 235, 0.02), transparent 40%); pointer-events: none; }
         
         .data-grid { display: flex; flex-direction: column; gap: 20px; flex: 1; z-index: 1; }
@@ -117,10 +120,10 @@
             font-family: 'Plus Jakarta Sans', sans-serif; 
             display: inline-flex; 
             align-items: center; 
-            background-color: #fef2f2; /* Faint red background */
-            border: 1px solid #fecaca; /* Slight red overall border */
-            border-left: 4px solid #ef4444; /* Sharp, modern red edge */
-            color: #b91c1c; /* Deep red text */
+            background-color: #fef2f2; 
+            border: 1px solid #fecaca; 
+            border-left: 4px solid #ef4444; 
+            color: #b91c1c; 
             font-size: 9.5px; 
             font-weight: 700; 
             padding: 6px 14px; 
@@ -141,7 +144,7 @@
         .parsed-table tr:last-child td { border-bottom: none; }
         .parsed-table tbody tr:hover td { background-color: #f8fafc; }
 
-        /* --- OVERHAULED DISTRICT TABLES --- */
+        /* --- OVERHAULED DISTRICT TABLES (ADDED HOVER POP) --- */
         .table-subtitle { font-size: 10px; color: var(--text-gray); margin-bottom: 16px; font-weight: 500; }
         .district-table { width: 100%; border-collapse: separate; border-spacing: 0 8px; margin-top: -8px; }
         .district-table th, .district-table td { padding: 12px 14px; vertical-align: middle; transition: var(--transition); }
@@ -153,15 +156,19 @@
         .district-table td { background: #ffffff; border: 1px solid var(--card-border); border-style: solid none; }
         .district-table td:first-child { border-left-style: solid; border-radius: 10px 0 0 10px; }
         .district-table td:last-child { border-right-style: solid; border-radius: 0 10px 10px 0; }
-        .district-table tbody tr { cursor: pointer; box-shadow: 0 2px 4px rgba(15, 23, 42, 0.01); }
-        .district-table tbody tr:hover td { background-color: #f8fafc; border-color: #cbd5e1; transform: translateY(-1px); box-shadow: 0 4px 12px rgba(15, 23, 42, 0.04); }
+        
+        /* Table Row Hover Animations */
+        .district-table tbody tr { cursor: pointer; transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1); box-shadow: 0 2px 4px rgba(15, 23, 42, 0.01); }
+        .district-table tbody tr:hover { transform: translateY(-3px) scale(1.015); box-shadow: 0 12px 20px -5px rgba(15, 23, 42, 0.12); z-index: 5; position: relative; border-radius: 10px; outline: 1px solid #cbd5e1; outline-offset: -1px; }
+        .district-table tbody tr:hover td { background-color: #f8fafc; border-color: transparent; }
         
         .lgu-name { font-weight: 700; font-size: 11.5px; color: var(--text-dark); display: flex; align-items: center; gap: 8px;}
         .lgu-name span { font-size: 7px; color: var(--text-gray); font-weight: 800; background: var(--input-bg); padding: 4px 6px; border-radius: 4px; text-transform: uppercase; border: 1px solid var(--card-border);}
 
-        .status-badge { display: inline-flex; align-items: center; justify-content: center; gap: 4px; padding: 5px 8px; border-radius: 12px; font-size: 7.5px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.5px; white-space: nowrap; transition: var(--transition); }
-        .status-badge.pending { background-color: var(--warning-bg); color: var(--warning); border: 1px solid #fde68a;}
-        .status-badge.submitted { background-color: var(--success-bg); color: var(--success); border: 1px solid #a7f3d0; }
+        /* --- FIXED "BOXY" BADGES - NOW SLEEK PILLS --- */
+        .status-badge { display: inline-flex; align-items: center; justify-content: center; gap: 4px; padding: 6px 12px; border-radius: 20px; font-size: 8.5px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.5px; white-space: nowrap; transition: var(--transition); }
+        .status-badge.pending { background-color: #fffbeb; color: #d97706; border: 1px solid #fde68a;}
+        .status-badge.submitted { background-color: #ecfdf5; color: #059669; border: 1px solid #a7f3d0; }
         .status-badge.skeleton-box { margin: 0 auto; border: none; }
 
         /* --- RIGHT SIDEBAR TWEET WALL --- */
@@ -169,8 +176,9 @@
         .live-feed-header h3 { font-size: 11px; font-weight: 800; color: var(--text-dark); text-transform: uppercase; letter-spacing: 0.5px; }
         .pulse-indicator { width: 8px; height: 8px; background-color: var(--accent); border-radius: 50%; animation: pulse-ring 2s infinite; }
 
-        .tweet-card { background: #ffffff; border: 1px solid var(--card-border); border-radius: 12px; padding: 14px; display: flex; flex-direction: column; margin-bottom: 12px; box-shadow: 0 2px 8px rgba(15, 23, 42, 0.02); transition: var(--transition);}
-        .tweet-card:hover { transform: translateY(-2px); box-shadow: 0 8px 20px rgba(15, 23, 42, 0.06); border-color: #cbd5e1;}
+        .tweet-card { background: #ffffff; border: 1px solid var(--card-border); border-radius: 12px; padding: 16px; display: flex; flex-direction: column; margin-bottom: 14px; box-shadow: 0 4px 6px -1px rgba(15, 23, 42, 0.03); transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1); cursor: pointer;}
+        .tweet-card:hover { transform: translateY(-4px) scale(1.02); box-shadow: 0 15px 30px -5px rgba(15, 23, 42, 0.1); border-color: #cbd5e1;}
+        
         .tweet-header { display: flex; align-items: center; gap: 10px; margin-bottom: 10px; }
         .tweet-avatar { width: 34px; height: 34px; border-radius: 10px; display: flex; align-items: center; justify-content: center; color: white; font-weight: 800; font-size: 13px; }
         .tweet-meta { display: flex; flex-direction: column; }
@@ -318,48 +326,48 @@
                     <div class="main-report">
                         <div class="dashboard-content-grid">
                             
-                            <div class="panel-card" style="margin-bottom: 0; border: none; padding: 0; background: transparent;">
-                                <div style="background: var(--card-bg); border: 1px solid var(--card-border); border-radius: 12px; padding: 20px; box-shadow: 0 4px 15px rgba(0,0,0,0.01);">
+                            <div class="panel-card" style="margin-bottom: 0; border: none; padding: 0; background: transparent; cursor: default;">
+                                <div class="panel-card" style="margin-bottom: 16px;">
                                     <h3 style="font-size: 11px; font-weight: 800; color: var(--text-dark); margin-bottom: 4px; text-transform: uppercase;">LDRRMCs REPORTING STATUS OVERVIEW</h3>
                                     <p class="table-subtitle">"Click on any LGU to open and review its full situational report details."</p>
                                     
                                     <table class="district-table" style="margin-top: 16px;">
                                         <thead><tr><th>1ST DISTRICT OF TARLAC</th><th>STATUS</th><th>ACTION</th></tr></thead>
                                         <tbody>
-                                            <tr onclick="viewLguDetails('Anao', 'Anao MDRRMO')"><td><div class="lgu-name">Anao<span>MDRRMO</span></div></td><td><div class="status-badge pending skeleton-box" id="status-Anao" style="width: 80px; height: 18px;"></div></td><td><button class="btn btn-sm">View Details</button></td></tr>
-                                            <tr onclick="viewLguDetails('Camiling', 'Camiling MDRRMO')"><td><div class="lgu-name">Camiling<span>MDRRMO</span></div></td><td><div class="status-badge pending skeleton-box" id="status-Camiling" style="width: 80px; height: 18px;"></div></td><td><button class="btn btn-sm">View Details</button></td></tr>
-                                            <tr onclick="viewLguDetails('Mayantoc', 'Mayantoc MDRRMO')"><td><div class="lgu-name">Mayantoc<span>MDRRMO</span></div></td><td><div class="status-badge pending skeleton-box" id="status-Mayantoc" style="width: 80px; height: 18px;"></div></td><td><button class="btn btn-sm">View Details</button></td></tr>
-                                            <tr onclick="viewLguDetails('Moncada', 'Moncada MDRRMO')"><td><div class="lgu-name">Moncada<span>MDRRMO</span></div></td><td><div class="status-badge pending skeleton-box" id="status-Moncada" style="width: 80px; height: 18px;"></div></td><td><button class="btn btn-sm">View Details</button></td></tr>
-                                            <tr onclick="viewLguDetails('Paniqui', 'Paniqui MDRRMO')"><td><div class="lgu-name">Paniqui<span>MDRRMO</span></div></td><td><div class="status-badge pending skeleton-box" id="status-Paniqui" style="width: 80px; height: 18px;"></div></td><td><button class="btn btn-sm">View Details</button></td></tr>
-                                            <tr onclick="viewLguDetails('Pura', 'Pura MDRRMO')"><td><div class="lgu-name">Pura<span>MDRRMO</span></div></td><td><div class="status-badge pending skeleton-box" id="status-Pura" style="width: 80px; height: 18px;"></div></td><td><button class="btn btn-sm">View Details</button></td></tr>
-                                            <tr onclick="viewLguDetails('Ramos', 'Ramos MDRRMO')"><td><div class="lgu-name">Ramos<span>MDRRMO</span></div></td><td><div class="status-badge pending skeleton-box" id="status-Ramos" style="width: 80px; height: 18px;"></div></td><td><button class="btn btn-sm">View Details</button></td></tr>
-                                            <tr onclick="viewLguDetails('SanClemente', 'San Clemente MDRRMO')"><td><div class="lgu-name">San Clemente<span>MDRRMO</span></div></td><td><div class="status-badge pending skeleton-box" id="status-SanClemente" style="width: 80px; height: 18px;"></div></td><td><button class="btn btn-sm">View Details</button></td></tr>
-                                            <tr onclick="viewLguDetails('SanManuel', 'San Manuel MDRRMO')"><td><div class="lgu-name">San Manuel<span>MDRRMO</span></div></td><td><div class="status-badge pending skeleton-box" id="status-SanManuel" style="width: 80px; height: 18px;"></div></td><td><button class="btn btn-sm">View Details</button></td></tr>
-                                            <tr onclick="viewLguDetails('SantaIgnacia', 'Santa Ignacia MDRRMO')"><td><div class="lgu-name">Santa Ignacia<span>MDRRMO</span></div></td><td><div class="status-badge pending skeleton-box" id="status-SantaIgnacia" style="width: 80px; height: 18px;"></div></td><td><button class="btn btn-sm">View Details</button></td></tr>
+                                            <tr onclick="viewLguDetails('Anao', 'Anao MDRRMO')"><td><div class="lgu-name">Anao<span>MDRRMO</span></div></td><td><div class="status-badge pending skeleton-box" id="status-Anao" style="width: 105px; height: 24px; border-radius: 20px;"></div></td><td><button class="btn btn-sm">View Details</button></td></tr>
+                                            <tr onclick="viewLguDetails('Camiling', 'Camiling MDRRMO')"><td><div class="lgu-name">Camiling<span>MDRRMO</span></div></td><td><div class="status-badge pending skeleton-box" id="status-Camiling" style="width: 105px; height: 24px; border-radius: 20px;"></div></td><td><button class="btn btn-sm">View Details</button></td></tr>
+                                            <tr onclick="viewLguDetails('Mayantoc', 'Mayantoc MDRRMO')"><td><div class="lgu-name">Mayantoc<span>MDRRMO</span></div></td><td><div class="status-badge pending skeleton-box" id="status-Mayantoc" style="width: 105px; height: 24px; border-radius: 20px;"></div></td><td><button class="btn btn-sm">View Details</button></td></tr>
+                                            <tr onclick="viewLguDetails('Moncada', 'Moncada MDRRMO')"><td><div class="lgu-name">Moncada<span>MDRRMO</span></div></td><td><div class="status-badge pending skeleton-box" id="status-Moncada" style="width: 105px; height: 24px; border-radius: 20px;"></div></td><td><button class="btn btn-sm">View Details</button></td></tr>
+                                            <tr onclick="viewLguDetails('Paniqui', 'Paniqui MDRRMO')"><td><div class="lgu-name">Paniqui<span>MDRRMO</span></div></td><td><div class="status-badge pending skeleton-box" id="status-Paniqui" style="width: 105px; height: 24px; border-radius: 20px;"></div></td><td><button class="btn btn-sm">View Details</button></td></tr>
+                                            <tr onclick="viewLguDetails('Pura', 'Pura MDRRMO')"><td><div class="lgu-name">Pura<span>MDRRMO</span></div></td><td><div class="status-badge pending skeleton-box" id="status-Pura" style="width: 105px; height: 24px; border-radius: 20px;"></div></td><td><button class="btn btn-sm">View Details</button></td></tr>
+                                            <tr onclick="viewLguDetails('Ramos', 'Ramos MDRRMO')"><td><div class="lgu-name">Ramos<span>MDRRMO</span></div></td><td><div class="status-badge pending skeleton-box" id="status-Ramos" style="width: 105px; height: 24px; border-radius: 20px;"></div></td><td><button class="btn btn-sm">View Details</button></td></tr>
+                                            <tr onclick="viewLguDetails('SanClemente', 'San Clemente MDRRMO')"><td><div class="lgu-name">San Clemente<span>MDRRMO</span></div></td><td><div class="status-badge pending skeleton-box" id="status-SanClemente" style="width: 105px; height: 24px; border-radius: 20px;"></div></td><td><button class="btn btn-sm">View Details</button></td></tr>
+                                            <tr onclick="viewLguDetails('SanManuel', 'San Manuel MDRRMO')"><td><div class="lgu-name">San Manuel<span>MDRRMO</span></div></td><td><div class="status-badge pending skeleton-box" id="status-SanManuel" style="width: 105px; height: 24px; border-radius: 20px;"></div></td><td><button class="btn btn-sm">View Details</button></td></tr>
+                                            <tr onclick="viewLguDetails('SantaIgnacia', 'Santa Ignacia MDRRMO')"><td><div class="lgu-name">Santa Ignacia<span>MDRRMO</span></div></td><td><div class="status-badge pending skeleton-box" id="status-SantaIgnacia" style="width: 105px; height: 24px; border-radius: 20px;"></div></td><td><button class="btn btn-sm">View Details</button></td></tr>
                                         </tbody>
                                     </table>
                                 </div>
 
-                                <div style="background: var(--card-bg); border: 1px solid var(--card-border); border-radius: 12px; padding: 20px; box-shadow: 0 4px 15px rgba(0,0,0,0.01); margin-top: 16px;">
+                                <div class="panel-card" style="margin-bottom: 16px;">
                                     <table class="district-table" style="margin-top: 0;">
                                         <thead><tr><th>2ND DISTRICT OF TARLAC</th><th>STATUS</th><th>ACTION</th></tr></thead>
                                         <tbody>
-                                            <tr onclick="viewLguDetails('Gerona', 'Gerona MDRRMO')"><td><div class="lgu-name">Gerona<span>MDRRMO</span></div></td><td><div class="status-badge pending skeleton-box" id="status-Gerona" style="width: 80px; height: 18px;"></div></td><td><button class="btn btn-sm">View Details</button></td></tr>
-                                            <tr onclick="viewLguDetails('SanJose', 'San Jose MDRRMO')"><td><div class="lgu-name">San Jose<span>MDRRMO</span></div></td><td><div class="status-badge pending skeleton-box" id="status-SanJose" style="width: 80px; height: 18px;"></div></td><td><button class="btn btn-sm">View Details</button></td></tr>
-                                            <tr onclick="viewLguDetails('TarlacCity', 'Tarlac City CDRRMO')"><td><div class="lgu-name">Tarlac City<span>CDRRMO</span></div></td><td><div class="status-badge pending skeleton-box" id="status-TarlacCity" style="width: 80px; height: 18px;"></div></td><td><button class="btn btn-sm">View Details</button></td></tr>
-                                            <tr onclick="viewLguDetails('Victoria', 'Victoria MDRRMO')"><td><div class="lgu-name">Victoria<span>MDRRMO</span></div></td><td><div class="status-badge pending skeleton-box" id="status-Victoria" style="width: 80px; height: 18px;"></div></td><td><button class="btn btn-sm">View Details</button></td></tr>
+                                            <tr onclick="viewLguDetails('Gerona', 'Gerona MDRRMO')"><td><div class="lgu-name">Gerona<span>MDRRMO</span></div></td><td><div class="status-badge pending skeleton-box" id="status-Gerona" style="width: 105px; height: 24px; border-radius: 20px;"></div></td><td><button class="btn btn-sm">View Details</button></td></tr>
+                                            <tr onclick="viewLguDetails('SanJose', 'San Jose MDRRMO')"><td><div class="lgu-name">San Jose<span>MDRRMO</span></div></td><td><div class="status-badge pending skeleton-box" id="status-SanJose" style="width: 105px; height: 24px; border-radius: 20px;"></div></td><td><button class="btn btn-sm">View Details</button></td></tr>
+                                            <tr onclick="viewLguDetails('TarlacCity', 'Tarlac City CDRRMO')"><td><div class="lgu-name">Tarlac City<span>CDRRMO</span></div></td><td><div class="status-badge pending skeleton-box" id="status-TarlacCity" style="width: 105px; height: 24px; border-radius: 20px;"></div></td><td><button class="btn btn-sm">View Details</button></td></tr>
+                                            <tr onclick="viewLguDetails('Victoria', 'Victoria MDRRMO')"><td><div class="lgu-name">Victoria<span>MDRRMO</span></div></td><td><div class="status-badge pending skeleton-box" id="status-Victoria" style="width: 105px; height: 24px; border-radius: 20px;"></div></td><td><button class="btn btn-sm">View Details</button></td></tr>
                                         </tbody>
                                     </table>
                                 </div>
 
-                                <div style="background: var(--card-bg); border: 1px solid var(--card-border); border-radius: 12px; padding: 20px; box-shadow: 0 4px 15px rgba(0,0,0,0.01); margin-top: 16px;">
+                                <div class="panel-card">
                                     <table class="district-table" style="margin-top: 0;">
                                         <thead><tr><th>3RD DISTRICT OF TARLAC</th><th>STATUS</th><th>ACTION</th></tr></thead>
                                         <tbody>
-                                            <tr onclick="viewLguDetails('Bamban', 'Bamban MDRRMO')"><td><div class="lgu-name">Bamban<span>MDRRMO</span></div></td><td><div class="status-badge pending skeleton-box" id="status-Bamban" style="width: 80px; height: 18px;"></div></td><td><button class="btn btn-sm">View Details</button></td></tr>
-                                            <tr onclick="viewLguDetails('Capas', 'Capas MDRRMO')"><td><div class="lgu-name">Capas<span>MDRRMO</span></div></td><td><div class="status-badge pending skeleton-box" id="status-Capas" style="width: 80px; height: 18px;"></div></td><td><button class="btn btn-sm">View Details</button></td></tr>
-                                            <tr onclick="viewLguDetails('Concepcion', 'Concepcion MDRRMO')"><td><div class="lgu-name">Concepcion<span>MDRRMO</span></div></td><td><div class="status-badge pending skeleton-box" id="status-Concepcion" style="width: 80px; height: 18px;"></div></td><td><button class="btn btn-sm">View Details</button></td></tr>
-                                            <tr onclick="viewLguDetails('LaPaz', 'La Paz MDRRMO')"><td><div class="lgu-name">La Paz<span>MDRRMO</span></div></td><td><div class="status-badge pending skeleton-box" id="status-LaPaz" style="width: 80px; height: 18px;"></div></td><td><button class="btn btn-sm">View Details</button></td></tr>
+                                            <tr onclick="viewLguDetails('Bamban', 'Bamban MDRRMO')"><td><div class="lgu-name">Bamban<span>MDRRMO</span></div></td><td><div class="status-badge pending skeleton-box" id="status-Bamban" style="width: 105px; height: 24px; border-radius: 20px;"></div></td><td><button class="btn btn-sm">View Details</button></td></tr>
+                                            <tr onclick="viewLguDetails('Capas', 'Capas MDRRMO')"><td><div class="lgu-name">Capas<span>MDRRMO</span></div></td><td><div class="status-badge pending skeleton-box" id="status-Capas" style="width: 105px; height: 24px; border-radius: 20px;"></div></td><td><button class="btn btn-sm">View Details</button></td></tr>
+                                            <tr onclick="viewLguDetails('Concepcion', 'Concepcion MDRRMO')"><td><div class="lgu-name">Concepcion<span>MDRRMO</span></div></td><td><div class="status-badge pending skeleton-box" id="status-Concepcion" style="width: 105px; height: 24px; border-radius: 20px;"></div></td><td><button class="btn btn-sm">View Details</button></td></tr>
+                                            <tr onclick="viewLguDetails('LaPaz', 'La Paz MDRRMO')"><td><div class="lgu-name">La Paz<span>MDRRMO</span></div></td><td><div class="status-badge pending skeleton-box" id="status-LaPaz" style="width: 105px; height: 24px; border-radius: 20px;"></div></td><td><button class="btn btn-sm">View Details</button></td></tr>
                                         </tbody>
                                     </table>
                                 </div>
@@ -412,7 +420,7 @@
                             <div class="pulse-indicator" title="Live monitoring active"></div>
                         </div>
                         <div id="tweetWallSection">
-                            <div class="tweet-card skeleton-card">
+                            <div class="tweet-card skeleton-card" style="cursor: default;">
                                 <div class="tweet-header">
                                     <div class="skeleton-box" style="width: 34px; height: 34px; border-radius:10px;"></div>
                                     <div style="flex:1;"><div class="skeleton-box" style="width: 90px; height: 10px; margin-bottom: 6px;"></div><div class="skeleton-box" style="width: 60px; height: 6px;"></div></div>
@@ -429,7 +437,7 @@
                     <div class="header-title"><h1>Encoding Page</h1><p>Choose an agency below to begin encoding.</p></div>
                 </div>
 
-                <div class="panel-card" style="max-width: 1100px; margin: 0 auto;">
+                <div class="panel-card" style="max-width: 1100px; margin: 0 auto; cursor: default;">
                     
                     <div style="display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 24px;">
                         <div class="form-group" style="flex:1; margin-bottom: 0;">
@@ -723,7 +731,7 @@
                     <div class="header-title"><h1>PDRRMO SitRep and Advisory Report</h1><p>LDRRMCs All Update Consolidated Report.</p></div>
                 </div>
                 
-                <div class="panel-card" style="max-width: 800px; margin: 0 auto; padding: 30px;">
+                <div class="panel-card" style="max-width: 800px; margin: 0 auto; padding: 30px; cursor: default;">
                     <div style="display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 24px;">
                         <h3 style="font-size: 13px; font-weight: 800; color: var(--text-dark);">Enter Advisory Details Below:</h3>
                         <div style="position: relative; display: flex; align-items: center; gap: 8px; padding-bottom: 2px;">
@@ -895,7 +903,7 @@
                     <div class="header-title"><h1>LDRRMCs / Agencies Records</h1><p>View the latest recorded PDF files uploaded by Councils and Partners.</p></div>
                 </div>
                 
-                <div class="panel-card" style="max-width: 500px; margin: 0 auto; text-align: center;">
+                <div class="panel-card" style="max-width: 500px; margin: 0 auto; text-align: center; cursor: default;">
                     <div class="form-group" style="text-align: left;">
                         <label>SELECT A RECORD TO VIEW:</label>
                         <select id="recordSelect" class="form-control">
@@ -1062,9 +1070,9 @@
                     <span class="status-title">General Status:</span>
                     <div class="status-text">${generalStatus}</div>
                 </div>
-                <div class="tweet-footer" style="padding-top: 10px; margin-top: 10px; border-top: 1px solid var(--card-border); display: flex; justify-content: flex-end; align-items: center;">
-                    <div style="display: inline-flex; align-items: center; gap: 6px; font-size: 9px; font-weight: 700; color: #b91c1c; background: #fef2f2; padding: 5px 12px; border-radius: 20px; border: 1px solid #fecaca; border-left: 4px solid #ef4444; box-shadow: 0 2px 4px rgba(220, 38, 38, 0.05);">
-                        <i data-lucide="clock" style="width: 11px; height: 11px; color: #ef4444;"></i>
+                <div class="tweet-footer" style="padding-top: 12px; margin-top: 10px; border-top: 1px solid var(--card-border); display: flex; justify-content: flex-start; align-items: center;">
+                    <div style="display: inline-flex; align-items: center; gap: 8px; font-size: 10.5px; font-weight: 700; color: #b91c1c; background: #fef2f2; padding: 8px 16px; border-radius: 20px; border: 1px solid #fecaca; border-left: 4px solid #ef4444; box-shadow: 0 2px 4px rgba(220, 38, 38, 0.05);">
+                        <i data-lucide="clock" style="width: 13px; height: 13px; color: #ef4444;"></i>
                         ${timeString}
                     </div>
                 </div>
@@ -1654,7 +1662,7 @@
                     document.querySelectorAll('.status-badge.skeleton-box').forEach(badge => { badge.classList.remove('skeleton-box'); badge.classList.add('pending'); badge.innerHTML = 'Awaiting Report'; });
                     document.querySelectorAll('.skeleton-card').forEach(t => t.remove());
                     const wall = document.getElementById('tweetWallSection');
-                    if (wall.children.length === 0) { wall.innerHTML = `<div class="tweet-card"><div class="tweet-header"><div class="tweet-avatar"><i data-lucide="activity" style="width:16px;"></i></div><div class="tweet-meta"><span class="tweet-name">System Monitoring</span><span class="tweet-handle">Active Node</span></div></div><div class="tweet-body" style="font-style:italic;">Listening for live LDRRMC submissions and system updates...</div></div>`; }
+                    if (wall.children.length === 0) { wall.innerHTML = `<div class="tweet-card" style="cursor:default;"><div class="tweet-header"><div class="tweet-avatar"><i data-lucide="activity" style="width:16px;"></i></div><div class="tweet-meta"><span class="tweet-name">System Monitoring</span><span class="tweet-handle">Active Node</span></div></div><div class="tweet-body" style="font-style:italic;">Listening for live LDRRMC submissions and system updates...</div></div>`; }
                     
                     // Re-render any icons injected dynamically
                     lucide.createIcons({ attrs: { 'stroke-width': 1.5 } });
