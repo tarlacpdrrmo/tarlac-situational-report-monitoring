@@ -28,7 +28,19 @@
 
         * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Plus Jakarta Sans', sans-serif; }
 
-        body { background-color: var(--bg-page); display: flex; align-items: center; justify-content: center; height: 100vh; width: 100vw; overflow: hidden; padding: 0; -webkit-font-smoothing: antialiased; }
+        /* ADDED ZOOM: 0.8 TO MIMIC 80% BROWSER SCALE GLOBALLY */
+        body { 
+            background-color: var(--bg-page); 
+            display: flex; 
+            align-items: center; 
+            justify-content: center; 
+            height: 100vh; 
+            width: 100vw; 
+            overflow: hidden; 
+            padding: 0; 
+            -webkit-font-smoothing: antialiased; 
+            zoom: 0.8; 
+        }
 
         @keyframes slideUpFade { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: translateY(0); } }
         @keyframes skeleton-loading { 0% { background-position: 200% 0; } 100% { background-position: -200% 0; } }
@@ -89,8 +101,23 @@
         .data-value { padding: 4px 0; color: var(--text-dark); border: none; }
         .placeholder-text { font-family: 'Inter', sans-serif; font-size: 12px; color: var(--text-gray); opacity: 0.8; font-style: italic; font-weight: 500; }
 
-        /* --- NEW MODERN INTER FONT STYLES FOR ADVISORY REPORTS --- */
-        .meta-badge { font-family: 'Inter', sans-serif; display: inline-flex; align-items: center; background-color: var(--input-bg); border: 1px solid var(--card-border); color: var(--text-dark); font-size: 10px; font-weight: 600; padding: 4px 10px; border-radius: 6px; margin-bottom: 10px; box-shadow: 0 2px 4px rgba(0,0,0,0.01); }
+        /* --- NEW MODERN INTER FONT STYLES FOR ADVISORY REPORTS & DATES --- */
+        .meta-badge { 
+            font-family: 'Plus Jakarta Sans', sans-serif; 
+            display: inline-flex; 
+            align-items: center; 
+            background-color: #f8fafc; 
+            border: 1px solid #e2e8f0; 
+            color: #475569; 
+            font-size: 9.5px; 
+            font-weight: 700; 
+            padding: 6px 14px; 
+            border-radius: 20px; 
+            margin-bottom: 12px; 
+            box-shadow: 0 2px 4px rgba(15, 23, 42, 0.02); 
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+        }
         .meta-source { font-family: 'Inter', sans-serif; display: flex; align-items: center; font-size: 10px; color: var(--text-gray); font-style: italic; font-weight: 500; margin-top: 10px; border-top: 1px dashed #cbd5e1; padding-top: 8px; }
         
         .standard-text { font-family: 'Inter', sans-serif; font-size: 13px; color: #334155; line-height: 1.6; margin-bottom: 10px; font-weight: 500; text-transform: none; letter-spacing: -0.1px; }
@@ -141,8 +168,6 @@
         .tweet-body { margin-top: 2px; margin-bottom: 8px; }
         .status-title { font-size: 8.5px; font-weight: 800; color: var(--text-gray); text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 4px; display: block; }
         .status-text { font-size: 11.5px; color: var(--text-dark); line-height: 1.5; font-weight: 700; }
-        
-        .tweet-footer { display: flex; justify-content: flex-end; align-items: center; padding-top: 8px; border-top: 1px dashed var(--card-border); margin-top: 4px;}
 
         /* --- BUTTONS --- */
         .btn { background-color: #ffffff; border: 1px solid var(--card-border); color: var(--text-dark); padding: 6px 12px; border-radius: 8px; font-size: 10px; font-weight: 700; cursor: pointer; transition: var(--transition); display: inline-flex; align-items: center; justify-content: center; gap: 6px;}
@@ -340,7 +365,7 @@
                                             <div class="last-updated">Status: <span id="generatedTimestamp">Initializing Database...</span></div>
                                         </div>
                                     </div>
-                                                                                                                                   
+                                                                                                                                                                                                            
                                     <div class="data-grid">
                                         <div class="data-item full-width">
                                             <label class="data-label"><i data-lucide="quote"></i> OUTLINE (SYNOPSIS)</label>
@@ -915,6 +940,37 @@
         }
 
         // ----------------------------------------------------
+        // Helper: Format raw Dates gracefully (ISO to standard)
+        // ----------------------------------------------------
+        function formatModernDate(dateStr) {
+            if (!dateStr) return 'JUST NOW';
+            try {
+                // If it looks like an ISO date (e.g. 2026-05-28T06:29:49.000Z)
+                if (dateStr.includes('T') && dateStr.includes('Z')) {
+                    const d = new Date(dateStr);
+                    if (isNaN(d.getTime())) return dateStr;
+                    
+                    const day = d.getDate().toString().padStart(2, '0');
+                    const monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+                    const month = monthNames[d.getMonth()];
+                    const year = d.getFullYear();
+                    
+                    let hrs = d.getHours();
+                    const mins = d.getMinutes().toString().padStart(2, '0');
+                    const ampm = hrs >= 12 ? 'PM' : 'AM';
+                    hrs = hrs % 12;
+                    hrs = hrs ? hrs : 12; 
+                    const hrStr = hrs.toString().padStart(2, '0');
+                    
+                    return `${day} ${month} ${year} - ${hrStr}:${mins} ${ampm}`;
+                }
+                return dateStr;
+            } catch(e) {
+                return dateStr;
+            }
+        }
+
+        // ----------------------------------------------------
         // Helper: Extracts ONLY the newest update for the feed
         // ----------------------------------------------------
         function extractLatestUpdateText(rawText) {
@@ -981,7 +1037,7 @@
             
             let generalStatus = isPdf ? `PDF Document Uploaded. Action: ${data.action || 'None'}` : finalStatusText;
             let handleText = isPdf ? `System Update` : `Weather: ${data.weather || '-'} | Casualties: ${data.casualty || '0'}`;
-            let timeString = data.reportTime || "Just now"; // Get exact database timestamp
+            let timeString = formatModernDate(data.reportTime || "Just now");
 
             const newCard = document.createElement('div');
             newCard.className = 'tweet-card';
@@ -994,11 +1050,11 @@
                     <span class="status-title">General Status:</span>
                     <div class="status-text">${generalStatus}</div>
                 </div>
-                <div class="tweet-footer">
-                    <span style="color: #dc2626; display: flex; align-items: center; gap: 4px; font-weight: 800;">
-                        <span style="width: 6px; height: 6px; background: #dc2626; border-radius: 50%; display: inline-block; box-shadow: 0 0 0 2px rgba(220, 38, 38, 0.2);"></span>
+                <div class="tweet-footer" style="padding-top: 10px; margin-top: 10px; border-top: 1px solid var(--card-border); display: flex; justify-content: flex-end; align-items: center;">
+                    <div style="display: inline-flex; align-items: center; gap: 6px; font-size: 9px; font-weight: 700; color: #64748b; background: #f8fafc; padding: 5px 12px; border-radius: 20px; border: 1px solid #e2e8f0;">
+                        <i data-lucide="clock" style="width: 11px; height: 11px; color: #3b82f6;"></i>
                         ${timeString}
-                    </span>
+                    </div>
                 </div>
             `;
             wall.prepend(newCard);
@@ -1011,7 +1067,7 @@
             const data = lguDataStore[lguId];
 
             if(data) {
-                document.getElementById('modalLguTimestamp').innerText = `As of: ${data.reportTime}`;
+                document.getElementById('modalLguTimestamp').innerText = `As of: ${formatModernDate(data.reportTime)}`;
                 contentBox.innerHTML = `
                     <div class="modal-grid">
                         <div class="modal-item"><label>A. Weather</label><span>${data.weather || 'None'}</span></div>
@@ -1131,7 +1187,10 @@
                 if (!line) continue;
 
                 if (line.startsWith('[UPDATE AS OF:')) {
-                    html += `<div class="meta-badge"><i data-lucide="clock" style="width:10px;height:10px;margin-right:4px;"></i>${line.replace(/\[|\]/g, '')}</div>`;
+                    // Extract date, clean it, and format it nicely
+                    let rawDate = line.replace(/\[UPDATE AS OF:|\]/gi, '').trim();
+                    let cleanDate = formatModernDate(rawDate);
+                    html += `<div class="meta-badge"><i data-lucide="clock" style="width:12px;height:12px;margin-right:6px;"></i> UPDATE AS OF: ${cleanDate}</div>`;
                 } else if (line.startsWith('[SOURCE:')) {
                     html += `<div class="meta-source"><i data-lucide="info" style="width:10px;height:10px;margin-right:4px;"></i>${line.replace(/\[|\]/g, '')}</div>`;
                 } else if (line.startsWith('•')) {
@@ -1487,7 +1546,7 @@
                 count++;
                 let opt = document.createElement('option');
                 opt.value = pdfData[council].url; 
-                opt.innerText = `${council} (As of: ${pdfData[council].timestamp})`;
+                opt.innerText = `${council} (As of: ${formatModernDate(pdfData[council].timestamp)})`;
                 councilGroup.appendChild(opt);
             }
             if (count > 0) { select.appendChild(councilGroup); } 
@@ -1566,7 +1625,7 @@
                             document.getElementById('outCal').innerHTML = formatTextToTable(persistentData.cal);
                             
                             ['outSyn', 'outInc', 'outWork', 'outClass', 'outCal'].forEach(id => { document.getElementById(id).classList.remove('skeleton-box'); });
-                            document.getElementById('generatedTimestamp').innerText = `${persistentData.timestamp}`;
+                            document.getElementById('generatedTimestamp').innerText = `${formatModernDate(persistentData.timestamp)}`;
                         } else {
                             ['outSyn', 'outInc', 'outWork', 'outClass', 'outCal'].forEach(id => { const el = document.getElementById(id); el.classList.remove('skeleton-box'); el.innerHTML = '<span class="placeholder-text">Awaiting data...</span>'; });
                         }
