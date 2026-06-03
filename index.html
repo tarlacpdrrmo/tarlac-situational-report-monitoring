@@ -8,41 +8,42 @@
     <script src="https://unpkg.com/lucide@latest"></script>
     <style>
         :root {
-            --bg-page: #f1f5f9;         
-            --bg-app: #ffffff;          
-            --bg-sidebar: #0f172a;      
-            --card-bg: #ffffff;
-            --card-border: #e2e8f0;     
-            --input-bg: #f8fafc;        
-            --text-dark: #1e293b;       
-            --text-gray: #64748b;       
-            --btn-dark: #0f172a;        
-            --btn-dark-hover: #1e293b;
-            --accent: #2563eb;          
-            --success: #059669;
-            --success-bg: #d1fae5;
+            /* DARK GLOSSY THEME VARIABLES */
+            --bg-page: #0f172a;         
+            --bg-sidebar: rgba(15, 23, 42, 0.95);      
+            --card-bg: rgba(15, 23, 42, 0.75); 
+            --card-border: rgba(255, 255, 255, 0.1);     
+            --input-bg: rgba(0, 0, 0, 0.25);        
+            --text-dark: #f8fafc;       
+            --text-gray: #94a3b8;       
+            --btn-dark: #1e293b;        
+            --btn-dark-hover: #334155;
+            --accent: #3b82f6;          
+            --success: #10b981;
+            --success-bg: rgba(16, 185, 129, 0.15);
             --warning: #f59e0b;
-            --warning-bg: #fef3c7;
+            --warning-bg: rgba(245, 158, 11, 0.15);
             --transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
         }
 
         * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Plus Jakarta Sans', sans-serif; }
 
         body { 
-            background: #1e293b url('./bg.jpg') center center / cover no-repeat fixed;
+            background: #0f172a url('./bg.jpg') center center / cover no-repeat fixed;
             margin: 0; 
             padding: 0; 
             width: 100vw; 
             height: 100vh; 
             overflow: hidden; 
             -webkit-font-smoothing: antialiased; 
+            color: var(--text-dark);
         }
 
         @keyframes slideUpFade { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: translateY(0); } }
         @keyframes skeleton-loading { 0% { background-position: 200% 0; } 100% { background-position: -200% 0; } }
-        @keyframes pulse-ring { 0% { transform: scale(0.8); box-shadow: 0 0 0 0 rgba(37, 99, 235, 0.7); } 70% { transform: scale(1); box-shadow: 0 0 0 6px rgba(37, 99, 235, 0); } 100% { transform: scale(0.8); box-shadow: 0 0 0 0 rgba(37, 99, 235, 0); } }
+        @keyframes pulse-ring { 0% { transform: scale(0.8); box-shadow: 0 0 0 0 rgba(59, 130, 246, 0.7); } 70% { transform: scale(1); box-shadow: 0 0 0 6px rgba(59, 130, 246, 0); } 100% { transform: scale(0.8); box-shadow: 0 0 0 0 rgba(59, 130, 246, 0); } }
         
-        .skeleton-box { background: linear-gradient(90deg, #f1f5f9 25%, #f8fafc 50%, #f1f5f9 75%); background-size: 200% 100%; animation: skeleton-loading 1.5s infinite linear; border-radius: 6px; color: transparent !important; border: none !important; pointer-events: none; }
+        .skeleton-box { background: linear-gradient(90deg, rgba(255,255,255,0.05) 25%, rgba(255,255,255,0.1) 50%, rgba(255,255,255,0.05) 75%); background-size: 200% 100%; animation: skeleton-loading 1.5s infinite linear; border-radius: 6px; color: transparent !important; border: none !important; pointer-events: none; }
 
         .app-container { 
             display: flex; 
@@ -53,7 +54,8 @@
             position: absolute; 
             top: 0; 
             left: 0;
-            background-color: rgba(255, 255, 255, 0.25); 
+            /* Changed to a dark tint overlay instead of white for the background */
+            background-color: rgba(0, 0, 0, 0.2); 
             backdrop-filter: blur(6px);
             -webkit-backdrop-filter: blur(6px);
             border-radius: 0; 
@@ -64,20 +66,19 @@
         /* --- SIDEBAR --- */
         .sidebar { 
             width: 230px; 
-            background-color: rgba(15, 23, 42, 0.95); 
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
+            background-color: var(--bg-sidebar); 
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
             display: flex; 
             flex-direction: column; 
             padding: 24px 0; 
             position: relative; 
             flex-shrink: 0; 
-            border-right: 1px solid rgba(255, 255, 255, 0.05);
+            border-right: 1px solid var(--card-border);
         }
         .profile { display: flex; align-items: center; gap: 14px; margin-bottom: 35px; padding: 0 20px; transition: var(--transition); cursor: pointer;}
         .profile:hover { opacity: 0.8; }
         
-        /* FIXED: Logo is now transparent with no box masking */
         .profile-img { 
             width: 55px; 
             height: 55px; 
@@ -92,17 +93,16 @@
         }
         
         .profile-info h4 { font-size: 13px; font-weight: 700; color: #ffffff; margin-bottom: 2px; letter-spacing: -0.2px;}
-        .profile-info p { font-size: 8.5px; color: #94a3b8; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px;}
+        .profile-info p { font-size: 8.5px; color: var(--text-gray); font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px;}
 
         .nav-menu { list-style: none; display: flex; flex-direction: column; gap: 8px; }
-        .nav-item { display: flex; align-items: center; gap: 12px; padding: 12px 20px; color: #94a3b8; cursor: pointer; transition: var(--transition); font-size: 11px; font-weight: 600; position: relative; margin: 0 10px; border-radius: 8px;}
+        .nav-item { display: flex; align-items: center; gap: 12px; padding: 12px 20px; color: var(--text-gray); cursor: pointer; transition: var(--transition); font-size: 11px; font-weight: 600; position: relative; margin: 0 10px; border-radius: 8px;}
         .nav-item:hover { color: #ffffff; transform: translateX(4px); background-color: rgba(255,255,255,0.05);}
         .nav-item i { width: 16px; height: 16px; opacity: 0.7; transition: var(--transition); }
         .nav-item:hover i { opacity: 1; }
         
-        /* FIXED: Active side panel is now a subtle highlight, no solid white block */
         .nav-item.active { 
-            background-color: rgba(37, 99, 235, 0.15); 
+            background-color: rgba(59, 130, 246, 0.15); 
             color: #ffffff; 
             transform: translateX(0); 
             border-left: 3px solid var(--accent);
@@ -115,58 +115,76 @@
         .view-section { display: none; }
         .view-section.active { display: block; animation: slideUpFade 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
 
-        /* FIXED: Header is now readable over the background and resized */
+        /* FIXED: Removed the white box completely. Just crisp text with a professional shadow */
         .header { 
             display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px; 
-            background: rgba(255, 255, 255, 0.90);
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
-            padding: 16px 24px;
-            border-radius: 12px;
-            box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05);
-            border: 1px solid rgba(255, 255, 255, 0.5);
+            background: transparent;
+            border: none;
+            box-shadow: none;
+            backdrop-filter: none;
+            -webkit-backdrop-filter: none;
+            padding: 0 4px;
         }
-        .header-title h1 { font-size: 22px; font-weight: 800; color: var(--text-dark); display: flex; align-items: center; gap: 8px; letter-spacing: -0.5px;}
-        .header-title p { font-size: 12px; color: var(--text-gray); margin-top: 4px; font-weight: 500;}
+        .header-title h1 { 
+            font-size: 24px; font-weight: 800; color: #ffffff; display: flex; align-items: center; gap: 8px; letter-spacing: -0.5px;
+            text-shadow: 0 2px 10px rgba(0,0,0,0.8);
+        }
+        .header-title p { 
+            font-size: 12px; color: #cbd5e1; margin-top: 4px; font-weight: 500;
+            text-shadow: 0 1px 4px rgba(0,0,0,0.8);
+        }
         .header-actions { display: flex; align-items: center; gap: 15px; }
-        .last-updated { font-size: 10px; color: var(--text-gray); font-style: italic; }
-        .last-updated span { font-weight: 700; color: var(--text-dark); font-style: normal; }
+        .last-updated { font-size: 10px; color: #cbd5e1; font-style: italic; text-shadow: 0 1px 4px rgba(0,0,0,0.8);}
+        .last-updated span { font-weight: 700; color: #ffffff; font-style: normal; text-shadow: 0 1px 4px rgba(0,0,0,0.8);}
 
-        /* --- DYNAMIC CARDS & GRIDS --- */
-        .panel-card { background-color: var(--card-bg); border: 1px solid var(--card-border); border-radius: 12px; padding: 20px; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.02); transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1); cursor: default; }
-        .panel-card:hover { transform: translateY(-3px); box-shadow: 0 15px 30px -5px rgba(15, 23, 42, 0.08); border-color: #cbd5e1; }
+        /* --- GLOSSY DARK CARDS & PANELS --- */
+        .panel-card, .sitrep-panel, .tweet-card, .modal-card, .dt-popup { 
+            background-color: var(--card-bg); 
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid var(--card-border); 
+            /* Glossy top edge highlight */
+            border-top: 1px solid rgba(255, 255, 255, 0.15);
+            border-radius: 12px; 
+            padding: 20px; 
+            box-shadow: 0 8px 32px 0 rgba(0,0,0,0.3); 
+            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1); 
+            cursor: default; 
+            color: var(--text-dark);
+        }
+        .panel-card:hover { transform: translateY(-3px); box-shadow: 0 15px 40px -5px rgba(0,0,0,0.5); border-color: rgba(255,255,255,0.25); }
         
         .dashboard-container { display: flex; gap: 20px; align-items: flex-start; }
         .main-report { flex: 1; min-width: 0; }
         .side-feed { width: 280px; flex-shrink: 0; }
         .dashboard-content-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; align-items: stretch; }
 
-        .sitrep-panel { display: flex; flex-direction: column; height: 100%; background: #ffffff; border-top: 4px solid var(--bg-sidebar); border-radius: 12px; box-shadow: 0 10px 30px rgba(15, 23, 42, 0.04); position: relative; overflow: hidden; transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1); cursor: default; }
-        .sitrep-panel:hover { transform: translateY(-4px); box-shadow: 0 20px 40px rgba(15, 23, 42, 0.08); }
-        .sitrep-panel::before { content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: radial-gradient(circle at top right, rgba(37, 99, 235, 0.02), transparent 40%); pointer-events: none; }
+        .sitrep-panel { display: flex; flex-direction: column; height: 100%; border-top: 4px solid var(--accent); position: relative; overflow: hidden; padding: 0;}
+        .sitrep-panel:hover { transform: translateY(-4px); box-shadow: 0 20px 40px rgba(0,0,0,0.4); }
+        .sitrep-panel::before { content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: radial-gradient(circle at top right, rgba(59, 130, 246, 0.1), transparent 40%); pointer-events: none; }
         
         .data-grid { display: flex; flex-direction: column; gap: 20px; flex: 1; z-index: 1; }
-        .data-item { display: flex; flex-direction: column; gap: 8px; background: #ffffff; }
+        .data-item { display: flex; flex-direction: column; gap: 8px; background: transparent; }
         .data-item.full-width { flex: 1; } 
         
-        .data-label { font-size: 9px; font-weight: 800; color: var(--text-dark); text-transform: uppercase; letter-spacing: 0.5px; border-bottom: 2px solid var(--input-bg); padding-bottom: 6px; display: flex; align-items: center; gap: 6px; }
+        .data-label { font-size: 9px; font-weight: 800; color: var(--text-gray); text-transform: uppercase; letter-spacing: 0.5px; border-bottom: 2px solid rgba(255,255,255,0.05); padding-bottom: 6px; display: flex; align-items: center; gap: 6px; }
         .data-label i { color: var(--accent); width: 12px; height: 12px; }
         
         .data-value { padding: 4px 0; color: var(--text-dark); border: none; }
         .placeholder-text { font-family: 'Inter', sans-serif; font-size: 12px; color: var(--text-gray); opacity: 0.8; font-style: italic; font-weight: 500; }
 
-        .meta-badge { font-family: 'Plus Jakarta Sans', sans-serif; display: inline-flex; align-items: center; background-color: #fef2f2; border: 1px solid #fecaca; border-left: 4px solid #ef4444; color: #b91c1c; font-size: 9.5px; font-weight: 700; padding: 6px 14px; border-radius: 20px; margin-bottom: 12px; box-shadow: 0 2px 4px rgba(220, 38, 38, 0.05); letter-spacing: 0.5px; text-transform: uppercase; }
-        .meta-source { font-family: 'Inter', sans-serif; display: flex; align-items: center; font-size: 10px; color: var(--text-gray); font-style: italic; font-weight: 500; margin-top: 10px; border-top: 1px dashed #cbd5e1; padding-top: 8px; }
-        .standard-text { font-family: 'Inter', sans-serif; font-size: 13px; color: #334155; line-height: 1.6; margin-bottom: 10px; font-weight: 500; text-transform: none; letter-spacing: -0.1px; }
+        .meta-badge { font-family: 'Plus Jakarta Sans', sans-serif; display: inline-flex; align-items: center; background-color: rgba(239, 68, 68, 0.15); border: 1px solid rgba(239, 68, 68, 0.3); border-left: 4px solid #ef4444; color: #fca5a5; font-size: 9.5px; font-weight: 700; padding: 6px 14px; border-radius: 20px; margin-bottom: 12px; letter-spacing: 0.5px; text-transform: uppercase; }
+        .meta-source { font-family: 'Inter', sans-serif; display: flex; align-items: center; font-size: 10px; color: var(--text-gray); font-style: italic; font-weight: 500; margin-top: 10px; border-top: 1px dashed rgba(255,255,255,0.1); padding-top: 8px; }
+        .standard-text { font-family: 'Inter', sans-serif; font-size: 13px; color: #e2e8f0; line-height: 1.6; margin-bottom: 10px; font-weight: 500; text-transform: none; letter-spacing: -0.1px; }
         
-        .parsed-table-wrapper { width: 100%; overflow-x: auto; margin: 12px 0; border-radius: 10px; border: 1px solid #e2e8f0; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05); }
-        .parsed-table { width: 100%; border-collapse: collapse; text-align: left; background: #ffffff; }
-        .parsed-table th { font-family: 'Plus Jakarta Sans', sans-serif; background-color: #f8fafc; font-size: 10px; font-weight: 800; color: #64748b; padding: 12px 16px; border-bottom: 2px solid #e2e8f0; text-transform: uppercase; letter-spacing: 0.5px; }
-        .parsed-table td { font-family: 'Inter', sans-serif; padding: 14px 16px; font-size: 12px; font-weight: 500; color: #334155; border-bottom: 1px solid #f1f5f9; text-transform: none; line-height: 1.5; vertical-align: top;}
+        .parsed-table-wrapper { width: 100%; overflow-x: auto; margin: 12px 0; border-radius: 10px; border: 1px solid var(--card-border); box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.2); }
+        .parsed-table { width: 100%; border-collapse: collapse; text-align: left; background: transparent; }
+        .parsed-table th { font-family: 'Plus Jakarta Sans', sans-serif; background-color: rgba(0,0,0,0.3); font-size: 10px; font-weight: 800; color: var(--text-gray); padding: 12px 16px; border-bottom: 2px solid var(--card-border); text-transform: uppercase; letter-spacing: 0.5px; }
+        .parsed-table td { font-family: 'Inter', sans-serif; padding: 14px 16px; font-size: 12px; font-weight: 500; color: #e2e8f0; border-bottom: 1px solid rgba(255,255,255,0.05); text-transform: none; line-height: 1.5; vertical-align: top;}
         .parsed-table tr:last-child td { border-bottom: none; }
-        .parsed-table tbody tr:hover td { background-color: #f8fafc; }
+        .parsed-table tbody tr:hover td { background-color: rgba(255,255,255,0.05); }
 
-        /* --- OVERHAULED DISTRICT TABLES --- */
+        /* --- OVERHAULED DISTRICT TABLES (DARK MODE) --- */
         .table-subtitle { font-size: 10.5px; color: var(--text-gray); margin-bottom: 16px; font-weight: 500; }
         .district-table { width: 100%; border-collapse: separate; border-spacing: 0 8px; margin-top: -8px; }
         .district-table th, .district-table td { padding: 12px 14px; vertical-align: middle; transition: var(--transition); }
@@ -175,30 +193,28 @@
         .district-table th:nth-child(2), .district-table td:nth-child(2) { width: 30%; text-align: center; }
         .district-table th:nth-child(3), .district-table td:nth-child(3) { width: 25%; text-align: right; }
         
-        .district-table td { background: #ffffff; border: 1px solid var(--card-border); border-style: solid none; }
+        .district-table td { background: rgba(255,255,255,0.03); border: 1px solid var(--card-border); border-style: solid none; }
         .district-table td:first-child { border-left-style: solid; border-radius: 10px 0 0 10px; }
         .district-table td:last-child { border-right-style: solid; border-radius: 0 10px 10px 0; }
         
-        /* FIXED: Removed the harsh outline and replaced it with a smooth shadow lift */
-        .district-table tbody tr { cursor: pointer; transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1); box-shadow: 0 2px 4px rgba(15, 23, 42, 0.01); }
-        .district-table tbody tr:hover { transform: translateY(-2px); box-shadow: 0 8px 16px -4px rgba(15, 23, 42, 0.08); z-index: 5; position: relative; border-radius: 10px; }
-        .district-table tbody tr:hover td { background-color: #f8fafc; border-color: #cbd5e1; }
+        .district-table tbody tr { cursor: pointer; transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1); box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
+        .district-table tbody tr:hover { transform: translateY(-2px); box-shadow: 0 8px 16px -4px rgba(0,0,0,0.3); z-index: 5; position: relative; border-radius: 10px; }
+        .district-table tbody tr:hover td { background-color: rgba(255,255,255,0.08); border-color: rgba(255,255,255,0.3); }
         
         .lgu-name { font-weight: 700; font-size: 11.5px; color: var(--text-dark); display: flex; align-items: center; gap: 8px;}
-        .lgu-name span { font-size: 7px; color: var(--text-gray); font-weight: 800; background: var(--input-bg); padding: 4px 6px; border-radius: 4px; text-transform: uppercase; border: 1px solid var(--card-border);}
+        .lgu-name span { font-size: 7px; color: var(--text-gray); font-weight: 800; background: rgba(0,0,0,0.3); padding: 4px 6px; border-radius: 4px; text-transform: uppercase; border: 1px solid var(--card-border);}
 
         .status-badge { display: inline-flex; align-items: center; justify-content: center; gap: 4px; padding: 6px 12px; border-radius: 20px; font-size: 8.5px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.5px; white-space: nowrap; transition: var(--transition); }
-        .status-badge.pending { background-color: #fffbeb; color: #d97706; border: 1px solid #fde68a;}
-        .status-badge.submitted { background-color: #ecfdf5; color: #059669; border: 1px solid #a7f3d0; }
+        .status-badge.pending { background-color: var(--warning-bg); color: #fcd34d; border: 1px solid rgba(245, 158, 11, 0.3);}
+        .status-badge.submitted { background-color: var(--success-bg); color: #6ee7b7; border: 1px solid rgba(16, 185, 129, 0.3); }
         .status-badge.skeleton-box { margin: 0 auto; border: none; }
 
         /* --- RIGHT SIDEBAR TWEET WALL --- */
-        .live-feed-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; background: rgba(255, 255, 255, 0.85); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); padding: 12px 16px; border-radius: 10px; border: 1px solid rgba(255, 255, 255, 0.5); box-shadow: 0 2px 4px rgba(0,0,0,0.02);}
+        .live-feed-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; background: var(--card-bg); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); padding: 12px 16px; border-radius: 10px; border: 1px solid var(--card-border); border-top: 1px solid rgba(255,255,255,0.15); box-shadow: 0 8px 32px 0 rgba(0,0,0,0.2);}
         .live-feed-header h3 { font-size: 12px; font-weight: 800; color: var(--text-dark); text-transform: uppercase; letter-spacing: 0.5px; margin: 0;}
         .pulse-indicator { width: 8px; height: 8px; background-color: var(--accent); border-radius: 50%; animation: pulse-ring 2s infinite; }
 
-        .tweet-card { background: #ffffff; border: 1px solid var(--card-border); border-radius: 12px; padding: 16px; display: flex; flex-direction: column; margin-bottom: 14px; box-shadow: 0 4px 6px -1px rgba(15, 23, 42, 0.03); transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1); cursor: pointer;}
-        .tweet-card:hover { transform: translateY(-4px) scale(1.02); box-shadow: 0 15px 30px -5px rgba(15, 23, 42, 0.1); border-color: #cbd5e1;}
+        .tweet-card { padding: 16px; display: flex; flex-direction: column; margin-bottom: 14px; cursor: pointer; }
         
         .tweet-header { display: flex; align-items: center; gap: 10px; margin-bottom: 10px; }
         .tweet-avatar { width: 34px; height: 34px; border-radius: 10px; display: flex; align-items: center; justify-content: center; color: white; font-weight: 800; font-size: 13px; }
@@ -211,76 +227,81 @@
         .status-text { font-size: 11.5px; color: var(--text-dark); line-height: 1.5; font-weight: 700; }
 
         /* --- BUTTONS --- */
-        .btn { background-color: #ffffff; border: 1px solid var(--card-border); color: var(--text-dark); padding: 6px 12px; border-radius: 8px; font-size: 10px; font-weight: 700; cursor: pointer; transition: var(--transition); display: inline-flex; align-items: center; justify-content: center; gap: 6px;}
-        .btn:hover { background-color: var(--input-bg); border-color: #cbd5e1; }
-        .btn-primary { background-color: var(--btn-dark); color: #ffffff; border: none; padding: 8px 16px;}
-        .btn-primary:hover { background-color: var(--btn-dark-hover); box-shadow: 0 4px 12px rgba(15, 23, 42, 0.15); transform: translateY(-1px);}
+        .btn { background-color: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); color: var(--text-dark); padding: 6px 12px; border-radius: 8px; font-size: 10px; font-weight: 700; cursor: pointer; transition: var(--transition); display: inline-flex; align-items: center; justify-content: center; gap: 6px;}
+        .btn:hover { background-color: rgba(255,255,255,0.15); border-color: rgba(255,255,255,0.3); }
+        .btn-primary { background-color: var(--accent); color: #ffffff; border: none; padding: 8px 16px;}
+        .btn-primary:hover { background-color: #2563eb; box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3); transform: translateY(-1px);}
         .btn-sm { padding: 8px 14px; font-size: 9px; border-radius: 6px;} 
-        .btn-danger { background-color: #ffffff; border: 1px solid #ef4444; color: #ef4444; }
-        .btn-danger:hover { background-color: #fef2f2; border-color: #dc2626; color: #dc2626; }
+        .btn-danger { background-color: rgba(239, 68, 68, 0.1); border: 1px solid rgba(239, 68, 68, 0.3); color: #fca5a5; }
+        .btn-danger:hover { background-color: rgba(239, 68, 68, 0.2); color: #fef2f2; border-color: rgba(239, 68, 68, 0.5);}
 
         /* --- FORMS & TABLES (Encoding Page) --- */
         .form-group { margin-bottom: 14px; }
         .form-group label { display: block; font-size: 8.5px; font-weight: 800; color: var(--text-gray); margin-bottom: 6px; text-transform: uppercase; letter-spacing: 0.5px;}
         .form-control { width: 100%; background-color: var(--input-bg); border: 1px solid var(--card-border); color: var(--text-dark); padding: 10px 14px; border-radius: 8px; font-size: 11px; outline: none; transition: var(--transition); font-weight: 500;}
-        .form-control:focus { border-color: var(--btn-dark); background-color: #ffffff; box-shadow: 0 0 0 3px rgba(15, 23, 42, 0.05); }
+        .form-control:focus { border-color: var(--accent); background-color: rgba(0,0,0,0.4); box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.2); }
+        
+        .form-control option { background: var(--bg-sidebar); color: var(--text-dark); } /* Fix select dropdown visibility */
+        
         .uppercase-input { text-transform: uppercase; }
         textarea.form-control { resize: none; overflow: hidden; min-height: 42px; line-height: 1.5; }
 
         .advisory-wrapper { border: 1px solid var(--card-border); border-radius: 8px; background-color: var(--input-bg); overflow: hidden; transition: var(--transition); }
-        .advisory-wrapper:focus-within { border-color: var(--btn-dark); background-color: #ffffff; box-shadow: 0 0 0 3px rgba(15, 23, 42, 0.05); }
+        .advisory-wrapper:focus-within { border-color: var(--accent); background-color: rgba(0,0,0,0.4); box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.2); }
         .advisory-wrapper .form-control { border: none; border-radius: 0; background: transparent; box-shadow: none; padding-bottom: 8px; }
-        .advisory-wrapper .source-input { width: 100%; border: none; background-color: transparent; border-top: 1px dashed #cbd5e1; padding: 8px 12px; font-size: 10px; color: var(--text-gray); outline: none; font-style: italic; font-weight: 500; transition: var(--transition);}
+        .advisory-wrapper .source-input { width: 100%; border: none; background-color: transparent; border-top: 1px dashed rgba(255,255,255,0.1); padding: 8px 12px; font-size: 10px; color: var(--text-gray); outline: none; font-style: italic; font-weight: 500; transition: var(--transition);}
         
         .tbl-input { width: 100%; border: none; outline: none; padding: 8px; font-size: 11px; background: transparent; color: var(--text-dark); font-weight: 500;} 
-        .tbl-input:focus { background: #f1f5f9; }
-        .table-input-wrapper th { font-size: 8px; font-weight: 800; color: var(--text-gray); text-transform: uppercase;}
+        .tbl-input:focus { background: rgba(255,255,255,0.05); }
+        .table-input-wrapper { border: 1px solid var(--card-border); border-radius: 8px; overflow: hidden; background: rgba(0,0,0,0.2); }
+        .table-input-wrapper th { font-size: 8px; font-weight: 800; color: var(--text-gray); text-transform: uppercase; padding: 8px; background: rgba(0,0,0,0.3);}
+        .table-input-wrapper td { border-bottom: 1px solid var(--card-border); border-right: 1px solid var(--card-border); padding: 0; }
 
-        .upload-area { border: 2px dashed #cbd5e1; border-radius: 12px; padding: 28px; text-align: center; background-color: var(--input-bg); cursor: pointer; transition: var(--transition); margin-bottom: 16px;}
-        .upload-area:hover { border-color: var(--btn-dark); background-color: #f1f5f9; }
-        .upload-area i { width: 24px; height: 24px; color: var(--text-dark); transition: var(--transition);}
+        .upload-area { border: 2px dashed rgba(255,255,255,0.2); border-radius: 12px; padding: 28px; text-align: center; background-color: var(--input-bg); cursor: pointer; transition: var(--transition); margin-bottom: 16px;}
+        .upload-area:hover { border-color: var(--accent); background-color: rgba(255,255,255,0.05); }
+        .upload-area i { width: 24px; height: 24px; color: var(--text-gray); transition: var(--transition);}
         .upload-area p { font-size: 10.5px; font-weight: 700; color: var(--text-gray); margin-top: 8px;}
-        .pdf-viewer { display: none; width: 100%; height: 600px; border-radius: 10px; border: 1px solid var(--card-border); margin-bottom: 16px; background-color: #f8fafc;}
+        .pdf-viewer { display: none; width: 100%; height: 600px; border-radius: 10px; border: 1px solid var(--card-border); margin-bottom: 16px; background-color: var(--bg-sidebar);}
 
         #dynamicWorkflowArea { display: none; margin-top: 16px; }
         .workflow-form { display: none; }
         .workflow-form.active { display: block; animation: slideUpFade 0.4s ease forwards; }
 
         /* --- DATETIME PICKER --- */
-        .dt-wrapper { display: inline-flex; align-items: center; gap: 8px; cursor: pointer; background: #ffffff; border: 1px solid var(--card-border); border-radius: 8px; padding: 6px 12px; transition: var(--transition); }
-        .dt-wrapper:hover { border-color: var(--btn-dark); box-shadow: 0 2px 4px rgba(0,0,0,0.02);}
+        .dt-wrapper { display: inline-flex; align-items: center; gap: 8px; cursor: pointer; background: rgba(255,255,255,0.05); border: 1px solid var(--card-border); border-radius: 8px; padding: 6px 12px; transition: var(--transition); }
+        .dt-wrapper:hover { border-color: rgba(255,255,255,0.3); box-shadow: 0 2px 4px rgba(0,0,0,0.1);}
         .dt-display-text { font-size: 10.5px; font-weight: 700; color: var(--text-dark);}
         
-        .dt-popup { display: none; position: absolute; top: calc(100% + 8px); right: 0; background: #ffffff; border: 1px solid var(--card-border); border-radius: 12px; box-shadow: 0 15px 40px rgba(15, 23, 42, 0.12); z-index: 100; width: 250px; flex-direction: column; overflow: hidden; animation: slideUpFade 0.2s ease forwards;}
+        .dt-popup { display: none; position: absolute; top: calc(100% + 8px); right: 0; z-index: 100; width: 250px; flex-direction: column; overflow: hidden; animation: slideUpFade 0.2s ease forwards;}
         .dt-popup.show { display: flex; }
         .dt-calendar-sec { padding: 14px; border-bottom: 1px solid var(--card-border); }
         .dt-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; font-size: 11px; font-weight: 800; color: var(--text-dark);}
         .dt-nav { display: flex; gap: 8px; }
         .dt-nav i { cursor: pointer; color: var(--text-gray); width: 14px; transition: var(--transition);}
-        .dt-nav i:hover { color: var(--text-dark); }
+        .dt-nav i:hover { color: #ffffff; }
         .dt-weekdays { display: grid; grid-template-columns: repeat(7, 1fr); text-align: center; font-size: 8px; color: var(--text-gray); margin-bottom: 8px; font-weight: 800; text-transform: uppercase;}
         .dt-days { display: grid; grid-template-columns: repeat(7, 1fr); gap: 4px; text-align: center; font-size: 10px; font-weight: 600;}
         .dt-day { padding: 6px 0; cursor: pointer; border-radius: 6px; transition: var(--transition); color: var(--text-dark); }
-        .dt-day:hover { background: var(--input-bg); }
-        .dt-day.active { background: var(--btn-dark); color: #ffffff; box-shadow: 0 2px 6px rgba(15,23,42,0.2);}
-        .dt-day.other-month { color: #cbd5e1; }
+        .dt-day:hover { background: rgba(255,255,255,0.1); }
+        .dt-day.active { background: var(--accent); color: #ffffff; box-shadow: 0 2px 6px rgba(0,0,0,0.3);}
+        .dt-day.other-month { color: #475569; }
         
-        .dt-time-sec { padding: 12px 14px; background: var(--input-bg); display: flex; align-items: center; justify-content: space-between;}
-        .time-inputs { display: flex; align-items: center; background: #ffffff; border-radius: 6px; border: 1px solid var(--card-border); padding: 4px 8px;}
+        .dt-time-sec { padding: 12px 14px; background: rgba(0,0,0,0.2); display: flex; align-items: center; justify-content: space-between;}
+        .time-inputs { display: flex; align-items: center; background: rgba(0,0,0,0.3); border-radius: 6px; border: 1px solid var(--card-border); padding: 4px 8px;}
         .time-input { background: transparent; border: none; color: var(--text-dark); font-size: 12px; font-weight: 800; width: 26px; text-align: center; outline: none; }
         .time-input::-webkit-outer-spin-button, .time-input::-webkit-inner-spin-button { -webkit-appearance: none; margin: 0; }
         .time-input[type=number] { -moz-appearance: textfield; }
-        .ampm-toggle { display: flex; background: #ffffff; border-radius: 6px; border: 1px solid var(--card-border); overflow: hidden; }
+        .ampm-toggle { display: flex; background: rgba(0,0,0,0.3); border-radius: 6px; border: 1px solid var(--card-border); overflow: hidden; }
         .ampm-btn { background: transparent; border: none; color: var(--text-gray); padding: 4px 8px; font-size: 9px; font-weight: 800; cursor: pointer; transition: var(--transition);}
-        .ampm-btn.active { background: var(--btn-dark); color: #ffffff; }
+        .ampm-btn.active { background: var(--btn-dark-hover); color: #ffffff; }
         .dt-actions { display: flex; justify-content: space-between; padding: 12px 14px; font-size: 9px; font-weight: 800; text-transform: uppercase;}
         .dt-actions span { cursor: pointer; color: var(--text-gray); transition: var(--transition);}
-        .dt-actions span:hover { color: var(--text-dark); }
+        .dt-actions span:hover { color: #ffffff; }
 
         /* --- MODALS --- */
-        .modal-overlay { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: rgba(15, 23, 42, 0.6); backdrop-filter: blur(4px); display: flex; align-items: center; justify-content: center; z-index: 1000; opacity: 0; pointer-events: none; transition: var(--transition);}
+        .modal-overlay { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: rgba(0, 0, 0, 0.7); backdrop-filter: blur(4px); display: flex; align-items: center; justify-content: center; z-index: 1000; opacity: 0; pointer-events: none; transition: var(--transition);}
         .modal-overlay.show { opacity: 1; pointer-events: auto; }
-        .modal-card { background: #ffffff; border-radius: 16px; padding: 24px; width: 380px; max-width: 90%; transform: translateY(20px) scale(0.95); transition: var(--transition); box-shadow: 0 20px 40px rgba(0,0,0,0.15);}
+        .modal-card { width: 380px; max-width: 90%; transform: translateY(20px) scale(0.95); transition: var(--transition); }
         .modal-overlay.show .modal-card { transform: translateY(0) scale(1); }
         .modal-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 16px;}
         .modal-item { display: flex; flex-direction: column; gap: 4px; }
@@ -293,7 +314,7 @@
 
     <div id="saveModal" class="modal-overlay">
         <div class="modal-card" style="text-align: center; width: 320px;">
-            <div style="width: 48px; height: 48px; background: var(--input-bg); border-radius: 12px; display: flex; align-items: center; justify-content: center; margin: 0 auto 16px auto; border: 1px solid var(--card-border);">
+            <div style="width: 48px; height: 48px; background: rgba(255,255,255,0.05); border-radius: 12px; display: flex; align-items: center; justify-content: center; margin: 0 auto 16px auto; border: 1px solid var(--card-border);">
                 <i data-lucide="save" style="color: var(--text-dark); width: 22px; height: 22px;"></i>
             </div>
             <h3 style="margin-bottom: 8px; font-size: 15px; font-weight: 800; color: var(--text-dark); letter-spacing: -0.3px;">Confirm Data Entry</h3>
@@ -312,7 +333,7 @@
                     <h3 id="modalLguName" style="font-size: 18px; font-weight: 800; color: var(--text-dark); letter-spacing: -0.3px;">LGU Name</h3>
                     <p id="modalLguTimestamp" style="font-size: 10px; color: var(--text-gray); font-weight: 700; margin-top: 4px;">As of: --</p>
                 </div>
-                <button class="btn" style="border:none; padding:6px; background:var(--input-bg); border-radius:8px;" onclick="closeLguModal()"><i data-lucide="x" style="width:16px; height:16px; color:var(--text-dark);"></i></button>
+                <button class="btn" style="border:none; padding:6px; background:rgba(255,255,255,0.05); border-radius:8px;" onclick="closeLguModal()"><i data-lucide="x" style="width:16px; height:16px; color:var(--text-dark);"></i></button>
             </div>
             <div id="lguModalContent"></div>
         </div>
@@ -350,7 +371,7 @@
                     <div class="main-report">
                         <div class="dashboard-content-grid">
                             
-                            <div class="panel-card" style="margin-bottom: 0; border: none; padding: 0; background: transparent; cursor: default;">
+                            <div class="panel-card" style="margin-bottom: 0; border: none; padding: 0; background: transparent; backdrop-filter: none; box-shadow: none; cursor: default;">
                                 <div class="panel-card" style="margin-bottom: 16px;">
                                     <h3 style="font-size: 11px; font-weight: 800; color: var(--text-dark); margin-bottom: 4px; text-transform: uppercase;">LDRRMCs REPORTING STATUS OVERVIEW</h3>
                                     <p class="table-subtitle">"Click on any LGU to open and review its full situational report details."</p>
@@ -399,14 +420,14 @@
 
                             <div class="sitrep-panel" style="margin-bottom: 0;">
                                 <div style="padding: 24px;">
-                                    <div class="header" style="margin-bottom: 20px; padding-bottom: 16px; border-bottom: 1px solid var(--card-border); background: transparent; backdrop-filter: none; border: none; box-shadow: none;">
+                                    <div class="header" style="margin-bottom: 20px; padding-bottom: 16px; border-bottom: 1px solid rgba(255,255,255,0.1); background: transparent; backdrop-filter: none; border-radius: 0;">
                                         <div class="header-title" style="margin-bottom: -5px;">
-                                            <h2 style="font-size: 14px; font-weight: 800; color: var(--text-dark); letter-spacing: -0.2px; display: flex; align-items: center; gap: 8px;">
+                                            <h2 style="font-size: 14px; font-weight: 800; color: var(--text-dark); letter-spacing: -0.2px; display: flex; align-items: center; gap: 8px; text-shadow: none;">
                                                 <i data-lucide="file-bar-chart" style="color: var(--accent); width: 18px; height: 18px;"></i> SITREP & ADVISORY REPORT
                                             </h2>
                                         </div>
                                         <div class="header-actions">
-                                            <div class="last-updated">Status: <span id="generatedTimestamp">Initializing Database...</span></div>
+                                            <div class="last-updated" style="text-shadow: none;">Status: <span id="generatedTimestamp" style="text-shadow: none;">Initializing Database...</span></div>
                                         </div>
                                     </div>
                                                                                                                                                                                                             
@@ -556,16 +577,16 @@
                                             <button type="button" class="btn btn-sm" style="padding: 4px 8px; font-size: 8px;" onclick="toggleInputMode('Ld_B')"><i data-lucide="arrow-left-right" style="width:12px; height:12px;"></i> SWITCH TO TABLE</button>
                                         </div>
                                         <div id="wrapTextLd_B"><textarea id="ld_B" class="form-control uppercase-input" rows="1"></textarea></div>
-                                        <div class="table-input-wrapper" id="wrapTableLd_B" style="display:none; border: 1px solid var(--card-border); border-radius: 8px; overflow: hidden; background: #fff;">
+                                        <div class="table-input-wrapper" id="wrapTableLd_B" style="display:none;">
                                             <table style="width:100%; border-collapse: collapse;" id="tblLd_B">
-                                                <thead style="background: var(--input-bg);">
-                                                    <tr><th style="padding: 8px; border-bottom: 1px solid var(--card-border); border-right: 1px solid var(--card-border); width: 25%;">AREA</th><th style="padding: 8px; border-bottom: 1px solid var(--card-border); border-right: 1px solid var(--card-border); width: 45%;">DETAILS</th><th style="padding: 8px; border-bottom: 1px solid var(--card-border);">REMARKS</th><th style="padding: 8px; border-bottom: 1px solid var(--card-border); width: 30px;"></th></tr>
+                                                <thead>
+                                                    <tr><th style="width: 25%;">AREA</th><th style="width: 45%;">DETAILS</th><th>REMARKS</th><th style="width: 30px;"></th></tr>
                                                 </thead>
                                                 <tbody>
-                                                    <tr><td style="padding: 0; border-bottom: 1px solid var(--card-border); border-right: 1px solid var(--card-border);"><input type="text" class="tbl-input uppercase-input"></td><td style="padding: 0; border-bottom: 1px solid var(--card-border); border-right: 1px solid var(--card-border);"><input type="text" class="tbl-input uppercase-input"></td><td style="padding: 0; border-bottom: 1px solid var(--card-border);"><input type="text" class="tbl-input uppercase-input"></td><td style="padding: 4px; text-align: center; border-bottom: 1px solid var(--card-border);"><button type="button" class="btn btn-danger" style="padding: 4px; border-radius:6px;" onclick="this.closest('tr').remove()"><i data-lucide="trash-2" style="width:12px; height:12px;"></i></button></td></tr>
+                                                    <tr><td><input type="text" class="tbl-input uppercase-input"></td><td><input type="text" class="tbl-input uppercase-input"></td><td><input type="text" class="tbl-input uppercase-input"></td><td style="padding: 4px; text-align: center;"><button type="button" class="btn btn-danger" style="padding: 4px; border-radius:6px;" onclick="this.closest('tr').remove()"><i data-lucide="trash-2" style="width:12px; height:12px;"></i></button></td></tr>
                                                 </tbody>
                                             </table>
-                                            <div style="padding: 8px; background: var(--input-bg); border-top: 1px solid var(--card-border);"><button type="button" class="btn btn-sm" onclick="addTableRow('tblLd_B')">+ Add Row</button></div>
+                                            <div style="padding: 8px; background: rgba(0,0,0,0.3); border-top: 1px solid var(--card-border);"><button type="button" class="btn btn-sm" onclick="addTableRow('tblLd_B')">+ Add Row</button></div>
                                         </div>
                                     </div>
 
@@ -575,16 +596,16 @@
                                             <button type="button" class="btn btn-sm" style="padding: 4px 8px; font-size: 8px;" onclick="toggleInputMode('Ld_C')"><i data-lucide="arrow-left-right" style="width:12px; height:12px;"></i> SWITCH TO TABLE</button>
                                         </div>
                                         <div id="wrapTextLd_C"><textarea id="ld_C" class="form-control uppercase-input" rows="1"></textarea></div>
-                                        <div class="table-input-wrapper" id="wrapTableLd_C" style="display:none; border: 1px solid var(--card-border); border-radius: 8px; overflow: hidden; background: #fff;">
+                                        <div class="table-input-wrapper" id="wrapTableLd_C" style="display:none;">
                                             <table style="width:100%; border-collapse: collapse;" id="tblLd_C">
-                                                <thead style="background: var(--input-bg);">
-                                                    <tr><th style="padding: 8px; border-bottom: 1px solid var(--card-border); border-right: 1px solid var(--card-border); width: 25%;">AREA</th><th style="padding: 8px; border-bottom: 1px solid var(--card-border); border-right: 1px solid var(--card-border); width: 45%;">DETAILS</th><th style="padding: 8px; border-bottom: 1px solid var(--card-border);">REMARKS</th><th style="padding: 8px; border-bottom: 1px solid var(--card-border); width: 30px;"></th></tr>
+                                                <thead>
+                                                    <tr><th style="width: 25%;">AREA</th><th style="width: 45%;">DETAILS</th><th>REMARKS</th><th style="width: 30px;"></th></tr>
                                                 </thead>
                                                 <tbody>
-                                                    <tr><td style="padding: 0; border-bottom: 1px solid var(--card-border); border-right: 1px solid var(--card-border);"><input type="text" class="tbl-input uppercase-input"></td><td style="padding: 0; border-bottom: 1px solid var(--card-border); border-right: 1px solid var(--card-border);"><input type="text" class="tbl-input uppercase-input"></td><td style="padding: 0; border-bottom: 1px solid var(--card-border);"><input type="text" class="tbl-input uppercase-input"></td><td style="padding: 4px; text-align: center; border-bottom: 1px solid var(--card-border);"><button type="button" class="btn btn-danger" style="padding: 4px; border-radius:6px;" onclick="this.closest('tr').remove()"><i data-lucide="trash-2" style="width:12px; height:12px;"></i></button></td></tr>
+                                                    <tr><td><input type="text" class="tbl-input uppercase-input"></td><td><input type="text" class="tbl-input uppercase-input"></td><td><input type="text" class="tbl-input uppercase-input"></td><td style="padding: 4px; text-align: center;"><button type="button" class="btn btn-danger" style="padding: 4px; border-radius:6px;" onclick="this.closest('tr').remove()"><i data-lucide="trash-2" style="width:12px; height:12px;"></i></button></td></tr>
                                                 </tbody>
                                             </table>
-                                            <div style="padding: 8px; background: var(--input-bg); border-top: 1px solid var(--card-border);"><button type="button" class="btn btn-sm" onclick="addTableRow('tblLd_C')">+ Add Row</button></div>
+                                            <div style="padding: 8px; background: rgba(0,0,0,0.3); border-top: 1px solid var(--card-border);"><button type="button" class="btn btn-sm" onclick="addTableRow('tblLd_C')">+ Add Row</button></div>
                                         </div>
                                     </div>
 
@@ -594,16 +615,16 @@
                                             <button type="button" class="btn btn-sm" style="padding: 4px 8px; font-size: 8px;" onclick="toggleInputMode('Ld_D')"><i data-lucide="arrow-left-right" style="width:12px; height:12px;"></i> SWITCH TO TABLE</button>
                                         </div>
                                         <div id="wrapTextLd_D"><textarea id="ld_D" class="form-control uppercase-input" rows="1"></textarea></div>
-                                        <div class="table-input-wrapper" id="wrapTableLd_D" style="display:none; border: 1px solid var(--card-border); border-radius: 8px; overflow: hidden; background: #fff;">
+                                        <div class="table-input-wrapper" id="wrapTableLd_D" style="display:none;">
                                             <table style="width:100%; border-collapse: collapse;" id="tblLd_D">
-                                                <thead style="background: var(--input-bg);">
-                                                    <tr><th style="padding: 8px; border-bottom: 1px solid var(--card-border); border-right: 1px solid var(--card-border); width: 25%;">AREA</th><th style="padding: 8px; border-bottom: 1px solid var(--card-border); border-right: 1px solid var(--card-border); width: 45%;">DETAILS</th><th style="padding: 8px; border-bottom: 1px solid var(--card-border);">REMARKS</th><th style="padding: 8px; border-bottom: 1px solid var(--card-border); width: 30px;"></th></tr>
+                                                <thead>
+                                                    <tr><th style="width: 25%;">AREA</th><th style="width: 45%;">DETAILS</th><th>REMARKS</th><th style="width: 30px;"></th></tr>
                                                 </thead>
                                                 <tbody>
-                                                    <tr><td style="padding: 0; border-bottom: 1px solid var(--card-border); border-right: 1px solid var(--card-border);"><input type="text" class="tbl-input uppercase-input"></td><td style="padding: 0; border-bottom: 1px solid var(--card-border); border-right: 1px solid var(--card-border);"><input type="text" class="tbl-input uppercase-input"></td><td style="padding: 0; border-bottom: 1px solid var(--card-border);"><input type="text" class="tbl-input uppercase-input"></td><td style="padding: 4px; text-align: center; border-bottom: 1px solid var(--card-border);"><button type="button" class="btn btn-danger" style="padding: 4px; border-radius:6px;" onclick="this.closest('tr').remove()"><i data-lucide="trash-2" style="width:12px; height:12px;"></i></button></td></tr>
+                                                    <tr><td><input type="text" class="tbl-input uppercase-input"></td><td><input type="text" class="tbl-input uppercase-input"></td><td><input type="text" class="tbl-input uppercase-input"></td><td style="padding: 4px; text-align: center;"><button type="button" class="btn btn-danger" style="padding: 4px; border-radius:6px;" onclick="this.closest('tr').remove()"><i data-lucide="trash-2" style="width:12px; height:12px;"></i></button></td></tr>
                                                 </tbody>
                                             </table>
-                                            <div style="padding: 8px; background: var(--input-bg); border-top: 1px solid var(--card-border);"><button type="button" class="btn btn-sm" onclick="addTableRow('tblLd_D')">+ Add Row</button></div>
+                                            <div style="padding: 8px; background: rgba(0,0,0,0.3); border-top: 1px solid var(--card-border);"><button type="button" class="btn btn-sm" onclick="addTableRow('tblLd_D')">+ Add Row</button></div>
                                         </div>
                                     </div>
 
@@ -613,16 +634,16 @@
                                             <button type="button" class="btn btn-sm" style="padding: 4px 8px; font-size: 8px;" onclick="toggleInputMode('Ld_E')"><i data-lucide="arrow-left-right" style="width:12px; height:12px;"></i> SWITCH TO TABLE</button>
                                         </div>
                                         <div id="wrapTextLd_E"><textarea id="ld_E" class="form-control uppercase-input" rows="1"></textarea></div>
-                                        <div class="table-input-wrapper" id="wrapTableLd_E" style="display:none; border: 1px solid var(--card-border); border-radius: 8px; overflow: hidden; background: #fff;">
+                                        <div class="table-input-wrapper" id="wrapTableLd_E" style="display:none;">
                                             <table style="width:100%; border-collapse: collapse;" id="tblLd_E">
-                                                <thead style="background: var(--input-bg);">
-                                                    <tr><th style="padding: 8px; border-bottom: 1px solid var(--card-border); border-right: 1px solid var(--card-border); width: 25%;">AREA</th><th style="padding: 8px; border-bottom: 1px solid var(--card-border); border-right: 1px solid var(--card-border); width: 45%;">DETAILS</th><th style="padding: 8px; border-bottom: 1px solid var(--card-border);">REMARKS</th><th style="padding: 8px; border-bottom: 1px solid var(--card-border); width: 30px;"></th></tr>
+                                                <thead>
+                                                    <tr><th style="width: 25%;">AREA</th><th style="width: 45%;">DETAILS</th><th>REMARKS</th><th style="width: 30px;"></th></tr>
                                                 </thead>
                                                 <tbody>
-                                                    <tr><td style="padding: 0; border-bottom: 1px solid var(--card-border); border-right: 1px solid var(--card-border);"><input type="text" class="tbl-input uppercase-input"></td><td style="padding: 0; border-bottom: 1px solid var(--card-border); border-right: 1px solid var(--card-border);"><input type="text" class="tbl-input uppercase-input"></td><td style="padding: 0; border-bottom: 1px solid var(--card-border);"><input type="text" class="tbl-input uppercase-input"></td><td style="padding: 4px; text-align: center; border-bottom: 1px solid var(--card-border);"><button type="button" class="btn btn-danger" style="padding: 4px; border-radius:6px;" onclick="this.closest('tr').remove()"><i data-lucide="trash-2" style="width:12px; height:12px;"></i></button></td></tr>
+                                                    <tr><td><input type="text" class="tbl-input uppercase-input"></td><td><input type="text" class="tbl-input uppercase-input"></td><td><input type="text" class="tbl-input uppercase-input"></td><td style="padding: 4px; text-align: center;"><button type="button" class="btn btn-danger" style="padding: 4px; border-radius:6px;" onclick="this.closest('tr').remove()"><i data-lucide="trash-2" style="width:12px; height:12px;"></i></button></td></tr>
                                                 </tbody>
                                             </table>
-                                            <div style="padding: 8px; background: var(--input-bg); border-top: 1px solid var(--card-border);"><button type="button" class="btn btn-sm" onclick="addTableRow('tblLd_E')">+ Add Row</button></div>
+                                            <div style="padding: 8px; background: rgba(0,0,0,0.3); border-top: 1px solid var(--card-border);"><button type="button" class="btn btn-sm" onclick="addTableRow('tblLd_E')">+ Add Row</button></div>
                                         </div>
                                     </div>
 
@@ -632,16 +653,16 @@
                                             <button type="button" class="btn btn-sm" style="padding: 4px 8px; font-size: 8px;" onclick="toggleInputMode('Ld_F')"><i data-lucide="arrow-left-right" style="width:12px; height:12px;"></i> SWITCH TO TABLE</button>
                                         </div>
                                         <div id="wrapTextLd_F"><textarea id="ld_F" class="form-control uppercase-input" rows="1"></textarea></div>
-                                        <div class="table-input-wrapper" id="wrapTableLd_F" style="display:none; border: 1px solid var(--card-border); border-radius: 8px; overflow: hidden; background: #fff;">
+                                        <div class="table-input-wrapper" id="wrapTableLd_F" style="display:none;">
                                             <table style="width:100%; border-collapse: collapse;" id="tblLd_F">
-                                                <thead style="background: var(--input-bg);">
-                                                    <tr><th style="padding: 8px; border-bottom: 1px solid var(--card-border); border-right: 1px solid var(--card-border); width: 25%;">AREA</th><th style="padding: 8px; border-bottom: 1px solid var(--card-border); border-right: 1px solid var(--card-border); width: 45%;">DETAILS</th><th style="padding: 8px; border-bottom: 1px solid var(--card-border);">REMARKS</th><th style="padding: 8px; border-bottom: 1px solid var(--card-border); width: 30px;"></th></tr>
+                                                <thead>
+                                                    <tr><th style="width: 25%;">AREA</th><th style="width: 45%;">DETAILS</th><th>REMARKS</th><th style="width: 30px;"></th></tr>
                                                 </thead>
                                                 <tbody>
-                                                    <tr><td style="padding: 0; border-bottom: 1px solid var(--card-border); border-right: 1px solid var(--card-border);"><input type="text" class="tbl-input uppercase-input"></td><td style="padding: 0; border-bottom: 1px solid var(--card-border); border-right: 1px solid var(--card-border);"><input type="text" class="tbl-input uppercase-input"></td><td style="padding: 0; border-bottom: 1px solid var(--card-border);"><input type="text" class="tbl-input uppercase-input"></td><td style="padding: 4px; text-align: center; border-bottom: 1px solid var(--card-border);"><button type="button" class="btn btn-danger" style="padding: 4px; border-radius:6px;" onclick="this.closest('tr').remove()"><i data-lucide="trash-2" style="width:12px; height:12px;"></i></button></td></tr>
+                                                    <tr><td><input type="text" class="tbl-input uppercase-input"></td><td><input type="text" class="tbl-input uppercase-input"></td><td><input type="text" class="tbl-input uppercase-input"></td><td style="padding: 4px; text-align: center;"><button type="button" class="btn btn-danger" style="padding: 4px; border-radius:6px;" onclick="this.closest('tr').remove()"><i data-lucide="trash-2" style="width:12px; height:12px;"></i></button></td></tr>
                                                 </tbody>
                                             </table>
-                                            <div style="padding: 8px; background: var(--input-bg); border-top: 1px solid var(--card-border);"><button type="button" class="btn btn-sm" onclick="addTableRow('tblLd_F')">+ Add Row</button></div>
+                                            <div style="padding: 8px; background: rgba(0,0,0,0.3); border-top: 1px solid var(--card-border);"><button type="button" class="btn btn-sm" onclick="addTableRow('tblLd_F')">+ Add Row</button></div>
                                         </div>
                                     </div>
                                 </div>
@@ -653,16 +674,16 @@
                                             <button type="button" class="btn btn-sm" style="padding: 4px 8px; font-size: 8px;" onclick="toggleInputMode('Ld_G')"><i data-lucide="arrow-left-right" style="width:12px; height:12px;"></i> SWITCH TO TABLE</button>
                                         </div>
                                         <div id="wrapTextLd_G"><textarea id="ld_G" class="form-control uppercase-input" rows="1"></textarea></div>
-                                        <div class="table-input-wrapper" id="wrapTableLd_G" style="display:none; border: 1px solid var(--card-border); border-radius: 8px; overflow: hidden; background: #fff;">
+                                        <div class="table-input-wrapper" id="wrapTableLd_G" style="display:none;">
                                             <table style="width:100%; border-collapse: collapse;" id="tblLd_G">
-                                                <thead style="background: var(--input-bg);">
-                                                    <tr><th style="padding: 8px; border-bottom: 1px solid var(--card-border); border-right: 1px solid var(--card-border); width: 25%;">AREA</th><th style="padding: 8px; border-bottom: 1px solid var(--card-border); border-right: 1px solid var(--card-border); width: 45%;">DETAILS</th><th style="padding: 8px; border-bottom: 1px solid var(--card-border);">REMARKS</th><th style="padding: 8px; border-bottom: 1px solid var(--card-border); width: 30px;"></th></tr>
+                                                <thead>
+                                                    <tr><th style="width: 25%;">AREA</th><th style="width: 45%;">DETAILS</th><th>REMARKS</th><th style="width: 30px;"></th></tr>
                                                 </thead>
                                                 <tbody>
-                                                    <tr><td style="padding: 0; border-bottom: 1px solid var(--card-border); border-right: 1px solid var(--card-border);"><input type="text" class="tbl-input uppercase-input"></td><td style="padding: 0; border-bottom: 1px solid var(--card-border); border-right: 1px solid var(--card-border);"><input type="text" class="tbl-input uppercase-input"></td><td style="padding: 0; border-bottom: 1px solid var(--card-border);"><input type="text" class="tbl-input uppercase-input"></td><td style="padding: 4px; text-align: center; border-bottom: 1px solid var(--card-border);"><button type="button" class="btn btn-danger" style="padding: 4px; border-radius:6px;" onclick="this.closest('tr').remove()"><i data-lucide="trash-2" style="width:12px; height:12px;"></i></button></td></tr>
+                                                    <tr><td><input type="text" class="tbl-input uppercase-input"></td><td><input type="text" class="tbl-input uppercase-input"></td><td><input type="text" class="tbl-input uppercase-input"></td><td style="padding: 4px; text-align: center;"><button type="button" class="btn btn-danger" style="padding: 4px; border-radius:6px;" onclick="this.closest('tr').remove()"><i data-lucide="trash-2" style="width:12px; height:12px;"></i></button></td></tr>
                                                 </tbody>
                                             </table>
-                                            <div style="padding: 8px; background: var(--input-bg); border-top: 1px solid var(--card-border);"><button type="button" class="btn btn-sm" onclick="addTableRow('tblLd_G')">+ Add Row</button></div>
+                                            <div style="padding: 8px; background: rgba(0,0,0,0.3); border-top: 1px solid var(--card-border);"><button type="button" class="btn btn-sm" onclick="addTableRow('tblLd_G')">+ Add Row</button></div>
                                         </div>
                                     </div>
 
@@ -672,16 +693,16 @@
                                             <button type="button" class="btn btn-sm" style="padding: 4px 8px; font-size: 8px;" onclick="toggleInputMode('Ld_H')"><i data-lucide="arrow-left-right" style="width:12px; height:12px;"></i> SWITCH TO TABLE</button>
                                         </div>
                                         <div id="wrapTextLd_H"><textarea id="ld_H" class="form-control uppercase-input" rows="1"></textarea></div>
-                                        <div class="table-input-wrapper" id="wrapTableLd_H" style="display:none; border: 1px solid var(--card-border); border-radius: 8px; overflow: hidden; background: #fff;">
+                                        <div class="table-input-wrapper" id="wrapTableLd_H" style="display:none;">
                                             <table style="width:100%; border-collapse: collapse;" id="tblLd_H">
-                                                <thead style="background: var(--input-bg);">
-                                                    <tr><th style="padding: 8px; border-bottom: 1px solid var(--card-border); border-right: 1px solid var(--card-border); width: 25%;">AREA</th><th style="padding: 8px; border-bottom: 1px solid var(--card-border); border-right: 1px solid var(--card-border); width: 45%;">DETAILS</th><th style="padding: 8px; border-bottom: 1px solid var(--card-border);">REMARKS</th><th style="padding: 8px; border-bottom: 1px solid var(--card-border); width: 30px;"></th></tr>
+                                                <thead>
+                                                    <tr><th style="width: 25%;">AREA</th><th style="width: 45%;">DETAILS</th><th>REMARKS</th><th style="width: 30px;"></th></tr>
                                                 </thead>
                                                 <tbody>
-                                                    <tr><td style="padding: 0; border-bottom: 1px solid var(--card-border); border-right: 1px solid var(--card-border);"><input type="text" class="tbl-input uppercase-input"></td><td style="padding: 0; border-bottom: 1px solid var(--card-border); border-right: 1px solid var(--card-border);"><input type="text" class="tbl-input uppercase-input"></td><td style="padding: 0; border-bottom: 1px solid var(--card-border);"><input type="text" class="tbl-input uppercase-input"></td><td style="padding: 4px; text-align: center; border-bottom: 1px solid var(--card-border);"><button type="button" class="btn btn-danger" style="padding: 4px; border-radius:6px;" onclick="this.closest('tr').remove()"><i data-lucide="trash-2" style="width:12px; height:12px;"></i></button></td></tr>
+                                                    <tr><td><input type="text" class="tbl-input uppercase-input"></td><td><input type="text" class="tbl-input uppercase-input"></td><td><input type="text" class="tbl-input uppercase-input"></td><td style="padding: 4px; text-align: center;"><button type="button" class="btn btn-danger" style="padding: 4px; border-radius:6px;" onclick="this.closest('tr').remove()"><i data-lucide="trash-2" style="width:12px; height:12px;"></i></button></td></tr>
                                                 </tbody>
                                             </table>
-                                            <div style="padding: 8px; background: var(--input-bg); border-top: 1px solid var(--card-border);"><button type="button" class="btn btn-sm" onclick="addTableRow('tblLd_H')">+ Add Row</button></div>
+                                            <div style="padding: 8px; background: rgba(0,0,0,0.3); border-top: 1px solid var(--card-border);"><button type="button" class="btn btn-sm" onclick="addTableRow('tblLd_H')">+ Add Row</button></div>
                                         </div>
                                     </div>
 
@@ -691,16 +712,16 @@
                                             <button type="button" class="btn btn-sm" style="padding: 4px 8px; font-size: 8px;" onclick="toggleInputMode('Ld_I')"><i data-lucide="arrow-left-right" style="width:12px; height:12px;"></i> SWITCH TO TABLE</button>
                                         </div>
                                         <div id="wrapTextLd_I"><textarea id="ld_I" class="form-control uppercase-input" rows="1"></textarea></div>
-                                        <div class="table-input-wrapper" id="wrapTableLd_I" style="display:none; border: 1px solid var(--card-border); border-radius: 8px; overflow: hidden; background: #fff;">
+                                        <div class="table-input-wrapper" id="wrapTableLd_I" style="display:none;">
                                             <table style="width:100%; border-collapse: collapse;" id="tblLd_I">
-                                                <thead style="background: var(--input-bg);">
-                                                    <tr><th style="padding: 8px; border-bottom: 1px solid var(--card-border); border-right: 1px solid var(--card-border); width: 25%;">AREA</th><th style="padding: 8px; border-bottom: 1px solid var(--card-border); border-right: 1px solid var(--card-border); width: 45%;">DETAILS</th><th style="padding: 8px; border-bottom: 1px solid var(--card-border);">REMARKS</th><th style="padding: 8px; border-bottom: 1px solid var(--card-border); width: 30px;"></th></tr>
+                                                <thead>
+                                                    <tr><th style="width: 25%;">AREA</th><th style="width: 45%;">DETAILS</th><th>REMARKS</th><th style="width: 30px;"></th></tr>
                                                 </thead>
                                                 <tbody>
-                                                    <tr><td style="padding: 0; border-bottom: 1px solid var(--card-border); border-right: 1px solid var(--card-border);"><input type="text" class="tbl-input uppercase-input"></td><td style="padding: 0; border-bottom: 1px solid var(--card-border); border-right: 1px solid var(--card-border);"><input type="text" class="tbl-input uppercase-input"></td><td style="padding: 0; border-bottom: 1px solid var(--card-border);"><input type="text" class="tbl-input uppercase-input"></td><td style="padding: 4px; text-align: center; border-bottom: 1px solid var(--card-border);"><button type="button" class="btn btn-danger" style="padding: 4px; border-radius:6px;" onclick="this.closest('tr').remove()"><i data-lucide="trash-2" style="width:12px; height:12px;"></i></button></td></tr>
+                                                    <tr><td><input type="text" class="tbl-input uppercase-input"></td><td><input type="text" class="tbl-input uppercase-input"></td><td><input type="text" class="tbl-input uppercase-input"></td><td style="padding: 4px; text-align: center;"><button type="button" class="btn btn-danger" style="padding: 4px; border-radius:6px;" onclick="this.closest('tr').remove()"><i data-lucide="trash-2" style="width:12px; height:12px;"></i></button></td></tr>
                                                 </tbody>
                                             </table>
-                                            <div style="padding: 8px; background: var(--input-bg); border-top: 1px solid var(--card-border);"><button type="button" class="btn btn-sm" onclick="addTableRow('tblLd_I')">+ Add Row</button></div>
+                                            <div style="padding: 8px; background: rgba(0,0,0,0.3); border-top: 1px solid var(--card-border);"><button type="button" class="btn btn-sm" onclick="addTableRow('tblLd_I')">+ Add Row</button></div>
                                         </div>
                                     </div>
 
@@ -710,16 +731,16 @@
                                             <button type="button" class="btn btn-sm" style="padding: 4px 8px; font-size: 8px;" onclick="toggleInputMode('Ld_J')"><i data-lucide="arrow-left-right" style="width:12px; height:12px;"></i> SWITCH TO TABLE</button>
                                         </div>
                                         <div id="wrapTextLd_J"><textarea id="ld_J" class="form-control uppercase-input" rows="1"></textarea></div>
-                                        <div class="table-input-wrapper" id="wrapTableLd_J" style="display:none; border: 1px solid var(--card-border); border-radius: 8px; overflow: hidden; background: #fff;">
+                                        <div class="table-input-wrapper" id="wrapTableLd_J" style="display:none;">
                                             <table style="width:100%; border-collapse: collapse;" id="tblLd_J">
-                                                <thead style="background: var(--input-bg);">
-                                                    <tr><th style="padding: 8px; border-bottom: 1px solid var(--card-border); border-right: 1px solid var(--card-border); width: 25%;">AREA</th><th style="padding: 8px; border-bottom: 1px solid var(--card-border); border-right: 1px solid var(--card-border); width: 45%;">DETAILS</th><th style="padding: 8px; border-bottom: 1px solid var(--card-border);">REMARKS</th><th style="padding: 8px; border-bottom: 1px solid var(--card-border); width: 30px;"></th></tr>
+                                                <thead>
+                                                    <tr><th style="width: 25%;">AREA</th><th style="width: 45%;">DETAILS</th><th>REMARKS</th><th style="width: 30px;"></th></tr>
                                                 </thead>
                                                 <tbody>
-                                                    <tr><td style="padding: 0; border-bottom: 1px solid var(--card-border); border-right: 1px solid var(--card-border);"><input type="text" class="tbl-input uppercase-input"></td><td style="padding: 0; border-bottom: 1px solid var(--card-border); border-right: 1px solid var(--card-border);"><input type="text" class="tbl-input uppercase-input"></td><td style="padding: 0; border-bottom: 1px solid var(--card-border);"><input type="text" class="tbl-input uppercase-input"></td><td style="padding: 4px; text-align: center; border-bottom: 1px solid var(--card-border);"><button type="button" class="btn btn-danger" style="padding: 4px; border-radius:6px;" onclick="this.closest('tr').remove()"><i data-lucide="trash-2" style="width:12px; height:12px;"></i></button></td></tr>
+                                                    <tr><td><input type="text" class="tbl-input uppercase-input"></td><td><input type="text" class="tbl-input uppercase-input"></td><td><input type="text" class="tbl-input uppercase-input"></td><td style="padding: 4px; text-align: center;"><button type="button" class="btn btn-danger" style="padding: 4px; border-radius:6px;" onclick="this.closest('tr').remove()"><i data-lucide="trash-2" style="width:12px; height:12px;"></i></button></td></tr>
                                                 </tbody>
                                             </table>
-                                            <div style="padding: 8px; background: var(--input-bg); border-top: 1px solid var(--card-border);"><button type="button" class="btn btn-sm" onclick="addTableRow('tblLd_J')">+ Add Row</button></div>
+                                            <div style="padding: 8px; background: rgba(0,0,0,0.3); border-top: 1px solid var(--card-border);"><button type="button" class="btn btn-sm" onclick="addTableRow('tblLd_J')">+ Add Row</button></div>
                                         </div>
                                     </div>
 
@@ -729,16 +750,16 @@
                                             <button type="button" class="btn btn-sm" style="padding: 4px 8px; font-size: 8px;" onclick="toggleInputMode('Ld_K')"><i data-lucide="arrow-left-right" style="width:12px; height:12px;"></i> SWITCH TO TABLE</button>
                                         </div>
                                         <div id="wrapTextLd_K"><textarea id="ld_K" class="form-control uppercase-input" rows="1"></textarea></div>
-                                        <div class="table-input-wrapper" id="wrapTableLd_K" style="display:none; border: 1px solid var(--card-border); border-radius: 8px; overflow: hidden; background: #fff;">
+                                        <div class="table-input-wrapper" id="wrapTableLd_K" style="display:none;">
                                             <table style="width:100%; border-collapse: collapse;" id="tblLd_K">
-                                                <thead style="background: var(--input-bg);">
-                                                    <tr><th style="padding: 8px; border-bottom: 1px solid var(--card-border); border-right: 1px solid var(--card-border); width: 25%;">AREA</th><th style="padding: 8px; border-bottom: 1px solid var(--card-border); border-right: 1px solid var(--card-border); width: 45%;">DETAILS</th><th style="padding: 8px; border-bottom: 1px solid var(--card-border);">REMARKS</th><th style="padding: 8px; border-bottom: 1px solid var(--card-border); width: 30px;"></th></tr>
+                                                <thead>
+                                                    <tr><th style="width: 25%;">AREA</th><th style="width: 45%;">DETAILS</th><th>REMARKS</th><th style="width: 30px;"></th></tr>
                                                 </thead>
                                                 <tbody>
-                                                    <tr><td style="padding: 0; border-bottom: 1px solid var(--card-border); border-right: 1px solid var(--card-border);"><input type="text" class="tbl-input uppercase-input"></td><td style="padding: 0; border-bottom: 1px solid var(--card-border); border-right: 1px solid var(--card-border);"><input type="text" class="tbl-input uppercase-input"></td><td style="padding: 0; border-bottom: 1px solid var(--card-border);"><input type="text" class="tbl-input uppercase-input"></td><td style="padding: 4px; text-align: center; border-bottom: 1px solid var(--card-border);"><button type="button" class="btn btn-danger" style="padding: 4px; border-radius:6px;" onclick="this.closest('tr').remove()"><i data-lucide="trash-2" style="width:12px; height:12px;"></i></button></td></tr>
+                                                    <tr><td><input type="text" class="tbl-input uppercase-input"></td><td><input type="text" class="tbl-input uppercase-input"></td><td><input type="text" class="tbl-input uppercase-input"></td><td style="padding: 4px; text-align: center;"><button type="button" class="btn btn-danger" style="padding: 4px; border-radius:6px;" onclick="this.closest('tr').remove()"><i data-lucide="trash-2" style="width:12px; height:12px;"></i></button></td></tr>
                                                 </tbody>
                                             </table>
-                                            <div style="padding: 8px; background: var(--input-bg); border-top: 1px solid var(--card-border);"><button type="button" class="btn btn-sm" onclick="addTableRow('tblLd_K')">+ Add Row</button></div>
+                                            <div style="padding: 8px; background: rgba(0,0,0,0.3); border-top: 1px solid var(--card-border);"><button type="button" class="btn btn-sm" onclick="addTableRow('tblLd_K')">+ Add Row</button></div>
                                         </div>
                                     </div>
                                 </div>
@@ -787,28 +808,28 @@
                             <textarea id="inpInc" class="form-control" rows="3"></textarea>
                             <input type="text" id="srcInc" class="source-input" placeholder="Source of information (Optional)...">
                         </div>
-                        <div class="table-input-wrapper" id="wrapTableInc" style="display:none; border: 1px solid var(--card-border); border-radius: 8px; overflow: hidden; background: #fff;">
+                        <div class="table-input-wrapper" id="wrapTableInc" style="display:none;">
                             <table style="width:100%; border-collapse: collapse;" id="tblInc">
-                                <thead style="background: var(--input-bg);">
+                                <thead>
                                     <tr>
-                                        <th style="padding: 8px; border-bottom: 1px solid var(--card-border); border-right: 1px solid var(--card-border); width: 25%;">AREA/LGU</th>
-                                        <th style="padding: 8px; border-bottom: 1px solid var(--card-border); border-right: 1px solid var(--card-border); width: 45%;">INCIDENT DETAILS</th>
-                                        <th style="padding: 8px; border-bottom: 1px solid var(--card-border);">REMARKS / ACTION</th>
-                                        <th style="padding: 8px; border-bottom: 1px solid var(--card-border); width: 30px;"></th>
+                                        <th style="width: 25%;">AREA/LGU</th>
+                                        <th style="width: 45%;">INCIDENT DETAILS</th>
+                                        <th>REMARKS / ACTION</th>
+                                        <th style="width: 30px;"></th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     <tr>
-                                        <td style="padding: 0; border-bottom: 1px solid var(--card-border); border-right: 1px solid var(--card-border);"><input type="text" class="tbl-input"></td>
-                                        <td style="padding: 0; border-bottom: 1px solid var(--card-border); border-right: 1px solid var(--card-border);"><input type="text" class="tbl-input"></td>
-                                        <td style="padding: 0; border-bottom: 1px solid var(--card-border);"><input type="text" class="tbl-input"></td>
-                                        <td style="padding: 4px; text-align: center; border-bottom: 1px solid var(--card-border);"><button type="button" class="btn btn-danger" style="padding: 4px; border-radius:6px;" onclick="this.closest('tr').remove()"><i data-lucide="trash-2" style="width:12px; height:12px;"></i></button></td>
+                                        <td><input type="text" class="tbl-input"></td>
+                                        <td><input type="text" class="tbl-input"></td>
+                                        <td><input type="text" class="tbl-input"></td>
+                                        <td style="padding: 4px; text-align: center;"><button type="button" class="btn btn-danger" style="padding: 4px; border-radius:6px;" onclick="this.closest('tr').remove()"><i data-lucide="trash-2" style="width:12px; height:12px;"></i></button></td>
                                     </tr>
                                 </tbody>
                             </table>
-                            <div style="padding: 8px; background: var(--input-bg); border-top: 1px solid var(--card-border);">
+                            <div style="padding: 8px; background: rgba(0,0,0,0.3); border-top: 1px solid var(--card-border);">
                                 <button type="button" class="btn btn-sm" onclick="addTableRow('tblInc')">+ Add Row</button>
-                                <input type="text" id="srcTblInc" class="source-input" placeholder="Source of information (Optional)..." style="margin-top: 8px; width: 100%; background: transparent; border: none; border-top: 1px dashed #cbd5e1; padding-top: 8px; font-size: 9px; outline: none;">
+                                <input type="text" id="srcTblInc" class="source-input" placeholder="Source of information (Optional)..." style="margin-top: 8px; width: 100%; background: transparent; border: none; border-top: 1px dashed rgba(255,255,255,0.1); padding-top: 8px; font-size: 9px; outline: none;">
                             </div>
                         </div>
                     </div>
@@ -822,28 +843,28 @@
                             <textarea id="inpWork" class="form-control" rows="2"></textarea>
                             <input type="text" id="srcWork" class="source-input" placeholder="Source of information (Optional)...">
                         </div>
-                        <div class="table-input-wrapper" id="wrapTableWork" style="display:none; border: 1px solid var(--card-border); border-radius: 8px; overflow: hidden; background: #fff;">
+                        <div class="table-input-wrapper" id="wrapTableWork" style="display:none;">
                             <table style="width:100%; border-collapse: collapse;" id="tblWork">
-                                <thead style="background: var(--input-bg);">
+                                <thead>
                                     <tr>
-                                        <th style="padding: 8px; border-bottom: 1px solid var(--card-border); border-right: 1px solid var(--card-border); width: 25%;">AREA/LGU</th>
-                                        <th style="padding: 8px; border-bottom: 1px solid var(--card-border); border-right: 1px solid var(--card-border); width: 45%;">LEVEL / AGENCY</th>
-                                        <th style="padding: 8px; border-bottom: 1px solid var(--card-border);">STATUS</th>
-                                        <th style="padding: 8px; border-bottom: 1px solid var(--card-border); width: 30px;"></th>
+                                        <th style="width: 25%;">AREA/LGU</th>
+                                        <th style="width: 45%;">LEVEL / AGENCY</th>
+                                        <th>STATUS</th>
+                                        <th style="width: 30px;"></th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     <tr>
-                                        <td style="padding: 0; border-bottom: 1px solid var(--card-border); border-right: 1px solid var(--card-border);"><input type="text" class="tbl-input"></td>
-                                        <td style="padding: 0; border-bottom: 1px solid var(--card-border); border-right: 1px solid var(--card-border);"><input type="text" class="tbl-input"></td>
-                                        <td style="padding: 0; border-bottom: 1px solid var(--card-border);"><input type="text" class="tbl-input"></td>
-                                        <td style="padding: 4px; text-align: center; border-bottom: 1px solid var(--card-border);"><button type="button" class="btn btn-danger" style="padding: 4px; border-radius:6px;" onclick="this.closest('tr').remove()"><i data-lucide="trash-2" style="width:12px; height:12px;"></i></button></td>
+                                        <td><input type="text" class="tbl-input"></td>
+                                        <td><input type="text" class="tbl-input"></td>
+                                        <td><input type="text" class="tbl-input"></td>
+                                        <td style="padding: 4px; text-align: center;"><button type="button" class="btn btn-danger" style="padding: 4px; border-radius:6px;" onclick="this.closest('tr').remove()"><i data-lucide="trash-2" style="width:12px; height:12px;"></i></button></td>
                                     </tr>
                                 </tbody>
                             </table>
-                            <div style="padding: 8px; background: var(--input-bg); border-top: 1px solid var(--card-border);">
+                            <div style="padding: 8px; background: rgba(0,0,0,0.3); border-top: 1px solid var(--card-border);">
                                 <button type="button" class="btn btn-sm" onclick="addTableRow('tblWork')">+ Add Row</button>
-                                <input type="text" id="srcTblWork" class="source-input" placeholder="Source of information (Optional)..." style="margin-top: 8px; width: 100%; background: transparent; border: none; border-top: 1px dashed #cbd5e1; padding-top: 8px; font-size: 9px; outline: none;">
+                                <input type="text" id="srcTblWork" class="source-input" placeholder="Source of information (Optional)..." style="margin-top: 8px; width: 100%; background: transparent; border: none; border-top: 1px dashed rgba(255,255,255,0.1); padding-top: 8px; font-size: 9px; outline: none;">
                             </div>
                         </div>
                     </div>
@@ -857,28 +878,28 @@
                             <textarea id="inpClass" class="form-control" rows="2"></textarea>
                             <input type="text" id="srcClass" class="source-input" placeholder="Source of information (Optional)...">
                         </div>
-                        <div class="table-input-wrapper" id="wrapTableClass" style="display:none; border: 1px solid var(--card-border); border-radius: 8px; overflow: hidden; background: #fff;">
+                        <div class="table-input-wrapper" id="wrapTableClass" style="display:none;">
                             <table style="width:100%; border-collapse: collapse;" id="tblClass">
-                                <thead style="background: var(--input-bg);">
+                                <thead>
                                     <tr>
-                                        <th style="padding: 8px; border-bottom: 1px solid var(--card-border); border-right: 1px solid var(--card-border); width: 25%;">AREA/LGU</th>
-                                        <th style="padding: 8px; border-bottom: 1px solid var(--card-border); border-right: 1px solid var(--card-border); width: 45%;">LEVEL / AGENCY</th>
-                                        <th style="padding: 8px; border-bottom: 1px solid var(--card-border);">STATUS</th>
-                                        <th style="padding: 8px; border-bottom: 1px solid var(--card-border); width: 30px;"></th>
+                                        <th style="width: 25%;">AREA/LGU</th>
+                                        <th style="width: 45%;">LEVEL / AGENCY</th>
+                                        <th>STATUS</th>
+                                        <th style="width: 30px;"></th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     <tr>
-                                        <td style="padding: 0; border-bottom: 1px solid var(--card-border); border-right: 1px solid var(--card-border);"><input type="text" class="tbl-input"></td>
-                                        <td style="padding: 0; border-bottom: 1px solid var(--card-border); border-right: 1px solid var(--card-border);"><input type="text" class="tbl-input"></td>
-                                        <td style="padding: 0; border-bottom: 1px solid var(--card-border);"><input type="text" class="tbl-input"></td>
-                                        <td style="padding: 4px; text-align: center; border-bottom: 1px solid var(--card-border);"><button type="button" class="btn btn-danger" style="padding: 4px; border-radius:6px;" onclick="this.closest('tr').remove()"><i data-lucide="trash-2" style="width:12px; height:12px;"></i></button></td>
+                                        <td><input type="text" class="tbl-input"></td>
+                                        <td><input type="text" class="tbl-input"></td>
+                                        <td><input type="text" class="tbl-input"></td>
+                                        <td style="padding: 4px; text-align: center;"><button type="button" class="btn btn-danger" style="padding: 4px; border-radius:6px;" onclick="this.closest('tr').remove()"><i data-lucide="trash-2" style="width:12px; height:12px;"></i></button></td>
                                     </tr>
                                 </tbody>
                             </table>
-                            <div style="padding: 8px; background: var(--input-bg); border-top: 1px solid var(--card-border);">
+                            <div style="padding: 8px; background: rgba(0,0,0,0.3); border-top: 1px solid var(--card-border);">
                                 <button type="button" class="btn btn-sm" onclick="addTableRow('tblClass')">+ Add Row</button>
-                                <input type="text" id="srcTblClass" class="source-input" placeholder="Source of information (Optional)..." style="margin-top: 8px; width: 100%; background: transparent; border: none; border-top: 1px dashed #cbd5e1; padding-top: 8px; font-size: 9px; outline: none;">
+                                <input type="text" id="srcTblClass" class="source-input" placeholder="Source of information (Optional)..." style="margin-top: 8px; width: 100%; background: transparent; border: none; border-top: 1px dashed rgba(255,255,255,0.1); padding-top: 8px; font-size: 9px; outline: none;">
                             </div>
                         </div>
                     </div>
@@ -892,28 +913,28 @@
                             <textarea id="inpCal" class="form-control" rows="2"></textarea>
                             <input type="text" id="srcCal" class="source-input" placeholder="Source of information (Optional)...">
                         </div>
-                        <div class="table-input-wrapper" id="wrapTableCal" style="display:none; border: 1px solid var(--card-border); border-radius: 8px; overflow: hidden; background: #fff;">
+                        <div class="table-input-wrapper" id="wrapTableCal" style="display:none;">
                             <table style="width:100%; border-collapse: collapse;" id="tblCal">
-                                <thead style="background: var(--input-bg);">
+                                <thead>
                                     <tr>
-                                        <th style="padding: 8px; border-bottom: 1px solid var(--card-border); border-right: 1px solid var(--card-border); width: 25%;">AREA/LGU</th>
-                                        <th style="padding: 8px; border-bottom: 1px solid var(--card-border); border-right: 1px solid var(--card-border); width: 45%;">RESOLUTION NO. / DETAILS</th>
-                                        <th style="padding: 8px; border-bottom: 1px solid var(--card-border);">STATUS / REMARKS</th>
-                                        <th style="padding: 8px; border-bottom: 1px solid var(--card-border); width: 30px;"></th>
+                                        <th style="width: 25%;">AREA/LGU</th>
+                                        <th style="width: 45%;">RESOLUTION NO. / DETAILS</th>
+                                        <th>STATUS / REMARKS</th>
+                                        <th style="width: 30px;"></th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     <tr>
-                                        <td style="padding: 0; border-bottom: 1px solid var(--card-border); border-right: 1px solid var(--card-border);"><input type="text" class="tbl-input"></td>
-                                        <td style="padding: 0; border-bottom: 1px solid var(--card-border); border-right: 1px solid var(--card-border);"><input type="text" class="tbl-input"></td>
-                                        <td style="padding: 0; border-bottom: 1px solid var(--card-border);"><input type="text" class="tbl-input"></td>
-                                        <td style="padding: 4px; text-align: center; border-bottom: 1px solid var(--card-border);"><button type="button" class="btn btn-danger" style="padding: 4px; border-radius:6px;" onclick="this.closest('tr').remove()"><i data-lucide="trash-2" style="width:12px; height:12px;"></i></button></td>
+                                        <td><input type="text" class="tbl-input"></td>
+                                        <td><input type="text" class="tbl-input"></td>
+                                        <td><input type="text" class="tbl-input"></td>
+                                        <td style="padding: 4px; text-align: center;"><button type="button" class="btn btn-danger" style="padding: 4px; border-radius:6px;" onclick="this.closest('tr').remove()"><i data-lucide="trash-2" style="width:12px; height:12px;"></i></button></td>
                                     </tr>
                                 </tbody>
                             </table>
-                            <div style="padding: 8px; background: var(--input-bg); border-top: 1px solid var(--card-border);">
+                            <div style="padding: 8px; background: rgba(0,0,0,0.3); border-top: 1px solid var(--card-border);">
                                 <button type="button" class="btn btn-sm" onclick="addTableRow('tblCal')">+ Add Row</button>
-                                <input type="text" id="srcTblCal" class="source-input" placeholder="Source of information (Optional)..." style="margin-top: 8px; width: 100%; background: transparent; border: none; border-top: 1px dashed #cbd5e1; padding-top: 8px; font-size: 9px; outline: none;">
+                                <input type="text" id="srcTblCal" class="source-input" placeholder="Source of information (Optional)..." style="margin-top: 8px; width: 100%; background: transparent; border: none; border-top: 1px dashed rgba(255,255,255,0.1); padding-top: 8px; font-size: 9px; outline: none;">
                             </div>
                         </div>
                     </div>
@@ -1059,7 +1080,7 @@
             newCard.className = 'tweet-card';
             newCard.innerHTML = `
                 <div class="tweet-header">
-                    <div class="tweet-avatar" style="background: ${avatarColor}; box-shadow: 0 4px 10px rgba(15, 23, 42, 0.15);">${avatarInitials}</div>
+                    <div class="tweet-avatar" style="background: ${avatarColor}; box-shadow: 0 4px 10px rgba(0,0,0, 0.3);">${avatarInitials}</div>
                     <div class="tweet-meta"><span class="tweet-name">${title}</span><span class="tweet-handle">${handleText}</span></div>
                 </div>
                 <div class="tweet-body">
@@ -1067,7 +1088,7 @@
                     <div class="status-text">${generalStatus}</div>
                 </div>
                 <div class="tweet-footer" style="padding-top: 12px; margin-top: 10px; border-top: 1px solid var(--card-border); display: flex; justify-content: flex-start; align-items: center;">
-                    <div style="display: inline-flex; align-items: center; gap: 8px; font-size: 10.5px; font-weight: 700; color: #b91c1c; background: #fef2f2; padding: 8px 16px; border-radius: 20px; border: 1px solid #fecaca; border-left: 4px solid #ef4444; box-shadow: 0 2px 4px rgba(220, 38, 38, 0.05);">
+                    <div style="display: inline-flex; align-items: center; gap: 8px; font-size: 10.5px; font-weight: 700; color: #fca5a5; background: rgba(239, 68, 68, 0.15); padding: 8px 16px; border-radius: 20px; border: 1px solid rgba(239, 68, 68, 0.3); border-left: 4px solid #ef4444;">
                         <i data-lucide="clock" style="width: 13px; height: 13px; color: #ef4444;"></i>
                         ${timeString}
                     </div>
@@ -1130,10 +1151,10 @@
             const inputClass = tableId.startsWith('tblLd_') ? 'tbl-input uppercase-input' : 'tbl-input';
             
             tr.innerHTML = `
-                <td style="padding: 0; border-bottom: 1px solid var(--card-border); border-right: 1px solid var(--card-border);"><input type="text" class="${inputClass}"></td>
-                <td style="padding: 0; border-bottom: 1px solid var(--card-border); border-right: 1px solid var(--card-border);"><input type="text" class="${inputClass}"></td>
-                <td style="padding: 0; border-bottom: 1px solid var(--card-border);"><input type="text" class="${inputClass}"></td>
-                <td style="padding: 4px; text-align: center; border-bottom: 1px solid var(--card-border);"><button type="button" class="btn btn-danger" style="padding: 4px; border-radius:6px;" onclick="this.closest('tr').remove()"><i data-lucide="trash-2" style="width:12px; height:12px;"></i></button></td>
+                <td><input type="text" class="${inputClass}"></td>
+                <td><input type="text" class="${inputClass}"></td>
+                <td><input type="text" class="${inputClass}"></td>
+                <td style="padding: 4px; text-align: center;"><button type="button" class="btn btn-danger" style="padding: 4px; border-radius:6px;" onclick="this.closest('tr').remove()"><i data-lucide="trash-2" style="width:12px; height:12px;"></i></button></td>
             `;
             tbody.appendChild(tr);
             lucide.createIcons({ attrs: { 'stroke-width': 1.5 } });
@@ -1248,7 +1269,7 @@
             rowsData.forEach(row => {
                 tableHTML += '<tr>';
                 headers.forEach(h => { 
-                    let cellVal = row[h] ? row[h] : '<span style="color:#cbd5e1;">-</span>';
+                    let cellVal = row[h] ? row[h] : '<span style="color:#64748b;">-</span>';
                     tableHTML += `<td>${cellVal}</td>`; 
                 });
                 tableHTML += '</tr>';
@@ -1631,7 +1652,7 @@
                     document.querySelectorAll('.status-badge.skeleton-box').forEach(badge => { badge.classList.remove('skeleton-box'); badge.classList.add('pending'); badge.innerHTML = 'Awaiting Report'; });
                     document.querySelectorAll('.skeleton-card').forEach(t => t.remove());
                     const wall = document.getElementById('tweetWallSection');
-                    if (wall.children.length === 0) { wall.innerHTML = `<div class="tweet-card" style="cursor:default;"><div class="tweet-header"><div class="tweet-avatar"><i data-lucide="activity" style="width:16px;"></i></div><div class="tweet-meta"><span class="tweet-name">System Monitoring</span><span class="tweet-handle">Active Node</span></div></div><div class="tweet-body" style="font-style:italic;">Listening for live LDRRMC submissions and system updates...</div></div>`; }
+                    if (wall.children.length === 0) { wall.innerHTML = `<div class="tweet-card" style="cursor:default;"><div class="tweet-header"><div class="tweet-avatar" style="background: rgba(255,255,255,0.1);"><i data-lucide="activity" style="width:16px;"></i></div><div class="tweet-meta"><span class="tweet-name">System Monitoring</span><span class="tweet-handle">Active Node</span></div></div><div class="tweet-body" style="font-style:italic; color: #94a3b8;">Listening for live LDRRMC submissions and system updates...</div></div>`; }
                     
                     lucide.createIcons({ attrs: { 'stroke-width': 1.5 } });
                 });
