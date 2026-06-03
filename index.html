@@ -28,9 +28,9 @@
 
         * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Plus Jakarta Sans', sans-serif; }
 
-        /* FIXED SCALING: Viewport remains full width/height */
+        /* FIXED SCALING & BACKGROUND INTEGRATION */
         body { 
-            background-color: var(--bg-page); 
+            background: var(--bg-page) url('bg.jpg') center center / cover no-repeat fixed;
             margin: 0; 
             padding: 0; 
             width: 100vw; 
@@ -45,7 +45,7 @@
         
         .skeleton-box { background: linear-gradient(90deg, #f1f5f9 25%, #f8fafc 50%, #f1f5f9 75%); background-size: 200% 100%; animation: skeleton-loading 1.5s infinite linear; border-radius: 6px; color: transparent !important; border: none !important; pointer-events: none; }
 
-        /* THE MAGIC TRICK: 125% width/height scaled down to 80% to fit perfectly without white borders */
+        /* PROFESSIONAL GLASSMORPHISM OVERLAY */
         .app-container { 
             display: flex; 
             width: 125%; 
@@ -55,18 +55,35 @@
             position: absolute; 
             top: 0; 
             left: 0;
-            background-color: var(--bg-app); 
+            background-color: rgba(241, 245, 249, 0.85); 
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
             border-radius: 0; 
             box-shadow: none; 
             overflow: hidden; 
         }
 
         /* --- SIDEBAR --- */
-        .sidebar { width: 230px; background-color: var(--bg-sidebar); display: flex; flex-direction: column; padding: 24px 0; position: relative; flex-shrink: 0; }
-        .profile { display: flex; align-items: center; gap: 12px; margin-bottom: 35px; padding: 0 20px; transition: var(--transition); cursor: pointer;}
+        .sidebar { 
+            width: 230px; 
+            background-color: rgba(15, 23, 42, 0.95); 
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            display: flex; 
+            flex-direction: column; 
+            padding: 24px 0; 
+            position: relative; 
+            flex-shrink: 0; 
+            border-right: 1px solid rgba(255, 255, 255, 0.05);
+        }
+        .profile { display: flex; align-items: center; gap: 14px; margin-bottom: 35px; padding: 0 20px; transition: var(--transition); cursor: pointer;}
         .profile:hover { opacity: 0.8; }
-        .profile-img { width: 32px; height: 32px; background: #ffffff; border-radius: 8px; display: flex; justify-content: center; align-items: center; color: var(--bg-sidebar); box-shadow: 0 2px 8px rgba(0,0,0,0.2); }
-        .profile-info h4 { font-size: 12px; font-weight: 600; color: #ffffff; margin-bottom: 2px; letter-spacing: -0.2px;}
+        
+        /* LOGO INTEGRATION */
+        .profile-img { width: 44px; height: 44px; background: #ffffff; border-radius: 10px; display: flex; justify-content: center; align-items: center; box-shadow: 0 4px 12px rgba(0,0,0,0.3); overflow: hidden; flex-shrink: 0; border: 2px solid rgba(255,255,255,0.05);}
+        .profile-img img { width: 100%; height: 100%; object-fit: contain; }
+        
+        .profile-info h4 { font-size: 12.5px; font-weight: 700; color: #ffffff; margin-bottom: 2px; letter-spacing: -0.2px;}
         .profile-info p { font-size: 8px; color: #94a3b8; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px;}
 
         .nav-menu { list-style: none; display: flex; flex-direction: column; gap: 4px; }
@@ -74,10 +91,10 @@
         .nav-item:hover { color: #ffffff; transform: translateX(4px); }
         .nav-item i { width: 15px; height: 15px; opacity: 0.7; transition: var(--transition); }
         .nav-item:hover i { opacity: 1; }
-        .nav-item.active { background-color: var(--bg-app); color: var(--text-dark); border-radius: 20px 0 0 20px; margin-left: 15px; padding-left: 15px; transform: translateX(0); }
+        .nav-item.active { background-color: rgba(248, 250, 252, 0.95); color: var(--text-dark); border-radius: 20px 0 0 20px; margin-left: 15px; padding-left: 15px; transform: translateX(0); }
         .nav-item.active i { color: var(--text-dark); opacity: 1; }
-        .nav-item.active::before { content: ''; position: absolute; right: 0; top: -16px; width: 16px; height: 16px; background: radial-gradient(circle at top left, transparent 16px, var(--bg-app) 16.5px); }
-        .nav-item.active::after { content: ''; position: absolute; right: 0; bottom: -16px; width: 16px; height: 16px; background: radial-gradient(circle at bottom left, transparent 16px, var(--bg-app) 16.5px); }
+        .nav-item.active::before { content: ''; position: absolute; right: 0; top: -16px; width: 16px; height: 16px; background: radial-gradient(circle at top left, transparent 16px, rgba(248, 250, 252, 0.95) 16.5px); }
+        .nav-item.active::after { content: ''; position: absolute; right: 0; bottom: -16px; width: 16px; height: 16px; background: radial-gradient(circle at bottom left, transparent 16px, rgba(248, 250, 252, 0.95) 16.5px); }
 
         /* --- MAIN CONTENT AREA --- */
         .main-content { flex: 1; padding: 24px 32px; overflow-y: auto; scroll-behavior: smooth; }
@@ -91,7 +108,7 @@
         .last-updated { font-size: 9px; color: var(--text-gray); font-style: italic; }
         .last-updated span { font-weight: 700; color: var(--text-dark); font-style: normal; }
 
-        /* --- DYNAMIC CARDS & GRIDS (ADDED POP EFFECTS) --- */
+        /* --- DYNAMIC CARDS & GRIDS --- */
         .panel-card { background-color: var(--card-bg); border: 1px solid var(--card-border); border-radius: 12px; padding: 20px; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.02); transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1); cursor: default; }
         .panel-card:hover { transform: translateY(-3px); box-shadow: 0 15px 30px -5px rgba(15, 23, 42, 0.08); border-color: #cbd5e1; }
         
@@ -303,8 +320,13 @@
         
         <aside class="sidebar">
             <div class="profile" onclick="switchToView('homeView')">
-                <div class="profile-img"><i data-lucide="shield-check" style="width: 18px; height: 18px;"></i></div>
-                <div class="profile-info"><h4>Tarlac PDRRMO</h4><p>Monitoring Center</p></div>
+                <div class="profile-img">
+                    <img src="clean.jpg" alt="PDRRMO Logo">
+                </div>
+                <div class="profile-info">
+                    <h4>Tarlac PDRRMO</h4>
+                    <p>Monitoring Center</p>
+                </div>
             </div>
             <ul class="nav-menu">
                 <li class="nav-item active" data-target="homeView"><i data-lucide="layout-dashboard"></i> Situation Overview</li>
