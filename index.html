@@ -30,7 +30,6 @@
 
         /* FIXED SCALING & BACKGROUND INTEGRATION */
         body { 
-            /* Added a dark slate fallback color in case the image takes a second to load */
             background: #1e293b url('./bg.jpg') center center / cover no-repeat fixed;
             margin: 0; 
             padding: 0; 
@@ -46,7 +45,7 @@
         
         .skeleton-box { background: linear-gradient(90deg, #f1f5f9 25%, #f8fafc 50%, #f1f5f9 75%); background-size: 200% 100%; animation: skeleton-loading 1.5s infinite linear; border-radius: 6px; color: transparent !important; border: none !important; pointer-events: none; }
 
-        /* PROFESSIONAL GLASSMORPHISM OVERLAY */
+        /* PROFESSIONAL GLASSMORPHISM OVERLAY - FIXED OPACITY & BLUR */
         .app-container { 
             display: flex; 
             width: 125%; 
@@ -56,10 +55,10 @@
             position: absolute; 
             top: 0; 
             left: 0;
-            /* Lowered opacity to 0.75 so the background image is much more visible */
-            background-color: rgba(241, 245, 249, 0.75); 
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
+            /* Drastically lowered opacity and blur so the background is highly visible */
+            background-color: rgba(255, 255, 255, 0.25); 
+            backdrop-filter: blur(6px);
+            -webkit-backdrop-filter: blur(6px);
             border-radius: 0; 
             box-shadow: none; 
             overflow: hidden; 
@@ -81,22 +80,22 @@
         .profile { display: flex; align-items: center; gap: 14px; margin-bottom: 35px; padding: 0 20px; transition: var(--transition); cursor: pointer;}
         .profile:hover { opacity: 0.8; }
         
-        /* LOGO INTEGRATION - FIXED WHITE BOX */
+        /* LOGO INTEGRATION - FIXED CUTOFF & FRAMING */
         .profile-img { 
-            width: 44px; 
-            height: 44px; 
-            background: transparent; /* Removed solid white background */
-            border-radius: 50%; /* Perfect circle masks the white corners of the JPEG */
+            width: 48px; 
+            height: 48px; 
+            background: #ffffff; /* White background to cleanly frame the JPEG */
+            border-radius: 12px; /* Smooth rounded square like an app icon */
             display: flex; justify-content: center; align-items: center; 
-            box-shadow: none; /* Removed shadow for cleaner blend */
-            border: none;
-            overflow: hidden; 
+            box-shadow: 0 4px 12px rgba(0,0,0,0.3); 
+            padding: 4px; /* Inner padding ensures the logo NEVER touches the edges */
             flex-shrink: 0; 
         }
         .profile-img img { 
             width: 100%; 
             height: 100%; 
-            object-fit: cover; /* Ensures the image completely fills the circle */
+            object-fit: contain; /* Contains the full image without cropping */
+            border-radius: 8px; /* Slight inner rounding */
         }
         
         .profile-info h4 { font-size: 12.5px; font-weight: 700; color: #ffffff; margin-bottom: 2px; letter-spacing: -0.2px;}
