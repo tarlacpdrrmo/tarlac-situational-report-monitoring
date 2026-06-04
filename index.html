@@ -39,10 +39,11 @@
             color: var(--text-dark);
         }
 
-        @keyframes slideUpFade { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: translateY(0); } }
+        @keyframes slideUpFade { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
         @keyframes skeleton-loading { 0% { background-position: 200% 0; } 100% { background-position: -200% 0; } }
-        @keyframes pulse-ring { 0% { transform: scale(0.8); box-shadow: 0 0 0 0 rgba(59, 130, 246, 0.7); } 70% { transform: scale(1); box-shadow: 0 0 0 6px rgba(59, 130, 246, 0); } 100% { transform: scale(0.8); box-shadow: 0 0 0 0 rgba(59, 130, 246, 0); } }
-        
+        @keyframes pulse-ring { 0% { transform: scale(0.8); box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.7); } 70% { transform: scale(1); box-shadow: 0 0 0 8px rgba(16, 185, 129, 0); } 100% { transform: scale(0.8); box-shadow: 0 0 0 0 rgba(16, 185, 129, 0); } }
+        @keyframes pulse-dot { 0% { transform: scale(0.95); opacity: 0.8; } 50% { transform: scale(1.1); opacity: 1; } 100% { transform: scale(0.95); opacity: 0.8; } }
+
         .skeleton-box { background: linear-gradient(90deg, rgba(255,255,255,0.05) 25%, rgba(255,255,255,0.1) 50%, rgba(255,255,255,0.05) 75%); background-size: 200% 100%; animation: skeleton-loading 1.5s infinite linear; border-radius: 6px; color: transparent !important; border: none !important; pointer-events: none; }
 
         .app-container { 
@@ -54,7 +55,6 @@
             position: absolute; 
             top: 0; 
             left: 0;
-            /* Changed to a dark tint overlay instead of white for the background */
             background-color: rgba(0, 0, 0, 0.2); 
             backdrop-filter: blur(6px);
             -webkit-backdrop-filter: blur(6px);
@@ -75,22 +75,13 @@
             position: relative; 
             flex-shrink: 0; 
             border-right: 1px solid var(--card-border);
+            z-index: 50;
         }
         .profile { display: flex; align-items: center; gap: 14px; margin-bottom: 35px; padding: 0 20px; transition: var(--transition); cursor: pointer;}
         .profile:hover { opacity: 0.8; }
         
-        .profile-img { 
-            width: 55px; 
-            height: 55px; 
-            background: transparent; 
-            display: flex; justify-content: center; align-items: center; 
-            flex-shrink: 0; 
-        }
-        .profile-img img { 
-            width: 100%; 
-            height: 100%; 
-            object-fit: contain; 
-        }
+        .profile-img { width: 55px; height: 55px; background: transparent; display: flex; justify-content: center; align-items: center; flex-shrink: 0; }
+        .profile-img img { width: 100%; height: 100%; object-fit: contain; filter: drop-shadow(0 4px 6px rgba(0,0,0,0.5));}
         
         .profile-info h4 { font-size: 13px; font-weight: 700; color: #ffffff; margin-bottom: 2px; letter-spacing: -0.2px;}
         .profile-info p { font-size: 8.5px; color: var(--text-gray); font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px;}
@@ -101,13 +92,7 @@
         .nav-item i { width: 16px; height: 16px; opacity: 0.7; transition: var(--transition); }
         .nav-item:hover i { opacity: 1; }
         
-        .nav-item.active { 
-            background-color: rgba(59, 130, 246, 0.15); 
-            color: #ffffff; 
-            transform: translateX(0); 
-            border-left: 3px solid var(--accent);
-            border-radius: 6px;
-        }
+        .nav-item.active { background-color: rgba(59, 130, 246, 0.15); color: #ffffff; transform: translateX(0); border-left: 3px solid var(--accent); border-radius: 6px; }
         .nav-item.active i { color: var(--accent); opacity: 1; }
 
         /* --- MAIN CONTENT AREA --- */
@@ -115,107 +100,100 @@
         .view-section { display: none; }
         .view-section.active { display: block; animation: slideUpFade 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
 
-        /* FIXED: Removed the white box completely. Just crisp text with a professional shadow */
-        .header { 
-            display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px; 
-            background: transparent;
-            border: none;
-            box-shadow: none;
-            backdrop-filter: none;
-            -webkit-backdrop-filter: none;
-            padding: 0 4px;
-        }
-        .header-title h1 { 
-            font-size: 24px; font-weight: 800; color: #ffffff; display: flex; align-items: center; gap: 8px; letter-spacing: -0.5px;
-            text-shadow: 0 2px 10px rgba(0,0,0,0.8);
-        }
-        .header-title p { 
-            font-size: 12px; color: #cbd5e1; margin-top: 4px; font-weight: 500;
-            text-shadow: 0 1px 4px rgba(0,0,0,0.8);
-        }
+        /* --- HEADER --- */
+        .header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px; background: transparent; border: none; box-shadow: none; padding: 0; }
+        .header-title h1 { font-size: 26px; font-weight: 800; color: #ffffff; display: flex; align-items: center; gap: 12px; letter-spacing: -0.5px; text-shadow: 0 2px 10px rgba(0,0,0,0.8); }
+        .header-title p { font-size: 12px; color: #cbd5e1; margin-top: 6px; font-weight: 500; text-shadow: 0 1px 4px rgba(0,0,0,0.8); }
         .header-actions { display: flex; align-items: center; gap: 15px; }
-        .last-updated { font-size: 10px; color: #cbd5e1; font-style: italic; text-shadow: 0 1px 4px rgba(0,0,0,0.8);}
-        .last-updated span { font-weight: 700; color: #ffffff; font-style: normal; text-shadow: 0 1px 4px rgba(0,0,0,0.8);}
+        
+        .live-status-pill { display: inline-flex; align-items: center; gap: 8px; background: rgba(16, 185, 129, 0.15); border: 1px solid rgba(16, 185, 129, 0.3); padding: 8px 16px; border-radius: 20px; box-shadow: 0 4px 12px rgba(0,0,0,0.2); backdrop-filter: blur(4px); }
+        .pulse-dot { width: 8px; height: 8px; background-color: var(--success); border-radius: 50%; animation: pulse-ring 2s infinite, pulse-dot 2s infinite; }
+        .live-status-text { font-size: 10px; font-weight: 700; color: #6ee7b7; text-transform: uppercase; letter-spacing: 0.5px; }
 
-        /* --- GLOSSY DARK CARDS & PANELS --- */
-        .panel-card, .sitrep-panel, .tweet-card, .modal-card, .dt-popup { 
+        /* --- GLOSSY DARK CARDS --- */
+        .panel-card, .sitrep-panel, .tweet-card, .modal-card, .dt-popup, .kpi-card { 
             background-color: var(--card-bg); 
             backdrop-filter: blur(16px);
             -webkit-backdrop-filter: blur(16px);
             border: 1px solid var(--card-border); 
-            /* Glossy top edge highlight */
             border-top: 1px solid rgba(255, 255, 255, 0.15);
             border-radius: 12px; 
             padding: 20px; 
             box-shadow: 0 8px 32px 0 rgba(0,0,0,0.3); 
             transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1); 
-            cursor: default; 
             color: var(--text-dark);
         }
-        .panel-card:hover { transform: translateY(-3px); box-shadow: 0 15px 40px -5px rgba(0,0,0,0.5); border-color: rgba(255,255,255,0.25); }
-        
+        .panel-card:hover, .kpi-card:hover { transform: translateY(-4px); box-shadow: 0 15px 40px -5px rgba(0,0,0,0.5); border-color: rgba(255,255,255,0.25); }
+
+        /* --- NEW: KPI DASHBOARD GRID --- */
+        .kpi-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin-bottom: 20px; opacity: 0; animation: slideUpFade 0.5s ease forwards 0.1s; }
+        .kpi-card { display: flex; align-items: center; gap: 16px; padding: 20px; cursor: default; }
+        .kpi-icon { width: 50px; height: 50px; border-radius: 12px; display: flex; justify-content: center; align-items: center; background: linear-gradient(135deg, rgba(255,255,255,0.1), rgba(255,255,255,0.02)); border: 1px solid rgba(255,255,255,0.1); flex-shrink: 0; box-shadow: inset 0 2px 4px rgba(255,255,255,0.05); }
+        .kpi-icon i { width: 24px; height: 24px; color: #ffffff; }
+        .kpi-details { flex: 1; }
+        .kpi-details h4 { font-size: 9.5px; color: var(--text-gray); font-weight: 800; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 4px; }
+        .kpi-details .kpi-value { font-size: 24px; font-weight: 800; color: #ffffff; display: flex; align-items: baseline; gap: 6px; letter-spacing: -0.5px;}
+        .kpi-details .kpi-sub { font-size: 10px; color: var(--success); font-weight: 600; background: var(--success-bg); padding: 2px 6px; border-radius: 4px;}
+
+        /* Icon specific colors */
+        .icon-blue i { color: #60a5fa; }
+        .icon-orange i { color: #fb923c; }
+        .icon-red i { color: #f87171; }
+        .icon-purple i { color: #c084fc; }
+
+        /* --- DASHBOARD LAYOUT GRIDS --- */
         .dashboard-container { display: flex; gap: 20px; align-items: flex-start; }
         .main-report { flex: 1; min-width: 0; }
-        .side-feed { width: 280px; flex-shrink: 0; }
-        .dashboard-content-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; align-items: stretch; }
+        .side-feed { width: 300px; flex-shrink: 0; opacity: 0; animation: slideUpFade 0.5s ease forwards 0.4s; }
+        
+        .middle-grid { display: grid; grid-template-columns: 1fr; gap: 20px; margin-bottom: 20px; opacity: 0; animation: slideUpFade 0.5s ease forwards 0.2s;}
+        
+        /* --- NEW: 3-COLUMN DISTRICT GRID --- */
+        .district-container { opacity: 0; animation: slideUpFade 0.5s ease forwards 0.3s; }
+        .district-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+        .district-column { display: flex; flex-direction: column; gap: 12px; }
+        .district-header { font-size: 11px; font-weight: 800; color: #ffffff; display: flex; align-items: center; gap: 8px; margin-bottom: 4px; letter-spacing: 0.5px; text-transform: uppercase; padding-bottom: 8px; border-bottom: 1px solid var(--card-border);}
+        .district-header i { color: var(--text-gray); width: 14px; height: 14px; }
 
-        .sitrep-panel { display: flex; flex-direction: column; height: 100%; border-top: 4px solid var(--accent); position: relative; overflow: hidden; padding: 0;}
-        .sitrep-panel:hover { transform: translateY(-4px); box-shadow: 0 20px 40px rgba(0,0,0,0.4); }
-        .sitrep-panel::before { content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: radial-gradient(circle at top right, rgba(59, 130, 246, 0.1), transparent 40%); pointer-events: none; }
-        
-        .data-grid { display: flex; flex-direction: column; gap: 20px; flex: 1; z-index: 1; }
+        /* --- SITREP PANEL --- */
+        .sitrep-panel { border-top: 4px solid var(--accent); position: relative; overflow: hidden; padding: 24px;}
+        .sitrep-panel::before { content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: radial-gradient(circle at top right, rgba(59, 130, 246, 0.1), transparent 50%); pointer-events: none; }
+        .data-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; z-index: 1; }
         .data-item { display: flex; flex-direction: column; gap: 8px; background: transparent; }
-        .data-item.full-width { flex: 1; } 
-        
+        .data-item.full-width { grid-column: span 2; } 
         .data-label { font-size: 9px; font-weight: 800; color: var(--text-gray); text-transform: uppercase; letter-spacing: 0.5px; border-bottom: 2px solid rgba(255,255,255,0.05); padding-bottom: 6px; display: flex; align-items: center; gap: 6px; }
         .data-label i { color: var(--accent); width: 12px; height: 12px; }
-        
         .data-value { padding: 4px 0; color: var(--text-dark); border: none; }
         .placeholder-text { font-family: 'Inter', sans-serif; font-size: 12px; color: var(--text-gray); opacity: 0.8; font-style: italic; font-weight: 500; }
-
-        .meta-badge { font-family: 'Plus Jakarta Sans', sans-serif; display: inline-flex; align-items: center; background-color: rgba(239, 68, 68, 0.15); border: 1px solid rgba(239, 68, 68, 0.3); border-left: 4px solid #ef4444; color: #fca5a5; font-size: 9.5px; font-weight: 700; padding: 6px 14px; border-radius: 20px; margin-bottom: 12px; letter-spacing: 0.5px; text-transform: uppercase; }
-        .meta-source { font-family: 'Inter', sans-serif; display: flex; align-items: center; font-size: 10px; color: var(--text-gray); font-style: italic; font-weight: 500; margin-top: 10px; border-top: 1px dashed rgba(255,255,255,0.1); padding-top: 8px; }
-        .standard-text { font-family: 'Inter', sans-serif; font-size: 13px; color: #e2e8f0; line-height: 1.6; margin-bottom: 10px; font-weight: 500; text-transform: none; letter-spacing: -0.1px; }
+        
+        .meta-badge { font-family: 'Plus Jakarta Sans', sans-serif; display: inline-flex; align-items: center; background-color: rgba(239, 68, 68, 0.15); border: 1px solid rgba(239, 68, 68, 0.3); border-left: 3px solid #ef4444; color: #fca5a5; font-size: 9px; font-weight: 800; padding: 6px 12px; border-radius: 6px; margin-bottom: 12px; letter-spacing: 0.5px; text-transform: uppercase; }
+        .meta-source { font-family: 'Inter', sans-serif; display: flex; align-items: center; font-size: 9.5px; color: var(--text-gray); font-style: italic; font-weight: 500; margin-top: 10px; border-top: 1px dashed rgba(255,255,255,0.1); padding-top: 8px; }
+        .standard-text { font-family: 'Inter', sans-serif; font-size: 12.5px; color: #e2e8f0; line-height: 1.6; margin-bottom: 10px; font-weight: 500; }
         
         .parsed-table-wrapper { width: 100%; overflow-x: auto; margin: 12px 0; border-radius: 10px; border: 1px solid var(--card-border); box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.2); }
         .parsed-table { width: 100%; border-collapse: collapse; text-align: left; background: transparent; }
-        .parsed-table th { font-family: 'Plus Jakarta Sans', sans-serif; background-color: rgba(0,0,0,0.3); font-size: 10px; font-weight: 800; color: var(--text-gray); padding: 12px 16px; border-bottom: 2px solid var(--card-border); text-transform: uppercase; letter-spacing: 0.5px; }
-        .parsed-table td { font-family: 'Inter', sans-serif; padding: 14px 16px; font-size: 12px; font-weight: 500; color: #e2e8f0; border-bottom: 1px solid rgba(255,255,255,0.05); text-transform: none; line-height: 1.5; vertical-align: top;}
-        .parsed-table tr:last-child td { border-bottom: none; }
+        .parsed-table th { font-family: 'Plus Jakarta Sans', sans-serif; background-color: rgba(0,0,0,0.4); font-size: 9px; font-weight: 800; color: var(--text-gray); padding: 12px 14px; border-bottom: 1px solid var(--card-border); text-transform: uppercase; letter-spacing: 0.5px; }
+        .parsed-table td { font-family: 'Inter', sans-serif; padding: 12px 14px; font-size: 11.5px; font-weight: 500; color: #e2e8f0; border-bottom: 1px solid rgba(255,255,255,0.05); line-height: 1.5; vertical-align: top;}
         .parsed-table tbody tr:hover td { background-color: rgba(255,255,255,0.05); }
 
-        /* --- OVERHAULED DISTRICT TABLES (DARK MODE) --- */
-        .table-subtitle { font-size: 10.5px; color: var(--text-gray); margin-bottom: 16px; font-weight: 500; }
-        .district-table { width: 100%; border-collapse: separate; border-spacing: 0 8px; margin-top: -8px; }
-        .district-table th, .district-table td { padding: 12px 14px; vertical-align: middle; transition: var(--transition); }
-        .district-table th { font-size: 8px; color: var(--text-gray); font-weight: 800; text-transform: uppercase; letter-spacing: 0.5px; border: none; padding-bottom: 4px; padding-top: 0;}
-        .district-table th:nth-child(1), .district-table td:nth-child(1) { width: 45%; text-align: left; }
-        .district-table th:nth-child(2), .district-table td:nth-child(2) { width: 30%; text-align: center; }
-        .district-table th:nth-child(3), .district-table td:nth-child(3) { width: 25%; text-align: right; }
+        /* --- DISTRICT LIST ITEMS --- */
+        .lgu-item { background: rgba(255,255,255,0.02); border: 1px solid var(--card-border); border-radius: 10px; padding: 12px 16px; display: flex; justify-content: space-between; align-items: center; cursor: pointer; transition: var(--transition); box-shadow: 0 2px 4px rgba(0,0,0,0.1); margin-bottom: 8px;}
+        .lgu-item:hover { transform: translateX(4px); background: rgba(255,255,255,0.06); border-color: rgba(255,255,255,0.2); box-shadow: 0 4px 12px rgba(0,0,0,0.2); }
         
-        .district-table td { background: rgba(255,255,255,0.03); border: 1px solid var(--card-border); border-style: solid none; }
-        .district-table td:first-child { border-left-style: solid; border-radius: 10px 0 0 10px; }
-        .district-table td:last-child { border-right-style: solid; border-radius: 0 10px 10px 0; }
+        .lgu-info { display: flex; flex-direction: column; gap: 4px; }
+        .lgu-name { font-weight: 700; font-size: 12px; color: var(--text-dark); display: flex; align-items: center; gap: 8px;}
+        .lgu-name span { font-size: 7px; color: var(--text-gray); font-weight: 800; background: rgba(0,0,0,0.4); padding: 3px 6px; border-radius: 4px; text-transform: uppercase; border: 1px solid rgba(255,255,255,0.1);}
         
-        .district-table tbody tr { cursor: pointer; transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1); box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
-        .district-table tbody tr:hover { transform: translateY(-2px); box-shadow: 0 8px 16px -4px rgba(0,0,0,0.3); z-index: 5; position: relative; border-radius: 10px; }
-        .district-table tbody tr:hover td { background-color: rgba(255,255,255,0.08); border-color: rgba(255,255,255,0.3); }
-        
-        .lgu-name { font-weight: 700; font-size: 11.5px; color: var(--text-dark); display: flex; align-items: center; gap: 8px;}
-        .lgu-name span { font-size: 7px; color: var(--text-gray); font-weight: 800; background: rgba(0,0,0,0.3); padding: 4px 6px; border-radius: 4px; text-transform: uppercase; border: 1px solid var(--card-border);}
-
-        .status-badge { display: inline-flex; align-items: center; justify-content: center; gap: 4px; padding: 6px 12px; border-radius: 20px; font-size: 8.5px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.5px; white-space: nowrap; transition: var(--transition); }
+        .status-badge { display: inline-flex; align-items: center; justify-content: center; padding: 4px 10px; border-radius: 20px; font-size: 8px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.5px; white-space: nowrap; transition: var(--transition); }
         .status-badge.pending { background-color: var(--warning-bg); color: #fcd34d; border: 1px solid rgba(245, 158, 11, 0.3);}
         .status-badge.submitted { background-color: var(--success-bg); color: #6ee7b7; border: 1px solid rgba(16, 185, 129, 0.3); }
-        .status-badge.skeleton-box { margin: 0 auto; border: none; }
+        .status-badge.skeleton-box { border: none; width: 80px; height: 20px; }
 
         /* --- RIGHT SIDEBAR TWEET WALL --- */
-        .live-feed-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; background: var(--card-bg); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); padding: 12px 16px; border-radius: 10px; border: 1px solid var(--card-border); border-top: 1px solid rgba(255,255,255,0.15); box-shadow: 0 8px 32px 0 rgba(0,0,0,0.2);}
-        .live-feed-header h3 { font-size: 12px; font-weight: 800; color: var(--text-dark); text-transform: uppercase; letter-spacing: 0.5px; margin: 0;}
-        .pulse-indicator { width: 8px; height: 8px; background-color: var(--accent); border-radius: 50%; animation: pulse-ring 2s infinite; }
-
-        .tweet-card { padding: 16px; display: flex; flex-direction: column; margin-bottom: 14px; cursor: pointer; }
+        .live-feed-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; padding-bottom: 12px; border-bottom: 1px solid var(--card-border); }
+        .live-feed-header h3 { font-size: 12px; font-weight: 800; color: var(--text-dark); text-transform: uppercase; letter-spacing: 0.5px; display: flex; align-items: center; gap: 8px; margin: 0;}
         
+        .tweet-card { padding: 16px; display: flex; flex-direction: column; margin-bottom: 14px; cursor: pointer; }
         .tweet-header { display: flex; align-items: center; gap: 10px; margin-bottom: 10px; }
         .tweet-avatar { width: 34px; height: 34px; border-radius: 10px; display: flex; align-items: center; justify-content: center; color: white; font-weight: 800; font-size: 13px; }
         .tweet-meta { display: flex; flex-direction: column; }
@@ -226,52 +204,51 @@
         .status-title { font-size: 8.5px; font-weight: 800; color: var(--text-gray); text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 4px; display: block; }
         .status-text { font-size: 11.5px; color: var(--text-dark); line-height: 1.5; font-weight: 700; }
 
-        /* --- BUTTONS --- */
+        /* --- BUTTONS & MODALS --- */
         .btn { background-color: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); color: var(--text-dark); padding: 6px 12px; border-radius: 8px; font-size: 10px; font-weight: 700; cursor: pointer; transition: var(--transition); display: inline-flex; align-items: center; justify-content: center; gap: 6px;}
         .btn:hover { background-color: rgba(255,255,255,0.15); border-color: rgba(255,255,255,0.3); }
         .btn-primary { background-color: var(--accent); color: #ffffff; border: none; padding: 8px 16px;}
         .btn-primary:hover { background-color: #2563eb; box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3); transform: translateY(-1px);}
-        .btn-sm { padding: 8px 14px; font-size: 9px; border-radius: 6px;} 
         .btn-danger { background-color: rgba(239, 68, 68, 0.1); border: 1px solid rgba(239, 68, 68, 0.3); color: #fca5a5; }
         .btn-danger:hover { background-color: rgba(239, 68, 68, 0.2); color: #fef2f2; border-color: rgba(239, 68, 68, 0.5);}
 
-        /* --- FORMS & TABLES (Encoding Page) --- */
-        .form-group { margin-bottom: 14px; }
+        .modal-overlay { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: rgba(0, 0, 0, 0.8); backdrop-filter: blur(8px); display: flex; align-items: center; justify-content: center; z-index: 1000; opacity: 0; pointer-events: none; transition: var(--transition);}
+        .modal-overlay.show { opacity: 1; pointer-events: auto; }
+        .modal-card { width: 500px; max-width: 90%; transform: translateY(20px) scale(0.95); transition: var(--transition); }
+        .modal-overlay.show .modal-card { transform: translateY(0) scale(1); }
+        .modal-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-top: 16px;}
+        .modal-item { display: flex; flex-direction: column; gap: 6px; background: rgba(0,0,0,0.2); padding: 12px; border-radius: 8px; border: 1px solid var(--card-border);}
+        .modal-item.wide { grid-column: span 2; }
+        .modal-item label { font-size: 8.5px; color: var(--accent); font-weight: 800; text-transform: uppercase; letter-spacing: 0.5px;}
+        .modal-item span { font-size: 11.5px; color: var(--text-dark); font-weight: 500; line-height: 1.5;}
+        
+        /* Other specific UI styles kept from previous iteration */
         .form-group label { display: block; font-size: 8.5px; font-weight: 800; color: var(--text-gray); margin-bottom: 6px; text-transform: uppercase; letter-spacing: 0.5px;}
         .form-control { width: 100%; background-color: var(--input-bg); border: 1px solid var(--card-border); color: var(--text-dark); padding: 10px 14px; border-radius: 8px; font-size: 11px; outline: none; transition: var(--transition); font-weight: 500;}
         .form-control:focus { border-color: var(--accent); background-color: rgba(0,0,0,0.4); box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.2); }
-        
-        .form-control option { background: var(--bg-sidebar); color: var(--text-dark); } /* Fix select dropdown visibility */
-        
+        .form-control option { background: var(--bg-sidebar); color: var(--text-dark); }
         .uppercase-input { text-transform: uppercase; }
         textarea.form-control { resize: none; overflow: hidden; min-height: 42px; line-height: 1.5; }
-
         .advisory-wrapper { border: 1px solid var(--card-border); border-radius: 8px; background-color: var(--input-bg); overflow: hidden; transition: var(--transition); }
         .advisory-wrapper:focus-within { border-color: var(--accent); background-color: rgba(0,0,0,0.4); box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.2); }
         .advisory-wrapper .form-control { border: none; border-radius: 0; background: transparent; box-shadow: none; padding-bottom: 8px; }
         .advisory-wrapper .source-input { width: 100%; border: none; background-color: transparent; border-top: 1px dashed rgba(255,255,255,0.1); padding: 8px 12px; font-size: 10px; color: var(--text-gray); outline: none; font-style: italic; font-weight: 500; transition: var(--transition);}
-        
         .tbl-input { width: 100%; border: none; outline: none; padding: 8px; font-size: 11px; background: transparent; color: var(--text-dark); font-weight: 500;} 
         .tbl-input:focus { background: rgba(255,255,255,0.05); }
         .table-input-wrapper { border: 1px solid var(--card-border); border-radius: 8px; overflow: hidden; background: rgba(0,0,0,0.2); }
         .table-input-wrapper th { font-size: 8px; font-weight: 800; color: var(--text-gray); text-transform: uppercase; padding: 8px; background: rgba(0,0,0,0.3);}
         .table-input-wrapper td { border-bottom: 1px solid var(--card-border); border-right: 1px solid var(--card-border); padding: 0; }
-
         .upload-area { border: 2px dashed rgba(255,255,255,0.2); border-radius: 12px; padding: 28px; text-align: center; background-color: var(--input-bg); cursor: pointer; transition: var(--transition); margin-bottom: 16px;}
         .upload-area:hover { border-color: var(--accent); background-color: rgba(255,255,255,0.05); }
         .upload-area i { width: 24px; height: 24px; color: var(--text-gray); transition: var(--transition);}
         .upload-area p { font-size: 10.5px; font-weight: 700; color: var(--text-gray); margin-top: 8px;}
         .pdf-viewer { display: none; width: 100%; height: 600px; border-radius: 10px; border: 1px solid var(--card-border); margin-bottom: 16px; background-color: var(--bg-sidebar);}
-
         #dynamicWorkflowArea { display: none; margin-top: 16px; }
         .workflow-form { display: none; }
         .workflow-form.active { display: block; animation: slideUpFade 0.4s ease forwards; }
-
-        /* --- DATETIME PICKER --- */
         .dt-wrapper { display: inline-flex; align-items: center; gap: 8px; cursor: pointer; background: rgba(255,255,255,0.05); border: 1px solid var(--card-border); border-radius: 8px; padding: 6px 12px; transition: var(--transition); }
         .dt-wrapper:hover { border-color: rgba(255,255,255,0.3); box-shadow: 0 2px 4px rgba(0,0,0,0.1);}
         .dt-display-text { font-size: 10.5px; font-weight: 700; color: var(--text-dark);}
-        
         .dt-popup { display: none; position: absolute; top: calc(100% + 8px); right: 0; z-index: 100; width: 250px; flex-direction: column; overflow: hidden; animation: slideUpFade 0.2s ease forwards;}
         .dt-popup.show { display: flex; }
         .dt-calendar-sec { padding: 14px; border-bottom: 1px solid var(--card-border); }
@@ -285,7 +262,6 @@
         .dt-day:hover { background: rgba(255,255,255,0.1); }
         .dt-day.active { background: var(--accent); color: #ffffff; box-shadow: 0 2px 6px rgba(0,0,0,0.3);}
         .dt-day.other-month { color: #475569; }
-        
         .dt-time-sec { padding: 12px 14px; background: rgba(0,0,0,0.2); display: flex; align-items: center; justify-content: space-between;}
         .time-inputs { display: flex; align-items: center; background: rgba(0,0,0,0.3); border-radius: 6px; border: 1px solid var(--card-border); padding: 4px 8px;}
         .time-input { background: transparent; border: none; color: var(--text-dark); font-size: 12px; font-weight: 800; width: 26px; text-align: center; outline: none; }
@@ -297,17 +273,6 @@
         .dt-actions { display: flex; justify-content: space-between; padding: 12px 14px; font-size: 9px; font-weight: 800; text-transform: uppercase;}
         .dt-actions span { cursor: pointer; color: var(--text-gray); transition: var(--transition);}
         .dt-actions span:hover { color: #ffffff; }
-
-        /* --- MODALS --- */
-        .modal-overlay { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: rgba(0, 0, 0, 0.7); backdrop-filter: blur(4px); display: flex; align-items: center; justify-content: center; z-index: 1000; opacity: 0; pointer-events: none; transition: var(--transition);}
-        .modal-overlay.show { opacity: 1; pointer-events: auto; }
-        .modal-card { width: 380px; max-width: 90%; transform: translateY(20px) scale(0.95); transition: var(--transition); }
-        .modal-overlay.show .modal-card { transform: translateY(0) scale(1); }
-        .modal-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 16px;}
-        .modal-item { display: flex; flex-direction: column; gap: 4px; }
-        .modal-item.wide { grid-column: span 2; border-top: 1px solid var(--card-border); padding-top: 12px; margin-top: 4px;}
-        .modal-item label { font-size: 8px; color: var(--text-gray); font-weight: 800; text-transform: uppercase; letter-spacing: 0.5px;}
-        .modal-item span { font-size: 11px; color: var(--text-dark); font-weight: 600;}
     </style>
 </head>
 <body>
@@ -327,11 +292,11 @@
     </div>
 
     <div id="lguDetailModal" class="modal-overlay">
-        <div class="modal-card" style="width: 550px;">
+        <div class="modal-card">
             <div style="display:flex; justify-content:space-between; align-items:flex-start; border-bottom: 1px solid var(--card-border); padding-bottom: 16px; margin-bottom: 12px;">
                 <div>
-                    <h3 id="modalLguName" style="font-size: 18px; font-weight: 800; color: var(--text-dark); letter-spacing: -0.3px;">LGU Name</h3>
-                    <p id="modalLguTimestamp" style="font-size: 10px; color: var(--text-gray); font-weight: 700; margin-top: 4px;">As of: --</p>
+                    <h3 id="modalLguName" style="font-size: 18px; font-weight: 800; color: #ffffff; letter-spacing: -0.3px;">LGU Name</h3>
+                    <p id="modalLguTimestamp" style="font-size: 10px; color: var(--accent); font-weight: 700; margin-top: 4px; text-transform: uppercase; letter-spacing: 0.5px;">As of: --</p>
                 </div>
                 <button class="btn" style="border:none; padding:6px; background:rgba(255,255,255,0.05); border-radius:8px;" onclick="closeLguModal()"><i data-lucide="x" style="width:16px; height:16px; color:var(--text-dark);"></i></button>
             </div>
@@ -343,134 +308,159 @@
         
         <aside class="sidebar">
             <div class="profile" onclick="switchToView('homeView')">
-                <div class="profile-img">
-                    <img src="./clean.jpg" alt="PDRRMO Logo">
-                </div>
+                <div class="profile-img"><img src="./clean.jpg" alt="PDRRMO Logo"></div>
                 <div class="profile-info">
                     <h4>Tarlac PDRRMO</h4>
-                    <p>Monitoring Center</p>
+                    <p>Command Center</p>
                 </div>
             </div>
             <ul class="nav-menu">
                 <li class="nav-item active" data-target="homeView"><i data-lucide="layout-dashboard"></i> Situation Overview</li>
                 <li class="nav-item" data-target="encodingView"><i data-lucide="edit"></i> Encoding Page</li>
-                <li class="nav-item" data-target="recordsView"><i data-lucide="folder-open"></i> LDRRMCs/Agencies Records</li>
-                <li class="nav-item" data-target="pdrrmoView"><i data-lucide="file-check-2"></i> PDRRMO SitRep & Advisory</li>
+                <li class="nav-item" data-target="recordsView"><i data-lucide="folder-open"></i> LDRRMCs / Agencies</li>
+                <li class="nav-item" data-target="pdrrmoView"><i data-lucide="file-check-2"></i> PDRRMO SitRep</li>
             </ul>
         </aside>
 
         <main class="main-content">
             
             <div id="homeView" class="view-section active">
+                
                 <div class="header">
-                    <div class="header-title"><h1>Situation Overview</h1><p>Live status feed of recently recorded LDRRMC and Agency reports.</p></div>
-                    <div class="header-actions"><button class="btn btn-primary" onclick="window.print()" style="display: flex; align-items: center; gap: 8px;"><i data-lucide="printer" style="width: 14px; height: 14px;"></i> Print Official Document</button></div>
+                    <div class="header-title">
+                        <h1>Executive Overview</h1>
+                        <p>Provincial Disaster Risk Reduction & Management Monitoring System</p>
+                    </div>
+                    <div class="header-actions">
+                        <div class="live-status-pill">
+                            <div class="pulse-dot"></div>
+                            <span class="live-status-text">Live System Sync</span>
+                        </div>
+                        <button class="btn btn-primary" onclick="window.print()" style="padding: 10px 16px;"><i data-lucide="printer" style="width: 14px; height: 14px;"></i> Generate PDF</button>
+                    </div>
+                </div>
+
+                <div class="kpi-grid">
+                    <div class="kpi-card">
+                        <div class="kpi-icon icon-blue"><i data-lucide="map"></i></div>
+                        <div class="kpi-details">
+                            <h4>LGUs Monitored</h4>
+                            <div class="kpi-value"><span id="kpiLguCount">18</span> <span style="font-size: 14px; color: var(--text-gray); font-weight: 600;">/ 18</span></div>
+                        </div>
+                    </div>
+                    <div class="kpi-card">
+                        <div class="kpi-icon icon-orange"><i data-lucide="alert-triangle"></i></div>
+                        <div class="kpi-details">
+                            <h4>Active Incidents</h4>
+                            <div class="kpi-value" id="kpiIncidents">0</div>
+                        </div>
+                    </div>
+                    <div class="kpi-card">
+                        <div class="kpi-icon icon-purple"><i data-lucide="briefcase"></i></div>
+                        <div class="kpi-details">
+                            <h4>Work / Class Suspensions</h4>
+                            <div class="kpi-value" id="kpiSuspensions">0 <span class="kpi-sub" style="display:none;" id="kpiSuspensionsSub">Active</span></div>
+                        </div>
+                    </div>
+                    <div class="kpi-card">
+                        <div class="kpi-icon icon-red"><i data-lucide="megaphone"></i></div>
+                        <div class="kpi-details">
+                            <h4>State of Calamity</h4>
+                            <div class="kpi-value" id="kpiCalamity">0 <span class="kpi-sub" style="display:none; color: #f87171; background: rgba(248, 113, 113, 0.15);" id="kpiCalamitySub">Declared</span></div>
+                        </div>
+                    </div>
                 </div>
                 
                 <div class="dashboard-container">
                     <div class="main-report">
-                        <div class="dashboard-content-grid">
-                            
-                            <div class="panel-card" style="margin-bottom: 0; border: none; padding: 0; background: transparent; backdrop-filter: none; box-shadow: none; cursor: default;">
-                                <div class="panel-card" style="margin-bottom: 16px;">
-                                    <h3 style="font-size: 11px; font-weight: 800; color: var(--text-dark); margin-bottom: 4px; text-transform: uppercase;">LDRRMCs REPORTING STATUS OVERVIEW</h3>
-                                    <p class="table-subtitle">"Click on any LGU to open and review its full situational report details."</p>
-                                    
-                                    <table class="district-table" style="margin-top: 16px;">
-                                        <thead><tr><th>1ST DISTRICT OF TARLAC</th><th>STATUS</th><th>ACTION</th></tr></thead>
-                                        <tbody>
-                                            <tr onclick="viewLguDetails('Anao', 'Anao MDRRMO')"><td><div class="lgu-name">Anao<span>MDRRMO</span></div></td><td><div class="status-badge pending skeleton-box" id="status-Anao" style="width: 105px; height: 24px; border-radius: 20px;"></div></td><td><button class="btn btn-sm">View Details</button></td></tr>
-                                            <tr onclick="viewLguDetails('Camiling', 'Camiling MDRRMO')"><td><div class="lgu-name">Camiling<span>MDRRMO</span></div></td><td><div class="status-badge pending skeleton-box" id="status-Camiling" style="width: 105px; height: 24px; border-radius: 20px;"></div></td><td><button class="btn btn-sm">View Details</button></td></tr>
-                                            <tr onclick="viewLguDetails('Mayantoc', 'Mayantoc MDRRMO')"><td><div class="lgu-name">Mayantoc<span>MDRRMO</span></div></td><td><div class="status-badge pending skeleton-box" id="status-Mayantoc" style="width: 105px; height: 24px; border-radius: 20px;"></div></td><td><button class="btn btn-sm">View Details</button></td></tr>
-                                            <tr onclick="viewLguDetails('Moncada', 'Moncada MDRRMO')"><td><div class="lgu-name">Moncada<span>MDRRMO</span></div></td><td><div class="status-badge pending skeleton-box" id="status-Moncada" style="width: 105px; height: 24px; border-radius: 20px;"></div></td><td><button class="btn btn-sm">View Details</button></td></tr>
-                                            <tr onclick="viewLguDetails('Paniqui', 'Paniqui MDRRMO')"><td><div class="lgu-name">Paniqui<span>MDRRMO</span></div></td><td><div class="status-badge pending skeleton-box" id="status-Paniqui" style="width: 105px; height: 24px; border-radius: 20px;"></div></td><td><button class="btn btn-sm">View Details</button></td></tr>
-                                            <tr onclick="viewLguDetails('Pura', 'Pura MDRRMO')"><td><div class="lgu-name">Pura<span>MDRRMO</span></div></td><td><div class="status-badge pending skeleton-box" id="status-Pura" style="width: 105px; height: 24px; border-radius: 20px;"></div></td><td><button class="btn btn-sm">View Details</button></td></tr>
-                                            <tr onclick="viewLguDetails('Ramos', 'Ramos MDRRMO')"><td><div class="lgu-name">Ramos<span>MDRRMO</span></div></td><td><div class="status-badge pending skeleton-box" id="status-Ramos" style="width: 105px; height: 24px; border-radius: 20px;"></div></td><td><button class="btn btn-sm">View Details</button></td></tr>
-                                            <tr onclick="viewLguDetails('SanClemente', 'San Clemente MDRRMO')"><td><div class="lgu-name">San Clemente<span>MDRRMO</span></div></td><td><div class="status-badge pending skeleton-box" id="status-SanClemente" style="width: 105px; height: 24px; border-radius: 20px;"></div></td><td><button class="btn btn-sm">View Details</button></td></tr>
-                                            <tr onclick="viewLguDetails('SanManuel', 'San Manuel MDRRMO')"><td><div class="lgu-name">San Manuel<span>MDRRMO</span></div></td><td><div class="status-badge pending skeleton-box" id="status-SanManuel" style="width: 105px; height: 24px; border-radius: 20px;"></div></td><td><button class="btn btn-sm">View Details</button></td></tr>
-                                            <tr onclick="viewLguDetails('SantaIgnacia', 'Santa Ignacia MDRRMO')"><td><div class="lgu-name">Santa Ignacia<span>MDRRMO</span></div></td><td><div class="status-badge pending skeleton-box" id="status-SantaIgnacia" style="width: 105px; height: 24px; border-radius: 20px;"></div></td><td><button class="btn btn-sm">View Details</button></td></tr>
-                                        </tbody>
-                                    </table>
-                                </div>
-
-                                <div class="panel-card" style="margin-bottom: 16px;">
-                                    <table class="district-table" style="margin-top: 0;">
-                                        <thead><tr><th>2ND DISTRICT OF TARLAC</th><th>STATUS</th><th>ACTION</th></tr></thead>
-                                        <tbody>
-                                            <tr onclick="viewLguDetails('Gerona', 'Gerona MDRRMO')"><td><div class="lgu-name">Gerona<span>MDRRMO</span></div></td><td><div class="status-badge pending skeleton-box" id="status-Gerona" style="width: 105px; height: 24px; border-radius: 20px;"></div></td><td><button class="btn btn-sm">View Details</button></td></tr>
-                                            <tr onclick="viewLguDetails('SanJose', 'San Jose MDRRMO')"><td><div class="lgu-name">San Jose<span>MDRRMO</span></div></td><td><div class="status-badge pending skeleton-box" id="status-SanJose" style="width: 105px; height: 24px; border-radius: 20px;"></div></td><td><button class="btn btn-sm">View Details</button></td></tr>
-                                            <tr onclick="viewLguDetails('TarlacCity', 'Tarlac City CDRRMO')"><td><div class="lgu-name">Tarlac City<span>CDRRMO</span></div></td><td><div class="status-badge pending skeleton-box" id="status-TarlacCity" style="width: 105px; height: 24px; border-radius: 20px;"></div></td><td><button class="btn btn-sm">View Details</button></td></tr>
-                                            <tr onclick="viewLguDetails('Victoria', 'Victoria MDRRMO')"><td><div class="lgu-name">Victoria<span>MDRRMO</span></div></td><td><div class="status-badge pending skeleton-box" id="status-Victoria" style="width: 105px; height: 24px; border-radius: 20px;"></div></td><td><button class="btn btn-sm">View Details</button></td></tr>
-                                        </tbody>
-                                    </table>
-                                </div>
-
-                                <div class="panel-card">
-                                    <table class="district-table" style="margin-top: 0;">
-                                        <thead><tr><th>3RD DISTRICT OF TARLAC</th><th>STATUS</th><th>ACTION</th></tr></thead>
-                                        <tbody>
-                                            <tr onclick="viewLguDetails('Bamban', 'Bamban MDRRMO')"><td><div class="lgu-name">Bamban<span>MDRRMO</span></div></td><td><div class="status-badge pending skeleton-box" id="status-Bamban" style="width: 105px; height: 24px; border-radius: 20px;"></div></td><td><button class="btn btn-sm">View Details</button></td></tr>
-                                            <tr onclick="viewLguDetails('Capas', 'Capas MDRRMO')"><td><div class="lgu-name">Capas<span>MDRRMO</span></div></td><td><div class="status-badge pending skeleton-box" id="status-Capas" style="width: 105px; height: 24px; border-radius: 20px;"></div></td><td><button class="btn btn-sm">View Details</button></td></tr>
-                                            <tr onclick="viewLguDetails('Concepcion', 'Concepcion MDRRMO')"><td><div class="lgu-name">Concepcion<span>MDRRMO</span></div></td><td><div class="status-badge pending skeleton-box" id="status-Concepcion" style="width: 105px; height: 24px; border-radius: 20px;"></div></td><td><button class="btn btn-sm">View Details</button></td></tr>
-                                            <tr onclick="viewLguDetails('LaPaz', 'La Paz MDRRMO')"><td><div class="lgu-name">La Paz<span>MDRRMO</span></div></td><td><div class="status-badge pending skeleton-box" id="status-LaPaz" style="width: 105px; height: 24px; border-radius: 20px;"></div></td><td><button class="btn btn-sm">View Details</button></td></tr>
-                                        </tbody>
-                                    </table>
-                                </div>
-                            </div>
-
-                            <div class="sitrep-panel" style="margin-bottom: 0;">
-                                <div style="padding: 24px;">
-                                    <div class="header" style="margin-bottom: 20px; padding-bottom: 16px; border-bottom: 1px solid rgba(255,255,255,0.1); background: transparent; backdrop-filter: none; border-radius: 0;">
-                                        <div class="header-title" style="margin-bottom: -5px;">
-                                            <h2 style="font-size: 14px; font-weight: 800; color: var(--text-dark); letter-spacing: -0.2px; display: flex; align-items: center; gap: 8px; text-shadow: none;">
-                                                <i data-lucide="file-bar-chart" style="color: var(--accent); width: 18px; height: 18px;"></i> SITREP & ADVISORY REPORT
-                                            </h2>
-                                        </div>
-                                        <div class="header-actions">
-                                            <div class="last-updated" style="text-shadow: none;">Status: <span id="generatedTimestamp" style="text-shadow: none;">Initializing Database...</span></div>
-                                        </div>
-                                    </div>
-                                                                                                                                                                                                            
-                                    <div class="data-grid">
-                                        <div class="data-item full-width">
-                                            <label class="data-label"><i data-lucide="quote"></i> OUTLINE (SYNOPSIS)</label>
-                                            <div class="data-value skeleton-box" id="outSyn" style="min-height: 40px;"></div>
-                                        </div>
-                                        <div class="data-item full-width">
-                                            <label class="data-label"><i data-lucide="alert-triangle"></i> OTHER INCIDENTS MONITORED (RESPONSES)</label>
-                                            <div class="data-value skeleton-box" id="outInc" style="min-height: 40px;"></div>
-                                        </div>
-                                        <div class="data-item full-width">
-                                            <label class="data-label"><i data-lucide="briefcase"></i> SUSPENSION ON WORK</label>
-                                            <div class="data-value skeleton-box" id="outWork" style="min-height: 40px;"></div>
-                                        </div>
-                                        <div class="data-item full-width">
-                                            <label class="data-label"><i data-lucide="graduation-cap"></i> SUSPENSION ON CLASSES</label>
-                                            <div class="data-value skeleton-box" id="outClass" style="min-height: 40px;"></div>
-                                        </div>
-                                        <div class="data-item full-width">
-                                            <label class="data-label"><i data-lucide="megaphone"></i> DECLARATION OF STATE OF CALAMITY</label>
-                                            <div class="data-value skeleton-box" id="outCal" style="min-height: 40px;"></div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
                         
+                        <div class="middle-grid">
+                            <div class="sitrep-panel">
+                                <div style="display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 24px; padding-bottom: 16px; border-bottom: 1px solid rgba(255,255,255,0.1);">
+                                    <h2 style="font-size: 14px; font-weight: 800; color: #ffffff; letter-spacing: -0.2px; display: flex; align-items: center; gap: 8px;">
+                                        <i data-lucide="file-bar-chart" style="color: var(--accent); width: 18px; height: 18px;"></i> CONSOLIDATED SITREP & ADVISORY
+                                    </h2>
+                                    <div class="last-updated">Status: <span id="generatedTimestamp">Initializing Database...</span></div>
+                                </div>
+                                                                                                                                                                                                        
+                                <div class="data-grid">
+                                    <div class="data-item full-width">
+                                        <label class="data-label"><i data-lucide="quote"></i> OUTLINE (SYNOPSIS)</label>
+                                        <div class="data-value skeleton-box" id="outSyn" style="min-height: 40px;"></div>
+                                    </div>
+                                    <div class="data-item">
+                                        <label class="data-label"><i data-lucide="alert-triangle"></i> OTHER INCIDENTS (RESPONSES)</label>
+                                        <div class="data-value skeleton-box" id="outInc" style="min-height: 40px;"></div>
+                                    </div>
+                                    <div class="data-item">
+                                        <label class="data-label"><i data-lucide="megaphone"></i> STATE OF CALAMITY</label>
+                                        <div class="data-value skeleton-box" id="outCal" style="min-height: 40px;"></div>
+                                    </div>
+                                    <div class="data-item">
+                                        <label class="data-label"><i data-lucide="briefcase"></i> SUSPENSION ON WORK</label>
+                                        <div class="data-value skeleton-box" id="outWork" style="min-height: 40px;"></div>
+                                    </div>
+                                    <div class="data-item">
+                                        <label class="data-label"><i data-lucide="graduation-cap"></i> SUSPENSION ON CLASSES</label>
+                                        <div class="data-value skeleton-box" id="outClass" style="min-height: 40px;"></div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
+
+                        <div class="district-container">
+                            <h3 style="font-size: 12px; font-weight: 800; color: var(--text-dark); margin-bottom: 16px; text-transform: uppercase; letter-spacing: 0.5px; display: flex; align-items: center; gap: 8px;">
+                                <i data-lucide="map-pin" style="color: var(--accent); width: 16px; height: 16px;"></i> LDRRMCs LIVE REPORTING STATUS
+                            </h3>
+                            
+                            <div class="district-grid">
+                                <div class="district-column">
+                                    <div class="district-header"><i data-lucide="layout-grid"></i> 1ST DISTRICT</div>
+                                    <div class="lgu-item" onclick="viewLguDetails('Anao', 'Anao MDRRMO')"><div class="lgu-info"><div class="lgu-name">Anao<span>MDRRMO</span></div></div><div class="status-badge pending skeleton-box" id="status-Anao"></div></div>
+                                    <div class="lgu-item" onclick="viewLguDetails('Camiling', 'Camiling MDRRMO')"><div class="lgu-info"><div class="lgu-name">Camiling<span>MDRRMO</span></div></div><div class="status-badge pending skeleton-box" id="status-Camiling"></div></div>
+                                    <div class="lgu-item" onclick="viewLguDetails('Mayantoc', 'Mayantoc MDRRMO')"><div class="lgu-info"><div class="lgu-name">Mayantoc<span>MDRRMO</span></div></div><div class="status-badge pending skeleton-box" id="status-Mayantoc"></div></div>
+                                    <div class="lgu-item" onclick="viewLguDetails('Moncada', 'Moncada MDRRMO')"><div class="lgu-info"><div class="lgu-name">Moncada<span>MDRRMO</span></div></div><div class="status-badge pending skeleton-box" id="status-Moncada"></div></div>
+                                    <div class="lgu-item" onclick="viewLguDetails('Paniqui', 'Paniqui MDRRMO')"><div class="lgu-info"><div class="lgu-name">Paniqui<span>MDRRMO</span></div></div><div class="status-badge pending skeleton-box" id="status-Paniqui"></div></div>
+                                    <div class="lgu-item" onclick="viewLguDetails('Pura', 'Pura MDRRMO')"><div class="lgu-info"><div class="lgu-name">Pura<span>MDRRMO</span></div></div><div class="status-badge pending skeleton-box" id="status-Pura"></div></div>
+                                    <div class="lgu-item" onclick="viewLguDetails('Ramos', 'Ramos MDRRMO')"><div class="lgu-info"><div class="lgu-name">Ramos<span>MDRRMO</span></div></div><div class="status-badge pending skeleton-box" id="status-Ramos"></div></div>
+                                    <div class="lgu-item" onclick="viewLguDetails('SanClemente', 'San Clemente MDRRMO')"><div class="lgu-info"><div class="lgu-name">San Clemente<span>MDRRMO</span></div></div><div class="status-badge pending skeleton-box" id="status-SanClemente"></div></div>
+                                    <div class="lgu-item" onclick="viewLguDetails('SanManuel', 'San Manuel MDRRMO')"><div class="lgu-info"><div class="lgu-name">San Manuel<span>MDRRMO</span></div></div><div class="status-badge pending skeleton-box" id="status-SanManuel"></div></div>
+                                    <div class="lgu-item" onclick="viewLguDetails('SantaIgnacia', 'Santa Ignacia MDRRMO')"><div class="lgu-info"><div class="lgu-name">Santa Ignacia<span>MDRRMO</span></div></div><div class="status-badge pending skeleton-box" id="status-SantaIgnacia"></div></div>
+                                </div>
+                                
+                                <div class="district-column">
+                                    <div class="district-header"><i data-lucide="layout-grid"></i> 2ND DISTRICT</div>
+                                    <div class="lgu-item" onclick="viewLguDetails('Gerona', 'Gerona MDRRMO')"><div class="lgu-info"><div class="lgu-name">Gerona<span>MDRRMO</span></div></div><div class="status-badge pending skeleton-box" id="status-Gerona"></div></div>
+                                    <div class="lgu-item" onclick="viewLguDetails('SanJose', 'San Jose MDRRMO')"><div class="lgu-info"><div class="lgu-name">San Jose<span>MDRRMO</span></div></div><div class="status-badge pending skeleton-box" id="status-SanJose"></div></div>
+                                    <div class="lgu-item" onclick="viewLguDetails('TarlacCity', 'Tarlac City CDRRMO')"><div class="lgu-info"><div class="lgu-name">Tarlac City<span>CDRRMO</span></div></div><div class="status-badge pending skeleton-box" id="status-TarlacCity"></div></div>
+                                    <div class="lgu-item" onclick="viewLguDetails('Victoria', 'Victoria MDRRMO')"><div class="lgu-info"><div class="lgu-name">Victoria<span>MDRRMO</span></div></div><div class="status-badge pending skeleton-box" id="status-Victoria"></div></div>
+                                </div>
+                                
+                                <div class="district-column">
+                                    <div class="district-header"><i data-lucide="layout-grid"></i> 3RD DISTRICT</div>
+                                    <div class="lgu-item" onclick="viewLguDetails('Bamban', 'Bamban MDRRMO')"><div class="lgu-info"><div class="lgu-name">Bamban<span>MDRRMO</span></div></div><div class="status-badge pending skeleton-box" id="status-Bamban"></div></div>
+                                    <div class="lgu-item" onclick="viewLguDetails('Capas', 'Capas MDRRMO')"><div class="lgu-info"><div class="lgu-name">Capas<span>MDRRMO</span></div></div><div class="status-badge pending skeleton-box" id="status-Capas"></div></div>
+                                    <div class="lgu-item" onclick="viewLguDetails('Concepcion', 'Concepcion MDRRMO')"><div class="lgu-info"><div class="lgu-name">Concepcion<span>MDRRMO</span></div></div><div class="status-badge pending skeleton-box" id="status-Concepcion"></div></div>
+                                    <div class="lgu-item" onclick="viewLguDetails('LaPaz', 'La Paz MDRRMO')"><div class="lgu-info"><div class="lgu-name">La Paz<span>MDRRMO</span></div></div><div class="status-badge pending skeleton-box" id="status-LaPaz"></div></div>
+                                </div>
+                            </div>
+                        </div>
+
                     </div>
 
                     <div class="side-feed">
-                        <div class="live-feed-header">
-                            <h3>Live Activity Feed</h3>
-                            <div class="pulse-indicator" title="Live monitoring active"></div>
-                        </div>
-                        <div id="tweetWallSection">
-                            <div class="tweet-card skeleton-card" style="cursor: default;">
-                                <div class="tweet-header">
-                                    <div class="skeleton-box" style="width: 34px; height: 34px; border-radius:10px;"></div>
-                                    <div style="flex:1;"><div class="skeleton-box" style="width: 90px; height: 10px; margin-bottom: 6px;"></div><div class="skeleton-box" style="width: 60px; height: 6px;"></div></div>
+                        <div class="panel-card" style="padding: 16px; background: rgba(15,23,42,0.85);">
+                            <div class="live-feed-header">
+                                <h3><i data-lucide="activity" style="color: var(--accent); width: 16px;"></i> Activity Feed</h3>
+                            </div>
+                            <div id="tweetWallSection">
+                                <div class="tweet-card skeleton-card" style="cursor: default; padding: 12px; background: rgba(0,0,0,0.2); box-shadow: none;">
+                                    <div class="tweet-header">
+                                        <div class="skeleton-box" style="width: 30px; height: 30px; border-radius:8px;"></div>
+                                        <div style="flex:1;"><div class="skeleton-box" style="width: 80px; height: 8px; margin-bottom: 6px;"></div><div class="skeleton-box" style="width: 50px; height: 6px;"></div></div>
+                                    </div>
+                                    <div class="skeleton-box" style="width: 100%; height: 24px; border-radius: 4px; margin-top: 4px;"></div>
                                 </div>
-                                <div class="skeleton-box" style="width: 100%; height: 30px; border-radius: 6px; margin-top: 4px;"></div>
                             </div>
                         </div>
                     </div>
@@ -479,14 +469,14 @@
 
             <div id="encodingView" class="view-section">
                 <div class="header">
-                    <div class="header-title"><h1>Encoding Page</h1><p>Choose an agency below to begin encoding.</p></div>
+                    <div class="header-title"><h1>Data Encoding</h1><p>Select an agency below to securely encode situational data.</p></div>
                 </div>
 
                 <div class="panel-card" style="max-width: 1100px; margin: 0 auto; cursor: default;">
                     
                     <div style="display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 24px;">
                         <div class="form-group" style="flex:1; margin-bottom: 0;">
-                            <label>CHOOSE BELOW:</label>
+                            <label>CHOOSE CLASSIFICATION BELOW:</label>
                             <select id="primaryCategory" class="form-control">
                                 <option value="" disabled selected>Select Category...</option>
                                 <option value="council">PDRRMC COUNCIL</option>
@@ -507,7 +497,7 @@
                                     <div class="time-inputs"><input type="number" id="dtHour" class="time-input" min="1" max="12" value="12"><span>:</span><input type="number" id="dtMin" class="time-input" min="0" max="59" value="00"></div>
                                     <div class="ampm-toggle"><button type="button" id="dtAm" class="ampm-btn active">AM</button><button type="button" id="dtPm" class="ampm-btn">PM</button></div>
                                 </div>
-                                <div class="dt-actions"><span id="dtClear">Clear</span><span id="dtToday" style="color:var(--text-dark);">Now</span></div>
+                                <div class="dt-actions"><span id="dtClear">Clear</span><span id="dtToday" style="color:#ffffff;">Now</span></div>
                             </div>
                         </div>
                     </div>
@@ -579,12 +569,8 @@
                                         <div id="wrapTextLd_B"><textarea id="ld_B" class="form-control uppercase-input" rows="1"></textarea></div>
                                         <div class="table-input-wrapper" id="wrapTableLd_B" style="display:none;">
                                             <table style="width:100%; border-collapse: collapse;" id="tblLd_B">
-                                                <thead>
-                                                    <tr><th style="width: 25%;">AREA</th><th style="width: 45%;">DETAILS</th><th>REMARKS</th><th style="width: 30px;"></th></tr>
-                                                </thead>
-                                                <tbody>
-                                                    <tr><td><input type="text" class="tbl-input uppercase-input"></td><td><input type="text" class="tbl-input uppercase-input"></td><td><input type="text" class="tbl-input uppercase-input"></td><td style="padding: 4px; text-align: center;"><button type="button" class="btn btn-danger" style="padding: 4px; border-radius:6px;" onclick="this.closest('tr').remove()"><i data-lucide="trash-2" style="width:12px; height:12px;"></i></button></td></tr>
-                                                </tbody>
+                                                <thead><tr><th style="width: 25%;">AREA</th><th style="width: 45%;">DETAILS</th><th>REMARKS</th><th style="width: 30px;"></th></tr></thead>
+                                                <tbody><tr><td><input type="text" class="tbl-input uppercase-input"></td><td><input type="text" class="tbl-input uppercase-input"></td><td><input type="text" class="tbl-input uppercase-input"></td><td style="padding: 4px; text-align: center;"><button type="button" class="btn btn-danger" style="padding: 4px; border-radius:6px;" onclick="this.closest('tr').remove()"><i data-lucide="trash-2" style="width:12px; height:12px;"></i></button></td></tr></tbody>
                                             </table>
                                             <div style="padding: 8px; background: rgba(0,0,0,0.3); border-top: 1px solid var(--card-border);"><button type="button" class="btn btn-sm" onclick="addTableRow('tblLd_B')">+ Add Row</button></div>
                                         </div>
@@ -598,12 +584,8 @@
                                         <div id="wrapTextLd_C"><textarea id="ld_C" class="form-control uppercase-input" rows="1"></textarea></div>
                                         <div class="table-input-wrapper" id="wrapTableLd_C" style="display:none;">
                                             <table style="width:100%; border-collapse: collapse;" id="tblLd_C">
-                                                <thead>
-                                                    <tr><th style="width: 25%;">AREA</th><th style="width: 45%;">DETAILS</th><th>REMARKS</th><th style="width: 30px;"></th></tr>
-                                                </thead>
-                                                <tbody>
-                                                    <tr><td><input type="text" class="tbl-input uppercase-input"></td><td><input type="text" class="tbl-input uppercase-input"></td><td><input type="text" class="tbl-input uppercase-input"></td><td style="padding: 4px; text-align: center;"><button type="button" class="btn btn-danger" style="padding: 4px; border-radius:6px;" onclick="this.closest('tr').remove()"><i data-lucide="trash-2" style="width:12px; height:12px;"></i></button></td></tr>
-                                                </tbody>
+                                                <thead><tr><th style="width: 25%;">AREA</th><th style="width: 45%;">DETAILS</th><th>REMARKS</th><th style="width: 30px;"></th></tr></thead>
+                                                <tbody><tr><td><input type="text" class="tbl-input uppercase-input"></td><td><input type="text" class="tbl-input uppercase-input"></td><td><input type="text" class="tbl-input uppercase-input"></td><td style="padding: 4px; text-align: center;"><button type="button" class="btn btn-danger" style="padding: 4px; border-radius:6px;" onclick="this.closest('tr').remove()"><i data-lucide="trash-2" style="width:12px; height:12px;"></i></button></td></tr></tbody>
                                             </table>
                                             <div style="padding: 8px; background: rgba(0,0,0,0.3); border-top: 1px solid var(--card-border);"><button type="button" class="btn btn-sm" onclick="addTableRow('tblLd_C')">+ Add Row</button></div>
                                         </div>
@@ -617,12 +599,8 @@
                                         <div id="wrapTextLd_D"><textarea id="ld_D" class="form-control uppercase-input" rows="1"></textarea></div>
                                         <div class="table-input-wrapper" id="wrapTableLd_D" style="display:none;">
                                             <table style="width:100%; border-collapse: collapse;" id="tblLd_D">
-                                                <thead>
-                                                    <tr><th style="width: 25%;">AREA</th><th style="width: 45%;">DETAILS</th><th>REMARKS</th><th style="width: 30px;"></th></tr>
-                                                </thead>
-                                                <tbody>
-                                                    <tr><td><input type="text" class="tbl-input uppercase-input"></td><td><input type="text" class="tbl-input uppercase-input"></td><td><input type="text" class="tbl-input uppercase-input"></td><td style="padding: 4px; text-align: center;"><button type="button" class="btn btn-danger" style="padding: 4px; border-radius:6px;" onclick="this.closest('tr').remove()"><i data-lucide="trash-2" style="width:12px; height:12px;"></i></button></td></tr>
-                                                </tbody>
+                                                <thead><tr><th style="width: 25%;">AREA</th><th style="width: 45%;">DETAILS</th><th>REMARKS</th><th style="width: 30px;"></th></tr></thead>
+                                                <tbody><tr><td><input type="text" class="tbl-input uppercase-input"></td><td><input type="text" class="tbl-input uppercase-input"></td><td><input type="text" class="tbl-input uppercase-input"></td><td style="padding: 4px; text-align: center;"><button type="button" class="btn btn-danger" style="padding: 4px; border-radius:6px;" onclick="this.closest('tr').remove()"><i data-lucide="trash-2" style="width:12px; height:12px;"></i></button></td></tr></tbody>
                                             </table>
                                             <div style="padding: 8px; background: rgba(0,0,0,0.3); border-top: 1px solid var(--card-border);"><button type="button" class="btn btn-sm" onclick="addTableRow('tblLd_D')">+ Add Row</button></div>
                                         </div>
@@ -636,12 +614,8 @@
                                         <div id="wrapTextLd_E"><textarea id="ld_E" class="form-control uppercase-input" rows="1"></textarea></div>
                                         <div class="table-input-wrapper" id="wrapTableLd_E" style="display:none;">
                                             <table style="width:100%; border-collapse: collapse;" id="tblLd_E">
-                                                <thead>
-                                                    <tr><th style="width: 25%;">AREA</th><th style="width: 45%;">DETAILS</th><th>REMARKS</th><th style="width: 30px;"></th></tr>
-                                                </thead>
-                                                <tbody>
-                                                    <tr><td><input type="text" class="tbl-input uppercase-input"></td><td><input type="text" class="tbl-input uppercase-input"></td><td><input type="text" class="tbl-input uppercase-input"></td><td style="padding: 4px; text-align: center;"><button type="button" class="btn btn-danger" style="padding: 4px; border-radius:6px;" onclick="this.closest('tr').remove()"><i data-lucide="trash-2" style="width:12px; height:12px;"></i></button></td></tr>
-                                                </tbody>
+                                                <thead><tr><th style="width: 25%;">AREA</th><th style="width: 45%;">DETAILS</th><th>REMARKS</th><th style="width: 30px;"></th></tr></thead>
+                                                <tbody><tr><td><input type="text" class="tbl-input uppercase-input"></td><td><input type="text" class="tbl-input uppercase-input"></td><td><input type="text" class="tbl-input uppercase-input"></td><td style="padding: 4px; text-align: center;"><button type="button" class="btn btn-danger" style="padding: 4px; border-radius:6px;" onclick="this.closest('tr').remove()"><i data-lucide="trash-2" style="width:12px; height:12px;"></i></button></td></tr></tbody>
                                             </table>
                                             <div style="padding: 8px; background: rgba(0,0,0,0.3); border-top: 1px solid var(--card-border);"><button type="button" class="btn btn-sm" onclick="addTableRow('tblLd_E')">+ Add Row</button></div>
                                         </div>
@@ -655,12 +629,8 @@
                                         <div id="wrapTextLd_F"><textarea id="ld_F" class="form-control uppercase-input" rows="1"></textarea></div>
                                         <div class="table-input-wrapper" id="wrapTableLd_F" style="display:none;">
                                             <table style="width:100%; border-collapse: collapse;" id="tblLd_F">
-                                                <thead>
-                                                    <tr><th style="width: 25%;">AREA</th><th style="width: 45%;">DETAILS</th><th>REMARKS</th><th style="width: 30px;"></th></tr>
-                                                </thead>
-                                                <tbody>
-                                                    <tr><td><input type="text" class="tbl-input uppercase-input"></td><td><input type="text" class="tbl-input uppercase-input"></td><td><input type="text" class="tbl-input uppercase-input"></td><td style="padding: 4px; text-align: center;"><button type="button" class="btn btn-danger" style="padding: 4px; border-radius:6px;" onclick="this.closest('tr').remove()"><i data-lucide="trash-2" style="width:12px; height:12px;"></i></button></td></tr>
-                                                </tbody>
+                                                <thead><tr><th style="width: 25%;">AREA</th><th style="width: 45%;">DETAILS</th><th>REMARKS</th><th style="width: 30px;"></th></tr></thead>
+                                                <tbody><tr><td><input type="text" class="tbl-input uppercase-input"></td><td><input type="text" class="tbl-input uppercase-input"></td><td><input type="text" class="tbl-input uppercase-input"></td><td style="padding: 4px; text-align: center;"><button type="button" class="btn btn-danger" style="padding: 4px; border-radius:6px;" onclick="this.closest('tr').remove()"><i data-lucide="trash-2" style="width:12px; height:12px;"></i></button></td></tr></tbody>
                                             </table>
                                             <div style="padding: 8px; background: rgba(0,0,0,0.3); border-top: 1px solid var(--card-border);"><button type="button" class="btn btn-sm" onclick="addTableRow('tblLd_F')">+ Add Row</button></div>
                                         </div>
@@ -676,12 +646,8 @@
                                         <div id="wrapTextLd_G"><textarea id="ld_G" class="form-control uppercase-input" rows="1"></textarea></div>
                                         <div class="table-input-wrapper" id="wrapTableLd_G" style="display:none;">
                                             <table style="width:100%; border-collapse: collapse;" id="tblLd_G">
-                                                <thead>
-                                                    <tr><th style="width: 25%;">AREA</th><th style="width: 45%;">DETAILS</th><th>REMARKS</th><th style="width: 30px;"></th></tr>
-                                                </thead>
-                                                <tbody>
-                                                    <tr><td><input type="text" class="tbl-input uppercase-input"></td><td><input type="text" class="tbl-input uppercase-input"></td><td><input type="text" class="tbl-input uppercase-input"></td><td style="padding: 4px; text-align: center;"><button type="button" class="btn btn-danger" style="padding: 4px; border-radius:6px;" onclick="this.closest('tr').remove()"><i data-lucide="trash-2" style="width:12px; height:12px;"></i></button></td></tr>
-                                                </tbody>
+                                                <thead><tr><th style="width: 25%;">AREA</th><th style="width: 45%;">DETAILS</th><th>REMARKS</th><th style="width: 30px;"></th></tr></thead>
+                                                <tbody><tr><td><input type="text" class="tbl-input uppercase-input"></td><td><input type="text" class="tbl-input uppercase-input"></td><td><input type="text" class="tbl-input uppercase-input"></td><td style="padding: 4px; text-align: center;"><button type="button" class="btn btn-danger" style="padding: 4px; border-radius:6px;" onclick="this.closest('tr').remove()"><i data-lucide="trash-2" style="width:12px; height:12px;"></i></button></td></tr></tbody>
                                             </table>
                                             <div style="padding: 8px; background: rgba(0,0,0,0.3); border-top: 1px solid var(--card-border);"><button type="button" class="btn btn-sm" onclick="addTableRow('tblLd_G')">+ Add Row</button></div>
                                         </div>
@@ -695,12 +661,8 @@
                                         <div id="wrapTextLd_H"><textarea id="ld_H" class="form-control uppercase-input" rows="1"></textarea></div>
                                         <div class="table-input-wrapper" id="wrapTableLd_H" style="display:none;">
                                             <table style="width:100%; border-collapse: collapse;" id="tblLd_H">
-                                                <thead>
-                                                    <tr><th style="width: 25%;">AREA</th><th style="width: 45%;">DETAILS</th><th>REMARKS</th><th style="width: 30px;"></th></tr>
-                                                </thead>
-                                                <tbody>
-                                                    <tr><td><input type="text" class="tbl-input uppercase-input"></td><td><input type="text" class="tbl-input uppercase-input"></td><td><input type="text" class="tbl-input uppercase-input"></td><td style="padding: 4px; text-align: center;"><button type="button" class="btn btn-danger" style="padding: 4px; border-radius:6px;" onclick="this.closest('tr').remove()"><i data-lucide="trash-2" style="width:12px; height:12px;"></i></button></td></tr>
-                                                </tbody>
+                                                <thead><tr><th style="width: 25%;">AREA</th><th style="width: 45%;">DETAILS</th><th>REMARKS</th><th style="width: 30px;"></th></tr></thead>
+                                                <tbody><tr><td><input type="text" class="tbl-input uppercase-input"></td><td><input type="text" class="tbl-input uppercase-input"></td><td><input type="text" class="tbl-input uppercase-input"></td><td style="padding: 4px; text-align: center;"><button type="button" class="btn btn-danger" style="padding: 4px; border-radius:6px;" onclick="this.closest('tr').remove()"><i data-lucide="trash-2" style="width:12px; height:12px;"></i></button></td></tr></tbody>
                                             </table>
                                             <div style="padding: 8px; background: rgba(0,0,0,0.3); border-top: 1px solid var(--card-border);"><button type="button" class="btn btn-sm" onclick="addTableRow('tblLd_H')">+ Add Row</button></div>
                                         </div>
@@ -714,12 +676,8 @@
                                         <div id="wrapTextLd_I"><textarea id="ld_I" class="form-control uppercase-input" rows="1"></textarea></div>
                                         <div class="table-input-wrapper" id="wrapTableLd_I" style="display:none;">
                                             <table style="width:100%; border-collapse: collapse;" id="tblLd_I">
-                                                <thead>
-                                                    <tr><th style="width: 25%;">AREA</th><th style="width: 45%;">DETAILS</th><th>REMARKS</th><th style="width: 30px;"></th></tr>
-                                                </thead>
-                                                <tbody>
-                                                    <tr><td><input type="text" class="tbl-input uppercase-input"></td><td><input type="text" class="tbl-input uppercase-input"></td><td><input type="text" class="tbl-input uppercase-input"></td><td style="padding: 4px; text-align: center;"><button type="button" class="btn btn-danger" style="padding: 4px; border-radius:6px;" onclick="this.closest('tr').remove()"><i data-lucide="trash-2" style="width:12px; height:12px;"></i></button></td></tr>
-                                                </tbody>
+                                                <thead><tr><th style="width: 25%;">AREA</th><th style="width: 45%;">DETAILS</th><th>REMARKS</th><th style="width: 30px;"></th></tr></thead>
+                                                <tbody><tr><td><input type="text" class="tbl-input uppercase-input"></td><td><input type="text" class="tbl-input uppercase-input"></td><td><input type="text" class="tbl-input uppercase-input"></td><td style="padding: 4px; text-align: center;"><button type="button" class="btn btn-danger" style="padding: 4px; border-radius:6px;" onclick="this.closest('tr').remove()"><i data-lucide="trash-2" style="width:12px; height:12px;"></i></button></td></tr></tbody>
                                             </table>
                                             <div style="padding: 8px; background: rgba(0,0,0,0.3); border-top: 1px solid var(--card-border);"><button type="button" class="btn btn-sm" onclick="addTableRow('tblLd_I')">+ Add Row</button></div>
                                         </div>
@@ -733,12 +691,8 @@
                                         <div id="wrapTextLd_J"><textarea id="ld_J" class="form-control uppercase-input" rows="1"></textarea></div>
                                         <div class="table-input-wrapper" id="wrapTableLd_J" style="display:none;">
                                             <table style="width:100%; border-collapse: collapse;" id="tblLd_J">
-                                                <thead>
-                                                    <tr><th style="width: 25%;">AREA</th><th style="width: 45%;">DETAILS</th><th>REMARKS</th><th style="width: 30px;"></th></tr>
-                                                </thead>
-                                                <tbody>
-                                                    <tr><td><input type="text" class="tbl-input uppercase-input"></td><td><input type="text" class="tbl-input uppercase-input"></td><td><input type="text" class="tbl-input uppercase-input"></td><td style="padding: 4px; text-align: center;"><button type="button" class="btn btn-danger" style="padding: 4px; border-radius:6px;" onclick="this.closest('tr').remove()"><i data-lucide="trash-2" style="width:12px; height:12px;"></i></button></td></tr>
-                                                </tbody>
+                                                <thead><tr><th style="width: 25%;">AREA</th><th style="width: 45%;">DETAILS</th><th>REMARKS</th><th style="width: 30px;"></th></tr></thead>
+                                                <tbody><tr><td><input type="text" class="tbl-input uppercase-input"></td><td><input type="text" class="tbl-input uppercase-input"></td><td><input type="text" class="tbl-input uppercase-input"></td><td style="padding: 4px; text-align: center;"><button type="button" class="btn btn-danger" style="padding: 4px; border-radius:6px;" onclick="this.closest('tr').remove()"><i data-lucide="trash-2" style="width:12px; height:12px;"></i></button></td></tr></tbody>
                                             </table>
                                             <div style="padding: 8px; background: rgba(0,0,0,0.3); border-top: 1px solid var(--card-border);"><button type="button" class="btn btn-sm" onclick="addTableRow('tblLd_J')">+ Add Row</button></div>
                                         </div>
@@ -752,12 +706,8 @@
                                         <div id="wrapTextLd_K"><textarea id="ld_K" class="form-control uppercase-input" rows="1"></textarea></div>
                                         <div class="table-input-wrapper" id="wrapTableLd_K" style="display:none;">
                                             <table style="width:100%; border-collapse: collapse;" id="tblLd_K">
-                                                <thead>
-                                                    <tr><th style="width: 25%;">AREA</th><th style="width: 45%;">DETAILS</th><th>REMARKS</th><th style="width: 30px;"></th></tr>
-                                                </thead>
-                                                <tbody>
-                                                    <tr><td><input type="text" class="tbl-input uppercase-input"></td><td><input type="text" class="tbl-input uppercase-input"></td><td><input type="text" class="tbl-input uppercase-input"></td><td style="padding: 4px; text-align: center;"><button type="button" class="btn btn-danger" style="padding: 4px; border-radius:6px;" onclick="this.closest('tr').remove()"><i data-lucide="trash-2" style="width:12px; height:12px;"></i></button></td></tr>
-                                                </tbody>
+                                                <thead><tr><th style="width: 25%;">AREA</th><th style="width: 45%;">DETAILS</th><th>REMARKS</th><th style="width: 30px;"></th></tr></thead>
+                                                <tbody><tr><td><input type="text" class="tbl-input uppercase-input"></td><td><input type="text" class="tbl-input uppercase-input"></td><td><input type="text" class="tbl-input uppercase-input"></td><td style="padding: 4px; text-align: center;"><button type="button" class="btn btn-danger" style="padding: 4px; border-radius:6px;" onclick="this.closest('tr').remove()"><i data-lucide="trash-2" style="width:12px; height:12px;"></i></button></td></tr></tbody>
                                             </table>
                                             <div style="padding: 8px; background: rgba(0,0,0,0.3); border-top: 1px solid var(--card-border);"><button type="button" class="btn btn-sm" onclick="addTableRow('tblLd_K')">+ Add Row</button></div>
                                         </div>
@@ -810,22 +760,8 @@
                         </div>
                         <div class="table-input-wrapper" id="wrapTableInc" style="display:none;">
                             <table style="width:100%; border-collapse: collapse;" id="tblInc">
-                                <thead>
-                                    <tr>
-                                        <th style="width: 25%;">AREA/LGU</th>
-                                        <th style="width: 45%;">INCIDENT DETAILS</th>
-                                        <th>REMARKS / ACTION</th>
-                                        <th style="width: 30px;"></th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr>
-                                        <td><input type="text" class="tbl-input"></td>
-                                        <td><input type="text" class="tbl-input"></td>
-                                        <td><input type="text" class="tbl-input"></td>
-                                        <td style="padding: 4px; text-align: center;"><button type="button" class="btn btn-danger" style="padding: 4px; border-radius:6px;" onclick="this.closest('tr').remove()"><i data-lucide="trash-2" style="width:12px; height:12px;"></i></button></td>
-                                    </tr>
-                                </tbody>
+                                <thead><tr><th style="width: 25%;">AREA/LGU</th><th style="width: 45%;">INCIDENT DETAILS</th><th>REMARKS / ACTION</th><th style="width: 30px;"></th></tr></thead>
+                                <tbody><tr><td><input type="text" class="tbl-input"></td><td><input type="text" class="tbl-input"></td><td><input type="text" class="tbl-input"></td><td style="padding: 4px; text-align: center;"><button type="button" class="btn btn-danger" style="padding: 4px; border-radius:6px;" onclick="this.closest('tr').remove()"><i data-lucide="trash-2" style="width:12px; height:12px;"></i></button></td></tr></tbody>
                             </table>
                             <div style="padding: 8px; background: rgba(0,0,0,0.3); border-top: 1px solid var(--card-border);">
                                 <button type="button" class="btn btn-sm" onclick="addTableRow('tblInc')">+ Add Row</button>
@@ -845,22 +781,8 @@
                         </div>
                         <div class="table-input-wrapper" id="wrapTableWork" style="display:none;">
                             <table style="width:100%; border-collapse: collapse;" id="tblWork">
-                                <thead>
-                                    <tr>
-                                        <th style="width: 25%;">AREA/LGU</th>
-                                        <th style="width: 45%;">LEVEL / AGENCY</th>
-                                        <th>STATUS</th>
-                                        <th style="width: 30px;"></th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr>
-                                        <td><input type="text" class="tbl-input"></td>
-                                        <td><input type="text" class="tbl-input"></td>
-                                        <td><input type="text" class="tbl-input"></td>
-                                        <td style="padding: 4px; text-align: center;"><button type="button" class="btn btn-danger" style="padding: 4px; border-radius:6px;" onclick="this.closest('tr').remove()"><i data-lucide="trash-2" style="width:12px; height:12px;"></i></button></td>
-                                    </tr>
-                                </tbody>
+                                <thead><tr><th style="width: 25%;">AREA/LGU</th><th style="width: 45%;">LEVEL / AGENCY</th><th>STATUS</th><th style="width: 30px;"></th></tr></thead>
+                                <tbody><tr><td><input type="text" class="tbl-input"></td><td><input type="text" class="tbl-input"></td><td><input type="text" class="tbl-input"></td><td style="padding: 4px; text-align: center;"><button type="button" class="btn btn-danger" style="padding: 4px; border-radius:6px;" onclick="this.closest('tr').remove()"><i data-lucide="trash-2" style="width:12px; height:12px;"></i></button></td></tr></tbody>
                             </table>
                             <div style="padding: 8px; background: rgba(0,0,0,0.3); border-top: 1px solid var(--card-border);">
                                 <button type="button" class="btn btn-sm" onclick="addTableRow('tblWork')">+ Add Row</button>
@@ -880,22 +802,8 @@
                         </div>
                         <div class="table-input-wrapper" id="wrapTableClass" style="display:none;">
                             <table style="width:100%; border-collapse: collapse;" id="tblClass">
-                                <thead>
-                                    <tr>
-                                        <th style="width: 25%;">AREA/LGU</th>
-                                        <th style="width: 45%;">LEVEL / AGENCY</th>
-                                        <th>STATUS</th>
-                                        <th style="width: 30px;"></th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr>
-                                        <td><input type="text" class="tbl-input"></td>
-                                        <td><input type="text" class="tbl-input"></td>
-                                        <td><input type="text" class="tbl-input"></td>
-                                        <td style="padding: 4px; text-align: center;"><button type="button" class="btn btn-danger" style="padding: 4px; border-radius:6px;" onclick="this.closest('tr').remove()"><i data-lucide="trash-2" style="width:12px; height:12px;"></i></button></td>
-                                    </tr>
-                                </tbody>
+                                <thead><tr><th style="width: 25%;">AREA/LGU</th><th style="width: 45%;">LEVEL / AGENCY</th><th>STATUS</th><th style="width: 30px;"></th></tr></thead>
+                                <tbody><tr><td><input type="text" class="tbl-input"></td><td><input type="text" class="tbl-input"></td><td><input type="text" class="tbl-input"></td><td style="padding: 4px; text-align: center;"><button type="button" class="btn btn-danger" style="padding: 4px; border-radius:6px;" onclick="this.closest('tr').remove()"><i data-lucide="trash-2" style="width:12px; height:12px;"></i></button></td></tr></tbody>
                             </table>
                             <div style="padding: 8px; background: rgba(0,0,0,0.3); border-top: 1px solid var(--card-border);">
                                 <button type="button" class="btn btn-sm" onclick="addTableRow('tblClass')">+ Add Row</button>
@@ -915,22 +823,8 @@
                         </div>
                         <div class="table-input-wrapper" id="wrapTableCal" style="display:none;">
                             <table style="width:100%; border-collapse: collapse;" id="tblCal">
-                                <thead>
-                                    <tr>
-                                        <th style="width: 25%;">AREA/LGU</th>
-                                        <th style="width: 45%;">RESOLUTION NO. / DETAILS</th>
-                                        <th>STATUS / REMARKS</th>
-                                        <th style="width: 30px;"></th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr>
-                                        <td><input type="text" class="tbl-input"></td>
-                                        <td><input type="text" class="tbl-input"></td>
-                                        <td><input type="text" class="tbl-input"></td>
-                                        <td style="padding: 4px; text-align: center;"><button type="button" class="btn btn-danger" style="padding: 4px; border-radius:6px;" onclick="this.closest('tr').remove()"><i data-lucide="trash-2" style="width:12px; height:12px;"></i></button></td>
-                                    </tr>
-                                </tbody>
+                                <thead><tr><th style="width: 25%;">AREA/LGU</th><th style="width: 45%;">RESOLUTION NO. / DETAILS</th><th>STATUS / REMARKS</th><th style="width: 30px;"></th></tr></thead>
+                                <tbody><tr><td><input type="text" class="tbl-input"></td><td><input type="text" class="tbl-input"></td><td><input type="text" class="tbl-input"></td><td style="padding: 4px; text-align: center;"><button type="button" class="btn btn-danger" style="padding: 4px; border-radius:6px;" onclick="this.closest('tr').remove()"><i data-lucide="trash-2" style="width:12px; height:12px;"></i></button></td></tr></tbody>
                             </table>
                             <div style="padding: 8px; background: rgba(0,0,0,0.3); border-top: 1px solid var(--card-border);">
                                 <button type="button" class="btn btn-sm" onclick="addTableRow('tblCal')">+ Add Row</button>
@@ -993,6 +887,40 @@
             lguDataStore[lguId] = data; 
             const badge = document.getElementById(`status-${lguId}`);
             if(badge) { badge.className = 'status-badge submitted'; badge.innerHTML = 'Report Submitted'; }
+        }
+
+        // --- NEW: KPI DASHBOARD UPDATER ---
+        function updateKPIs(dataArray, advisoryDataArray) {
+            let activeIncidents = 0;
+            
+            // Loop through the processed data to find active incidents
+            for (const key in dataArray) {
+                const lgu = dataArray[key];
+                if (lgu.incidents && lgu.incidents !== "" && lgu.incidents.toUpperCase() !== "NONE") {
+                    activeIncidents++;
+                }
+            }
+            
+            document.getElementById('kpiIncidents').innerText = activeIncidents > 0 ? activeIncidents : '0';
+
+            // Check advisory text for Suspensions and Calamities
+            if (advisoryDataArray) {
+                const work = advisoryDataArray.work || '';
+                const cls = advisoryDataArray.cls || '';
+                const cal = advisoryDataArray.cal || '';
+
+                if ((work && work.toUpperCase() !== "NONE") || (cls && cls.toUpperCase() !== "NONE")) {
+                    document.getElementById('kpiSuspensions').innerHTML = `1+ <span class="kpi-sub" id="kpiSuspensionsSub">Active</span>`;
+                } else {
+                    document.getElementById('kpiSuspensions').innerHTML = `0 <span class="kpi-sub" style="display:none;" id="kpiSuspensionsSub">Active</span>`;
+                }
+
+                if (cal && cal.toUpperCase() !== "NONE") {
+                    document.getElementById('kpiCalamity').innerHTML = `1+ <span class="kpi-sub" style="color: #f87171; background: rgba(248, 113, 113, 0.15);" id="kpiCalamitySub">Declared</span>`;
+                } else {
+                    document.getElementById('kpiCalamity').innerHTML = `0 <span class="kpi-sub" style="display:none; color: #f87171; background: rgba(248, 113, 113, 0.15);" id="kpiCalamitySub">Declared</span>`;
+                }
+            }
         }
 
         function formatModernDate(dateStr) {
@@ -1088,8 +1016,8 @@
                     <div class="status-text">${generalStatus}</div>
                 </div>
                 <div class="tweet-footer" style="padding-top: 12px; margin-top: 10px; border-top: 1px solid var(--card-border); display: flex; justify-content: flex-start; align-items: center;">
-                    <div style="display: inline-flex; align-items: center; gap: 8px; font-size: 10.5px; font-weight: 700; color: #fca5a5; background: rgba(239, 68, 68, 0.15); padding: 8px 16px; border-radius: 20px; border: 1px solid rgba(239, 68, 68, 0.3); border-left: 4px solid #ef4444;">
-                        <i data-lucide="clock" style="width: 13px; height: 13px; color: #ef4444;"></i>
+                    <div style="display: inline-flex; align-items: center; gap: 8px; font-size: 10.5px; font-weight: 700; color: #60a5fa; background: rgba(59, 130, 246, 0.1); padding: 6px 12px; border-radius: 6px; border: 1px solid rgba(59, 130, 246, 0.2);">
+                        <i data-lucide="clock" style="width: 12px; height: 12px; color: #3b82f6;"></i>
                         ${timeString}
                     </div>
                 </div>
@@ -1615,30 +1543,35 @@
                             }
                         }
 
+                        let persistentAdvisoryData = null;
+
                         if (result.advisoryData && result.advisoryData.length > 1) {
-                            let persistentData = { syn: 'NONE', inc: 'NONE', work: 'NONE', cls: 'NONE', cal: 'NONE', timestamp: '--' };
+                            persistentAdvisoryData = { syn: 'NONE', inc: 'NONE', work: 'NONE', cls: 'NONE', cal: 'NONE', timestamp: '--' };
                             
                             for(let i = 1; i < result.advisoryData.length; i++) {
                                 const row = result.advisoryData[i];
-                                if (row[1]) persistentData.syn = row[1];
-                                if (row[2]) persistentData.inc = row[2];
-                                if (row[3]) persistentData.work = row[3];
-                                if (row[4]) persistentData.cls = row[4];
-                                if (row[5]) persistentData.cal = row[5];
-                                persistentData.timestamp = row[0]; 
+                                if (row[1]) persistentAdvisoryData.syn = row[1];
+                                if (row[2]) persistentAdvisoryData.inc = row[2];
+                                if (row[3]) persistentAdvisoryData.work = row[3];
+                                if (row[4]) persistentAdvisoryData.cls = row[4];
+                                if (row[5]) persistentAdvisoryData.cal = row[5];
+                                persistentAdvisoryData.timestamp = row[0]; 
                             }
                             
-                            document.getElementById('outSyn').innerHTML = formatTextToTable(persistentData.syn);
-                            document.getElementById('outInc').innerHTML = formatTextToTable(persistentData.inc); 
-                            document.getElementById('outWork').innerHTML = formatTextToTable(persistentData.work); 
-                            document.getElementById('outClass').innerHTML = formatTextToTable(persistentData.cls); 
-                            document.getElementById('outCal').innerHTML = formatTextToTable(persistentData.cal);
+                            document.getElementById('outSyn').innerHTML = formatTextToTable(persistentAdvisoryData.syn);
+                            document.getElementById('outInc').innerHTML = formatTextToTable(persistentAdvisoryData.inc); 
+                            document.getElementById('outWork').innerHTML = formatTextToTable(persistentAdvisoryData.work); 
+                            document.getElementById('outClass').innerHTML = formatTextToTable(persistentAdvisoryData.cls); 
+                            document.getElementById('outCal').innerHTML = formatTextToTable(persistentAdvisoryData.cal);
                             
                             ['outSyn', 'outInc', 'outWork', 'outClass', 'outCal'].forEach(id => { document.getElementById(id).classList.remove('skeleton-box'); });
-                            document.getElementById('generatedTimestamp').innerText = `${formatModernDate(persistentData.timestamp)}`;
+                            document.getElementById('generatedTimestamp').innerText = `${formatModernDate(persistentAdvisoryData.timestamp)}`;
                         } else {
                             ['outSyn', 'outInc', 'outWork', 'outClass', 'outCal'].forEach(id => { const el = document.getElementById(id); el.classList.remove('skeleton-box'); el.innerHTML = '<span class="placeholder-text">Awaiting data...</span>'; });
                         }
+
+                        // Run the KPI updater with the fetched data
+                        updateKPIs(latestLguData, persistentAdvisoryData);
 
                         if (result.pdfData) { populatePdfRecords(result.pdfData); }
                     }
@@ -1652,7 +1585,7 @@
                     document.querySelectorAll('.status-badge.skeleton-box').forEach(badge => { badge.classList.remove('skeleton-box'); badge.classList.add('pending'); badge.innerHTML = 'Awaiting Report'; });
                     document.querySelectorAll('.skeleton-card').forEach(t => t.remove());
                     const wall = document.getElementById('tweetWallSection');
-                    if (wall.children.length === 0) { wall.innerHTML = `<div class="tweet-card" style="cursor:default;"><div class="tweet-header"><div class="tweet-avatar" style="background: rgba(255,255,255,0.1);"><i data-lucide="activity" style="width:16px;"></i></div><div class="tweet-meta"><span class="tweet-name">System Monitoring</span><span class="tweet-handle">Active Node</span></div></div><div class="tweet-body" style="font-style:italic; color: #94a3b8;">Listening for live LDRRMC submissions and system updates...</div></div>`; }
+                    if (wall.children.length === 0) { wall.innerHTML = `<div class="tweet-card" style="cursor:default; padding: 12px; background: rgba(0,0,0,0.2); box-shadow: none;"><div class="tweet-header"><div class="tweet-avatar" style="background: rgba(255,255,255,0.1);"><i data-lucide="activity" style="width:16px;"></i></div><div class="tweet-meta"><span class="tweet-name">System Monitoring</span><span class="tweet-handle">Active Node</span></div></div><div class="tweet-body" style="font-style:italic; color: #94a3b8;">Listening for live LDRRMC submissions and system updates...</div></div>`; }
                     
                     lucide.createIcons({ attrs: { 'stroke-width': 1.5 } });
                 });
