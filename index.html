@@ -8,7 +8,7 @@
     <script src="https://unpkg.com/lucide@latest"></script>
     <style>
         :root {
-            /* DARK GLOSSY THEME VARIABLES */
+            /* DARK GLOSSY THEME VARIABLES - FIREBASE ORANGE ACCENT */
             --bg-page: #0f172a;         
             --bg-nav: rgba(15, 23, 42, 0.75);      
             --card-bg: rgba(15, 23, 42, 0.60); 
@@ -18,7 +18,7 @@
             --text-gray: #94a3b8;       
             --btn-dark: #1e293b;        
             --btn-dark-hover: #334155;
-            --accent: #3b82f6;          
+            --accent: #f97316;          
             --success: #10b981;
             --success-bg: rgba(16, 185, 129, 0.15);
             --warning: #f59e0b;
@@ -169,7 +169,7 @@
         .kpi-details .kpi-value { font-size: 24px; font-weight: 800; color: #ffffff; display: flex; align-items: baseline; gap: 6px; letter-spacing: -0.5px; text-shadow: 0 2px 4px rgba(0,0,0,0.5);}
         .kpi-details .kpi-sub { font-size: 9px; color: var(--success); font-weight: 700; background: var(--success-bg); padding: 3px 6px; border-radius: 6px; letter-spacing: 0.5px; text-transform: uppercase; box-shadow: 0 2px 4px rgba(0,0,0,0.3);}
 
-        .icon-blue i { color: #60a5fa; }
+        .icon-yellow i { color: #eab308; }
         .icon-orange i { color: #fb923c; }
         .icon-red i { color: #f87171; }
         .icon-purple i { color: #c084fc; }
@@ -190,7 +190,7 @@
 
         /* --- SITREP PANEL --- */
         .sitrep-panel { border-top: 4px solid var(--accent); position: relative; overflow: hidden; padding: 24px;}
-        .sitrep-panel::before { content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: radial-gradient(circle at top right, rgba(59, 130, 246, 0.15), transparent 60%); pointer-events: none; }
+        .sitrep-panel::before { content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: radial-gradient(circle at top right, rgba(249, 115, 22, 0.15), transparent 60%); pointer-events: none; }
         .data-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; z-index: 1; position: relative;}
         .data-item { display: flex; flex-direction: column; gap: 8px; background: transparent; }
         .data-item.full-width { grid-column: span 2; } 
@@ -243,7 +243,7 @@
         .btn { background-color: rgba(0,0,0,0.5); border: 1px solid rgba(255,255,255,0.15); color: #ffffff; padding: 6px 12px; border-radius: 6px; font-size: 10px; font-weight: 700; cursor: pointer; transition: var(--transition); display: inline-flex; align-items: center; justify-content: center; gap: 6px; box-shadow: 0 4px 10px rgba(0,0,0,0.2);}
         .btn:hover { background-color: rgba(255,255,255,0.15); border-color: rgba(255,255,255,0.4); box-shadow: 0 6px 15px rgba(0,0,0,0.4);}
         .btn-primary { background-color: var(--accent); color: #ffffff; border: none; padding: 8px 16px;}
-        .btn-primary:hover { background-color: #2563eb; box-shadow: 0 6px 20px rgba(59, 130, 246, 0.5); transform: translateY(-1px);}
+        .btn-primary:hover { background-color: #ea580c; box-shadow: 0 6px 20px rgba(249, 115, 22, 0.5); transform: translateY(-1px);}
         .btn-danger { background-color: rgba(239, 68, 68, 0.2); border: 1px solid rgba(239, 68, 68, 0.4); color: #fca5a5; }
         .btn-danger:hover { background-color: rgba(239, 68, 68, 0.4); color: #fef2f2; border-color: rgba(239, 68, 68, 0.6);}
         .modal-overlay { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: rgba(0, 0, 0, 0.85); backdrop-filter: blur(16px); display: flex; align-items: center; justify-content: center; z-index: 1000; opacity: 0; pointer-events: none; transition: var(--transition);}
@@ -259,13 +259,13 @@
         .form-group { margin-bottom: 12px; }
         .form-group label { display: block; font-size: 8.5px; font-weight: 800; color: #cbd5e1; margin-bottom: 6px; text-transform: uppercase; letter-spacing: 0.5px; text-shadow: 0 1px 2px rgba(0,0,0,0.5);}
         .form-control { width: 100%; background-color: rgba(0,0,0,0.5); border: 1px solid rgba(255,255,255,0.15); color: #ffffff; padding: 10px 14px; border-radius: 8px; font-size: 11px; outline: none; transition: var(--transition); font-weight: 500; box-shadow: inset 0 2px 4px rgba(0,0,0,0.3);}
-        .form-control:focus { border-color: var(--accent); background-color: rgba(0,0,0,0.7); box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.2), inset 0 2px 4px rgba(0,0,0,0.3); }
+        .form-control:focus { border-color: var(--accent); background-color: rgba(0,0,0,0.7); box-shadow: 0 0 0 4px rgba(249, 115, 22, 0.2), inset 0 2px 4px rgba(0,0,0,0.3); }
         .form-control option { background: var(--bg-page); color: var(--text-dark); }
         .uppercase-input { text-transform: uppercase; }
         textarea.form-control { resize: none; overflow: hidden; min-height: 38px; line-height: 1.5; }
         
         .advisory-wrapper { border: 1px solid rgba(255,255,255,0.15); border-radius: 8px; background-color: rgba(0,0,0,0.5); overflow: hidden; transition: var(--transition); box-shadow: inset 0 2px 4px rgba(0,0,0,0.3);}
-        .advisory-wrapper:focus-within { border-color: var(--accent); background-color: rgba(0,0,0,0.7); box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.2), inset 0 2px 4px rgba(0,0,0,0.3); }
+        .advisory-wrapper:focus-within { border-color: var(--accent); background-color: rgba(0,0,0,0.7); box-shadow: 0 0 0 4px rgba(249, 115, 22, 0.2), inset 0 2px 4px rgba(0,0,0,0.3); }
         .advisory-wrapper .form-control { border: none; border-radius: 0; background: transparent; box-shadow: none; padding-bottom: 6px; }
         .advisory-wrapper .source-input { width: 100%; border: none; background-color: transparent; border-top: 1px dashed rgba(255,255,255,0.2); padding: 8px 12px; font-size: 10px; color: var(--text-gray); outline: none; font-style: italic; font-weight: 500; transition: var(--transition);}
         
@@ -387,7 +387,7 @@
                 <!-- KPI DASHBOARD TOP ROW -->
                 <div class="kpi-grid">
                     <div class="kpi-card">
-                        <div class="kpi-icon icon-blue"><i data-lucide="map"></i></div>
+                        <div class="kpi-icon icon-yellow"><i data-lucide="map"></i></div>
                         <div class="kpi-details">
                             <h4>LGUs Monitored</h4>
                             <div class="kpi-value"><span id="kpiLguCount">18</span> <span style="font-size: 14px; color: var(--text-gray); font-weight: 600;">/ 18</span></div>
@@ -562,7 +562,7 @@
             <!-- --- ENCODING VIEW --- -->
             <div id="encodingView" class="view-section">
                 <div class="header" style="justify-content: flex-start; gap: 16px; align-items: center;">
-                    <div style="background: rgba(59, 130, 246, 0.15); padding: 10px; border-radius: 10px; border: 1px solid rgba(59, 130, 246, 0.3);"><i data-lucide="edit" style="width: 24px; height: 24px; color: var(--accent);"></i></div>
+                    <div style="background: rgba(249, 115, 22, 0.15); padding: 10px; border-radius: 10px; border: 1px solid rgba(249, 115, 22, 0.3);"><i data-lucide="edit" style="width: 24px; height: 24px; color: var(--accent);"></i></div>
                     <div class="header-title"><h1 style="text-shadow: none;">Data Encoding</h1><p style="text-shadow: none;">Select an agency below to securely encode situational data.</p></div>
                 </div>
 
@@ -821,7 +821,7 @@
             <!-- --- PDRRMO SITREP VIEW --- -->
             <div id="pdrrmoView" class="view-section">
                 <div class="header" style="justify-content: flex-start; gap: 16px; align-items: center;">
-                    <div style="background: rgba(59, 130, 246, 0.15); padding: 10px; border-radius: 10px; border: 1px solid rgba(59, 130, 246, 0.3);"><i data-lucide="file-check-2" style="width: 24px; height: 24px; color: var(--accent);"></i></div>
+                    <div style="background: rgba(249, 115, 22, 0.15); padding: 10px; border-radius: 10px; border: 1px solid rgba(249, 115, 22, 0.3);"><i data-lucide="file-check-2" style="width: 24px; height: 24px; color: var(--accent);"></i></div>
                     <div class="header-title"><h1 style="text-shadow: none;">PDRRMO SitRep & Advisory</h1><p style="text-shadow: none;">Generate and record the consolidated provincial status report.</p></div>
                 </div>
                 
@@ -939,7 +939,7 @@
             <!-- --- RECORDS VIEW --- -->
             <div id="recordsView" class="view-section">
                 <div class="header" style="justify-content: flex-start; gap: 16px; align-items: center;">
-                    <div style="background: rgba(59, 130, 246, 0.15); padding: 10px; border-radius: 10px; border: 1px solid rgba(59, 130, 246, 0.3);"><i data-lucide="folder-open" style="width: 24px; height: 24px; color: var(--accent);"></i></div>
+                    <div style="background: rgba(249, 115, 22, 0.15); padding: 10px; border-radius: 10px; border: 1px solid rgba(249, 115, 22, 0.3);"><i data-lucide="folder-open" style="width: 24px; height: 24px; color: var(--accent);"></i></div>
                     <div class="header-title"><h1 style="text-shadow: none;">LDRRMCs & Agencies Records</h1><p style="text-shadow: none;">View the latest recorded PDF files uploaded by Councils and Partners.</p></div>
                 </div>
                 
@@ -1159,7 +1159,7 @@
         function addTweetCard(title, data, isPdf = false) {
             const wall = document.getElementById('tweetWallSection');
             const avatarInitials = title.includes("City") ? "TC" : title.charAt(0);
-            const colors = ['linear-gradient(135deg, #3b82f6, #2563eb)', 'linear-gradient(135deg, #10b981, #059669)', 'linear-gradient(135deg, #f59e0b, #d97706)', 'linear-gradient(135deg, #ef4444, #dc2626)', 'linear-gradient(135deg, #8b5cf6, #7c3aed)', 'linear-gradient(135deg, #ec4899, #db2777)', 'linear-gradient(135deg, #06b6d4, #0891b2)'];
+            const colors = ['linear-gradient(135deg, #f97316, #ea580c)', 'linear-gradient(135deg, #10b981, #059669)', 'linear-gradient(135deg, #f59e0b, #d97706)', 'linear-gradient(135deg, #ef4444, #dc2626)', 'linear-gradient(135deg, #8b5cf6, #7c3aed)', 'linear-gradient(135deg, #ec4899, #db2777)', 'linear-gradient(135deg, #06b6d4, #0891b2)'];
             const charCode = title.charCodeAt(0) || 0; const avatarColor = colors[charCode % colors.length];
             let inc = extractLatestUpdateText(data.incidents); let oth = extractLatestUpdateText(data.other);
             let statusArr = []; if (inc) statusArr.push(inc); if (oth) statusArr.push(oth);
@@ -1173,7 +1173,7 @@
             newCard.innerHTML = `
                 <div class="tweet-header"><div class="tweet-avatar" style="background: ${avatarColor}; box-shadow: 0 4px 10px rgba(0,0,0, 0.3);">${avatarInitials}</div><div class="tweet-meta"><span class="tweet-name">${title}</span><span class="tweet-handle">${handleText}</span></div></div>
                 <div class="tweet-body"><span class="status-title">General Status:</span><div class="status-text">${generalStatus}</div></div>
-                <div class="tweet-footer" style="padding-top: 12px; margin-top: 10px; border-top: 1px solid rgba(255,255,255,0.1); display: flex; justify-content: flex-start; align-items: center;"><div style="display: inline-flex; align-items: center; gap: 6px; font-size: 9.5px; font-weight: 700; color: #60a5fa; background: rgba(59, 130, 246, 0.1); padding: 6px 12px; border-radius: 8px; border: 1px solid rgba(59, 130, 246, 0.2);"><i data-lucide="clock" style="width: 12px; height: 12px; color: #3b82f6;"></i>${timeString}</div></div>
+                <div class="tweet-footer" style="padding-top: 12px; margin-top: 10px; border-top: 1px solid rgba(255,255,255,0.1); display: flex; justify-content: flex-start; align-items: center;"><div style="display: inline-flex; align-items: center; gap: 6px; font-size: 9.5px; font-weight: 700; color: #fb923c; background: rgba(249, 115, 22, 0.1); padding: 6px 12px; border-radius: 8px; border: 1px solid rgba(249, 115, 22, 0.2);"><i data-lucide="clock" style="width: 12px; height: 12px; color: #f97316;"></i>${timeString}</div></div>
             `;
             wall.prepend(newCard);
         }
