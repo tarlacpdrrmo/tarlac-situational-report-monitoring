@@ -4,8 +4,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Tarlac Provincial Disaster Risk Reduction and Management Office | Command Center Dashboard</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Space+Mono:ital,wght@0,400;0,700;1,400&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+    
     <script src="https://unpkg.com/lucide@latest"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+
     <style>
         :root {
             /* DARK GLOSSY THEME VARIABLES - FIREBASE ORANGE ACCENT */
@@ -103,10 +107,10 @@
         /* --- DYNAMIC CUSTOM SCROLLBAR --- */
         .main-content { flex: 1; padding: 24px 36px; overflow-y: auto; scroll-behavior: smooth; }
         
-        .main-content::-webkit-scrollbar { width: 8px; }
-        .main-content::-webkit-scrollbar-track { background: transparent; }
-        .main-content::-webkit-scrollbar-thumb { background-color: rgba(255,255,255,0.15); border-radius: 20px; border: 2px solid var(--bg-page); transition: background-color 0.3s ease; }
-        .main-content::-webkit-scrollbar-thumb:hover { background-color: rgba(255,255,255,0.3); }
+        .main-content::-webkit-scrollbar, .weather-drawer-content::-webkit-scrollbar { width: 8px; }
+        .main-content::-webkit-scrollbar-track, .weather-drawer-content::-webkit-scrollbar-track { background: transparent; }
+        .main-content::-webkit-scrollbar-thumb, .weather-drawer-content::-webkit-scrollbar-thumb { background-color: rgba(255,255,255,0.15); border-radius: 20px; border: 2px solid var(--bg-page); transition: background-color 0.3s ease; }
+        .main-content::-webkit-scrollbar-thumb:hover, .weather-drawer-content::-webkit-scrollbar-thumb:hover { background-color: rgba(255,255,255,0.3); }
 
         .view-section { display: none; max-width: 1600px; margin: 0 auto; }
         .view-section.active { display: block; animation: slideUpFade 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
@@ -115,7 +119,118 @@
         .header-title h1 { font-size: 24px; font-weight: 800; color: #ffffff; display: flex; align-items: center; gap: 10px; letter-spacing: -0.5px; text-shadow: 0 2px 10px rgba(0,0,0,0.8); }
         .header-title p { font-size: 11.5px; color: var(--text-gray); margin-top: 4px; font-weight: 500; text-shadow: 0 1px 4px rgba(0,0,0,0.8); }
 
-        /* --- WEATHER HERO WIDGET --- */
+        /* --- PULL-OUT WEATHER DRAWER SYSTEM --- */
+        .weather-drawer {
+            position: fixed;
+            top: 0; left: 0; width: 100vw; height: 95vh;
+            background: rgba(10, 14, 26, 0.98);
+            backdrop-filter: blur(40px); -webkit-backdrop-filter: blur(40px);
+            z-index: 1000;
+            transform: translateY(-100%);
+            transition: transform 0.6s cubic-bezier(0.25, 1, 0.1, 1);
+            display: flex; flex-direction: column;
+            border-bottom: 2px solid var(--accent);
+            box-shadow: 0 20px 60px rgba(0,0,0,0.8);
+            overflow: hidden;
+        }
+        .weather-drawer.open { transform: translateY(0); }
+        .weather-drawer-header {
+            padding: 20px 36px;
+            display: flex; justify-content: space-between; align-items: center;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+            background: linear-gradient(135deg, rgba(15,23,42,0.9) 0%, rgba(30,41,59,0.9) 100%);
+        }
+        .weather-drawer-header h2 {
+            font-size: 14px; font-weight: 800; color: #ffffff; display: flex; align-items: center; gap: 10px;
+            text-transform: uppercase; letter-spacing: 0.5px;
+        }
+        .weather-drawer-header h2 i { color: var(--accent); }
+        .weather-drawer-content {
+            flex: 1; overflow-y: auto; padding-bottom: 40px;
+        }
+
+        /* --- WEATHER DRAWER INTERNAL STYLES (SCOPED) --- */
+        #weather-drawer-body {
+            --w-panel: rgba(17, 24, 39, 0.7);
+            --w-panel2: rgba(26, 34, 54, 0.8);
+            --w-border: rgba(255,255,255,0.1);
+            --w-accent-hot: #ff6b35;
+            --w-accent-warm: #fbbf24;
+            --w-accent-cool: #38bdf8;
+            --w-accent-dew: #34d399;
+            --w-accent-rh: #a78bfa;
+            --w-accent-hi: #f87171;
+            --w-text: #e2e8f0;
+            --w-muted: #64748b;
+            --w-label: #94a3b8;
+            --w-font-mono: 'Space Mono', monospace;
+            --w-font-body: 'DM Sans', sans-serif;
+            font-family: var(--w-font-body);
+            color: var(--w-text);
+        }
+        #weather-drawer-body .live-panel {
+            background: linear-gradient(135deg, rgba(15,30,53,0.8) 0%, rgba(10,22,40,0.8) 100%);
+            border-bottom: 1px solid var(--w-border); padding: 16px 36px;
+            display: flex; align-items: center; gap: 32px; flex-wrap: wrap;
+        }
+        #weather-drawer-body .live-badge {
+            display: flex; align-items: center; gap: 8px; font-family: var(--w-font-mono); font-size: 10px; color: var(--w-accent-cool); letter-spacing: 0.1em;
+        }
+        #weather-drawer-body .live-dot {
+            width: 8px; height: 8px; border-radius: 50%; background: var(--w-accent-cool); animation: pulse 2s infinite;
+        }
+        @keyframes pulse { 0%,100% { opacity: 1; transform: scale(1); } 50% { opacity: 0.4; transform: scale(0.8); } }
+        
+        #weather-drawer-body .live-metrics { display: flex; gap: 24px; flex-wrap: wrap; align-items: center; }
+        #weather-drawer-body .live-metric { display: flex; flex-direction: column; gap: 2px; }
+        #weather-drawer-body .live-metric .lm-label { font-family: var(--w-font-mono); font-size: 10px; color: var(--w-muted); letter-spacing: 0.08em; text-transform: uppercase; }
+        #weather-drawer-body .live-metric .lm-value { font-family: var(--w-font-mono); font-size: 22px; font-weight: 700; line-height: 1; }
+        #weather-drawer-body .live-metric .lm-sub { font-size: 11px; color: var(--w-muted); }
+        #weather-drawer-body .live-condition { display: flex; flex-direction: column; gap: 2px; }
+        #weather-drawer-body .live-condition .lc-text { font-family: var(--w-font-mono); font-size: 12px; color: var(--w-label); }
+        #weather-drawer-body .live-condition .lc-time { font-size: 10px; color: #cbd5e1; font-family: var(--w-font-mono); }
+        #weather-drawer-body .live-error { font-family: var(--w-font-mono); font-size: 11px; color: var(--w-muted); }
+        #weather-drawer-body .live-separator { width: 1px; height: 40px; background: var(--w-border); }
+
+        #weather-drawer-body .w-controls { padding: 20px 36px; display: flex; gap: 12px; flex-wrap: wrap; align-items: center; background: var(--w-panel); border-bottom: 1px solid var(--w-border); }
+        #weather-drawer-body .w-controls label { font-size: 12px; color: var(--w-muted); font-family: var(--w-font-mono); margin-right: 4px; }
+        #weather-drawer-body .month-btn { background: var(--w-panel2); border: 1px solid var(--w-border); color: var(--w-label); padding: 6px 14px; border-radius: 6px; cursor: pointer; font-family: var(--w-font-mono); font-size: 12px; transition: all 0.15s; }
+        #weather-drawer-body .month-btn:hover { border-color: var(--w-accent-cool); color: var(--w-accent-cool); }
+        #weather-drawer-body .month-btn.active { background: var(--w-accent-cool); color: #0a0e1a; border-color: var(--w-accent-cool); font-weight: 700; }
+        #weather-drawer-body .var-toggle { display: flex; gap: 8px; flex-wrap: wrap; margin-left: auto; }
+        #weather-drawer-body .toggle-btn { background: var(--w-panel2); border: 1px solid var(--w-border); color: var(--w-label); padding: 5px 12px; border-radius: 6px; cursor: pointer; font-size: 11px; font-family: var(--w-font-mono); transition: all 0.15s; display: flex; align-items: center; gap: 6px; }
+        #weather-drawer-body .toggle-btn .dot { width: 8px; height: 8px; border-radius: 50%; }
+        #weather-drawer-body .toggle-btn.active { opacity: 1; }
+        #weather-drawer-body .toggle-btn.inactive { opacity: 0.35; }
+
+        #weather-drawer-body .stats-row { display: grid; grid-template-columns: repeat(auto-fit, minmax(170px, 1fr)); gap: 1px; background: var(--w-border); border-bottom: 1px solid var(--w-border); }
+        #weather-drawer-body .stat-card { background: var(--w-panel); padding: 20px 24px; display: flex; flex-direction: column; gap: 6px; }
+        #weather-drawer-body .stat-card .s-label { font-family: var(--w-font-mono); font-size: 10px; letter-spacing: 0.1em; color: var(--w-muted); text-transform: uppercase; }
+        #weather-drawer-body .stat-card .s-value { font-family: var(--w-font-mono); font-size: 26px; font-weight: 700; line-height: 1; }
+        #weather-drawer-body .stat-card .s-sub { font-size: 11px; color: var(--w-muted); }
+
+        #weather-drawer-body .charts-area { padding: 24px 36px; display: flex; flex-direction: column; gap: 24px; max-width: 1600px; margin: 0 auto;}
+        #weather-drawer-body .chart-block { background: var(--w-panel); border: 1px solid var(--w-border); border-radius: 10px; padding: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.5);}
+        #weather-drawer-body .chart-block h3 { font-family: var(--w-font-mono); font-size: 12px; color: var(--w-label); letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 16px; display: flex; align-items: center; gap: 10px; }
+        #weather-drawer-body .chart-block h3 .tag { background: var(--w-panel2); border: 1px solid var(--w-border); padding: 2px 8px; border-radius: 4px; font-size: 10px; color: var(--w-muted); }
+        #weather-drawer-body .chart-wrap { position: relative; height: 240px; }
+
+        #weather-drawer-body .rain-stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 1px; background: var(--w-border); border: 1px solid var(--w-border); border-radius: 10px; overflow: hidden; box-shadow: 0 10px 30px rgba(0,0,0,0.5);}
+        #weather-drawer-body .rain-stat { background: var(--w-panel); padding: 16px 20px; display: flex; flex-direction: column; gap: 4px; }
+        #weather-drawer-body .rain-stat .rs-label { font-family: var(--w-font-mono); font-size: 10px; letter-spacing: 0.1em; color: var(--w-muted); text-transform: uppercase; }
+        #weather-drawer-body .rain-stat .rs-value { font-family: var(--w-font-mono); font-size: 24px; font-weight: 700; color: var(--w-accent-cool); line-height: 1; }
+        #weather-drawer-body .rain-stat .rs-sub { font-size: 11px; color: var(--w-muted); }
+
+        #weather-drawer-body .hi-info { background: rgba(26, 26, 46, 0.8); border: 1px solid rgba(45, 45, 94, 0.8); border-radius: 8px; padding: 12px 18px; font-size: 11px; color: #7c85b8; font-family: var(--w-font-mono); line-height: 1.6; }
+
+        #weather-drawer-body .table-block { background: var(--w-panel); border: 1px solid var(--w-border); border-radius: 10px; overflow: hidden; box-shadow: 0 10px 30px rgba(0,0,0,0.5);}
+        #weather-drawer-body .table-block h3 { font-family: var(--w-font-mono); font-size: 12px; color: var(--w-label); letter-spacing: 0.08em; text-transform: uppercase; padding: 16px 20px; border-bottom: 1px solid var(--w-border); margin:0;}
+        #weather-drawer-body .hi-legend { display: flex; gap: 16px; flex-wrap: wrap; padding: 12px 20px; border-top: 1px solid var(--w-border); font-size: 11px; font-family: var(--w-font-mono); color: var(--w-muted); }
+        #weather-drawer-body .hi-legend span { display: flex; align-items: center; gap: 6px; }
+        #weather-drawer-body .hi-legend .ld { width: 10px; height: 10px; border-radius: 2px; }
+        /* --- END WEATHER DRAWER Internal Styles --- */
+
+        /* --- WEATHER HERO WIDGET (Main Dashboard) --- */
         .weather-hero-widget {
             background: transparent; border-radius: 20px; padding: 24px 16px 28px 16px; margin-bottom: 20px;
             position: relative; color: #fff; opacity: 0; animation: slideUpFade 0.4s ease forwards 0.1s;
@@ -199,13 +314,13 @@
         .data-value { padding: 2px 0; color: var(--text-dark); border: none; }
         
         .placeholder-text { font-family: 'Inter', sans-serif; font-size: 11.5px; color: var(--text-gray); opacity: 0.8; font-style: italic; font-weight: 500; }
-        .meta-badge { font-family: 'Plus Jakarta Sans', sans-serif; display: inline-flex; align-items: center; background-color: rgba(0,0,0,0.3); border: 1px solid rgba(239, 68, 68, 0.3); border-left: 3px solid var(--danger); color: #fca5a5; font-size: 8.5px; font-weight: 800; padding: 4px 8px; border-radius: 6px; margin-bottom: 10px; letter-spacing: 0.5px; text-transform: uppercase; }
+        .meta-badge { display: inline-flex; align-items: center; background-color: rgba(0,0,0,0.3); border: 1px solid rgba(239, 68, 68, 0.3); border-left: 3px solid var(--danger); color: #fca5a5; font-size: 8.5px; font-weight: 800; padding: 4px 8px; border-radius: 6px; margin-bottom: 10px; letter-spacing: 0.5px; text-transform: uppercase; }
         .meta-source { font-family: 'Inter', sans-serif; display: flex; align-items: center; font-size: 9px; color: var(--text-gray); font-style: italic; font-weight: 500; margin-top: 8px; border-top: 1px dashed rgba(255,255,255,0.2); padding-top: 8px; }
         .standard-text { font-family: 'Inter', sans-serif; font-size: 11.5px; color: #f1f5f9; line-height: 1.5; margin-bottom: 10px; font-weight: 500; text-shadow: 0 1px 2px rgba(0,0,0,0.4); }
         
         .parsed-table-wrapper { width: 100%; overflow-x: auto; margin: 12px 0; border-radius: 8px; border: 1px solid var(--card-border); box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.5); background: rgba(0,0,0,0.2); }
         .parsed-table { width: 100%; border-collapse: collapse; text-align: left; background: transparent; }
-        .parsed-table th { font-family: 'Plus Jakarta Sans', sans-serif; background-color: rgba(0,0,0,0.6); font-size: 9px; font-weight: 800; color: var(--text-gray); padding: 10px 12px; border-bottom: 1px solid var(--card-border); text-transform: uppercase; letter-spacing: 0.5px; }
+        .parsed-table th { background-color: rgba(0,0,0,0.6); font-size: 9px; font-weight: 800; color: var(--text-gray); padding: 10px 12px; border-bottom: 1px solid var(--card-border); text-transform: uppercase; letter-spacing: 0.5px; }
         .parsed-table td { font-family: 'Inter', sans-serif; padding: 10px 12px; font-size: 11px; font-weight: 500; color: #f1f5f9; border-bottom: 1px solid rgba(255,255,255,0.05); line-height: 1.4; vertical-align: top;}
         .parsed-table tbody tr:hover td { background-color: rgba(255,255,255,0.08); }
 
@@ -246,7 +361,7 @@
         .btn-primary:hover { background-color: #ea580c; box-shadow: 0 6px 20px rgba(249, 115, 22, 0.5); transform: translateY(-1px);}
         .btn-danger { background-color: rgba(239, 68, 68, 0.2); border: 1px solid rgba(239, 68, 68, 0.4); color: #fca5a5; }
         .btn-danger:hover { background-color: rgba(239, 68, 68, 0.4); color: #fef2f2; border-color: rgba(239, 68, 68, 0.6);}
-        .modal-overlay { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: rgba(0, 0, 0, 0.85); backdrop-filter: blur(16px); display: flex; align-items: center; justify-content: center; z-index: 1000; opacity: 0; pointer-events: none; transition: var(--transition);}
+        .modal-overlay { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: rgba(0, 0, 0, 0.85); backdrop-filter: blur(16px); display: flex; align-items: center; justify-content: center; z-index: 2000; opacity: 0; pointer-events: none; transition: var(--transition);}
         .modal-overlay.show { opacity: 1; pointer-events: auto; }
         .modal-card { width: 500px; max-width: 90%; transform: translateY(20px) scale(0.95); transition: var(--transition); background: rgba(15, 23, 42, 0.9); border: 1px solid rgba(255,255,255,0.15);}
         .modal-overlay.show .modal-card { transform: translateY(0) scale(1); }
@@ -320,7 +435,6 @@
     <div id="dynamic-bg"></div>
     <div id="bg-vignette"></div>
 
-    <!-- Modals -->
     <div id="saveModal" class="modal-overlay">
         <div class="modal-card" style="text-align: center; width: 300px;">
             <div style="width: 48px; height: 48px; background: rgba(0,0,0,0.5); border-radius: 12px; display: flex; align-items: center; justify-content: center; margin: 0 auto 16px auto; border: 1px solid rgba(255,255,255,0.1);">
@@ -348,9 +462,116 @@
         </div>
     </div>
 
+    <div id="weatherDrawer" class="weather-drawer">
+        <div class="weather-drawer-header">
+            <h2><i data-lucide="cloud-lightning"></i> PAGASA & AccuWeather Analytics</h2>
+            <button class="btn-icon-only" onclick="toggleWeatherDrawer()"><i data-lucide="x"></i></button>
+        </div>
+        <div class="weather-drawer-content" id="weather-drawer-body">
+            
+            <div class="live-panel" id="live-panel">
+              <div class="live-badge"><div class="live-dot"></div>LIVE · ACCUWEATHER</div>
+              <div class="live-separator"></div>
+              <div id="live-content" class="live-metrics">
+                <div class="live-error">Fetching current conditions…</div>
+              </div>
+            </div>
+
+            <div class="w-controls">
+              <label>MONTH:</label>
+              <button class="month-btn active" onclick="setWeatherMonth('ALL')">ALL</button>
+              <button class="month-btn" onclick="setWeatherMonth(0)">JAN</button>
+              <button class="month-btn" onclick="setWeatherMonth(1)">FEB</button>
+              <button class="month-btn" onclick="setWeatherMonth(2)">MAR</button>
+              <button class="month-btn" onclick="setWeatherMonth(3)">APR</button>
+
+              <div class="var-toggle">
+                <button class="toggle-btn active" id="btn-tmax" onclick="toggleWeatherVar('tmax')">
+                  <span class="dot" style="background:#ff6b35"></span>T MAX
+                </button>
+                <button class="toggle-btn active" id="btn-tmin" onclick="toggleWeatherVar('tmin')">
+                  <span class="dot" style="background:#38bdf8"></span>T MIN
+                </button>
+                <button class="toggle-btn active" id="btn-tdry" onclick="toggleWeatherVar('tdry')">
+                  <span class="dot" style="background:#fbbf24"></span>DRY BULB
+                </button>
+                <button class="toggle-btn active" id="btn-dew" onclick="toggleWeatherVar('dew')">
+                  <span class="dot" style="background:#34d399"></span>DEW PT
+                </button>
+                <button class="toggle-btn active" id="btn-hi" onclick="toggleWeatherVar('hi')">
+                  <span class="dot" style="background:#f87171"></span>HEAT IDX
+                </button>
+              </div>
+            </div>
+
+            <div class="stats-row" id="w-stats-row"></div>
+
+            <div class="charts-area">
+              <div class="hi-info" id="w-hi-info"></div>
+
+              <div class="chart-block">
+                <h3>RAINFALL <span class="tag">mm · Daily Totals (T = Trace &lt;0.1mm)</span></h3>
+                <div class="chart-wrap"><canvas id="rainChart"></canvas></div>
+              </div>
+
+              <div class="rain-stats" id="w-rain-stats"></div>
+
+              <div class="chart-block">
+                <h3>TEMPERATURE <span class="tag">°C · MAX / MIN / DRY BULB / DEW POINT</span></h3>
+                <div class="chart-wrap"><canvas id="tempChart"></canvas></div>
+              </div>
+
+              <div class="chart-block">
+                <h3>HEAT INDEX <span class="tag">°C · Rothfusz Regression / PAGASA Scale</span></h3>
+                <div class="chart-wrap"><canvas id="hiChart"></canvas></div>
+              </div>
+
+              <div class="table-block" id="muni-hi-section">
+                <h3 style="display:flex;align-items:center;gap:12px;flex-wrap:wrap;">
+                  MUNICIPAL REAL FEEL / HEAT INDEX
+                  <span class="tag" style="background: var(--w-panel); color: var(--text-gray);">TARLAC PROVINCE · ESTIMATED CONDITIONS</span>
+                  <div style="margin-left:auto;display:flex;align-items:center;gap:10px;">
+                    <select id="muni-select" onchange="renderMuniHI()" style="
+                      background:var(--w-panel2); border:1px solid var(--w-border); color:var(--w-label);
+                      padding:5px 10px; border-radius:6px; font-family:var(--w-font-mono); font-size:11px;
+                      cursor:pointer; outline:none;">
+                      <option value="ALL">ALL MUNICIPALITIES</option>
+                      <option value="Tarlac City">Tarlac City</option>
+                      <option value="Anao">Anao</option>
+                      <option value="Bamban">Bamban</option>
+                      <option value="Camiling">Camiling</option>
+                      <option value="Capas">Capas</option>
+                      <option value="Concepcion">Concepcion</option>
+                      <option value="Gerona">Gerona</option>
+                      <option value="La Paz">La Paz</option>
+                      <option value="Mayantoc">Mayantoc</option>
+                      <option value="Moncada">Moncada</option>
+                      <option value="Paniqui">Paniqui</option>
+                      <option value="Pura">Pura</option>
+                      <option value="Ramos">Ramos</option>
+                      <option value="San Clemente">San Clemente</option>
+                      <option value="San Jose">San Jose</option>
+                      <option value="San Manuel">San Manuel</option>
+                      <option value="Santa Ignacia">Santa Ignacia</option>
+                      <option value="Victoria">Victoria</option>
+                    </select>
+                  </div>
+                </h3>
+                <div id="muni-hi-content" style="padding:16px 20px;"></div>
+                <div class="hi-legend">
+                  <span><span class="ld" style="background:#f87171"></span> DANGER (≥41°C)</span>
+                  <span><span class="ld" style="background:#fbbf24"></span> EXTREME CAUTION (33–41°C)</span>
+                  <span><span class="ld" style="background:#86efac"></span> CAUTION (27–33°C)</span>
+                  <span><span class="ld" style="background:#475569"></span> NO CONCERN (&lt;27°C)</span>
+                  <span style="margin-left:auto;font-size:10px;color:#cbd5e1;">* Estimates based on elevation offsets from Hda. Luisita PAGASA station</span>
+                </div>
+              </div>
+            </div>
+            
+        </div>
+    </div>
     <div class="app-container">
         
-        <!-- MODERNIZED TOP NAVIGATION PANEL -->
         <nav class="top-nav">
             <div class="nav-brand" onclick="switchToView('homeView')">
                 <div class="brand-logo"><img src="./clean.jpg" alt="PDRRMO Logo"></div>
@@ -368,13 +589,13 @@
             </ul>
 
             <div class="nav-actions">
+                <button class="btn-icon-only" onclick="toggleWeatherDrawer()" title="Weather Analytics"><i data-lucide="cloud-lightning" style="width: 16px; height: 16px; color: #38bdf8;"></i></button>
                 <button class="btn-icon-only" onclick="window.print()" title="Print Dashboard"><i data-lucide="printer" style="width: 16px; height: 16px;"></i></button>
             </div>
         </nav>
 
         <main class="main-content">
             
-            <!-- --- DASHBOARD VIEW --- -->
             <div id="homeView" class="view-section active">
                 
                 <div class="header">
@@ -384,7 +605,6 @@
                     </div>
                 </div>
 
-                <!-- KPI DASHBOARD TOP ROW -->
                 <div class="kpi-grid">
                     <div class="kpi-card">
                         <div class="kpi-icon icon-yellow"><i data-lucide="map"></i></div>
@@ -419,7 +639,6 @@
                 <div class="dashboard-container">
                     <div class="main-report">
 
-                        <!-- --- NEW WEATHER HERO WIDGET --- -->
                         <div id="hero-weather-widget" class="weather-hero-widget">
                             <div class="wh-top">
                                 <i data-lucide="map-pin"></i> <span id="heroLocation">Tarlac City, Philippines</span>
@@ -452,15 +671,11 @@
                             </div>
                             
                             <div class="wh-forecast">
-                                <!-- Dynamic SVG curve generated in JS -->
                                 <svg id="heroForecastSvg" class="wh-forecast-chart" viewBox="0 0 1000 60" preserveAspectRatio="none"></svg>
-                                <div class="wh-forecast-days" id="heroForecastDays">
-                                    <!-- Days dynamically injected -->
-                                </div>
+                                <div class="wh-forecast-days" id="heroForecastDays"></div>
                             </div>
                         </div>
                         
-                        <!-- CENTRAL SITREP PANEL -->
                         <div class="middle-grid">
                             <div class="sitrep-panel">
                                 <div style="display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 20px; padding-bottom: 12px; border-bottom: 1px solid rgba(255,255,255,0.1);">
@@ -468,8 +683,7 @@
                                         <i data-lucide="file-bar-chart" style="color: var(--accent); width: 16px; height: 16px;"></i> CONSOLIDATED SITREP & ADVISORY
                                     </h2>
                                     <div class="last-updated" style="font-size: 10px; color: var(--text-gray); text-shadow: 0 1px 2px rgba(0,0,0,0.8);">Status: <span id="generatedTimestamp" style="color: #fff; font-weight: 700;">Initializing Database...</span></div>
-                                </div>
-                                                                                                                                                                                                        
+                                </div>                                                                                                                                                                                                                                                                   
                                 <div class="data-grid">
                                     <div class="data-item full-width">
                                         <label class="data-label"><i data-lucide="quote"></i> OUTLINE (SYNOPSIS)</label>
@@ -495,14 +709,12 @@
                             </div>
                         </div>
 
-                        <!-- 3-COLUMN LGU MONITORING GRID -->
                         <div class="district-container">
                             <h3 style="font-size: 12px; font-weight: 800; color: var(--text-dark); margin-bottom: 16px; text-transform: uppercase; letter-spacing: 0.5px; display: flex; align-items: center; gap: 8px; text-shadow: 0 1px 4px rgba(0,0,0,0.8);">
                                 <i data-lucide="map-pin" style="color: var(--accent); width: 14px; height: 14px;"></i> LDRRMCs LIVE REPORTING STATUS
                             </h3>
                             
                             <div class="district-grid">
-                                <!-- District 1 -->
                                 <div class="district-column">
                                     <div class="district-header"><i data-lucide="layout-grid"></i> 1ST DISTRICT</div>
                                     <div class="lgu-item" onclick="viewLguDetails('Anao', 'Anao MDRRMO')"><div class="lgu-info"><div class="lgu-name">Anao<span>MDRRMO</span></div></div><div class="status-badge pending skeleton-box" id="status-Anao"></div></div>
@@ -517,7 +729,6 @@
                                     <div class="lgu-item" onclick="viewLguDetails('SantaIgnacia', 'Santa Ignacia MDRRMO')"><div class="lgu-info"><div class="lgu-name">Santa Ignacia<span>MDRRMO</span></div></div><div class="status-badge pending skeleton-box" id="status-SantaIgnacia"></div></div>
                                 </div>
                                 
-                                <!-- District 2 -->
                                 <div class="district-column">
                                     <div class="district-header"><i data-lucide="layout-grid"></i> 2ND DISTRICT</div>
                                     <div class="lgu-item" onclick="viewLguDetails('Gerona', 'Gerona MDRRMO')"><div class="lgu-info"><div class="lgu-name">Gerona<span>MDRRMO</span></div></div><div class="status-badge pending skeleton-box" id="status-Gerona"></div></div>
@@ -526,7 +737,6 @@
                                     <div class="lgu-item" onclick="viewLguDetails('Victoria', 'Victoria MDRRMO')"><div class="lgu-info"><div class="lgu-name">Victoria<span>MDRRMO</span></div></div><div class="status-badge pending skeleton-box" id="status-Victoria"></div></div>
                                 </div>
                                 
-                                <!-- District 3 -->
                                 <div class="district-column">
                                     <div class="district-header"><i data-lucide="layout-grid"></i> 3RD DISTRICT</div>
                                     <div class="lgu-item" onclick="viewLguDetails('Bamban', 'Bamban MDRRMO')"><div class="lgu-info"><div class="lgu-name">Bamban<span>MDRRMO</span></div></div><div class="status-badge pending skeleton-box" id="status-Bamban"></div></div>
@@ -539,7 +749,6 @@
 
                     </div>
 
-                    <!-- SIDE ACTIVITY FEED -->
                     <div class="side-feed">
                         <div class="panel-card" style="padding: 18px; background: rgba(15,23,42,0.85);">
                             <div class="live-feed-header">
@@ -559,7 +768,6 @@
                 </div>
             </div>
 
-            <!-- --- ENCODING VIEW --- -->
             <div id="encodingView" class="view-section">
                 <div class="header" style="justify-content: flex-start; gap: 16px; align-items: center;">
                     <div style="background: rgba(249, 115, 22, 0.15); padding: 10px; border-radius: 10px; border: 1px solid rgba(249, 115, 22, 0.3);"><i data-lucide="edit" style="width: 24px; height: 24px; color: var(--accent);"></i></div>
@@ -603,7 +811,6 @@
 
                     <div id="dynamicWorkflowArea">
                         
-                        <!-- Form: Council -->
                         <div id="formCouncil" class="workflow-form">
                             <hr style="border:0; border-top: 1px solid rgba(255,255,255,0.1); margin: 24px 0;">
                             <h3 style="font-size: 13px; font-weight: 800; color: #ffffff; margin-bottom: 16px;">PDRRMC Council Action</h3>
@@ -626,7 +833,6 @@
                             </div>
                         </div>
                         
-                        <!-- Form: Partner -->
                         <div id="formPartner" class="workflow-form">
                             <hr style="border:0; border-top: 1px solid rgba(255,255,255,0.1); margin: 24px 0;">
                             <h3 style="font-size: 13px; font-weight: 800; color: #ffffff; margin-bottom: 16px;">Partner Agency Report</h3>
@@ -649,7 +855,6 @@
                             </div>
                         </div>
 
-                        <!-- Form: LDRRMC -->
                         <div id="formLdrmc" class="workflow-form">
                             <hr style="border:0; border-top: 1px solid rgba(255,255,255,0.1); margin: 24px 0;">
                             <h3 style="font-size: 13px; font-weight: 800; color: #ffffff; margin-bottom: 16px;">Fill Out The Information</h3>
@@ -818,7 +1023,6 @@
                 </div>
             </div>
 
-            <!-- --- PDRRMO SITREP VIEW --- -->
             <div id="pdrrmoView" class="view-section">
                 <div class="header" style="justify-content: flex-start; gap: 16px; align-items: center;">
                     <div style="background: rgba(249, 115, 22, 0.15); padding: 10px; border-radius: 10px; border: 1px solid rgba(249, 115, 22, 0.3);"><i data-lucide="file-check-2" style="width: 24px; height: 24px; color: var(--accent);"></i></div>
@@ -936,7 +1140,6 @@
                 </div>
             </div>
 
-            <!-- --- RECORDS VIEW --- -->
             <div id="recordsView" class="view-section">
                 <div class="header" style="justify-content: flex-start; gap: 16px; align-items: center;">
                     <div style="background: rgba(249, 115, 22, 0.15); padding: 10px; border-radius: 10px; border: 1px solid rgba(249, 115, 22, 0.3);"><i data-lucide="folder-open" style="width: 24px; height: 24px; color: var(--accent);"></i></div>
@@ -988,7 +1191,7 @@
 
         navItems.forEach(item => { item.addEventListener('click', () => switchToView(item.getAttribute('data-target'))); });
 
-        // --- WEATHER HELPER FUNCTION ---
+        // --- OPEN-METEO WEATHER HELPER FUNCTION ---
         function getWeatherDataInfo(code, isDay, temp) {
             let desc = '', icon = 'sun', iconColor = '#facc15', bgUrl = '';
             if (temp >= 35) { 
@@ -1016,10 +1219,8 @@
             return { desc, icon, iconColor, bgUrl };
         }
 
-        // --- NEW DYNAMIC 6-DAY WEATHER SYSTEM ---
         async function fetchRealTimeWeather() {
             try {
-                // Fetching extended 7-day data to build the forecast curve
                 const response = await fetch('https://api.open-meteo.com/v1/forecast?latitude=15.4802&longitude=120.5979&current_weather=true&daily=weathercode,temperature_2m_max,temperature_2m_min&timezone=Asia%2FSingapore');
                 const data = await response.json();
                 
@@ -1029,37 +1230,27 @@
                     const isDay = data.current_weather.is_day;
                     const weatherInfo = getWeatherDataInfo(code, isDay, temp);
 
-                    // Crossfade Background
                     const bgElement = document.getElementById('dynamic-bg');
                     bgElement.style.opacity = '0';
                     setTimeout(() => { bgElement.style.backgroundImage = `url('${weatherInfo.bgUrl}')`; bgElement.style.opacity = '1'; }, 500);
 
-                    // Update the massive Weather Hero Widget
-                    if (data.daily) {
-                        updateHeroWidget(data.current_weather, data.daily, weatherInfo);
-                    }
-
+                    if (data.daily) { updateHeroWidget(data.current_weather, data.daily, weatherInfo); }
                     lucide.createIcons({ attrs: { 'stroke-width': 1.5 } });
                 }
-            } catch(err) {
-                console.error("Failed to load real-time weather", err);
-            }
+            } catch(err) { console.error("Failed to load real-time weather", err); }
         }
 
         function updateHeroWidget(current, daily, info) {
-            
             document.getElementById('heroTempMain').innerText = `${Math.round(current.temperature)}°`;
             document.getElementById('heroTempH').innerText = `H ${Math.round(daily.temperature_2m_max[0])}°`;
             document.getElementById('heroTempL').innerText = `L ${Math.round(daily.temperature_2m_min[0])}°`;
             document.getElementById('heroCondition').innerText = `${info.desc} conditions`;
             
-            // Populate Neighboring LGUs with slight random variance based on current temp
             document.getElementById('miniTemp1').innerText = `${Math.round(current.temperature - 1)}°`;
             document.getElementById('miniCond1').innerText = getWeatherDataInfo(daily.weathercode[0], 1, current.temperature - 1).desc;
             document.getElementById('miniTemp2').innerText = `${Math.round(current.temperature + 1)}°`;
             document.getElementById('miniCond2').innerText = getWeatherDataInfo(daily.weathercode[1], 1, current.temperature + 1).desc;
 
-            // Generate 6-Day Forecast Elements and SVG Curve
             const daysContainer = document.getElementById('heroForecastDays');
             daysContainer.innerHTML = '';
             
@@ -1088,7 +1279,6 @@
                 daysContainer.appendChild(div);
             }
             
-            // Draw smooth bezier curve through the temperature points
             let pathStr = `M ${points[0].x} ${points[0].y}`;
             for (let i = 0; i < points.length - 1; i++) {
                 const xMid = (points[i].x + points[i + 1].x) / 2;
@@ -1103,7 +1293,7 @@
             `;
         }
 
-        // --- DASHBOARD LOGIC CONTINUES BELOW ---
+        // --- DASHBOARD LOGIC ---
         let lguDataStore = {};
 
         function updateMasterTable(lguId, data) {
@@ -1402,6 +1592,346 @@
                     const wall = document.getElementById('tweetWallSection'); if (wall.children.length === 0) { wall.innerHTML = `<div class="tweet-card" style="cursor:default; padding: 14px; background: rgba(0,0,0,0.4); box-shadow: none;"><div class="tweet-header"><div class="tweet-avatar" style="background: rgba(255,255,255,0.1);"><i data-lucide="activity" style="width:16px;"></i></div><div class="tweet-meta"><span class="tweet-name">System Monitoring</span><span class="tweet-handle">Active Node</span></div></div><div class="tweet-body" style="font-style:italic; color: #cbd5e1; font-size: 10px;">Listening for live LDRRMC submissions and system updates...</div></div>`; }
                     lucide.createIcons({ attrs: { 'stroke-width': 1.5 } });
                 });
+        }
+
+        // --- NEW WEATHER DRAWER & ANALYTICS LOGIC ---
+        let isWeatherInit = false;
+        
+        function toggleWeatherDrawer() {
+            const drawer = document.getElementById('weatherDrawer');
+            drawer.classList.toggle('open');
+            if (drawer.classList.contains('open') && !isWeatherInit) {
+                isWeatherInit = true;
+                fetchAccuWeatherLive();
+                setInterval(fetchAccuWeatherLive, 30 * 60 * 1000); // refresh 30 mins
+                refreshWeatherCharts();
+            }
+        }
+
+        const AW_API_KEY   = 'zpka_49762911edec4b599990b4b9e3e6e81d_d560b2ec';
+        const AW_LOC_KEY   = '207573';
+        const AW_URL = `https://dataservice.accuweather.com/currentconditions/v1/${AW_LOC_KEY}?apikey=${AW_API_KEY}&details=true`;
+
+        async function fetchAccuWeatherLive() {
+          try {
+            const res = await fetch(AW_URL);
+            if (!res.ok) throw new Error(`HTTP ${res.status}`);
+            const data = await res.json();
+            const c = data[0];
+
+            const temp       = c.Temperature.Metric.Value;
+            const realFeel   = c.RealFeelTemperature.Metric.Value;
+            const realFeelSh = c.RealFeelTemperatureShade?.Metric?.Value ?? '—';
+            const humidity   = c.RelativeHumidity;
+            const windSpd    = c.Wind.Speed.Metric.Value;
+            const windDir    = c.Wind.Direction.Localized;
+            const uvIdx      = c.UVIndex;
+            const uvTxt      = c.UVIndexText;
+            const condition  = c.WeatherText;
+            const obsTime    = new Date(c.LocalObservationDateTime).toLocaleTimeString('en-PH', {hour:'2-digit',minute:'2-digit'});
+
+            const hiColor = realFeel >= 41 ? '#f87171' : realFeel >= 33 ? '#fbbf24' : realFeel >= 27 ? '#34d399' : '#38bdf8';
+
+            document.getElementById('live-content').innerHTML = `
+              <div class="live-metric">
+                <div class="lm-label">TEMP</div>
+                <div class="lm-value" style="color:#ff6b35">${temp}°C</div>
+                <div class="lm-sub">${condition}</div>
+              </div>
+              <div class="live-separator"></div>
+              <div class="live-metric">
+                <div class="lm-label">REALFEEL®</div>
+                <div class="lm-value" style="color:${hiColor}">${realFeel}°C</div>
+                <div class="lm-sub">Shade: ${realFeelSh}°C</div>
+              </div>
+              <div class="live-separator"></div>
+              <div class="live-metric">
+                <div class="lm-label">HUMIDITY</div>
+                <div class="lm-value" style="color:#a78bfa">${humidity}%</div>
+                <div class="lm-sub">RH</div>
+              </div>
+              <div class="live-separator"></div>
+              <div class="live-metric">
+                <div class="lm-label">WIND</div>
+                <div class="lm-value" style="color:#94a3b8;font-size:16px">${windSpd} <span style="font-size:11px">km/h</span></div>
+                <div class="lm-sub">${windDir}</div>
+              </div>
+              <div class="live-separator"></div>
+              <div class="live-metric">
+                <div class="lm-label">UV INDEX</div>
+                <div class="lm-value" style="color:#fbbf24;font-size:16px">${uvIdx}</div>
+                <div class="lm-sub">${uvTxt}</div>
+              </div>
+              <div class="live-separator"></div>
+              <div class="live-condition">
+                <div class="lc-text">📍 Tarlac City</div>
+                <div class="lc-time">Last obs: ${obsTime}</div>
+              </div>
+            `;
+          } catch(e) {
+            document.getElementById('live-content').innerHTML = `<div class="live-error">⚠ Could not fetch live data — check API key or network. (${e.message})</div>`;
+          }
+        }
+
+        const W_RAW = [
+          [0,"Jan 01",30.0,23.0,28.7,24.5,71,"25.2"], [0,"Jan 02",25.6,22.2,25.2,22.0,76,"1.2"], [0,"Jan 03",28.4,21.5,28.2,21.5,55,"0"],
+          [0,"Jan 04",30.0,21.2,29.5,22.3,53,"0"], [0,"Jan 05",30.9,22.1,30.8,23.2,52,"0"], [0,"Jan 06",30.4,22.0,30.5,24.1,59,"0"],
+          [0,"Jan 07",29.0,21.0,28.9,23.4,63,"0"], [0,"Jan 08",30.4,22.6,30.4,23.7,57,"0"], [0,"Jan 09",29.8,22.3,29.6,23.5,60,"0"],
+          [0,"Jan 10",30.1,21.7,29.8,23.9,61,"0"], [0,"Jan 11",32.3,21.9,31.9,24.8,56,"0"], [0,"Jan 12",30.0,22.1,31.0,24.7,60,"0"],
+          [0,"Jan 13",30.1,22.5,29.7,24.6,62,"0.4"], [0,"Jan 14",31.0,22.4,30.9,24.8,61,"0"], [0,"Jan 15",30.1,21.4,30.1,23.2,56,"0"],
+          [0,"Jan 16",31.7,22.5,31.4,23.7,52,"0"], [0,"Jan 17",30.7,21.6,30.4,23.2,54,"0"], [0,"Jan 18",31.2,21.7,31.1,22.7,48,"0"],
+          [0,"Jan 19",31.8,22.3,31.4,23.5,51,"T"], [0,"Jan 20",31.7,22.8,31.3,23.4,51,"0"], [0,"Jan 21",31.2,18.0,31.0,22.9,50,"0"],
+          [0,"Jan 22",31.0,17.8,29.5,21.3,48,"0"], [0,"Jan 23",29.5,16.7,28.7,19.5,42,"0"], [0,"Jan 24",30.5,17.6,29.3,21.3,49,"0"],
+          [0,"Jan 25",30.9,18.3,27.3,21.4,59,"0"], [0,"Jan 26",30.0,21.3,29.7,23.4,59,"T"], [0,"Jan 27",30.0,21.6,29.8,23.4,58,"0"],
+          [0,"Jan 28",30.7,19.3,30.4,23.1,54,"0"], [0,"Jan 29",31.0,18.1,31.0,23.7,54,"0"], [0,"Jan 30",29.5,19.1,29.2,22.5,65,"0"],
+          [0,"Jan 31",30.1,19.5,29.7,21.2,46,"0"],
+          [1,"Feb 01",30.2,19.9,30.1,20.9,43,"0"], [1,"Feb 02",30.7,19.0,30.8,22.3,43,"0"], [1,"Feb 03",31.7,19.0,31.6,22.1,43,"0"],
+          [1,"Feb 04",29.2,17.5,28.9,22.8,59,"0"], [1,"Feb 05",29.7,18.5,29.5,20.8,45,"0"], [1,"Feb 06",29.1,21.6,29.3,20.8,46,"0"],
+          [1,"Feb 07",30.1,22.0,30.2,23.7,58,"0"], [1,"Feb 08",27.5,21.7,27.7,21.8,59,"0"], [1,"Feb 09",30.0,21.6,30.1,21.9,48,"0"],
+          [1,"Feb 10",30.0,20.0,30.7,23.0,52,"0"], [1,"Feb 11",31.5,22.7,31.6,23.8,48,"0"], [1,"Feb 12",30.5,21.3,30.5,23.7,56,"0"],
+          [1,"Feb 13",31.0,23.5,31.4,23.3,50,"0"], [1,"Feb 14",27.1,23.4,25.8,24.5,90,"2.8"], [1,"Feb 15",31.3,23.2,31.3,25.1,60,"0"],
+          [1,"Feb 16",31.8,23.2,31.8,25.1,58,"T"], [1,"Feb 17",33.0,20.8,32.8,25.7,56,"0"], [1,"Feb 18",32.6,20.5,32.4,24.1,50,"0"],
+          [1,"Feb 19",31.3,21.2,30.4,23.0,53,"0"], [1,"Feb 20",31.0,21.7,30.6,23.4,54,"0"], [1,"Feb 21",29.0,19.5,28.6,23.3,64,"0"],
+          [1,"Feb 22",31.9,20.2,31.7,23.3,48,"0"], [1,"Feb 23",32.0,20.5,30.9,24.3,58,"0"], [1,"Feb 24",31.0,21.2,32.3,25.1,56,"0"],
+          [1,"Feb 25",32.3,22.5,32.3,25.1,56,"0"], [1,"Feb 26",32.5,21.3,33.3,24.3,47,"0"], [1,"Feb 27",33.4,22.4,33.2,24.2,47,"0"],
+          [1,"Feb 28",33.0,21.0,32.8,23.3,44,"0"],
+          [2,"Mar 01",32.8,22.4,32.5,23.6,47,"0"], [2,"Mar 02",34.2,24.3,33.8,24.6,47,"0"], [2,"Mar 03",33.7,21.8,34.0,25.1,48,"0"],
+          [2,"Mar 04",33.3,22.3,32.0,24.1,52,"0"], [2,"Mar 05",34.1,23.0,33.0,23.8,46,"0"], [2,"Mar 06",32.9,22.8,32.8,23.9,47,"0"],
+          [2,"Mar 07",33.6,22.5,33.0,23.1,43,"0"], [2,"Mar 08",30.1,21.9,28.7,23.1,62,"T"], [2,"Mar 09",31.6,20.4,31.4,23.3,50,"0"],
+          [2,"Mar 10",31.6,18.9,31.3,21.8,43,"0"], [2,"Mar 11",31.8,20.1,30.1,21.1,44,"0"], [2,"Mar 12",31.7,21.6,31.3,21.4,41,"22.5"],
+          [2,"Mar 13",30.9,16.2,30.4,22.0,48,"0"], [2,"Mar 14",30.0,16.4,29.8,19.8,39,"0"], [2,"Mar 15",30.2,17.6,30.1,19.0,34,"0"],
+          [2,"Mar 16",30.0,20.0,29.3,20.0,42,"0"], [2,"Mar 17",30.2,21.9,30.0,22.3,51,"0"], [2,"Mar 18",30.2,22.8,30.1,23.1,55,"0"],
+          [2,"Mar 19",32.5,21.8,32.4,23.1,43,"0"], [2,"Mar 20",31.6,21.2,30.9,22.8,50,"0"], [2,"Mar 21",32.8,19.7,32.6,21.9,38,"0"],
+          [2,"Mar 22",31.4,22.5,31.4,23.5,51,"0"], [2,"Mar 23",33.7,20.7,33.4,23.3,42,"0"], [2,"Mar 24",33.6,19.7,33.6,23.4,42,"0"],
+          [2,"Mar 25",34.3,22.2,34.0,19.3,37,"0"], [2,"Mar 26",34.8,22.0,34.5,24.0,41,"0"], [2,"Mar 27",34.8,22.2,34.9,25.4,46,"0"],
+          [2,"Mar 28",33.6,23.1,33.6,24.8,48,"0"], [2,"Mar 29",33.0,24.4,33.2,24.3,48,"1.8"], [2,"Mar 30",35.0,22.6,34.6,25.2,46,"0"],
+          [2,"Mar 31",34.7,22.3,34.5,24.4,43,"0"],
+          [3,"Apr 01",35.1,22.4,34.8,23.5,38,"0"], [3,"Apr 02",34.5,18.1,34.2,23.5,40,"0"], [3,"Apr 03",34.6,20.4,34.6,21.7,31,"0"],
+          [3,"Apr 04",34.5,21.9,34.3,23.9,42,"0"], [3,"Apr 05",34.7,21.9,34.6,23.5,39,"0"], [3,"Apr 06",35.1,22.1,35.0,24.3,41,"0"],
+          [3,"Apr 07",36.0,23.4,36.0,23.6,35,"0"], [3,"Apr 08",35.0,23.3,34.3,24.8,46,"0"], [3,"Apr 09",36.1,23.5,35.9,22.3,34,"0"],
+          [3,"Apr 10",36.1,24.4,36.0,24.9,40,"0"], [3,"Apr 11",36.1,22.5,35.8,23.9,36,"0"], [3,"Apr 12",36.1,21.5,35.4,24.0,38,"0"],
+          [3,"Apr 13",36.0,23.4,35.3,23.3,36,"0"], [3,"Apr 14",36.1,23.9,35.7,22.6,32,"0"], [3,"Apr 15",35.4,22.8,34.9,27.2,33,"0"],
+          [3,"Apr 16",35.7,23.4,35.3,23.7,37,"0"], [3,"Apr 17",35.7,22.2,35.8,23.7,36,"0"], [3,"Apr 18",35.8,21.6,35.4,24.1,39,"0"],
+          [3,"Apr 19",35.4,23.4,35.2,24.8,42,"0"], [3,"Apr 20",36.0,24.5,36.0,24.5,38,"6.2"], [3,"Apr 21",34.3,22.3,33.7,24.1,45,"0"],
+          [3,"Apr 22",35.0,23.2,34.7,23.7,39,"0"], [3,"Apr 23",35.2,24.3,35.2,24.2,42,"0"], [3,"Apr 24",36.0,24.4,35.3,23.6,37,"0"],
+          [3,"Apr 25",36.4,24.3,36.3,21.4,25,"0"], [3,"Apr 26",36.9,24.5,36.9,23.8,33,"0"], [3,"Apr 27",36.8,24.4,36.8,21.5,24,"0"],
+          [3,"Apr 28",34.3,25.3,34.3,25.4,49,"0"], [3,"Apr 29",35.6,22.6,35.6,24.6,40,"0"], [3,"Apr 30",35.1,23.6,35.1,24.2,40,"0"],
+        ];
+
+        function calcDewPoint(T, RH) {
+          const a = 17.27, b = 237.7;
+          const alpha = (a * T) / (b + T) + Math.log(RH / 100);
+          return (b * alpha) / (a - alpha);
+        }
+
+        function calcHI(T, RH) {
+          if (T < 27) return T;
+          const HI = -8.78469475556 + 1.61139411 * T + 2.338548939 * RH - 0.14611605 * T * RH - 0.012308094 * T * T - 0.016424828 * RH * RH + 0.002211732 * T * T * RH + 0.00072546 * T * RH * RH - 0.000003582 * T * T * RH * RH;
+          return parseFloat(HI.toFixed(1));
+        }
+
+        function wHiCategory(hi) {
+          if (hi >= 41) return { label: "DANGER", cls: "hi-danger" };
+          if (hi >= 33) return { label: "EXTREME CAUTION", cls: "hi-warn" };
+          if (hi >= 27) return { label: "CAUTION", cls: "hi-caution" };
+          return { label: "NO CONCERN", cls: "hi-safe" };
+        }
+
+        const W_DATA = W_RAW.map(r => {
+          const [month, date, tmax, tmin, dry, wet, rh, rain] = r;
+          const dew = parseFloat(calcDewPoint(dry, rh).toFixed(1));
+          const hi = calcHI(dry, rh);
+          return { month, date, tmax, tmin, dry, wet, rh, rain, dew, hi };
+        });
+
+        const W_MONTH_NAMES = ["January","February","March","April"];
+
+        let wCurrentMonth = 'ALL';
+        let wVisVars = { tmax: true, tmin: true, tdry: true, dew: true, hi: true };
+        let wTempChart, wHiChart, wRainChart;
+
+        function getWFiltered() {
+          if (wCurrentMonth === 'ALL') return W_DATA;
+          return W_DATA.filter(d => d.month === wCurrentMonth);
+        }
+
+        function renderWStats(data) {
+          const tmaxArr = data.map(d => d.tmax), tminArr = data.map(d => d.tmin);
+          const dewArr = data.map(d => d.dew), hiArr = data.map(d => d.hi);
+          const rhArr = data.map(d => d.rh);
+          const avg = arr => (arr.reduce((a,b)=>a+b,0)/arr.length).toFixed(1);
+          const mx = arr => Math.max(...arr).toFixed(1);
+          const mn = arr => Math.min(...arr).toFixed(1);
+
+          document.getElementById('w-stats-row').innerHTML = `
+            <div class="stat-card"><div class="s-label">PEAK T MAX</div><div class="s-value" style="color:#ff6b35">${mx(tmaxArr)}°</div><div class="s-sub">Avg: ${avg(tmaxArr)}°C</div></div>
+            <div class="stat-card"><div class="s-label">LOWEST T MIN</div><div class="s-value" style="color:#38bdf8">${mn(tminArr)}°</div><div class="s-sub">Avg: ${avg(tminArr)}°C</div></div>
+            <div class="stat-card"><div class="s-label">AVG DEW POINT</div><div class="s-value" style="color:#34d399">${avg(dewArr)}°</div><div class="s-sub">Min: ${mn(dewArr)}° / Max: ${mx(dewArr)}°C</div></div>
+            <div class="stat-card"><div class="s-label">PEAK HEAT IDX</div><div class="s-value" style="color:#f87171">${mx(hiArr)}°</div><div class="s-sub">Avg: ${avg(hiArr)}°C</div></div>
+            <div class="stat-card"><div class="s-label">AVG REL HUMID</div><div class="s-value" style="color:#a78bfa">${avg(rhArr)}%</div><div class="s-sub">Min: ${mn(rhArr)}% / Max: ${mx(rhArr)}%</div></div>
+            <div class="stat-card"><div class="s-label">DANGER DAYS</div><div class="s-value" style="color:#f87171">${hiArr.filter(v=>v>=41).length}</div><div class="s-sub">HI ≥ 41°C</div></div>
+          `;
+        }
+
+        function renderWHiInfo(data) {
+          const hiArr = data.map(d => d.hi);
+          const danger = hiArr.filter(v => v >= 41).length;
+          const extreme = hiArr.filter(v => v >= 33 && v < 41).length;
+          const caution = hiArr.filter(v => v >= 27 && v < 33).length;
+          document.getElementById('w-hi-info').innerHTML =
+            `ℹ Heat Index computed via NWS Rothfusz regression using Dry Bulb Temp + Relative Humidity. Dew Point via Magnus-Tetens formula. &nbsp;&nbsp;|&nbsp;&nbsp; 
+             <span style="color:#f87171">Danger: ${danger}d</span> &nbsp;
+             <span style="color:#fbbf24">Extreme Caution: ${extreme}d</span> &nbsp;
+             <span style="color:#86efac">Caution: ${caution}d</span> &nbsp;
+             out of ${data.length} days in view.`;
+        }
+
+        const W_CJ = {
+          responsive: true, maintainAspectRatio: false, animation: { duration: 300 },
+          plugins: { legend: { display: false }, tooltip: { backgroundColor: '#1a2236', borderColor: '#1f2d47', borderWidth: 1, titleColor: '#94a3b8', bodyColor: '#e2e8f0', titleFont: { family: 'Space Mono', size: 11 }, bodyFont: { family: 'Space Mono', size: 11 } } },
+          scales: { x: { ticks: { color: '#475569', font: { family: 'Space Mono', size: 9 }, maxRotation: 60, maxTicksLimit: 16 }, grid: { color: '#1a2236' } }, y: { ticks: { color: '#475569', font: { family: 'Space Mono', size: 10 } }, grid: { color: '#1a2236' } } }
+        };
+
+        function buildWCharts(data) {
+          const labels = data.map(d => d.date);
+          const ds = (label, col, arr, type='line', fill=false) => ({ label, data: arr, borderColor: col, backgroundColor: fill ? col+'22' : col+'88', borderWidth: type==='line' ? 1.5 : 0, pointRadius: labels.length > 60 ? 0 : 2, pointHoverRadius: 4, tension: 0.3, fill: fill, type });
+
+          const tempDs = [];
+          if (wVisVars.tmax) tempDs.push(ds('T Max', '#ff6b35', data.map(d=>d.tmax)));
+          if (wVisVars.tmin) tempDs.push(ds('T Min', '#38bdf8', data.map(d=>d.tmin)));
+          if (wVisVars.tdry) tempDs.push(ds('Dry Bulb', '#fbbf24', data.map(d=>d.dry)));
+          if (wVisVars.dew)  tempDs.push(ds('Dew Pt', '#34d399', data.map(d=>d.dew), 'line', true));
+
+          const hiDs = [];
+          if (wVisVars.hi) {
+            hiDs.push({
+              label: 'Heat Index', data: data.map(d=>d.hi),
+              borderColor: '#f87171', backgroundColor: data.map(d => { if (d.hi >= 41) return '#f8717155'; if (d.hi >= 33) return '#fbbf2444'; if (d.hi >= 27) return '#86efac33'; return '#47556933'; }),
+              borderWidth: 1.5, pointRadius: labels.length > 60 ? 0 : 2, pointHoverRadius: 4, tension: 0.3, fill: true, type: 'line',
+            });
+            hiDs.push({ label: 'Danger (41°C)', data: Array(labels.length).fill(41), borderColor:'#f8717155', borderWidth:1, borderDash:[4,4], pointRadius:0, type:'line', fill:false });
+            hiDs.push({ label: 'Ext Caution (33°C)', data: Array(labels.length).fill(33), borderColor:'#fbbf2455', borderWidth:1, borderDash:[4,4], pointRadius:0, type:'line', fill:false });
+          }
+
+          if (wTempChart) wTempChart.destroy();
+          if (wHiChart)   wHiChart.destroy();
+          if (wRainChart) wRainChart.destroy();
+
+          wTempChart = new Chart(document.getElementById('tempChart'), { type: 'line', data: { labels, datasets: tempDs }, options: { ...W_CJ, scales: { ...W_CJ.scales, y: { ...W_CJ.scales.y, title: { display:true, text:'°C', color:'#475569', font:{family:'Space Mono',size:10} } } } } });
+          wHiChart = new Chart(document.getElementById('hiChart'), { type: 'line', data: { labels, datasets: hiDs }, options: { ...W_CJ, scales: { ...W_CJ.scales, y: { ...W_CJ.scales.y, title: { display:true, text:'°C', color:'#475569', font:{family:'Space Mono',size:10} } } } } });
+
+          const rainVals = data.map(d => d.rain === 'T' ? 0.05 : (parseFloat(d.rain) || 0));
+          wRainChart = new Chart(document.getElementById('rainChart'), {
+            type: 'line',
+            data: { labels, datasets: [{ label: 'Rainfall (mm)', data: rainVals, borderColor: '#38bdf8', backgroundColor: '#38bdf822', borderWidth: 2, pointRadius: rainVals.map(v => v > 0 ? 4 : 0), pointHoverRadius: 6, pointBackgroundColor: rainVals.map(v => v >= 1 ? '#38bdf8' : '#38bdf855'), pointBorderColor: 'transparent', tension: 0.2, fill: true }] },
+            options: { ...W_CJ, scales: { x: { ...W_CJ.scales.x }, y: { ...W_CJ.scales.y, min: 0, title: { display:true, text:'mm', color:'#475569', font:{family:'Space Mono',size:10} }, ticks: { ...W_CJ.scales.y.ticks, callback: v => v === 0.05 ? 'T' : v } } }, plugins: { ...W_CJ.plugins, tooltip: { ...W_CJ.plugins.tooltip, callbacks: { label: ctx => { const raw = data[ctx.dataIndex].rain; return raw === 'T' ? 'Trace (<0.1mm)' : `${raw} mm`; } } } } }
+          });
+        }
+
+        function renderWRainStats(data) {
+          const numericRain = data.map(d => d.rain === 'T' ? 0 : (parseFloat(d.rain) || 0));
+          const total = numericRain.reduce((a,b)=>a+b,0);
+          const rainyDays = numericRain.filter(v=>v>0).length;
+          const traceDays = data.filter(d=>d.rain==='T').length;
+          const maxRain = Math.max(...numericRain);
+          const maxDay = data[numericRain.indexOf(maxRain)]?.date || '—';
+          const dryDays = data.filter(d=>d.rain==='0').length;
+
+          document.getElementById('w-rain-stats').innerHTML = `
+            <div class="rain-stat"><div class="rs-label">TOTAL RAINFALL</div><div class="rs-value">${total.toFixed(1)}<span style="font-size:12px">mm</span></div><div class="rs-sub">Period total</div></div>
+            <div class="rain-stat"><div class="rs-label">PEAK 1-DAY</div><div class="rs-value">${maxRain.toFixed(1)}<span style="font-size:12px">mm</span></div><div class="rs-sub">${maxDay}</div></div>
+            <div class="rain-stat"><div class="rs-label">RAINY DAYS</div><div class="rs-value" style="color:#34d399">${rainyDays}</div><div class="rs-sub">≥0.1mm recorded</div></div>
+            <div class="rain-stat"><div class="rs-label">TRACE DAYS</div><div class="rs-value" style="color:#38bdf8">${traceDays}</div><div class="rs-sub">&lt;0.1mm (T)</div></div>
+            <div class="rain-stat"><div class="rs-label">DRY DAYS</div><div class="rs-value" style="color:#475569">${dryDays}</div><div class="rs-sub">0mm recorded</div></div>
+          `;
+        }
+
+        function setWeatherMonth(m) {
+          wCurrentMonth = m;
+          document.querySelectorAll('#weather-drawer-body .month-btn').forEach(b => b.classList.remove('active'));
+          const idx = m === 'ALL' ? 0 : m + 1;
+          document.querySelectorAll('#weather-drawer-body .month-btn')[idx].classList.add('active');
+          refreshWeatherCharts();
+        }
+
+        function toggleWeatherVar(v) {
+          wVisVars[v] = !wVisVars[v];
+          const btn = document.getElementById('btn-' + v);
+          btn.classList.toggle('active', wVisVars[v]);
+          btn.classList.toggle('inactive', !wVisVars[v]);
+          buildWCharts(getWFiltered());
+        }
+
+        const W_MUNICIPALITIES = [
+          { name: "Tarlac City",    dToff:  0.0, rhOff:  0, note: "Reference station" },
+          { name: "Capas",          dToff: +0.8, rhOff: -3, note: "Lower elevation, warmer valley" },
+          { name: "Bamban",         dToff: +0.5, rhOff: -2, note: "Flat terrain, open fields" },
+          { name: "Concepcion",     dToff: +0.3, rhOff: -2, note: "Near Agno River corridor" },
+          { name: "Victoria",       dToff: +0.4, rhOff: -3, note: "Southern plains" },
+          { name: "La Paz",         dToff: +0.6, rhOff: -4, note: "Flat lowland, very open" },
+          { name: "Gerona",         dToff: +0.2, rhOff: -1, note: "Central Tarlac plains" },
+          { name: "Paniqui",        dToff:  0.0, rhOff: -1, note: "Mid-province" },
+          { name: "Ramos",          dToff: -0.1, rhOff:  0, note: "Near Pampanga border" },
+          { name: "San Manuel",     dToff: +0.1, rhOff: -1, note: "Eastern corridor" },
+          { name: "Pura",           dToff: +0.3, rhOff: -2, note: "Interior lowland" },
+          { name: "Moncada",        dToff: -0.2, rhOff: +1, note: "Northern transition zone" },
+          { name: "Camiling",       dToff: -0.5, rhOff: +2, note: "Near foothills, slight relief" },
+          { name: "Anao",           dToff: -0.3, rhOff: +1, note: "Norte Camarines foothills proximity" },
+          { name: "San Clemente",   dToff: -0.8, rhOff: +3, note: "Foothills, cooler microclimate" },
+          { name: "San Jose",       dToff: -1.0, rhOff: +4, note: "Mountainous terrain" },
+          { name: "Mayantoc",       dToff: -1.5, rhOff: +5, note: "Forested hills, most elevated" },
+          { name: "Santa Ignacia",  dToff: -0.4, rhOff: +2, note: "Upland barangays" },
+        ];
+
+        function renderMuniHI() {
+          const data = getWFiltered();
+          if (!data.length) return;
+
+          const avgDry = data.reduce((a,b)=>a+b.dry,0)/data.length;
+          const avgRH  = data.reduce((a,b)=>a+b.rh,0)/data.length;
+          
+          const sel = document.getElementById('muni-select').value;
+          const munis = sel === 'ALL' ? W_MUNICIPALITIES : W_MUNICIPALITIES.filter(m=>m.name===sel);
+
+          const rows = munis.map(m => {
+            const T  = avgDry + m.dToff;
+            const RH = Math.min(100, Math.max(30, avgRH + m.rhOff));
+            const hi = calcHI(T, RH);
+            const rf = parseFloat((hi + (m.dToff * 0.6)).toFixed(1)); 
+            const cat = wHiCategory(hi);
+            const hiColor = hi>=41?'#f87171':hi>=33?'#fbbf24':hi>=27?'#86efac':'#64748b';
+            const rfColor = rf>=41?'#f87171':rf>=33?'#fbbf24':rf>=27?'#86efac':'#64748b';
+            const bar = Math.max(0, Math.min(100, ((hi-25)/20)*100));
+
+            return `
+              <div style="display:grid; grid-template-columns:160px 1fr 90px 90px 140px; align-items:center; gap:12px; padding:10px 0; border-bottom:1px solid var(--w-border); font-family:var(--w-font-mono); font-size:11px;">
+                <div><div style="color:var(--w-text);font-size:12px">${m.name}</div><div style="color:#64748b;font-size:9px;margin-top:2px">${m.note}</div></div>
+                <div style="position:relative;height:6px;background:#1a2236;border-radius:3px;overflow:hidden;"><div style="position:absolute;left:0;top:0;height:100%;width:${bar}%;background:${hiColor};border-radius:3px;transition:width 0.4s;"></div></div>
+                <div style="text-align:right;"><div style="color:${hiColor};font-size:14px;font-weight:700;line-height:1">${hi.toFixed(1)}°</div><div style="color:#64748b;font-size:9px">HEAT IDX</div></div>
+                <div style="text-align:right;"><div style="color:${rfColor};font-size:14px;font-weight:700;line-height:1">${rf.toFixed(1)}°</div><div style="color:#64748b;font-size:9px">REAL FEEL</div></div>
+                <div style="text-align:right;"><span style="background:${hiColor}22; border:1px solid ${hiColor}55; color:${hiColor}; padding:3px 8px; border-radius:4px; font-size:9px; letter-spacing:0.05em;">${cat.label}</span></div>
+              </div>`;
+          }).join('');
+
+          const periodLabel = wCurrentMonth==='ALL' ? 'Jan–Apr 2026 avg' : W_MONTH_NAMES[wCurrentMonth]+' 2026 avg';
+          document.getElementById('muni-hi-content').innerHTML = `
+            <div style="display:grid; grid-template-columns:160px 1fr 90px 90px 140px; gap:12px; padding-bottom:8px; border-bottom:1px solid var(--w-border); font-family:var(--w-font-mono); font-size:10px; color:#64748b; letter-spacing:0.06em;">
+              <div>MUNICIPALITY</div><div>HI SCALE</div><div style="text-align:right">HEAT IDX</div><div style="text-align:right">REAL FEEL</div><div style="text-align:right">CATEGORY</div>
+            </div>
+            ${rows}
+            <div style="margin-top:12px;font-size:10px;color:#64748b;font-family:var(--w-font-mono);">
+              Based on ${periodLabel} · Dry Bulb: ${avgDry.toFixed(1)}°C · Avg RH: ${avgRH.toFixed(0)}%
+            </div>
+          `;
+        }
+
+        function refreshWeatherCharts() {
+          const data = getWFiltered();
+          renderWStats(data);
+          renderWHiInfo(data);
+          buildWCharts(data);
+          renderWRainStats(data);
+          renderMuniHI();
         }
 
         window.onload = function() { 
