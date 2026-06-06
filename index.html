@@ -1473,7 +1473,7 @@
                     modalBtn.innerText = "UPLOADING FILE..."; const file = fileInput.files[0]; const base64Data = await getBase64(file);
                     const payload = { type: 'pdf', reportTime: document.getElementById('dtDisplayText').innerText, entity: entityName, action: actionInput.toUpperCase(), filename: file.name, mimeType: file.type, fileData: base64Data };
                     let response = await fetch(GOOGLE_SCRIPT_URL, { method: 'POST', body: JSON.stringify(payload) }); let result = await response.json();
-                    if (result.status === "success") { alert("PDF Document saved successfully to Google Drive & Sheets!"); fetchHistoricalData(); resetEncodingView(); switchToView('homeView'); } else { throw new Error("Failed to process file on server."); }
+                   if (result.status === "success") { alert("PDF Document saved successfully to Google Drive & Sheets!"); fetchHistoricalData(); resetEncodingView(); switchToView('homeView'); } else { throw new Error("SERVER ERROR: " + result.message); }
                 }
             } catch(error) { if(error.message !== "No File.") alert('System Action Failed: ' + error.message); } finally { modalBtn.innerText = originalText; modalBtn.disabled = false; closeSaveModal(); }
         }
