@@ -107,50 +107,20 @@
         /* --- DYNAMIC CUSTOM SCROLLBAR --- */
         .main-content { flex: 1; padding: 24px 36px; overflow-y: auto; scroll-behavior: smooth; }
         
-        .main-content::-webkit-scrollbar, .weather-drawer-content::-webkit-scrollbar { width: 8px; }
-        .main-content::-webkit-scrollbar-track, .weather-drawer-content::-webkit-scrollbar-track { background: transparent; }
-        .main-content::-webkit-scrollbar-thumb, .weather-drawer-content::-webkit-scrollbar-thumb { background-color: rgba(255,255,255,0.15); border-radius: 20px; border: 2px solid var(--bg-page); transition: background-color 0.3s ease; }
-        .main-content::-webkit-scrollbar-thumb:hover, .weather-drawer-content::-webkit-scrollbar-thumb:hover { background-color: rgba(255,255,255,0.3); }
+        .main-content::-webkit-scrollbar { width: 8px; }
+        .main-content::-webkit-scrollbar-track { background: transparent; }
+        .main-content::-webkit-scrollbar-thumb { background-color: rgba(255,255,255,0.15); border-radius: 20px; border: 2px solid var(--bg-page); transition: background-color 0.3s ease; }
+        .main-content::-webkit-scrollbar-thumb:hover { background-color: rgba(255,255,255,0.3); }
 
-        .view-section { display: none; max-width: 1600px; margin: 0 auto; }
+        .view-section { display: none; max-width: 1600px; margin: 0 auto; padding-bottom: 40px; }
         .view-section.active { display: block; animation: slideUpFade 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
 
         .header { display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 20px; padding-bottom: 12px; border-bottom: 1px solid rgba(255,255,255,0.1); }
         .header-title h1 { font-size: 24px; font-weight: 800; color: #ffffff; display: flex; align-items: center; gap: 10px; letter-spacing: -0.5px; text-shadow: 0 2px 10px rgba(0,0,0,0.8); }
         .header-title p { font-size: 11.5px; color: var(--text-gray); margin-top: 4px; font-weight: 500; text-shadow: 0 1px 4px rgba(0,0,0,0.8); }
 
-        /* --- PULL-OUT WEATHER DRAWER SYSTEM --- */
-        .weather-drawer {
-            position: fixed;
-            top: 0; left: 0; width: 100vw; height: 95vh;
-            background: rgba(10, 14, 26, 0.98);
-            backdrop-filter: blur(40px); -webkit-backdrop-filter: blur(40px);
-            z-index: 1000;
-            transform: translateY(-100%);
-            transition: transform 0.6s cubic-bezier(0.25, 1, 0.1, 1);
-            display: flex; flex-direction: column;
-            border-bottom: 2px solid var(--accent);
-            box-shadow: 0 20px 60px rgba(0,0,0,0.8);
-            overflow: hidden;
-        }
-        .weather-drawer.open { transform: translateY(0); }
-        .weather-drawer-header {
-            padding: 20px 36px;
-            display: flex; justify-content: space-between; align-items: center;
-            border-bottom: 1px solid rgba(255,255,255,0.1);
-            background: linear-gradient(135deg, rgba(15,23,42,0.9) 0%, rgba(30,41,59,0.9) 100%);
-        }
-        .weather-drawer-header h2 {
-            font-size: 14px; font-weight: 800; color: #ffffff; display: flex; align-items: center; gap: 10px;
-            text-transform: uppercase; letter-spacing: 0.5px;
-        }
-        .weather-drawer-header h2 i { color: var(--accent); }
-        .weather-drawer-content {
-            flex: 1; overflow-y: auto; padding-bottom: 40px;
-        }
-
-        /* --- WEATHER DRAWER INTERNAL STYLES (SCOPED) --- */
-        #weather-drawer-body {
+        /* --- WEATHER DASHBOARD INTERNAL STYLES (SCOPED) --- */
+        .weather-dashboard-wrapper {
             --w-panel: rgba(17, 24, 39, 0.7);
             --w-panel2: rgba(26, 34, 54, 0.8);
             --w-border: rgba(255,255,255,0.1);
@@ -167,68 +137,73 @@
             --w-font-body: 'DM Sans', sans-serif;
             font-family: var(--w-font-body);
             color: var(--w-text);
+            background: rgba(15, 23, 42, 0.4);
+            border: 1px solid var(--w-border);
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 16px 40px rgba(0,0,0,0.4);
         }
-        #weather-drawer-body .live-panel {
+        .weather-dashboard-wrapper .live-panel {
             background: linear-gradient(135deg, rgba(15,30,53,0.8) 0%, rgba(10,22,40,0.8) 100%);
             border-bottom: 1px solid var(--w-border); padding: 16px 36px;
             display: flex; align-items: center; gap: 32px; flex-wrap: wrap;
         }
-        #weather-drawer-body .live-badge {
+        .weather-dashboard-wrapper .live-badge {
             display: flex; align-items: center; gap: 8px; font-family: var(--w-font-mono); font-size: 10px; color: var(--w-accent-cool); letter-spacing: 0.1em;
         }
-        #weather-drawer-body .live-dot {
+        .weather-dashboard-wrapper .live-dot {
             width: 8px; height: 8px; border-radius: 50%; background: var(--w-accent-cool); animation: pulse 2s infinite;
         }
         @keyframes pulse { 0%,100% { opacity: 1; transform: scale(1); } 50% { opacity: 0.4; transform: scale(0.8); } }
         
-        #weather-drawer-body .live-metrics { display: flex; gap: 24px; flex-wrap: wrap; align-items: center; }
-        #weather-drawer-body .live-metric { display: flex; flex-direction: column; gap: 2px; }
-        #weather-drawer-body .live-metric .lm-label { font-family: var(--w-font-mono); font-size: 10px; color: var(--w-muted); letter-spacing: 0.08em; text-transform: uppercase; }
-        #weather-drawer-body .live-metric .lm-value { font-family: var(--w-font-mono); font-size: 22px; font-weight: 700; line-height: 1; }
-        #weather-drawer-body .live-metric .lm-sub { font-size: 11px; color: var(--w-muted); }
-        #weather-drawer-body .live-condition { display: flex; flex-direction: column; gap: 2px; }
-        #weather-drawer-body .live-condition .lc-text { font-family: var(--w-font-mono); font-size: 12px; color: var(--w-label); }
-        #weather-drawer-body .live-condition .lc-time { font-size: 10px; color: #cbd5e1; font-family: var(--w-font-mono); }
-        #weather-drawer-body .live-error { font-family: var(--w-font-mono); font-size: 11px; color: var(--w-muted); }
-        #weather-drawer-body .live-separator { width: 1px; height: 40px; background: var(--w-border); }
+        .weather-dashboard-wrapper .live-metrics { display: flex; gap: 24px; flex-wrap: wrap; align-items: center; }
+        .weather-dashboard-wrapper .live-metric { display: flex; flex-direction: column; gap: 2px; }
+        .weather-dashboard-wrapper .live-metric .lm-label { font-family: var(--w-font-mono); font-size: 10px; color: var(--w-muted); letter-spacing: 0.08em; text-transform: uppercase; }
+        .weather-dashboard-wrapper .live-metric .lm-value { font-family: var(--w-font-mono); font-size: 22px; font-weight: 700; line-height: 1; }
+        .weather-dashboard-wrapper .live-metric .lm-sub { font-size: 11px; color: var(--w-muted); }
+        .weather-dashboard-wrapper .live-condition { display: flex; flex-direction: column; gap: 2px; }
+        .weather-dashboard-wrapper .live-condition .lc-text { font-family: var(--w-font-mono); font-size: 12px; color: var(--w-label); }
+        .weather-dashboard-wrapper .live-condition .lc-time { font-size: 10px; color: #cbd5e1; font-family: var(--w-font-mono); }
+        .weather-dashboard-wrapper .live-error { font-family: var(--w-font-mono); font-size: 11px; color: var(--w-muted); }
+        .weather-dashboard-wrapper .live-separator { width: 1px; height: 40px; background: var(--w-border); }
 
-        #weather-drawer-body .w-controls { padding: 20px 36px; display: flex; gap: 12px; flex-wrap: wrap; align-items: center; background: var(--w-panel); border-bottom: 1px solid var(--w-border); }
-        #weather-drawer-body .w-controls label { font-size: 12px; color: var(--w-muted); font-family: var(--w-font-mono); margin-right: 4px; }
-        #weather-drawer-body .month-btn { background: var(--w-panel2); border: 1px solid var(--w-border); color: var(--w-label); padding: 6px 14px; border-radius: 6px; cursor: pointer; font-family: var(--w-font-mono); font-size: 12px; transition: all 0.15s; }
-        #weather-drawer-body .month-btn:hover { border-color: var(--w-accent-cool); color: var(--w-accent-cool); }
-        #weather-drawer-body .month-btn.active { background: var(--w-accent-cool); color: #0a0e1a; border-color: var(--w-accent-cool); font-weight: 700; }
-        #weather-drawer-body .var-toggle { display: flex; gap: 8px; flex-wrap: wrap; margin-left: auto; }
-        #weather-drawer-body .toggle-btn { background: var(--w-panel2); border: 1px solid var(--w-border); color: var(--w-label); padding: 5px 12px; border-radius: 6px; cursor: pointer; font-size: 11px; font-family: var(--w-font-mono); transition: all 0.15s; display: flex; align-items: center; gap: 6px; }
-        #weather-drawer-body .toggle-btn .dot { width: 8px; height: 8px; border-radius: 50%; }
-        #weather-drawer-body .toggle-btn.active { opacity: 1; }
-        #weather-drawer-body .toggle-btn.inactive { opacity: 0.35; }
+        .weather-dashboard-wrapper .w-controls { padding: 20px 36px; display: flex; gap: 12px; flex-wrap: wrap; align-items: center; background: var(--w-panel); border-bottom: 1px solid var(--w-border); }
+        .weather-dashboard-wrapper .w-controls label { font-size: 12px; color: var(--w-muted); font-family: var(--w-font-mono); margin-right: 4px; }
+        .weather-dashboard-wrapper .month-btn { background: var(--w-panel2); border: 1px solid var(--w-border); color: var(--w-label); padding: 6px 14px; border-radius: 6px; cursor: pointer; font-family: var(--w-font-mono); font-size: 12px; transition: all 0.15s; }
+        .weather-dashboard-wrapper .month-btn:hover { border-color: var(--w-accent-cool); color: var(--w-accent-cool); }
+        .weather-dashboard-wrapper .month-btn.active { background: var(--w-accent-cool); color: #0a0e1a; border-color: var(--w-accent-cool); font-weight: 700; }
+        .weather-dashboard-wrapper .var-toggle { display: flex; gap: 8px; flex-wrap: wrap; margin-left: auto; }
+        .weather-dashboard-wrapper .toggle-btn { background: var(--w-panel2); border: 1px solid var(--w-border); color: var(--w-label); padding: 5px 12px; border-radius: 6px; cursor: pointer; font-size: 11px; font-family: var(--w-font-mono); transition: all 0.15s; display: flex; align-items: center; gap: 6px; }
+        .weather-dashboard-wrapper .toggle-btn .dot { width: 8px; height: 8px; border-radius: 50%; }
+        .weather-dashboard-wrapper .toggle-btn.active { opacity: 1; }
+        .weather-dashboard-wrapper .toggle-btn.inactive { opacity: 0.35; }
 
-        #weather-drawer-body .stats-row { display: grid; grid-template-columns: repeat(auto-fit, minmax(170px, 1fr)); gap: 1px; background: var(--w-border); border-bottom: 1px solid var(--w-border); }
-        #weather-drawer-body .stat-card { background: var(--w-panel); padding: 20px 24px; display: flex; flex-direction: column; gap: 6px; }
-        #weather-drawer-body .stat-card .s-label { font-family: var(--w-font-mono); font-size: 10px; letter-spacing: 0.1em; color: var(--w-muted); text-transform: uppercase; }
-        #weather-drawer-body .stat-card .s-value { font-family: var(--w-font-mono); font-size: 26px; font-weight: 700; line-height: 1; }
-        #weather-drawer-body .stat-card .s-sub { font-size: 11px; color: var(--w-muted); }
+        .weather-dashboard-wrapper .stats-row { display: grid; grid-template-columns: repeat(auto-fit, minmax(170px, 1fr)); gap: 1px; background: var(--w-border); border-bottom: 1px solid var(--w-border); }
+        .weather-dashboard-wrapper .stat-card { background: var(--w-panel); padding: 20px 24px; display: flex; flex-direction: column; gap: 6px; }
+        .weather-dashboard-wrapper .stat-card .s-label { font-family: var(--w-font-mono); font-size: 10px; letter-spacing: 0.1em; color: var(--w-muted); text-transform: uppercase; }
+        .weather-dashboard-wrapper .stat-card .s-value { font-family: var(--w-font-mono); font-size: 26px; font-weight: 700; line-height: 1; }
+        .weather-dashboard-wrapper .stat-card .s-sub { font-size: 11px; color: var(--w-muted); }
 
-        #weather-drawer-body .charts-area { padding: 24px 36px; display: flex; flex-direction: column; gap: 24px; max-width: 1600px; margin: 0 auto;}
-        #weather-drawer-body .chart-block { background: var(--w-panel); border: 1px solid var(--w-border); border-radius: 10px; padding: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.5);}
-        #weather-drawer-body .chart-block h3 { font-family: var(--w-font-mono); font-size: 12px; color: var(--w-label); letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 16px; display: flex; align-items: center; gap: 10px; }
-        #weather-drawer-body .chart-block h3 .tag { background: var(--w-panel2); border: 1px solid var(--w-border); padding: 2px 8px; border-radius: 4px; font-size: 10px; color: var(--w-muted); }
-        #weather-drawer-body .chart-wrap { position: relative; height: 240px; }
+        .weather-dashboard-wrapper .charts-area { padding: 24px 36px; display: flex; flex-direction: column; gap: 24px; max-width: 1600px; margin: 0 auto;}
+        .weather-dashboard-wrapper .chart-block { background: var(--w-panel); border: 1px solid var(--w-border); border-radius: 10px; padding: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.5);}
+        .weather-dashboard-wrapper .chart-block h3 { font-family: var(--w-font-mono); font-size: 12px; color: var(--w-label); letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 16px; display: flex; align-items: center; gap: 10px; }
+        .weather-dashboard-wrapper .chart-block h3 .tag { background: var(--w-panel2); border: 1px solid var(--w-border); padding: 2px 8px; border-radius: 4px; font-size: 10px; color: var(--w-muted); }
+        .weather-dashboard-wrapper .chart-wrap { position: relative; height: 240px; }
 
-        #weather-drawer-body .rain-stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 1px; background: var(--w-border); border: 1px solid var(--w-border); border-radius: 10px; overflow: hidden; box-shadow: 0 10px 30px rgba(0,0,0,0.5);}
-        #weather-drawer-body .rain-stat { background: var(--w-panel); padding: 16px 20px; display: flex; flex-direction: column; gap: 4px; }
-        #weather-drawer-body .rain-stat .rs-label { font-family: var(--w-font-mono); font-size: 10px; letter-spacing: 0.1em; color: var(--w-muted); text-transform: uppercase; }
-        #weather-drawer-body .rain-stat .rs-value { font-family: var(--w-font-mono); font-size: 24px; font-weight: 700; color: var(--w-accent-cool); line-height: 1; }
-        #weather-drawer-body .rain-stat .rs-sub { font-size: 11px; color: var(--w-muted); }
+        .weather-dashboard-wrapper .rain-stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 1px; background: var(--w-border); border: 1px solid var(--w-border); border-radius: 10px; overflow: hidden; box-shadow: 0 10px 30px rgba(0,0,0,0.5);}
+        .weather-dashboard-wrapper .rain-stat { background: var(--w-panel); padding: 16px 20px; display: flex; flex-direction: column; gap: 4px; }
+        .weather-dashboard-wrapper .rain-stat .rs-label { font-family: var(--w-font-mono); font-size: 10px; letter-spacing: 0.1em; color: var(--w-muted); text-transform: uppercase; }
+        .weather-dashboard-wrapper .rain-stat .rs-value { font-family: var(--w-font-mono); font-size: 24px; font-weight: 700; color: var(--w-accent-cool); line-height: 1; }
+        .weather-dashboard-wrapper .rain-stat .rs-sub { font-size: 11px; color: var(--w-muted); }
 
-        #weather-drawer-body .hi-info { background: rgba(26, 26, 46, 0.8); border: 1px solid rgba(45, 45, 94, 0.8); border-radius: 8px; padding: 12px 18px; font-size: 11px; color: #7c85b8; font-family: var(--w-font-mono); line-height: 1.6; }
+        .weather-dashboard-wrapper .hi-info { background: rgba(26, 26, 46, 0.8); border: 1px solid rgba(45, 45, 94, 0.8); border-radius: 8px; padding: 12px 18px; font-size: 11px; color: #7c85b8; font-family: var(--w-font-mono); line-height: 1.6; }
 
-        #weather-drawer-body .table-block { background: var(--w-panel); border: 1px solid var(--w-border); border-radius: 10px; overflow: hidden; box-shadow: 0 10px 30px rgba(0,0,0,0.5);}
-        #weather-drawer-body .table-block h3 { font-family: var(--w-font-mono); font-size: 12px; color: var(--w-label); letter-spacing: 0.08em; text-transform: uppercase; padding: 16px 20px; border-bottom: 1px solid var(--w-border); margin:0;}
-        #weather-drawer-body .hi-legend { display: flex; gap: 16px; flex-wrap: wrap; padding: 12px 20px; border-top: 1px solid var(--w-border); font-size: 11px; font-family: var(--w-font-mono); color: var(--w-muted); }
-        #weather-drawer-body .hi-legend span { display: flex; align-items: center; gap: 6px; }
-        #weather-drawer-body .hi-legend .ld { width: 10px; height: 10px; border-radius: 2px; }
-        /* --- END WEATHER DRAWER Internal Styles --- */
+        .weather-dashboard-wrapper .table-block { background: var(--w-panel); border: 1px solid var(--w-border); border-radius: 10px; overflow: hidden; box-shadow: 0 10px 30px rgba(0,0,0,0.5);}
+        .weather-dashboard-wrapper .table-block h3 { font-family: var(--w-font-mono); font-size: 12px; color: var(--w-label); letter-spacing: 0.08em; text-transform: uppercase; padding: 16px 20px; border-bottom: 1px solid var(--w-border); margin:0;}
+        .weather-dashboard-wrapper .hi-legend { display: flex; gap: 16px; flex-wrap: wrap; padding: 12px 20px; border-top: 1px solid var(--w-border); font-size: 11px; font-family: var(--w-font-mono); color: var(--w-muted); }
+        .weather-dashboard-wrapper .hi-legend span { display: flex; align-items: center; gap: 6px; }
+        .weather-dashboard-wrapper .hi-legend .ld { width: 10px; height: 10px; border-radius: 2px; }
+        /* --- END WEATHER DASHBOARD Internal Styles --- */
 
         /* --- WEATHER HERO WIDGET (Main Dashboard) --- */
         .weather-hero-widget {
@@ -462,114 +437,6 @@
         </div>
     </div>
 
-    <div id="weatherDrawer" class="weather-drawer">
-        <div class="weather-drawer-header">
-            <h2><i data-lucide="cloud-lightning"></i> PAGASA & AccuWeather Analytics</h2>
-            <button class="btn-icon-only" onclick="toggleWeatherDrawer()"><i data-lucide="x"></i></button>
-        </div>
-        <div class="weather-drawer-content" id="weather-drawer-body">
-            
-            <div class="live-panel" id="live-panel">
-              <div class="live-badge"><div class="live-dot"></div>LIVE · ACCUWEATHER</div>
-              <div class="live-separator"></div>
-              <div id="live-content" class="live-metrics">
-                <div class="live-error">Fetching current conditions…</div>
-              </div>
-            </div>
-
-            <div class="w-controls">
-              <label>MONTH:</label>
-              <button class="month-btn active" onclick="setWeatherMonth('ALL')">ALL</button>
-              <button class="month-btn" onclick="setWeatherMonth(0)">JAN</button>
-              <button class="month-btn" onclick="setWeatherMonth(1)">FEB</button>
-              <button class="month-btn" onclick="setWeatherMonth(2)">MAR</button>
-              <button class="month-btn" onclick="setWeatherMonth(3)">APR</button>
-
-              <div class="var-toggle">
-                <button class="toggle-btn active" id="btn-tmax" onclick="toggleWeatherVar('tmax')">
-                  <span class="dot" style="background:#ff6b35"></span>T MAX
-                </button>
-                <button class="toggle-btn active" id="btn-tmin" onclick="toggleWeatherVar('tmin')">
-                  <span class="dot" style="background:#38bdf8"></span>T MIN
-                </button>
-                <button class="toggle-btn active" id="btn-tdry" onclick="toggleWeatherVar('tdry')">
-                  <span class="dot" style="background:#fbbf24"></span>DRY BULB
-                </button>
-                <button class="toggle-btn active" id="btn-dew" onclick="toggleWeatherVar('dew')">
-                  <span class="dot" style="background:#34d399"></span>DEW PT
-                </button>
-                <button class="toggle-btn active" id="btn-hi" onclick="toggleWeatherVar('hi')">
-                  <span class="dot" style="background:#f87171"></span>HEAT IDX
-                </button>
-              </div>
-            </div>
-
-            <div class="stats-row" id="w-stats-row"></div>
-
-            <div class="charts-area">
-              <div class="hi-info" id="w-hi-info"></div>
-
-              <div class="chart-block">
-                <h3>RAINFALL <span class="tag">mm · Daily Totals (T = Trace &lt;0.1mm)</span></h3>
-                <div class="chart-wrap"><canvas id="rainChart"></canvas></div>
-              </div>
-
-              <div class="rain-stats" id="w-rain-stats"></div>
-
-              <div class="chart-block">
-                <h3>TEMPERATURE <span class="tag">°C · MAX / MIN / DRY BULB / DEW POINT</span></h3>
-                <div class="chart-wrap"><canvas id="tempChart"></canvas></div>
-              </div>
-
-              <div class="chart-block">
-                <h3>HEAT INDEX <span class="tag">°C · Rothfusz Regression / PAGASA Scale</span></h3>
-                <div class="chart-wrap"><canvas id="hiChart"></canvas></div>
-              </div>
-
-              <div class="table-block" id="muni-hi-section">
-                <h3 style="display:flex;align-items:center;gap:12px;flex-wrap:wrap;">
-                  MUNICIPAL REAL FEEL / HEAT INDEX
-                  <span class="tag" style="background: var(--w-panel); color: var(--text-gray);">TARLAC PROVINCE · ESTIMATED CONDITIONS</span>
-                  <div style="margin-left:auto;display:flex;align-items:center;gap:10px;">
-                    <select id="muni-select" onchange="renderMuniHI()" style="
-                      background:var(--w-panel2); border:1px solid var(--w-border); color:var(--w-label);
-                      padding:5px 10px; border-radius:6px; font-family:var(--w-font-mono); font-size:11px;
-                      cursor:pointer; outline:none;">
-                      <option value="ALL">ALL MUNICIPALITIES</option>
-                      <option value="Tarlac City">Tarlac City</option>
-                      <option value="Anao">Anao</option>
-                      <option value="Bamban">Bamban</option>
-                      <option value="Camiling">Camiling</option>
-                      <option value="Capas">Capas</option>
-                      <option value="Concepcion">Concepcion</option>
-                      <option value="Gerona">Gerona</option>
-                      <option value="La Paz">La Paz</option>
-                      <option value="Mayantoc">Mayantoc</option>
-                      <option value="Moncada">Moncada</option>
-                      <option value="Paniqui">Paniqui</option>
-                      <option value="Pura">Pura</option>
-                      <option value="Ramos">Ramos</option>
-                      <option value="San Clemente">San Clemente</option>
-                      <option value="San Jose">San Jose</option>
-                      <option value="San Manuel">San Manuel</option>
-                      <option value="Santa Ignacia">Santa Ignacia</option>
-                      <option value="Victoria">Victoria</option>
-                    </select>
-                  </div>
-                </h3>
-                <div id="muni-hi-content" style="padding:16px 20px;"></div>
-                <div class="hi-legend">
-                  <span><span class="ld" style="background:#f87171"></span> DANGER (≥41°C)</span>
-                  <span><span class="ld" style="background:#fbbf24"></span> EXTREME CAUTION (33–41°C)</span>
-                  <span><span class="ld" style="background:#86efac"></span> CAUTION (27–33°C)</span>
-                  <span><span class="ld" style="background:#475569"></span> NO CONCERN (&lt;27°C)</span>
-                  <span style="margin-left:auto;font-size:10px;color:#cbd5e1;">* Estimates based on elevation offsets from Hda. Luisita PAGASA station</span>
-                </div>
-              </div>
-            </div>
-            
-        </div>
-    </div>
     <div class="app-container">
         
         <nav class="top-nav">
@@ -586,7 +453,7 @@
                 <li class="nav-item" data-target="encodingView"><i data-lucide="edit"></i> Data Encoding</li>
                 <li class="nav-item" data-target="recordsView"><i data-lucide="folder-open"></i> LDRRMCs / Agencies</li>
                 <li class="nav-item" data-target="pdrrmoView"><i data-lucide="file-check-2"></i> PDRRMO SitRep</li>
-                <li class="nav-item" onclick="toggleWeatherDrawer()"><i data-lucide="cloud-lightning" style="color: #38bdf8; opacity: 1;"></i> Weather Analytics</li>
+                <li class="nav-item" data-target="weatherView"><i data-lucide="cloud-lightning"></i> Weather Analytics</li>
             </ul>
 
             <div class="nav-actions">
@@ -1156,6 +1023,119 @@
                     <button class="btn btn-primary" style="margin-top: 12px; width: 100%; padding: 12px; font-size: 11px;" onclick="viewSelectedRecord()">CLICK TO VIEW DOCUMENT</button>
                 </div>
             </div>
+            
+            <div id="weatherView" class="view-section">
+                <div class="header" style="justify-content: flex-start; gap: 16px; align-items: center;">
+                    <div style="background: rgba(56, 189, 248, 0.15); padding: 10px; border-radius: 10px; border: 1px solid rgba(56, 189, 248, 0.3);">
+                        <i data-lucide="cloud-lightning" style="width: 24px; height: 24px; color: #38bdf8;"></i>
+                    </div>
+                    <div class="header-title">
+                        <h1 style="text-shadow: none;">Weather Analytics</h1>
+                        <p style="text-shadow: none;">PAGASA & AccuWeather Data and Forecasting</p>
+                    </div>
+                </div>
+                
+                <div class="weather-dashboard-wrapper">
+                    <div class="live-panel" id="live-panel">
+                      <div class="live-badge"><div class="live-dot"></div>LIVE · ACCUWEATHER</div>
+                      <div class="live-separator"></div>
+                      <div id="live-content" class="live-metrics">
+                        <div class="live-error">Fetching current conditions…</div>
+                      </div>
+                    </div>
+
+                    <div class="w-controls">
+                      <label>MONTH:</label>
+                      <button class="month-btn active" onclick="setWeatherMonth('ALL')">ALL</button>
+                      <button class="month-btn" onclick="setWeatherMonth(0)">JAN</button>
+                      <button class="month-btn" onclick="setWeatherMonth(1)">FEB</button>
+                      <button class="month-btn" onclick="setWeatherMonth(2)">MAR</button>
+                      <button class="month-btn" onclick="setWeatherMonth(3)">APR</button>
+
+                      <div class="var-toggle">
+                        <button class="toggle-btn active" id="btn-tmax" onclick="toggleWeatherVar('tmax')">
+                          <span class="dot" style="background:#ff6b35"></span>T MAX
+                        </button>
+                        <button class="toggle-btn active" id="btn-tmin" onclick="toggleWeatherVar('tmin')">
+                          <span class="dot" style="background:#38bdf8"></span>T MIN
+                        </button>
+                        <button class="toggle-btn active" id="btn-tdry" onclick="toggleWeatherVar('tdry')">
+                          <span class="dot" style="background:#fbbf24"></span>DRY BULB
+                        </button>
+                        <button class="toggle-btn active" id="btn-dew" onclick="toggleWeatherVar('dew')">
+                          <span class="dot" style="background:#34d399"></span>DEW PT
+                        </button>
+                        <button class="toggle-btn active" id="btn-hi" onclick="toggleWeatherVar('hi')">
+                          <span class="dot" style="background:#f87171"></span>HEAT IDX
+                        </button>
+                      </div>
+                    </div>
+
+                    <div class="stats-row" id="w-stats-row"></div>
+
+                    <div class="charts-area">
+                      <div class="hi-info" id="w-hi-info"></div>
+
+                      <div class="chart-block">
+                        <h3>RAINFALL <span class="tag">mm · Daily Totals (T = Trace &lt;0.1mm)</span></h3>
+                        <div class="chart-wrap"><canvas id="rainChart"></canvas></div>
+                      </div>
+
+                      <div class="rain-stats" id="w-rain-stats"></div>
+
+                      <div class="chart-block">
+                        <h3>TEMPERATURE <span class="tag">°C · MAX / MIN / DRY BULB / DEW POINT</span></h3>
+                        <div class="chart-wrap"><canvas id="tempChart"></canvas></div>
+                      </div>
+
+                      <div class="chart-block">
+                        <h3>HEAT INDEX <span class="tag">°C · Rothfusz Regression / PAGASA Scale</span></h3>
+                        <div class="chart-wrap"><canvas id="hiChart"></canvas></div>
+                      </div>
+
+                      <div class="table-block" id="muni-hi-section">
+                        <h3 style="display:flex;align-items:center;gap:12px;flex-wrap:wrap;">
+                          MUNICIPAL REAL FEEL / HEAT INDEX
+                          <span class="tag" style="background: var(--w-panel); color: var(--text-gray);">TARLAC PROVINCE · ESTIMATED CONDITIONS</span>
+                          <div style="margin-left:auto;display:flex;align-items:center;gap:10px;">
+                            <select id="muni-select" onchange="renderMuniHI()" style="
+                              background:var(--w-panel2); border:1px solid var(--w-border); color:var(--w-label);
+                              padding:5px 10px; border-radius:6px; font-family:var(--w-font-mono); font-size:11px;
+                              cursor:pointer; outline:none;">
+                              <option value="ALL">ALL MUNICIPALITIES</option>
+                              <option value="Tarlac City">Tarlac City</option>
+                              <option value="Anao">Anao</option>
+                              <option value="Bamban">Bamban</option>
+                              <option value="Camiling">Camiling</option>
+                              <option value="Capas">Capas</option>
+                              <option value="Concepcion">Concepcion</option>
+                              <option value="Gerona">Gerona</option>
+                              <option value="La Paz">La Paz</option>
+                              <option value="Mayantoc">Mayantoc</option>
+                              <option value="Moncada">Moncada</option>
+                              <option value="Paniqui">Paniqui</option>
+                              <option value="Pura">Pura</option>
+                              <option value="Ramos">Ramos</option>
+                              <option value="San Clemente">San Clemente</option>
+                              <option value="San Jose">San Jose</option>
+                              <option value="San Manuel">San Manuel</option>
+                              <option value="Santa Ignacia">Santa Ignacia</option>
+                              <option value="Victoria">Victoria</option>
+                            </select>
+                          </div>
+                        </h3>
+                        <div id="muni-hi-content" style="padding:16px 20px;"></div>
+                        <div class="hi-legend">
+                          <span><span class="ld" style="background:#f87171"></span> DANGER (≥41°C)</span>
+                          <span><span class="ld" style="background:#fbbf24"></span> EXTREME CAUTION (33–41°C)</span>
+                          <span><span class="ld" style="background:#86efac"></span> CAUTION (27–33°C)</span>
+                          <span><span class="ld" style="background:#475569"></span> NO CONCERN (&lt;27°C)</span>
+                          <span style="margin-left:auto;font-size:10px;color:#cbd5e1;">* Estimates based on elevation offsets from Hda. Luisita PAGASA station</span>
+                        </div>
+                      </div>
+                    </div>
+                </div>
+            </div>
 
         </main>
     </div>
@@ -1187,6 +1167,14 @@
             const targetView = document.getElementById(targetViewId);
             targetView.classList.add('active');
             setTimeout(() => { targetView.style.animation = 'slideUpFade 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards'; }, 10);
+            
+            // Initialize weather analytics on first click to the view
+            if (targetViewId === 'weatherView' && !isWeatherInit) {
+                isWeatherInit = true;
+                fetchAccuWeatherLive();
+                setInterval(fetchAccuWeatherLive, 30 * 60 * 1000); // refresh 30 mins
+                refreshWeatherCharts();
+            }
         }
 
         navItems.forEach(item => { item.addEventListener('click', () => switchToView(item.getAttribute('data-target'))); });
@@ -1596,17 +1584,6 @@
 
         // --- NEW WEATHER DRAWER & ANALYTICS LOGIC ---
         let isWeatherInit = false;
-        
-        function toggleWeatherDrawer() {
-            const drawer = document.getElementById('weatherDrawer');
-            drawer.classList.toggle('open');
-            if (drawer.classList.contains('open') && !isWeatherInit) {
-                isWeatherInit = true;
-                fetchAccuWeatherLive();
-                setInterval(fetchAccuWeatherLive, 30 * 60 * 1000); // refresh 30 mins
-                refreshWeatherCharts();
-            }
-        }
 
         const AW_API_KEY   = 'zpka_49762911edec4b599990b4b9e3e6e81d_d560b2ec';
         const AW_LOC_KEY   = '207573';
@@ -1848,9 +1825,9 @@
 
         function setWeatherMonth(m) {
           wCurrentMonth = m;
-          document.querySelectorAll('#weather-drawer-body .month-btn').forEach(b => b.classList.remove('active'));
+          document.querySelectorAll('.weather-dashboard-wrapper .month-btn').forEach(b => b.classList.remove('active'));
           const idx = m === 'ALL' ? 0 : m + 1;
-          document.querySelectorAll('#weather-drawer-body .month-btn')[idx].classList.add('active');
+          document.querySelectorAll('.weather-dashboard-wrapper .month-btn')[idx].classList.add('active');
           refreshWeatherCharts();
         }
 
